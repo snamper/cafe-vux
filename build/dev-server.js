@@ -23,14 +23,14 @@ const proxyTable = config.dev.proxyTable
 
 const app = express()
 
-/* 定义数据读取 */
+/* define the data for ajax read */
 const appData = require('../data.json')
 const categorys = appData.categorys
 const products = appData.products
 const login = appData.login
 const register = appData.register
 
-/* 编写路由 */
+/* define router  */
 var apiRoutes = express.Router()
 apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) {
   res.json({
@@ -46,9 +46,9 @@ apiRoutes.get('/product/show/ui/getProducts.do', function (req, res) {
 
 apiRoutes.get('/member/show/ui/memberLogin.do', function (req, res) {
   res.json({
-    /* 登陆成功 */
+    /* login success */
     data: login.success
-    /* 登陆失败 */
+    /* login fail */
     /* data: login.fail */
   })
 })
@@ -61,12 +61,12 @@ apiRoutes.get('/member/show/ui/createMember.do', function (req, res) {
 
 apiRoutes.get('/member/show/ui/isExistUserName.do', function (req, res) {
   res.json({
-    /* 真表示有重名 */
+    /* true: duiplicate name */
     data: true
   })
 })
 
-/* 设置路由地址 */
+/* setting router address */
 app.use('/shop', apiRoutes);
 
 const compiler = webpack(webpackConfig);

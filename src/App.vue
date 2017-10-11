@@ -3,9 +3,9 @@
     <view-box>
       <img src="../static/img/logo.jpg" width="100%" height="auto">
       <h1>test</h1>
-      <router-view></router-view>
+      <router-view :categorys="categorys"></router-view>
       <tabbar>
-        <tabbar-item :link="{path:'/home'}" >
+        <tabbar-item :link="{path:'/home'}">
           <img slot="icon" src="./common/img/icon_nav_button.png">
           <span slot="label">主页</span>
         </tabbar-item>
@@ -24,13 +24,28 @@
 
 <script>
 import { Tabbar, TabbarItem, XHeader, ViewBox } from 'vux';
+
 export default {
   name: 'app',
+  data() {
+    return {
+      categorys: {
+        /* get data from ajax */
+      }
+    };
+  },
   components: {
     Tabbar,
     TabbarItem,
     XHeader,
     ViewBox
+  },
+  created: function() {
+    this.$http.get('/shop/category/show/ui/getCategoriedProducts.do').then((response) => {
+      response = response.body;
+      this.categorys = response.data;
+      console.log(this.categorys);
+    });
   }
 };
 </script>

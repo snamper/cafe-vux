@@ -5,6 +5,9 @@ import FastClick from 'fastclick';
 import router from './router';
 import App from './App';
 import '@/common/stylus/index.styl';
+import VueResource from 'vue-resource';
+
+Vue.use(VueResource);
 
 FastClick.attach(document.body);
 
