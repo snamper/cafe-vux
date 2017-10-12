@@ -25,16 +25,6 @@ export default {
         'imgpanel': ImgPanel
     },
     computed: {
-        products: function() {
-            const products = [];
-            for (let category in this.categorys) {
-                console.log(category);
-                this.categorys[category].forEach((product) => {
-                    products.push(product);
-                });
-            }
-            return products;
-        }
     }
 };
 </script>

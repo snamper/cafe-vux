@@ -39,7 +39,7 @@ export default {
                 });
             }
             // console.log(sliders);
-            console.log(sliders.length);
+            // console.log(sliders.length);
             return sliders;
         },
         hots: function() {
@@ -47,7 +47,7 @@ export default {
             for (let category in this.categorys) {
                 this.categorys[category].forEach((product) => {
                     if (product.canBook) {
-                        console.log(product.imageUrl);
+                        // console.log(product.imageUrl);
                         hots.push({ 'img': product.imageUrl });
                     }
                 });
@@ -75,17 +75,18 @@ export default {
             .weui-grids
                 padding-bottom 5px
                 .weui-grid
-                    padding 5px 
+                    padding 25px 
                 .detail-wrapper
                     display flex
                     justify-content space-between
                     .title
-                        font-size 14px
+                        font-size 18px
                         padding 5px 0
                         font-weight 700
+                        color black
                     .price
-                        font-size 14px
-                        color:red
+                        font-size 18px
+                        color red
                         padding 5px 0
-
+                        font-weight 700
 </style>

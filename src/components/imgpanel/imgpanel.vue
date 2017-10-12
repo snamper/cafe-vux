@@ -36,6 +36,9 @@ export default {
     props: {
         product: {
             type: Object
+        },
+        value: {
+            type: Number
         }
     },
     components: {
@@ -56,10 +59,10 @@ export default {
             width 100%
             display flex
             justify-content center
+            margin 0 10px
             img
                 width 100px
                 height 100px
-                margin 0 20px
         .detail-wrapper
             width 100%
             height 100px
