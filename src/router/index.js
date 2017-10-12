@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Member from '@/components/member/member';
 import Menu from '@/components/menu/menu';
 import Home from '@/components/home/home';
+import Cart from '@/components/cart/cart';
 
 Vue.use(Router);
 
@@ -26,6 +27,11 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
     }
   ]
 });

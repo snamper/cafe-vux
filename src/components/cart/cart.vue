@@ -1,6 +1,6 @@
 <template>
-    <div class="member-wrapper">
-        <h1>member</h1>
+    <div class="cart-wrapper">
+        <h1>cart</h1>
     </div>
 </template>
 

@@ -1,15 +1,26 @@
 <template>
     <div class="home-wrapper">
-        <h1>home</h1>
-        <div class="swiper-wrapper">
-            <swiper :list="slidersList" auto loop style="width:100%;height:auto;" dots-class="custom-bottom" dots-position="center"></swiper>
+        <div class="swiper-wrapper" v-if="sliders.length>0">
+            <divider>新品推荐</divider>
+            <swiper :list="sliders" auto loop style="width:100%;height:auto;" dots-class="custom-bottom" dots-position="center"></swiper>
         </div>
-        <div class="hot-wrapper"></div>
+        <div class="hot-wrapper" v-if="hots.length>0">
+            <divider>热销商品</divider>
+            <grid :cols="2">
+                <grid-item v-for="(product,i) in hots" :key="i">
+                    <img width="100%" height="auto" :src="product.img">
+                    <div class="detail-wrapper">
+                        <span class="title">商品1</span>
+                        <span class="price">￥20</span>
+                    </div>
+                </grid-item>
+            </grid>
+        </div>
     </div>
 </template>
 
-<script>
-import { Swiper } from 'vux';
+<script type="text/ecmascript-6">
+import { Swiper, Divider, Grid, GridItem } from 'vux';
 export default {
     props: {
         categorys: {
@@ -19,50 +30,62 @@ export default {
     computed: {
         /* calcation the silder arry from categorys */
         sliders: function() {
-            // console.log(this.categorys === null);
-            let sliders = [];
+            const sliders = [];
             for (let category in this.categorys) {
-                // console.log(category);
-                // console.log(this.categorys[category]);
                 this.categorys[category].forEach((product) => {
-                    // console.log(product.name);
-                    // console.log(product.slider);
                     if (product.slider) {
-                        sliders.push(product);
+                        sliders.push({ 'img': product.imageSliderUrl });
                     }
                 });
             }
             // console.log(sliders);
+            console.log(sliders.length);
             return sliders;
         },
-        slidersList: function() {
-            const imgList = [
-                'http://placeholder.qiniudn.com/800x300/FF3B3B/ffffff',
-                'http://placeholder.qiniudn.com/800x300/FFEF7D/ffffff',
-                'http://placeholder.qiniudn.com/800x300/8AEEB1/ffffff'
-            ];
-            const demoList = imgList.map((one, index) => ({
-                url: 'javascript:',
-                img: one
-            }));
-
-            /* let list = this.silders.map((product, index) => ({
-                url: 'http://m.baidu.com',
-                img: product.imageSliderUrl,
-                fallbackImg: product.imageSliderUrl,
-                title: `(可点击)${product.name}`
-            })); */
-            console.log(demoList);
-            return demoList;
+        hots: function() {
+            const hots = [];
+            for (let category in this.categorys) {
+                this.categorys[category].forEach((product) => {
+                    if (product.canBook) {
+                        console.log(product.imageUrl);
+                        hots.push({ 'img': product.imageUrl });
+                    }
+                });
+            }
+            return hots;
         }
     },
     methods: {
     },
     components: {
-        Swiper
+        Swiper,
+        Divider,
+        Grid,
+        GridItem
     }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+    .home-wrapper
+        .swiper-wrapper
+            font-size 24px
+        .hot-wrapper
+            font-size 24px
+            .weui-grids
+                padding-bottom 5px
+                .weui-grid
+                    padding 5px 
+                .detail-wrapper
+                    display flex
+                    justify-content space-between
+                    .title
+                        font-size 14px
+                        padding 5px 0
+                        font-weight 700
+                    .price
+                        font-size 14px
+                        color:red
+                        padding 5px 0
+
 </style>

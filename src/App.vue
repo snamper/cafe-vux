@@ -2,7 +2,6 @@
   <div id="app">
     <view-box>
       <img src="../static/img/logo.jpg" width="100%" height="auto">
-      <h1>test</h1>
       <router-view :categorys="categorys"></router-view>
       <tabbar>
         <tabbar-item :link="{path:'/home'}">
@@ -13,6 +12,10 @@
           <img slot="icon" src="./common/img/icon_nav_button.png">
           <span slot="label">菜单</span>
         </tabbar-item>
+        <tabbar-item :link="{path:'/cart'}">
+          <img slot="icon" src="./common/img/icon_nav_button.png">
+          <span slot="label">购物车</span>
+        </tabbar-item>
         <tabbar-item :link="{path:'/member'}">
           <img slot="icon" src="./common/img/icon_nav_button.png">
           <span slot="label">会员</span>
@@ -22,9 +25,8 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import { Tabbar, TabbarItem, XHeader, ViewBox } from 'vux';
-
 export default {
   name: 'app',
   data() {
@@ -44,7 +46,7 @@ export default {
     this.$http.get('/shop/category/show/ui/getCategoriedProducts.do').then((response) => {
       response = response.body;
       this.categorys = response.data;
-      console.log(this.categorys);
+      // console.log(this.categorys);
     });
   }
 };
