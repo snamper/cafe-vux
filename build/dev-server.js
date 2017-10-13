@@ -28,7 +28,15 @@ const appData = require('../data.json')
 const categorys = appData.categorys
 const products = appData.products
 const login = appData.login
+
+/* vue-seller */
+const appDataseller = require('../data-seller.json')
+var seller = appDataseller.seller
+var goods = appDataseller.goods
+var ratings = appDataseller.ratings
+
 const register = appData.register
+
 
 /* define router  */
 var apiRoutes = express.Router()
@@ -65,6 +73,29 @@ apiRoutes.get('/member/show/ui/isExistUserName.do', function (req, res) {
     data: true
   })
 })
+
+
+apiRoutes.get('/seller', function (req, res) {
+  res.json({
+    errno: 0,
+    data: seller
+  });
+})
+
+apiRoutes.get('/goods', function (req, res) {
+  res.json({
+    errno: 0,
+    data: goods
+  })
+})
+
+apiRoutes.get('/ratings', function (req, res) {
+  res.json({
+    errno: 0,
+    data: ratings
+  });
+})
+
 
 /* setting router address */
 app.use('/shop', apiRoutes);

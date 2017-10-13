@@ -12,7 +12,7 @@
           <img slot="icon" src="./common/img/icon_nav_button.png">
           <span slot="label">菜单</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/cart'}" :badge="badge">
+        <tabbar-item :link="{path:'/cart'}" :badge="badgeNo">
           <img slot="icon" src="./common/img/icon_nav_button.png">
           <span slot="label">购物车</span>
         </tabbar-item>
@@ -26,7 +26,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Vue from 'vue';
 import { Tabbar, TabbarItem, XHeader, ViewBox, Badge } from 'vux';
 export default {
   name: 'app',
@@ -50,35 +49,25 @@ export default {
       this.categorys = response.data;
       // console.log(this.categorys);
     });
-    this.addCount();
   },
   computed: {
-    badge: function() {
-      return '12';
-    },
-    products: function() {
-      const products = [];
+    badgeNo: function() {
+      let badgeNo = 0;
       for (let category in this.categorys) {
-        console.log(category);
         this.categorys[category].forEach((product) => {
-          products.push(product);
+          if (product.count) {
+            badgeNo = badgeNo + product.count;
+          }
         });
       }
-      return products;
-    }
-  },
-  methods: {
-    addCount: function() {
-      if (!this.products.count) {
-        Vue.set(this.products, 'count', 1);
-      }
+      console.log('count is ' + String(badgeNo));
+      return String(badgeNo);
     }
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-#app {
+#app 
   height: 100%;
-}
 </style>

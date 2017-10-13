@@ -12,7 +12,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import ImgPanel from '../imgpanel/imgpanel';
+import ImgPanel from '../panel/imgpanel';
 import { Divider } from 'vux';
 export default {
     props: {
