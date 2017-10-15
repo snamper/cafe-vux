@@ -1,56 +1,24 @@
 <template>
     <div class="cart-wrapper">
-        <div class="cart" v-if="products.length>0">
-            <group></group>
-            <cell title="总价" :value="total"></cell>
-            <cell title="会员价" :value="totalMember"></cell>
-            <divider>购物车明细</divider>
-            <div class="cartlist" v-for="(product, item) in products" :key="item">
-                <cartpanel :product="product"></cartpanel>
-            </div>
-            <divider>结算</divider>
-            <div class="button">
-                <flexbox>
-                    <flexbox-item>
-                    </flexbox-item>
-                    <flexbox-item>
-                        <x-button type="primary" @click.native="clear">clear</x-button>
-                    </flexbox-item>
-                    <flexbox-item>
-                    </flexbox-item>
-                    <flexbox-item>
-                        <x-button type="primary" link="/member">buy</x-button>
-                    </flexbox-item>
-                    <flexbox-item>
-                    </flexbox-item>
-                </flexbox>
-            </div>
-        </div>
-        <div class="no-cart" v-else>
-            <card :header="{title:'尚未购买商品，请先选择商品购买'}"></card>
+        <div class="cartlist-wrapper">
+            <cartlist :categorys="categorys"></cartlist>
         </div>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
-import { Badge, Cell, Group, Divider, Card, XButton, Flexbox, FlexboxItem } from 'vux';
-import CartPanel from '../panel/cartpanel';
+import CartList from '@/components/cart/cartlist';
 export default {
     props: {
         categorys: {
             type: Object
+        },
+        member: {
+            type: Object
         }
     },
     components: {
-        Badge,
-        Cell,
-        Group,
-        Divider,
-        Card,
-        XButton,
-        Flexbox,
-        FlexboxItem,
-        'cartpanel': CartPanel
+        'cartlist': CartList
     },
     computed: {
         total: function() {

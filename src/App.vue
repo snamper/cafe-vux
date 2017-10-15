@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <view-box>
-      <img src="../static/img/logo.jpg" width="100%" height="auto">
-      <router-view :categorys="categorys"></router-view>
+      <router-view :categorys="categorys" :member="member" v-on:dloginmember="dloginmember" v-on:dregistermember="dregistermember"></router-view>
       <tabbar>
         <tabbar-item :link="{path:'/home'}">
           <img slot="icon" src="./common/img/icon_nav_button.png">
@@ -18,7 +17,7 @@
         </tabbar-item>
         <tabbar-item :link="{path:'/member'}">
           <img slot="icon" src="./common/img/icon_nav_button.png">
-          <span slot="label">会员</span>
+          <span slot="label">我的</span>
         </tabbar-item>
       </tabbar>
     </view-box>
@@ -33,7 +32,8 @@ export default {
     return {
       categorys: {
         /* get data from ajax */
-      }
+      },
+      member: {}
     };
   },
   components: {
@@ -45,9 +45,8 @@ export default {
   },
   created: function() {
     this.$http.get('/shop/category/show/ui/getCategoriedProducts.do').then((response) => {
-      response = response.body;
-      this.categorys = response.data;
-      // console.log(this.categorys);
+      this.categorys = response.body.data;
+      console.log(this.categorys);
     });
   },
   computed: {
@@ -60,14 +59,33 @@ export default {
           }
         });
       }
-      console.log('count is ' + String(badgeNo));
-      return String(badgeNo);
+      // console.log('count is ' + String(badgeNo));
+      if (badgeNo === 0) {
+        return '';
+      } else {
+        return String(badgeNo);
+      }
+    }
+  },
+  methods: {
+    dloginmember: function(data) {
+      this.member = data;
+    },
+    dregistermember: function(data) {
+      console.log(data);
+      this.member = {
+        'balance': 0,
+        'id': data.entityid,
+        'name': data.entityName
+      };
     }
   }
 };
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
-#app 
+<style lang="less">
+@import '~vux/src/styles/1px.less';
+#app {
   height: 100%;
+}
 </style>

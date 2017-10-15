@@ -1,5 +1,6 @@
 <template>
     <div class="home-wrapper">
+        <logo></logo>
         <div class="swiper-wrapper" v-if="sliders.length>0">
             <divider>新品推荐</divider>
             <swiper :list="sliders" auto loop style="width:100%;height:auto;" dots-class="custom-bottom" dots-position="center"></swiper>
@@ -21,6 +22,7 @@
 
 <script type="text/ecmascript-6">
 import { Swiper, Divider, Grid, GridItem } from 'vux';
+import Logo from '@/components/logo/logo';
 export default {
     props: {
         categorys: {
@@ -61,7 +63,8 @@ export default {
         Swiper,
         Divider,
         Grid,
-        GridItem
+        GridItem,
+        'logo': Logo
     }
 };
 </script>

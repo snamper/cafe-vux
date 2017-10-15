@@ -6,7 +6,9 @@ import router from './router';
 import App from './App';
 import '@/common/stylus/index.styl';
 import VueResource from 'vue-resource';
+import { ToastPlugin } from 'vux';
 
+Vue.use(ToastPlugin);
 Vue.use(VueResource);
 
 FastClick.attach(document.body);

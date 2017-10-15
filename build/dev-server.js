@@ -28,14 +28,9 @@ const appData = require('../data.json')
 const categorys = appData.categorys
 const products = appData.products
 const login = appData.login
-
-/* vue-seller */
-const appDataseller = require('../data-seller.json')
-var seller = appDataseller.seller
-var goods = appDataseller.goods
-var ratings = appDataseller.ratings
-
+const cartlist = appData.cartlist
 const register = appData.register
+const addValue = appData.addValue
 
 
 /* define router  */
@@ -74,26 +69,16 @@ apiRoutes.get('/member/show/ui/isExistUserName.do', function (req, res) {
   })
 })
 
-
-apiRoutes.get('/seller', function (req, res) {
+apiRoutes.get('/product/show/ui/getRecordList.do',function(req,res){
   res.json({
-    errno: 0,
-    data: seller
-  });
-})
-
-apiRoutes.get('/goods', function (req, res) {
-  res.json({
-    errno: 0,
-    data: goods
+    data: cartlist
   })
 })
 
-apiRoutes.get('/ratings', function (req, res) {
+apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
   res.json({
-    errno: 0,
-    data: ratings
-  });
+    data:
+  })
 })
 
 
