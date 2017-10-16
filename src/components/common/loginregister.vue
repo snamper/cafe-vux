@@ -4,8 +4,8 @@
             <div class="login-wrapper" v-if="loginin">
                 <divider>会员登陆</divider>
                 <group title="会员登陆">
-                    <x-input title="用户名" name="username" placeholder="请输入用户名" type="text" :min='3' :max='16' v-model="loginInfo.username"></x-input>
-                    <x-input title="密码" name="password" placeholder="请输入密码" type="password" :min='6' :max='16' v-model="loginInfo.password"></x-input>
+                    <x-input title="用户名" name="username" placeholder="请输入用户名" type="text" v-model="loginInfo.username" :required="true"></x-input>
+                    <x-input title="密码" name="password" placeholder="请输入密码" type="password" v-model="loginInfo.password" :required="true"></x-input>
                 </group>
                 <flexbox>
                     <flexbox-item>
@@ -23,10 +23,10 @@
             <div class="register-wrapper" v-else>
                 <divider>会员注册</divider>
                 <group title="会员注册">
-                    <x-input title="用户名" name="username" placeholder="请输入用户名" type="text" :min='3' :max='16' v-model="registerInfo.username"></x-input>
-                    <x-input title="手机号码" name="phone" placeholder="请输入手机号码" type="tel" mask="999 9999 9999" is-type="china-mobile" v-model="registerInfo.phone"></x-input>
-                    <x-input title="密码" name="password" placeholder="请输入密码" type="password" :min='6' :max='16' v-model="registerInfo.password"></x-input>
-                    <x-input title="确认密码" name="confirmPassword" placeholder="再一次输入密码" type="password" :min='6' :max='16' v-model="registerInfo.confirmpsd" :is-type="verifypsd"></x-input>
+                    <x-input title="用户名" name="username" placeholder="请输入用户名" type="text" :min='3' :max='16' :required="true" v-model="registerInfo.username" :on-blur="duplicateUsername"></x-input>
+                    <x-input title="手机号码" name="phone" placeholder="请输入手机号码" type="tel" mask="999 9999 9999" is-type="china-mobile" :required="true" v-model="registerInfo.phone"></x-input>
+                    <x-input title="密码" name="password" placeholder="请输入密码" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.password"></x-input>
+                    <x-input title="确认密码" name="confirmPassword" placeholder="再一次输入密码" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.confirmpsd" :is-type="verifypsd"></x-input>
                 </group>
                 <flexbox>
                     <flexbox-item>
@@ -90,22 +90,39 @@ export default {
     },
     methods: {
         login: function() {
-            this.$http.get('/shop/member/show/ui/memberLogin.do', this.loginInfo).then((response) => {
-                let result = response.body;
-                log.info('ajax request start in memberLogin.do');
-                log.debug('ajax response is ' + JSON.stringify(result));
-                if (result !== null) {
-                    this.$emit('loginMember', result);
-                }
-            });
+            if (this.loginInfo.username === '' || this.loginInfo.password === '') {
+                this.$vux.toast.text('用户名或者密码不能为空', 'middle');
+            } else {
+                // this.loginInfo.password = md5(this.loginInfo.password);
+                log.info('login user is ' + JSON.stringify(this.loginInfo));
+                this.$http.get('/shop/member/show/ui/memberLogin.do', this.loginInfo).then((response) => {
+                    let result = response.body.data;
+                    log.info('ajax request start in memberLogin.do');
+                    log.debug('ajax response is ' + JSON.stringify(result));
+                    if (result !== null) {
+                        this.$emit('loginMember', result);
+                    }
+                });
+            }
         },
         register: function() {
-            this.$http.get('/shop/member/show/ui/createMember.do', this.registerInfo).then((response) => {
-                let result = response.body;
-                log.info('ajax request start in createMember.do');
-                log.debug('ajax response is ' + JSON.stringify(result));
-                this.$emit('registerMember', result);
-            });
+            log.info('register user is ' + JSON.stringify(this.registerInfo));
+            if (this.registerInfo.username === '') {
+                this.$vux.toast.text('用户名不能为空', 'middle');
+            } else if (this.registerInfo.phone === '') {
+                this.$vux.toast.text('密码不能为空', 'middle');
+            } else if (this.registerInfo.password === '' || this.registerInfo.confirmpsd === '') {
+                this.$vux.toast.text('请输入正确的密码', 'middle');
+            } else if (this.registerInfo.password !== this.registerInfo.confirmpsd) {
+                this.$vux.toast.text('两次输入的密码不一致，请重新输入', 'middle');
+            } else {
+                this.$http.get('/shop/member/show/ui/createMember.do', this.registerInfo).then((response) => {
+                    let result = response.body.data;
+                    log.info('ajax request start in createMember.do');
+                    log.debug('ajax response is ' + JSON.stringify(result));
+                    this.$emit('registerMember', result);
+                });
+            }
         },
         showlogin: function() {
             this.loginin = true;
@@ -132,17 +149,19 @@ export default {
             }
         },
         duplicateUsername: function() {
-            this.$http.get('/shop/member/show/ui/isExistUserName.do', this.registerInfo.username).then((response) => {
-                log.info('is ' + this.registerInfo.username + ' exist?');
-                let result = response.body;
-                log.debug('ajax response is ' + result);
-                /* 用户已存在 */
-                if (result) {
-                    return { valid: false, msg: '用户名已存在，请重新输入' };
-                } else {
-                    return { valid: true };
-                }
-            });
+            if (this.registerInfo.username !== '') {
+                this.$http.get('/shop/member/show/ui/isExistUserName.do', this.registerInfo.username).then((response) => {
+                    log.info('is ' + this.registerInfo.username + ' exist?');
+                    let result = response.body.data;
+                    log.debug('ajax response is ' + result);
+                    /* 用户已存在 */
+                    if (result) {
+                        return { valid: false, msg: '用户名已存在，请重新输入' };
+                    } else {
+                        return { valid: true };
+                    }
+                });
+            }
         }
     }
 };

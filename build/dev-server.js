@@ -47,7 +47,7 @@ apiRoutes.get('/product/show/ui/getProducts.do', function (req, res) {
   })
 })
 
-apiRoutes.get('/member/show/ui/memberLogin.do', function (req, res) {
+apiRoutes.post('/member/show/ui/memberLogin.do', function (req, res) {
   res.json({
     /* login success */
     data: login.success
@@ -78,6 +78,12 @@ apiRoutes.get('/product/show/ui/getRecordList.do',function(req,res){
 apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
   res.json({
     data:addValue
+  })
+})
+
+apiRoutes.get('/product/show/ui/saveRecordList.do',function(req,res){
+  res.json({
+    data: true
   })
 })
 

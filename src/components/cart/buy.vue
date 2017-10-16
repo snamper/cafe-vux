@@ -156,18 +156,35 @@ export default {
                 });
             }
             return products;
+        },
+        balancePrice: function(cashOrBalance) {
+            let total = 0;
+            this.products.forEach((product) => {
+                log.debug('product is ' + JSON.stringify(product));
+                log.debug('count is ' + product.count);
+                log.debug('memberPrice is ' + product.memberPrice);
+                total = total + product.count * product.memberPrice;
+            });
+            return total;
+        },
+        memberTotalPrice: function() {
+            let total = 0;
+            this.products.forEach((product) => {
+                total = total + product.count * product.price;
+            });
+            return total;
         }
     },
     methods: {
         loginMember: function(data) {
             /* login return */
-            log.debug('loginMember recive data is ' + JSON.stringfy(data));
+            log.debug('loginMember recive data is ' + JSON.stringify(data));
             /* deilver to app */
             this.$emit('dloginmember', data);
         },
         registerMember: function(data) {
             /* register return */
-            log.debug('registerMember recive data is ' + JSON.stringfy(data));
+            log.debug('registerMember recive data is ' + JSON.stringify(data));
             /* deilver to app */
             this.$emit('dregistermember', data);
         },
@@ -176,30 +193,34 @@ export default {
                 log.info('choose balance pay');
                 if (this.memberbalance >= this.totalMember) {
                     this.isPay = false;
-                    this.realpay();
+                    this.realpay('Balance');
                 } else {
                     this.$vux.toast.text('余额不足，请先充值', 'middle');
                 }
             } else {
                 this.isPay = false;
-                this.realpay();
+                this.realpay('Cash');
             }
         },
-        realpay: function() {
-            let count;
-            if (this.member.name === '' || typeof (this.member.name) === 'undefined') {
-                count = this.totalPrice;
-            } else {
-                count = this.memberPrice;
+        realpay: function(cashOrBalance) {
+            log.info('param is ' + cashOrBalance);
+            let total;
+            if (cashOrBalance === 'Balance') {
+                total = this.memberTotalPrice;
+            } else if (cashOrBalance === 'Cash') {
+                total = this.balancePrice;
             }
+            log.info('cart total price is ' + total);
             let buylist = {
-                'id': this.member.id,
-                'list': this.list,
-                'total': count,
-                'datetime': ''
+                'userId': this.member.id,
+                'cashOrBalance': cashOrBalance,
+                'details': this.list,
+                'amount': total
             };
+            log.info('now request to Server');
+            log.debug('detaillist is ' + JSON.stringify(buylist));
             this.$http.get('/shop/product/show/ui/saveRecordList.do', buylist).then((response) => {
-                this.$vux.toast.text('购买成功', 'middle');
+                this.$vux.toast.text('购买成功,请付款后关注订单状态', 'middle');
             });
         }
     }
