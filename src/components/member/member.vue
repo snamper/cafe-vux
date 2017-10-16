@@ -5,6 +5,7 @@
             <loginregister :member="member" v-on:loginMember="loginMember" v-on:registerMember="registerMember"></loginregister>
         </div>
         <div class="showInfo" v-else>
+            <card :header="{title:'你好，' + member.name}"></card>
             <divider>2017年10月15日22时21分</divider>
             <group>
                 <cell title="您购买的商品总价" :value="total"></cell>
@@ -15,9 +16,11 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { CellFormPreview, Group, Cell, Divider } from 'vux';
+import { CellFormPreview, Group, Cell, Divider, Card } from 'vux';
 import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
+import Logger from 'chivy';
+const log = new Logger('cafe/member');
 export default {
     props: {
         categorys: {
@@ -32,6 +35,7 @@ export default {
         Cell,
         Group,
         Divider,
+        Card,
         'logo': Logo,
         'loginregister': LoginRegister
     },
@@ -76,13 +80,13 @@ export default {
     methods: {
         loginMember: function(data) {
             /* login return */
-            console.log(data);
+            log.debug('loginMember recive data is ' + JSON.stringify(data));
             /* deilver to app */
             this.$emit('dloginmember', data);
         },
         registerMember: function(data) {
             /* register return */
-            console.log(data);
+            log.debug('registerMember recive data is ' + JSON.stringify(data));
             /* deilver to app */
             this.$emit('dregistermember', data);
         }
@@ -91,4 +95,11 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+.member-wrapper
+    .showInfo
+        .weui-panel
+            .weui-panel__hd
+                font-size 20px
+                font-weight 700
+                color black
 </style>

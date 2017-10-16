@@ -31,6 +31,8 @@
 import { Badge, Cell, Group, Divider, Card, XButton, Flexbox, FlexboxItem, XHeader } from 'vux';
 import CartPanel from '../panel/cartpanel';
 import Logo from '@/components/logo/logo';
+import Logger from 'chivy';
+const log = new Logger('cafe/cartlist');
 export default {
     props: {
         categorys: {
@@ -74,6 +76,7 @@ export default {
                     }
                 });
             }
+            log.debug('products return data is ' + JSON.stringify(products));
             return products;
         }
     },

@@ -52,6 +52,8 @@
 
 <script type="text/ecmascript-6">
 import { XHeader, Flexbox, FlexboxItem, Group, Cell, Divider, XButton, XInput, XSwitch, Card, Toast } from 'vux';
+import Logger from 'chivy';
+const log = new Logger('cafe/loginregister');
 export default {
     data() {
         return {
@@ -89,8 +91,9 @@ export default {
     methods: {
         login: function() {
             this.$http.get('/shop/member/show/ui/memberLogin.do', this.loginInfo).then((response) => {
-                let result = response.body.data;
-                console.log(result);
+                let result = response.body;
+                log.info('ajax request start in memberLogin.do');
+                log.debug('ajax response is ' + JSON.stringify(result));
                 if (result !== null) {
                     this.$emit('loginMember', result);
                 }
@@ -98,8 +101,9 @@ export default {
         },
         register: function() {
             this.$http.get('/shop/member/show/ui/createMember.do', this.registerInfo).then((response) => {
-                let result = response.body.data;
-                console.log(result);
+                let result = response.body;
+                log.info('ajax request start in createMember.do');
+                log.debug('ajax response is ' + JSON.stringify(result));
                 this.$emit('registerMember', result);
             });
         },
@@ -129,10 +133,9 @@ export default {
         },
         duplicateUsername: function() {
             this.$http.get('/shop/member/show/ui/isExistUserName.do', this.registerInfo.username).then((response) => {
-                console.log('获取用户是否已经存在');
-                console.log(response.body);
-                let result = response.body.data;
-                console.log(result);
+                log.info('is ' + this.registerInfo.username + ' exist?');
+                let result = response.body;
+                log.debug('ajax response is ' + result);
                 /* 用户已存在 */
                 if (result) {
                     return { valid: false, msg: '用户名已存在，请重新输入' };

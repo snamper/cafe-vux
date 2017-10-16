@@ -77,7 +77,7 @@ apiRoutes.get('/product/show/ui/getRecordList.do',function(req,res){
 
 apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
   res.json({
-    data:
+    data:addValue
   })
 })
 

@@ -26,6 +26,8 @@
 
 <script type="text/ecmascript-6">
 import { Tabbar, TabbarItem, XHeader, ViewBox, Badge } from 'vux';
+import Logger from 'chivy';
+const log = new Logger('cafe/App');
 export default {
   name: 'app',
   data() {
@@ -45,9 +47,15 @@ export default {
   },
   created: function() {
     this.$http.get('/shop/category/show/ui/getCategoriedProducts.do').then((response) => {
-      this.categorys = response.body.data;
-      console.log(this.categorys);
+      this.categorys = response.body;
+      log.info('Ajax request start');
+      log.debug('Ajax request categorys data is ' + JSON.stringify(this.categorys));
+      // console.log(this.categorys);
     });
+  },
+  mounted: function() {
+    let member = JSON.parse(sessionStorage.getItem('member'));
+    this.member = member;
   },
   computed: {
     badgeNo: function() {
@@ -70,14 +78,21 @@ export default {
   methods: {
     dloginmember: function(data) {
       this.member = data;
+      log.info('save member to sessionstorage');
+      sessionStorage.setItem('member', JSON.stringify(this.member));
+      log.debug('sessionStorage.member is ' + JSON.stringify(sessionStorage.getItem('member')));
     },
     dregistermember: function(data) {
-      console.log(data);
+      log.debug('data is ' + JSON.stringify(data));
+      // console.log(data);
       this.member = {
         'balance': 0,
         'id': data.entityid,
         'name': data.entityName
       };
+      log.info('save member to sessionstorage');
+      sessionStorage.setItem('member', JSON.stringify(this.member));
+      log.debug('sessionStorage.member is ' + JSON.stringify(sessionStorage.getItem('member')));
     }
   }
 };

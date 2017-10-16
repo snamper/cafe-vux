@@ -39,7 +39,7 @@
                 <x-button type="primary" @click.native="payit">去支付</x-button>
             </div>
         </div>
-        <div class="pay-wrapper" v-else="">
+        <div class="pay-wrapper" v-else>
             <div class="readme">请选择扫描支付</div>
             <flexbox>
                 <flexbox-item>
@@ -63,6 +63,8 @@
 import { XHeader, Flexbox, FlexboxItem, Group, Cell, Divider, XButton, XInput, XSwitch, Card } from 'vux';
 import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
+import Logger from 'chivy';
+const log = new Logger('cafe/buy');
 export default {
     data() {
         return {
@@ -134,10 +136,6 @@ export default {
             return balance;
         },
         memberName: function() {
-            console.log(this.member);
-            console.log(this.member === null);
-            console.log(this.member.name === '');
-            console.log(typeof (this.member.name) === 'undefined');
             if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
                 return false;
             } else {
@@ -163,19 +161,19 @@ export default {
     methods: {
         loginMember: function(data) {
             /* login return */
-            console.log(data);
+            log.debug('loginMember recive data is ' + JSON.stringfy(data));
             /* deilver to app */
             this.$emit('dloginmember', data);
         },
         registerMember: function(data) {
             /* register return */
-            console.log(data);
+            log.debug('registerMember recive data is ' + JSON.stringfy(data));
             /* deilver to app */
             this.$emit('dregistermember', data);
         },
         payit: function() {
-            console.log('是否选择了余额扣款' + this.balancePay);
             if (this.balancePay) {
+                log.info('choose balance pay');
                 if (this.memberbalance >= this.totalMember) {
                     this.isPay = false;
                     this.realpay();

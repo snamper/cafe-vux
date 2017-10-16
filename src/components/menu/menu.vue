@@ -14,7 +14,6 @@
 <script type="text/ecmascript-6">
 import ImgPanel from '../panel/imgpanel';
 import Logo from '@/components/logo/logo';
-
 import { Divider } from 'vux';
 export default {
     props: {
