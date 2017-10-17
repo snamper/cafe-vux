@@ -13,10 +13,10 @@
             <div class="button">
                 <flexbox>
                     <flexbox-item>
-                        <x-button type="primary" @click.native="clear">清除</x-button>
+                        <x-button @click.native="clear">清除</x-button>
                     </flexbox-item>
                     <flexbox-item>
-                        <x-button type="primary" link="/buy">购买</x-button>
+                        <x-button link="/buy">支付</x-button>
                     </flexbox-item>
                 </flexbox>
             </div>
@@ -93,4 +93,15 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+.cartlist-wrapper
+    .cart
+        .button
+            .vux-flexbox
+                .vux-flexbox-item
+                    .weui-btn
+                        color: #fff
+                        background-color: #58B7FF
+
+
+
 </style>

@@ -47,7 +47,7 @@ export default {
   },
   created: function() {
     this.$http.get('/shop/category/show/ui/getCategoriedProducts.do').then((response) => {
-      this.categorys = response.body.data;
+      this.categorys = response.data.data;
       log.info('Ajax request start');
       log.debug('Ajax request categorys data is ' + JSON.stringify(this.categorys));
       // console.log(this.categorys);

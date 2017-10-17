@@ -132,6 +132,6 @@ export default {
                 .buy 
                     float right
                     .weui-btn
-                        background #20A0FF
+                        background #58B7FF
                         color:#fff
 </style>

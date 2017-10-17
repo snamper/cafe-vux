@@ -1,17 +1,23 @@
 <template>
-    <div class="member-wrapper">
+    <div class="about-wrapper">
         <logo></logo>
-        <div class="login" v-if="!memberName">
-            <loginregister :member="member" v-on:loginMember="loginMember" v-on:registerMember="registerMember"></loginregister>
+        <div class="member-wrapper" >
+            <div class="login" v-if="!memberName">
+                <loginregister :member="member" v-on:loginMember="loginMember" v-on:registerMember="registerMember"></loginregister>
+            </div>
+            <div class="showInfo" v-else>
+                <card :header="{title:'你好，' + member.name}" @click.native="showmodify"></card>
+                <divider>2017年10月15日22时21分</divider>
+                <group>
+                    <cell title="您购买的商品总价" :value="total"></cell>
+                    <cell-form-preview :list="cartLists"></cell-form-preview>
+                </group>
+            </div>
         </div>
-        <div class="showInfo" v-else>
-            <card :header="{title:'你好，' + member.name}"></card>
-            <divider>2017年10月15日22时21分</divider>
-            <group>
-                <cell title="您购买的商品总价" :value="total"></cell>
-                <cell-form-preview :list="cartLists"></cell-form-preview>
-            </group>
-        </div>
+        <!-- <div class="modify-wrapper">
+            <modify></modify>
+        </div> -->
+        
     </div>
 </template>
 
@@ -19,9 +25,15 @@
 import { CellFormPreview, Group, Cell, Divider, Card } from 'vux';
 import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
+import Modify from '@/components/common/modify';
 import Logger from 'chivy';
 const log = new Logger('cafe/member');
 export default {
+    data() {
+        return {
+            modify: false
+        };
+    },
     props: {
         categorys: {
             type: Object
@@ -37,7 +49,8 @@ export default {
         Divider,
         Card,
         'logo': Logo,
-        'loginregister': LoginRegister
+        'loginregister': LoginRegister,
+        'modify': Modify
     },
     computed: {
         total: function() {
@@ -89,6 +102,9 @@ export default {
             log.debug('registerMember recive data is ' + JSON.stringify(data));
             /* deilver to app */
             this.$emit('dregistermember', data);
+        },
+        showmodify: function() {
+            this.modify = true;
         }
     }
 };

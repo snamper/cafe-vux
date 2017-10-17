@@ -36,7 +36,7 @@
             </div>
             <divider>付款</divider>
             <div class="paid-wrapper">
-                <x-button type="primary" @click.native="payit">去支付</x-button>
+                <x-button @click.native="payit">去支付</x-button>
             </div>
         </div>
         <div class="pay-wrapper" v-else>
@@ -230,6 +230,12 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 .loginRegister-wrapper
     .pay-wrapper
+        .readme
+            font-size 24px
+            font-weight 700
+            padding 10px 5px
+            text-align center
+            color gray
         .img-wrapper
             margin 10px 5px
             padding 5px

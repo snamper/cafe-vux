@@ -5,11 +5,10 @@ import FastClick from 'fastclick';
 import router from './router';
 import App from './App';
 import '@/common/stylus/index.styl';
-import VueResource from 'vue-resource';
-import { ToastPlugin } from 'vux';
+import { ToastPlugin, AjaxPlugin } from 'vux';
 
+Vue.use(AjaxPlugin);
 Vue.use(ToastPlugin);
-Vue.use(VueResource);
 
 FastClick.attach(document.body);
 
