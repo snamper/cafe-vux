@@ -23,39 +23,13 @@
 <script type="text/ecmascript-6">
 import { Swiper, Divider, Grid, GridItem } from 'vux';
 import Logo from '@/components/logo/logo';
+import { mapGetters } from 'vuex';
 export default {
-    props: {
-        categorys: {
-            type: Object
-        }
-    },
     computed: {
-        /* calcation the silder arry from categorys */
-        sliders: function() {
-            const sliders = [];
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    if (product.slider) {
-                        sliders.push({ 'img': product.imageSliderUrl });
-                    }
-                });
-            }
-            // console.log(sliders);
-            // console.log(sliders.length);
-            return sliders;
-        },
-        hots: function() {
-            const hots = [];
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    if (product.canBook) {
-                        // console.log(product.imageUrl);
-                        hots.push({ 'img': product.imageUrl });
-                    }
-                });
-            }
-            return hots;
-        }
+        ...mapGetters({
+            sliders: 'sliders',
+            hots: 'hots'
+        })
     },
     methods: {
     },

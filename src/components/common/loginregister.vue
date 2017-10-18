@@ -32,6 +32,7 @@
 import { md5, Group, XButton, XInput, Toast, Tab, TabItem } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('cafe/loginregister');
+const ApiIsExistUserName = '/shop/member/show/ui/isExistUserName.do';
 export default {
     data() {
         return {
@@ -49,11 +50,6 @@ export default {
             index: 0
         };
     },
-    props: {
-        member: {
-            type: Object
-        }
-    },
     components: {
         Group,
         XButton,
@@ -63,26 +59,59 @@ export default {
         TabItem
     },
     methods: {
+        member: function() {
+            return this.$store.state.member;
+        },
+        loginStatus: function() {
+            log.debug('loginStatus: the member data is ' + JSON.stringify(this.member));
+            if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
+                this.$vux.toast.text('登陆成功', 'middle');
+            } else {
+                this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
+            }
+        },
+        registerStatus: function() {
+            log.debug('registerStatus: the member data is ' + JSON.stringify(this.member));
+            if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
+                this.$vux.toast.text('注册成功', 'middle');
+            } else {
+                this.$vux.toast.text('服务器故障，请重新注册', 'middle');
+            }
+        },
         login: function() {
             if (this.loginInfo.username === '' || this.loginInfo.password === '') {
                 this.$vux.toast.text('用户名或者密码不能为空', 'middle');
             } else {
-                this.loginInfo.password = md5(this.loginInfo.password);
-                log.debug('login user is ' + JSON.stringify(this.loginInfo));
-                this.$http.get('/shop/member/show/ui/memberLogin.do', this.loginInfo).then((response) => {
-                    let result = response.data.data;
-                    log.info('ajax request start in memberLogin.do');
-                    log.debug('ajax response is ' + JSON.stringify(result));
-                    if (result !== null) {
-                        this.$emit('loginMember', result);
-                    }
-                });
+                this.$store.commit('login', this.submitLogin);
+                setTimeout(function() {
+                    log.error('test');
+                    log.error(JSON.stringify(this.member));
+                }, 2000);
             }
         },
+        submitLogin: function() {
+           let message = {
+                'username': this.loginInfo.username,
+                'password': md5(this.loginInfo.password)
+            };
+            log.debug('login user is ' + JSON.stringify(message));
+            return message;
+        },
+        submitRegister: function() {
+            let message = {
+                'username': this.registerInfo.username,
+                'phone': this.registerInfo.phone,
+                'password': md5(this.registerInfo.password)
+            };
+            log.debug('Register user is ' + JSON.stringify(message));
+            return message;
+        },
         showregister: function() {
+            log.info('show register HMI');
             this.index = 1;
         },
         showlogin: function() {
+            log.info('show login HMI');
             this.index = 0;
         },
         register: function() {
@@ -93,15 +122,7 @@ export default {
             } else if (this.registerInfo.password !== this.registerInfo.confirmpsd) {
                 this.$vux.toast.text('两次输入的密码不一致，请重新输入', 'middle');
             } else {
-                this.registerInfo.password = md5(this.registerInfo.password);
-                this.registerInfo.confirmpsd = md5(this.registerInfo.confirmpsd);
-                log.debug('register user is ' + JSON.stringify(this.registerInfo));
-                this.$http.get('/shop/member/show/ui/createMember.do', this.registerInfo).then((response) => {
-                    let result = response.data.data;
-                    log.info('ajax request start in createMember.do');
-                    log.debug('ajax response is ' + JSON.stringify(result));
-                    this.$emit('registerMember', result);
-                });
+                this.$store.commit('register', this.submitRegister);
             }
         },
         verifypsd: function() {
@@ -113,7 +134,8 @@ export default {
         },
         duplicateUsername: function() {
             if (this.registerInfo.username !== '') {
-                this.$http.get('/shop/member/show/ui/isExistUserName.do', this.registerInfo.username).then((response) => {
+                log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
+                this.$http.get(ApiIsExistUserName, this.registerInfo.username).then((response) => {
                     log.info('is ' + this.registerInfo.username + ' exist?');
                     let result = response.data.data;
                     log.debug('ajax response is ' + result);

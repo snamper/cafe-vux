@@ -16,7 +16,7 @@
                 </flexbox-item>
             </flexbox>
             <div class="login" v-if="!memberName">
-                <loginregister v-on:loginMember="loginMember" v-on:registerMember="registerMember"></loginregister>
+                <loginregister></loginregister>
             </div>
             <div class="member" v-else>
                 <divider>会员信息</divider>
@@ -60,25 +60,19 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { XHeader, Flexbox, FlexboxItem, Group, Cell, Divider, XButton, XInput, XSwitch, Card } from 'vux';
+import { XHeader, Flexbox, FlexboxItem, Group, Cell, Divider, XButton, XSwitch, Card } from 'vux';
 import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
 import Logger from 'chivy';
+import { mapGetters } from 'vuex';
 const log = new Logger('cafe/buy');
+const ApiSaveRecordList = '/shop/product/show/ui/saveRecordList.do';
 export default {
     data() {
         return {
             balancePay: false,
             isPay: true
         };
-    },
-    props: {
-        categorys: {
-            type: Object
-        },
-        member: {
-            type: Object
-        }
     },
     components: {
         XHeader,
@@ -88,127 +82,45 @@ export default {
         Cell,
         Divider,
         XButton,
-        XInput,
         XSwitch,
         Card,
         'logo': Logo,
         'loginregister': LoginRegister
     },
     computed: {
+        ...mapGetters([
+            'cartProducts',
+            'totalPrice',
+            'totalMemberPrice',
+            'cartList',
+            'cartMemberList'
+        ]),
+        member: function() {
+            return this.$store.state.member;
+        },
         total: function() {
-            let total = 0;
-            this.products.forEach((product) => {
-                total = total + product.count * product.price;
-            });
-            return '￥' + total + '元';
+            return '￥' + this.totalPrice + '元';
         },
         totalMember: function() {
-            let total = 0;
-            this.products.forEach((product) => {
-                total = total + product.count * product.memberPrice;
-            });
-            return '￥' + total + '元';
-        },
-        products: function() {
-            let products = [];
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    if (product.count > 0) {
-                        products.push(product);
-                    }
-                });
-            }
-            return products;
-        },
-        cartLists: function() {
-            let cartLists = [];
-            this.products.forEach((product) => {
-                let cartlist = {
-                    label: product.name,
-                    value: product.count + '个 X ' + product.price + '元 = ' + product.count * product.price + '元'
-                };
-                cartLists.push(cartlist);
-            });
-            return cartLists;
+            return '￥' + this.totalMemberPrice + '元';
         },
         memberbalance: function() {
-            let balance = '￥' + this.member.balance + '元';
-            return balance;
+            return '￥' + this.member.balance + '元';
         },
         memberName: function() {
+            // if member is empty or member.name is empty show
             if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
                 return false;
             } else {
                 return true;
             }
-        },
-        list: function() {
-            let products = [];
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    if (product.count > 0) {
-                        let cartProduct = {
-                            'productId': product.id,
-                            'count': product.count,
-                            'amount': product.count * product.price
-                        };
-                        products.push(cartProduct);
-                    }
-                });
-            }
-            return products;
-        },
-        memberlist: function() {
-            let products = [];
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    if (product.count > 0) {
-                        let cartProduct = {
-                            'productId': product.id,
-                            'count': product.count,
-                            'amount': product.count * product.memberPrice
-                        };
-                        products.push(cartProduct);
-                    }
-                });
-            }
-            return products;
-        },
-        balancePrice: function(cashOrBalance) {
-            let total = 0;
-            this.products.forEach((product) => {
-                log.debug('product is ' + JSON.stringify(product));
-                log.debug('count is ' + product.count);
-                log.debug('memberPrice is ' + product.memberPrice);
-                total = total + product.count * product.memberPrice;
-            });
-            return total;
-        },
-        memberTotalPrice: function() {
-            let total = 0;
-            this.products.forEach((product) => {
-                total = total + product.count * product.price;
-            });
-            return total;
         }
     },
     methods: {
-        loginMember: function(data) {
-            /* login return */
-            log.debug('loginMember recive data is ' + JSON.stringify(data));
-            /* deilver to app */
-            this.$emit('dloginmember', data);
-        },
-        registerMember: function(data) {
-            /* register return */
-            log.debug('registerMember recive data is ' + JSON.stringify(data));
-            /* deilver to app */
-            this.$emit('dregistermember', data);
-        },
         payit: function() {
             if (this.balancePay) {
                 log.info('choose balance pay');
-                if (this.memberbalance >= this.totalMember) {
+                if (this.member.balance >= this.totalMemberPrice) {
                     this.isPay = false;
                     this.realpay('Balance');
                 } else {
@@ -220,28 +132,38 @@ export default {
             }
         },
         realpay: function(cashOrBalance) {
-            log.info('param is ' + cashOrBalance);
+            log.info('Pay type is ' + cashOrBalance);
             let buylist;
             if (cashOrBalance === 'Balance') {
                 buylist = {
-                    'userId': this.member.id,
+                    'userId': this.member.ID,
                     'userName': this.member.name,
                     'cashOrBalance': cashOrBalance,
-                    'details': this.memberlist,
-                    'amount': this.memberTotalPrice
+                    'details': this.cartMemberList,
+                    'amount': this.totalMemberPrice
                 };
             } else if (cashOrBalance === 'Cash') {
-                buylist = {
-                    'userId': this.member.id,
-                    'userName': this.member.name,
-                    'cashOrBalance': cashOrBalance,
-                    'details': this.list,
-                    'amount': this.balancePrice
-                };
+                if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
+                    buylist = {
+                        'userId': '',
+                        'userName': '',
+                        'cashOrBalance': cashOrBalance,
+                        'details': this.cartList,
+                        'amount': this.totalPrice
+                    };
+                } else {
+                    buylist = {
+                        'userId': this.member.id,
+                        'userName': this.member.name,
+                        'cashOrBalance': cashOrBalance,
+                        'details': this.cartList,
+                        'amount': this.totalPrice
+                    };
+                }
             }
-            log.info('now request to Server');
-            log.debug('detaillist is ' + JSON.stringify(buylist));
-            this.$http.get('/shop/product/show/ui/saveRecordList.do', buylist).then((response) => {
+            log.info('Now get the AJAX to API(' + ApiSaveRecordList + ')');
+            log.debug('Buy List is ' + JSON.stringify(buylist));
+            this.$http.get(ApiSaveRecordList, buylist).then((response) => {
                 this.$vux.toast.text('购买成功,请付款后关注订单状态', 'middle');
             });
         }

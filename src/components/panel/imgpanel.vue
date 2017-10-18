@@ -29,16 +29,12 @@
 
 <script type="text/ecmascript-6">
 import { Flexbox, FlexboxItem, Group, XNumber, XButton } from 'vux';
-import Vue from 'vue';
 import Logger from 'chivy';
 const log = new Logger('cafe/imgpanel');
 export default {
     props: {
         product: {
             type: Object
-        },
-        value: {
-            type: Number
         }
     },
     components: {
@@ -50,13 +46,8 @@ export default {
     },
     methods: {
         buy: function() {
-            if (!this.product.count) {
-                Vue.set(this.product, 'count', 1);
-            } else {
-                this.product.count++;
-            }
-            log.info(this.product.name + ' is buyed here');
-            // console.log(this.product.name + ' is buyed here, the count is ' + this.product.count);
+            log.info('buy ' + this.product.name);
+            this.$store.commit('countCategorys', this.product);
         }
     }
 };

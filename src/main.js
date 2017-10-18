@@ -6,6 +6,7 @@ import router from './router';
 import App from './App';
 import '@/common/stylus/index.styl';
 import { ToastPlugin, AjaxPlugin } from 'vux';
+import { store } from './vuex/vuex';
 
 Vue.use(AjaxPlugin);
 Vue.use(ToastPlugin);
@@ -18,6 +19,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {App}
 });

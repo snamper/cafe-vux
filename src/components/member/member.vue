@@ -3,7 +3,7 @@
         <logo></logo>
         <div class="member-wrapper" >
             <div class="login" v-if="!memberName">
-                <loginregister :member="member" v-on:loginMember="loginMember" v-on:registerMember="registerMember"></loginregister>
+                <loginregister></loginregister>
             </div>
             <div class="showInfo" v-else>
                 <card :header="{title:'你好，' + member.name}" @click.native="showmodify"></card>
@@ -14,10 +14,6 @@
                 </group>
             </div>
         </div>
-        <!-- <div class="modify-wrapper">
-            <modify></modify>
-        </div> -->
-        
     </div>
 </template>
 
@@ -27,20 +23,13 @@ import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
 import Modify from '@/components/common/modify';
 import Logger from 'chivy';
+import { mapGetters } from 'vuex';
 const log = new Logger('cafe/member');
 export default {
     data() {
         return {
             modify: false
         };
-    },
-    props: {
-        categorys: {
-            type: Object
-        },
-        member: {
-            type: Object
-        }
     },
     components: {
         CellFormPreview,
@@ -53,27 +42,22 @@ export default {
         'modify': Modify
     },
     computed: {
-        total: function() {
-            let total = 0;
-            this.products.forEach((product) => {
-                total = total + product.count * product.memberPrice;
-            });
-            return '￥' + total + '元';
+        ...mapGetters([
+            'cartProducts',
+            'totalPrice',
+            'totalMemberPrice',
+            'cartList',
+            'cartMemberList'
+        ]),
+        member: function() {
+            return this.$store.state.member;
         },
-        products: function() {
-            let products = [];
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    if (product.count > 0) {
-                        products.push(product);
-                    }
-                });
-            }
-            return products;
+        total: function() {
+            return '￥' + this.totalPrice + '元';
         },
         cartLists: function() {
             let cartLists = [];
-            this.products.forEach((product) => {
+            this.cartProducts.forEach((product) => {
                 let cartlist = {
                     label: product.name,
                     value: product.count + '个 X ' + product.price + '元 = ' + product.count * product.price + '元'
@@ -91,19 +75,8 @@ export default {
         }
     },
     methods: {
-        loginMember: function(data) {
-            /* login return */
-            log.debug('loginMember recive data is ' + JSON.stringify(data));
-            /* deilver to app */
-            this.$emit('dloginmember', data);
-        },
-        registerMember: function(data) {
-            /* register return */
-            log.debug('registerMember recive data is ' + JSON.stringify(data));
-            /* deilver to app */
-            this.$emit('dregistermember', data);
-        },
         showmodify: function() {
+            log.info('show modify HMI');
             this.modify = true;
         }
     }

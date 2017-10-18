@@ -28,19 +28,11 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { Badge, Cell, Group, Divider, Card, XButton, Flexbox, FlexboxItem, XHeader } from 'vux';
+import { Cell, Group, Divider, Card, XButton, Flexbox, FlexboxItem } from 'vux';
 import CartPanel from '../panel/cartpanel';
 import Logo from '@/components/logo/logo';
-import Logger from 'chivy';
-const log = new Logger('cafe/cartlist');
 export default {
-    props: {
-        categorys: {
-            type: Object
-        }
-    },
     components: {
-        Badge,
         Cell,
         Group,
         Divider,
@@ -48,45 +40,23 @@ export default {
         XButton,
         Flexbox,
         FlexboxItem,
-        XHeader,
         'cartpanel': CartPanel,
         'logo': Logo
     },
     computed: {
         total: function() {
-            let total = 0;
-            this.products.forEach((product) => {
-                total = total + product.count * product.price;
-            });
-            return '￥' + total + '元';
+            return '￥' + this.$store.getters.totalPrice + '元';
         },
         totalMember: function() {
-            let total = 0;
-            this.products.forEach((product) => {
-                total = total + product.count * product.memberPrice;
-            });
-            return '￥' + total + '元';
+            return '￥' + this.$store.getters.totalMemberPrice + '元';
         },
         products: function() {
-            let products = [];
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    if (product.count > 0) {
-                       products.push(product);
-                    }
-                });
-            }
-            log.debug('products return data is ' + JSON.stringify(products));
-            return products;
+            return this.$store.getters.cartProducts;
         }
     },
     methods: {
         clear: function() {
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    product.count = 0;
-                });
-            }
+            this.$store.commit('clearCount');
         }
     }
 };
@@ -101,7 +71,4 @@ export default {
                     .weui-btn
                         color: #fff
                         background-color: #58B7FF
-
-
-
 </style>
