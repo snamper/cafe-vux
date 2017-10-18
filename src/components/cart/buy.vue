@@ -148,8 +148,25 @@ export default {
                 this.categorys[category].forEach((product) => {
                     if (product.count > 0) {
                         let cartProduct = {
-                            'code': product.code,
-                            'count': product.count
+                            'productId': product.id,
+                            'count': product.count,
+                            'amount': product.count * product.price
+                        };
+                        products.push(cartProduct);
+                    }
+                });
+            }
+            return products;
+        },
+        memberlist: function() {
+            let products = [];
+            for (let category in this.categorys) {
+                this.categorys[category].forEach((product) => {
+                    if (product.count > 0) {
+                        let cartProduct = {
+                            'productId': product.id,
+                            'count': product.count,
+                            'amount': product.count * product.memberPrice
                         };
                         products.push(cartProduct);
                     }
@@ -204,19 +221,24 @@ export default {
         },
         realpay: function(cashOrBalance) {
             log.info('param is ' + cashOrBalance);
-            let total;
+            let buylist;
             if (cashOrBalance === 'Balance') {
-                total = this.memberTotalPrice;
+                buylist = {
+                    'userId': this.member.id,
+                    'userName': this.member.name,
+                    'cashOrBalance': cashOrBalance,
+                    'details': this.memberlist,
+                    'amount': this.memberTotalPrice
+                };
             } else if (cashOrBalance === 'Cash') {
-                total = this.balancePrice;
+                buylist = {
+                    'userId': this.member.id,
+                    'userName': this.member.name,
+                    'cashOrBalance': cashOrBalance,
+                    'details': this.list,
+                    'amount': this.balancePrice
+                };
             }
-            log.info('cart total price is ' + total);
-            let buylist = {
-                'userId': this.member.id,
-                'cashOrBalance': cashOrBalance,
-                'details': this.list,
-                'amount': total
-            };
             log.info('now request to Server');
             log.debug('detaillist is ' + JSON.stringify(buylist));
             this.$http.get('/shop/product/show/ui/saveRecordList.do', buylist).then((response) => {
