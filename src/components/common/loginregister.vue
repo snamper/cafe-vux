@@ -58,10 +58,29 @@ export default {
         Tab,
         TabItem
     },
-    methods: {
+    computed: {
         member: function() {
             return this.$store.state.member;
         },
+        submitLogin: function() {
+           let message = {
+                'username': this.loginInfo.username,
+                'password': md5(this.loginInfo.password)
+            };
+            log.debug('login user is ' + JSON.stringify(message));
+            return message;
+        },
+        submitRegister: function() {
+            let message = {
+                'username': this.registerInfo.username,
+                'phone': this.registerInfo.phone,
+                'password': md5(this.registerInfo.password)
+            };
+            log.debug('Register user is ' + JSON.stringify(message));
+            return message;
+        }
+    },
+    methods: {
         loginStatus: function() {
             log.debug('loginStatus: the member data is ' + JSON.stringify(this.member));
             if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
@@ -82,29 +101,9 @@ export default {
             if (this.loginInfo.username === '' || this.loginInfo.password === '') {
                 this.$vux.toast.text('用户名或者密码不能为空', 'middle');
             } else {
-                this.$store.commit('login', this.submitLogin);
-                setTimeout(function() {
-                    log.error('test');
-                    log.error(JSON.stringify(this.member));
-                }, 2000);
+                this.$store.dispatch('loginin', this.submitLogin);
+                setTimeout(this.loginStatus(), 2000);
             }
-        },
-        submitLogin: function() {
-           let message = {
-                'username': this.loginInfo.username,
-                'password': md5(this.loginInfo.password)
-            };
-            log.debug('login user is ' + JSON.stringify(message));
-            return message;
-        },
-        submitRegister: function() {
-            let message = {
-                'username': this.registerInfo.username,
-                'phone': this.registerInfo.phone,
-                'password': md5(this.registerInfo.password)
-            };
-            log.debug('Register user is ' + JSON.stringify(message));
-            return message;
         },
         showregister: function() {
             log.info('show register HMI');
@@ -122,7 +121,7 @@ export default {
             } else if (this.registerInfo.password !== this.registerInfo.confirmpsd) {
                 this.$vux.toast.text('两次输入的密码不一致，请重新输入', 'middle');
             } else {
-                this.$store.commit('register', this.submitRegister);
+                this.$store.dispatch('registerit', this.submitRegister);
             }
         },
         verifypsd: function() {
