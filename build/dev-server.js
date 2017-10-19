@@ -31,6 +31,7 @@ const login = appData.login
 const cartlist = appData.cartlist
 const register = appData.register
 const addValue = appData.addValue
+const cartList = appData.cartList
 
 
 /* define router  */
@@ -84,6 +85,12 @@ apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
 apiRoutes.get('/product/show/ui/saveRecordList.do',function(req,res){
   res.json({
     data: true
+  })
+})
+
+apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
+  res.json({
+    data:cartList
   })
 })
 

@@ -25,6 +25,9 @@
                 </div>
             </div>
         </div>
+        <div>
+            <x-button @click.native="test">Test</x-button>
+        </div>
     </div>
 </template>
 
@@ -146,6 +149,9 @@ export default {
                     }
                 });
             }
+        },
+        test: function() {
+            log.debug('test button click');
         }
     }
 };

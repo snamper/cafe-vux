@@ -5,7 +5,6 @@ import Menu from '@/components/menu/menu';
 import Home from '@/components/home/home';
 import Cart from '@/components/cart/cart';
 import Buy from '@/components/cart/buy';
-import Test from '@/components/test/test';
 
 Vue.use(Router);
 
@@ -39,11 +38,6 @@ export default new Router({
       path: '/buy',
       name: 'Buy',
       component: Buy
-    },
-    {
-      path: '/test',
-      name: 'Test',
-      component: Test
     }
   ]
 });
