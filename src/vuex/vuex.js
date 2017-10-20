@@ -142,7 +142,7 @@ export const store = new Vuex.Store({
     },
     login: function (state, playload) {
       log.info('Now get the AJAX to API(' + ApiMemberLogin + ')');
-      axios.get(ApiMemberLogin, playload).then((response) => {
+      axios.post(ApiMemberLogin, playload).then((response) => {
         let result = response.data.data;
         log.debug('ajax response is ' + JSON.stringify(result));
         if (result !== null) {
@@ -158,15 +158,17 @@ export const store = new Vuex.Store({
     },
     register: function (state, payload) {
       log.info('Now get the AJAX to API(' + ApiCreateMember + ')');
-      axios.get(ApiCreateMember, payload).then((response) => {
+      axios.post(ApiCreateMember, payload).then((response) => {
         let result = response.data.data;
         log.debug('response data is ' + JSON.stringify(result));
-        let member = {
-          'balance': 0,
-          'ID': result.entityid,
-          'name': result.entityName
-        };
-        state.member = member;
+        if (result !== null) {
+          let member = {
+            'balance': 0,
+            'ID': result.entityid,
+            'name': result.entityName
+          };
+          state.member = member;
+        }
       });
     },
     testClear: function (state) {

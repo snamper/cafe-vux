@@ -15,7 +15,7 @@
             </div>
             <div class="register-wrapper" v-if="index === 1">
                 <group>
-                    <x-input label-width="4em" title="手机号码" name="phone" type="tel" mask="999 9999 9999" is-type="china-mobile" :required="true" v-model="registerInfo.phone"></x-input>
+                    <x-input label-width="4em" title="手机号码" name="phone" type="tel" mask="999 9999 9999" is-type="china-mobile" :required="true" v-model="registerInfo.phone"  ></x-input>
                     <x-input label-width="4em" title="用户名" name="username" type="text" :min='3' :max='16' v-model="registerInfo.username" :on-blur="duplicateUsername"></x-input>
                     <x-input label-width="4em" title="密码" name="password" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.password"></x-input>
                     <x-input label-width="4em" title="确认密码" name="confirmPassword" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.confirmpsd" :is-type="verifypsd"></x-input>
@@ -87,9 +87,9 @@ export default {
         loginStatus: function() {
             log.debug('loginStatus: the member data is ' + JSON.stringify(this.member));
             if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
-                this.$vux.toast.text('登陆成功', 'middle');
-            } else {
                 this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
+            } else {
+                this.$vux.toast.text('登陆成功', 'middle');
             }
         },
         registerStatus: function() {
@@ -135,9 +135,10 @@ export default {
             }
         },
         duplicateUsername: function() {
+            log.info('submit resister name is ' + this.registerInfo.username);
             if (this.registerInfo.username !== '') {
                 log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
-                this.$http.get(ApiIsExistUserName, this.registerInfo.username).then((response) => {
+                this.$http.post(ApiIsExistUserName, this.registerInfo.username).then((response) => {
                     log.info('is ' + this.registerInfo.username + ' exist?');
                     let result = response.data.data;
                     log.debug('ajax response is ' + result);

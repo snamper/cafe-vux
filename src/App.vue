@@ -40,7 +40,7 @@ export default {
   },
   created: function() {
     let categorys = this.$store.commit('initCategorys');
-    log.debug('products data is' + JSON.stringify(categorys));
+    log.debug('products data is ' + JSON.stringify(categorys));
   },
   mounted: function() {
     this.$store.commit('getMember');

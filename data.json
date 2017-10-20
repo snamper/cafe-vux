@@ -793,16 +793,31 @@
     ]
   },
   "login": {
-    "success": {
-      "balance": 50,
-      "iD": 3,
+    "poor": {
+      "balance": 5,
+      "ID": 3,
       "name": "totti"
+    },
+    "rich":{
+      "balance": 500,
+      "ID": 13,
+      "name": "david"
     },
     "fail": null
   },
   "register": {
-    "entityid": "89",
-    "entityName": "text11"
+    "poor": {
+      "entityid": "3",
+      "entityName": "totti"
+    },
+    "rich":{
+      "entityid": "13",
+      "entityName": "david"
+    },
+    "other":{
+      "entityid": "888",
+      "entityName": "Vue"
+    }
   },
   "addValue": {
     "name": 123456,

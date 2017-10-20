@@ -12,6 +12,8 @@ const express = require('express')
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = require('./webpack.dev.conf')
+// body-parse define
+const bodyParser = require('body-parser');
 
 // default port where dev server listens for incoming traffic
 const port = process.env.PORT || config.dev.port
@@ -22,6 +24,11 @@ const autoOpenBrowser = !!config.dev.autoOpenBrowser
 const proxyTable = config.dev.proxyTable
 
 const app = express()
+
+// create application/json parser
+const jsonParser = bodyParser.json()
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 /* define the data for ajax read */
 const appData = require('../data.json')
@@ -48,24 +55,50 @@ apiRoutes.get('/product/show/ui/getProducts.do', function (req, res) {
   })
 })
 
-apiRoutes.get('/member/show/ui/memberLogin.do', function (req, res) {
-  res.json({
-    /* login success */
-    data: login.success
-    /* login fail */
-    /* data: login.fail */
-  })
+apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res) {
+  let user = req.body;
+  console.log('memberLogin.do data is ');
+  console.log(user);
+  if(user.username==='totti'){
+    res.json({
+      data: login.poor
+    })
+  } else if(user.username==='rich') {
+    res.json({
+      data: login.rich
+    })
+  } else {
+    res.json({
+      data: login.fail
+    })
+  }
 })
 
-apiRoutes.get('/member/show/ui/createMember.do', function (req, res) {
-  res.json({
-    data: register
-  })
+apiRoutes.post('/member/show/ui/createMember.do', jsonParser, function (req, res) {
+  let user = req.body;
+  console.log('createMember.do data is ');
+  console.log(user);
+  if(user.username==="totti"){
+    res.json({
+      data: register.poor
+    })
+  }else if(user.username==="david") {
+    res.json({
+      data: register.rich
+    })
+  }else{
+    res.json({
+      data: register.other
+    })
+  }
+  
 })
 
-apiRoutes.get('/member/show/ui/isExistUserName.do', function (req, res) {
+apiRoutes.post('/member/show/ui/isExistUserName.do', jsonParser, function (req, res) {
+  let user = req.body;
+  console.log('isExistUserName.do data is ');
+  console.log(user);
   res.json({
-    /* true: duiplicate name */
     data: true
   })
 })
