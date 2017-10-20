@@ -4,9 +4,9 @@ import Vue from 'vue';
 import FastClick from 'fastclick';
 import router from './router';
 import App from './App';
-import '@/common/stylus/index.styl';
 import { ToastPlugin, AjaxPlugin } from 'vux';
 import { store } from './vuex/vuex';
+import '@/common/stylus/index.styl';
 
 Vue.use(AjaxPlugin);
 Vue.use(ToastPlugin);

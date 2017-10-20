@@ -4,20 +4,19 @@
       <router-view></router-view>
       <tabbar>
         <tabbar-item :link="{path:'/home'}">
-          <img slot="icon" src="./common/img/icon_nav_button.png">
+          <img slot="icon" src="./common/img/home.png"></img>
           <span slot="label">主页</span>
         </tabbar-item>
-        <!-- <tabbar-item :link="{path:'/menu'}"> -->
         <tabbar-item @click.native="clear">
-          <img slot="icon" src="./common/img/icon_nav_button.png">
+          <img slot="icon" src="./common/img/menu.png"></img>
           <span slot="label">菜单</span>
         </tabbar-item>
         <tabbar-item :link="{path:'/cart'}" :badge="badgeNo">
-          <img slot="icon" src="./common/img/icon_nav_button.png">
+          <img slot="icon" src="./common/img/cart.png"></img>
           <span slot="label">购物车</span>
         </tabbar-item>
         <tabbar-item :link="{path:'/member'}">
-          <img slot="icon" src="./common/img/icon_nav_button.png">
+          <img slot="icon" src="./common/img/me.png"></img>
           <span slot="label">我的</span>
         </tabbar-item>
       </tabbar>
@@ -52,7 +51,6 @@ export default {
   },
   methods: {
     clear: function() {
-      log.error('click');
       this.$store.commit('testClear');
     }
   }

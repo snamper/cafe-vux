@@ -15,18 +15,15 @@
             </div>
             <div class="register-wrapper" v-if="index === 1">
                 <group>
-                    <x-input label-width="4em" title="手机号码" name="phone" type="tel" mask="999 9999 9999" is-type="china-mobile" :required="true" v-model="registerInfo.phone"  ></x-input>
-                    <x-input label-width="4em" title="用户名" name="username" type="text" :min='3' :max='16' v-model="registerInfo.username" :on-blur="duplicateUsername"></x-input>
-                    <x-input label-width="4em" title="密码" name="password" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.password"></x-input>
-                    <x-input label-width="4em" title="确认密码" name="confirmPassword" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.confirmpsd" :is-type="verifypsd"></x-input>
+                    <x-input label-width="4em" title="手机号码" name="phone" type="tel" mask="999 9999 9999" is-type="china-mobile" :required="true" v-model="registerInfo.phone" ref="phone"></x-input>
+                    <x-input label-width="4em" title="用户名" name="username" type="text" :min='3' :max='16' v-model="registerInfo.username" @on-blur="duplicateUsername" ref="username"></x-input>
+                    <x-input label-width="4em" title="密码" name="password" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.password" ref="password"></x-input>
+                    <x-input label-width="4em" title="确认密码" name="confirmPassword" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.confirmpsd" :is-type="verifypsd" ref="repassword"></x-input>
                 </group>
                 <div class="button">
                     <x-button @click.native="register">注册</x-button>
                 </div>
             </div>
-        </div>
-        <div>
-            <x-button @click.native="test">Test</x-button>
         </div>
     </div>
 </template>
@@ -117,12 +114,14 @@ export default {
             this.index = 0;
         },
         register: function() {
-            if (this.registerInfo.phone === '') {
-                this.$vux.toast.text('手机号码不能为空', 'middle');
-            } else if (this.registerInfo.password === '' || this.registerInfo.confirmpsd === '') {
+            if (this.$refs.phone.invalid) {
+                 this.$vux.toast.text('请填写正确的手机号码', 'middle');
+            } else if (this.$refs.password.invalid) {
                 this.$vux.toast.text('请输入正确的密码', 'middle');
             } else if (this.registerInfo.password !== this.registerInfo.confirmpsd) {
                 this.$vux.toast.text('两次输入的密码不一致，请重新输入', 'middle');
+                this.$refs.password.reset();
+                this.$refs.repassword.reset();
             } else {
                 this.$store.dispatch('registerit', this.submitRegister);
             }
@@ -138,21 +137,21 @@ export default {
             log.info('submit resister name is ' + this.registerInfo.username);
             if (this.registerInfo.username !== '') {
                 log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
-                this.$http.post(ApiIsExistUserName, this.registerInfo.username).then((response) => {
+                let username = { 'username': this.registerInfo.username };
+                this.$http.post(ApiIsExistUserName, username).then((response) => {
                     log.info('is ' + this.registerInfo.username + ' exist?');
                     let result = response.data.data;
-                    log.debug('ajax response is ' + result);
-                    /* 用户已存在 */
+                    log.info('ajax response is ' + result);
+                    /* username already exist */
                     if (result) {
-                        return { valid: false, msg: '用户名已存在，请重新输入' };
-                    } else {
-                        return { valid: true };
+                        this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
+                        this.$refs.username.reset();
                     }
                 });
             }
         },
         test: function() {
-            log.debug('test button click');
+            log.error('test button click');
         }
     }
 };

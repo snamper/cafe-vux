@@ -97,10 +97,16 @@ apiRoutes.post('/member/show/ui/createMember.do', jsonParser, function (req, res
 apiRoutes.post('/member/show/ui/isExistUserName.do', jsonParser, function (req, res) {
   let user = req.body;
   console.log('isExistUserName.do data is ');
-  console.log(user);
-  res.json({
-    data: true
-  })
+  if(user.username === 'totti' || user.username === 'david')
+  {
+    res.json({
+      data: true
+    })
+  }else{
+    res.json({
+      data: false
+    })
+  }  
 })
 
 apiRoutes.get('/product/show/ui/getRecordList.do',function(req,res){
