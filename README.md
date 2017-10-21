@@ -132,3 +132,119 @@ null
 2. 无重复名字
 	
 	false
+
+##### 获取用户购物清单
+	const ApiGetRecordList = '/shop/product/show/ui/getRecordList.do ';
+
+**提交数据**
+
+	{
+		"userId":"userId ",
+		"needDetail":"true"
+	}
+
+**返回数据**
+
+1. needDetail为真
+ 
+
+		[{
+		  "amount": 56,
+		  "cashOrBanlance": " ",
+		  "code": "34c9829f-d57d-4e35-a8cb-51b861467b21",
+		  "createTime": 1508251634463,
+		  "creatorId": -1,
+		  "defaultEntity": false,
+		  "details": [{
+		    "amount": 12,
+		    "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
+		    "createTime": 1508251633955,
+		    "creatorId": -1,
+		    "defaultEntity": false,
+		    "id": 100,
+		    "number": 2,
+		    "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+		    "productId": 2,
+		    "recordId": 99
+		  }, {
+		    "amount": 6,
+		    "code": "c4abae95-d9d0-408d-8397-57c12fd125c1",
+		    "createTime": 1508251633955,
+		    "creatorId": -1,
+		    "defaultEntity": false,
+		    "id": 101,
+		    "number": 3,
+		    "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+		    "productId": 3,
+		    "recordId": 99
+		  }],
+		  "id": 99,
+		  "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
+		  "status": "success",
+		  "userId": 84,
+		  "userName": "test3"
+		}, {
+		  "amount": 56,
+		  "cashOrBanlance": " ",
+		  "code": "55280e74-0e83-458a-8998-788cb5a9176d",
+		  "createTime": 1508251795107,
+		  "creatorId": -1,
+		  "defaultEntity": false,
+		  "details": [{
+		    "amount": 12,
+		    "code": "f9f4c8a8-ec93-4974-9c10-30c0c81be62d",
+		    "createTime": 1508251708535,
+		    "creatorId": -1,
+		    "defaultEntity": false,
+		    "id": 103,
+		    "number": 2,
+		    "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+		    "productId": 2,
+		    "recordId": 102
+		  }, {
+		    "amount": 6,
+		    "code": "b0c0d78f-3d38-4cd6-9902-7246cf47f980",
+		    "createTime": 1508251708535,
+		    "creatorId": -1,
+		    "defaultEntity": false,
+		    "id": 104,
+		    "number": 3,
+		    "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+		    "productId": 3,
+		    "recordId": 102
+		  }],
+		  "id": 102,
+		  "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
+		  "status": "success",
+		  "userId": 84,
+		  "userName": "test3"
+		}]
+
+
+2. needDetail为假
+
+		[{
+		    "amount": 56,
+		    "cashOrBanlance": " ",
+		    "code": "34c9829f-d57d-4e35-a8cb-51b861467b21",
+		    "createTime": 1508251634463,
+		    "creatorId": -1,
+		    "defaultEntity": false,
+		    "id": 99,
+		    "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
+		    "status": "success",
+		    "userId": 84,
+		    "userName": "test3"
+		  }, {
+		    "amount": 56,
+		    "cashOrBanlance": " ",
+		    "code": "55280e74-0e83-458a-8998-788cb5a9176d",
+		    "createTime": 1508251795107,
+		    "creatorId": -1,
+		    "defaultEntity": false,
+		    "id": 102,
+		    "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
+		    "status": "success",
+		    "userId": 84,
+		    "userName": "test3"
+		  }]
