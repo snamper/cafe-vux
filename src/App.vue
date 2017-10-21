@@ -7,7 +7,7 @@
           <img slot="icon" src="./common/img/home.png"></img>
           <span slot="label">主页</span>
         </tabbar-item>
-        <tabbar-item @click.native="clear">
+        <tabbar-item :link="{path:'/menu'}">
           <img slot="icon" src="./common/img/menu.png"></img>
           <span slot="label">菜单</span>
         </tabbar-item>

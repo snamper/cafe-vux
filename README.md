@@ -1,24 +1,134 @@
-Éè¼ÆË¼Â·
-1. ·ÖÄ£¿é½øĞĞ
-2. Ö÷Ò³·Ö³ÉÁ½¸öÄ£¿é
-    Ä£¿é1: µ×²¿Ñ¡Ïî¿¨£¨Ö÷Ò³£¬ÉÌÆ·£¬¹ºÎï³µ£¬»áÔ±½áËã£©ËÄ¸ö²¿·Ö
-    Ğ¡Ä£¿é1: Í·²¿logoÄ£¿é
-    Ğ¡Ä£¿é2: Ôö¼ÓÉ¾³ıÉÌÆ·ÊıÁ¿Ä£¿é
-    Ä£¿é2: Ö÷Ò³Ä£¿é
-        Ğ¡Ä£¿é3£ºÂÖ²¥Ä£¿é
-        Èç¹û´æÔÚÈÈÏú²úÆ·£¬ÔòÏÔÊ¾ÈÈÏú²úÆ·ÁĞ±í
-            µã»÷ÈÈÏú²úÆ·µÄÊ±ºò£¬ĞèÒªÏÔÊ¾ÏêÏ¸ĞÅÏ¢
-    Ä£¿é3: ÉÌÆ·Ä£¿é
-        Ä¿Ç°×ö³ÉÉÌÆ·ÁĞ±íÏÔÊ¾¡£
-            µã»÷ÈÈÏú²úÆ·µÄÊ±ºò£¬ĞèÒªÏÔÊ¾ÏêÏ¸ĞÅÏ¢
-        ºóĞø£º×ó²àÏÔÊ¾ÉÌÆ·µÄÁĞ±í£¬ÓÒ²àÏÔÊ¾ÉÌÆ·µÄÏêÇé£¨·Â¶öÁËÃ´£©
-    Ä£¿é4: ÏêÏ¸ĞÅÏ¢Ä£¿é
-        ÏÔÊ¾ÉÌÆ·µÄÏêÏ¸ĞÅÏ¢¡£
-    Ä£¿é5: ÏÔÊ¾¹ºÎïµÄÏêÏ¸ĞÅÏ¢
-        µ±¹ºÎï³µÓĞÉÌÆ·µÄÊ±ºò£¬ĞèÒªÔÚµ×²¿ÏÔÊ¾½áËãÄ£¿é¡££¨·Â¾©¶«)
-        Ğ¡Ä£¿é4: ½áËãÄ£¿é
-    Ä£¿é6£º»áÔ±¹ÜÀíÄ£¿é
-        Ğ¡Ä£¿é5: µÇÂ½Ä£¿é
-        Ğ¡Ä£¿é6: »áÔ±¹ÜÀíÄ£¿é
-        Ğ¡Ä£¿é7: ³äÖµ·şÎñÄ£¿é
-        Ğ¡Ä£¿é8: ¸¶¿îÄ£¿é 
+### æ¥å£æ–‡æ¡£
+
+##### åˆ†ç±»æ•°æ®æ¥æ”¶API
+
+    const ApiCategorys = '/shop/category/show/ui/getCategoriedProducts.do';
+    
+
+**è¿”å›æ•°æ®**
+
+{
+"ç”œå“": [{
+  "canBook": true,
+  "classifyId": 70,
+  "code": "0090645a-2ca6-4a5b-b250-13a8403930d5",
+  "creatPeriod": "40",
+  "createTime": 1505439759644,
+  "creatorId": -1,
+  "defaultEntity": false,
+  "description": "æ…•æ–¯è›‹ç³•",
+  "id": 71,
+  "imageSliderUrl": "static/img/silder1.jpg",
+  "imageUrl": "static/img/test1.jpg",
+  "memberPrice": 45,
+  "name": "æ…•æ–¯è›‹ç³•",
+  "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+  "price": 50,
+  "slider": true
+}],
+"å’–å•¡": [{
+"canBook": false,
+"classifyId": 62,
+"code": "5cf0fd83-4a3d-4014-9a66-745fdf80222c",
+"creatPeriod": "34",
+"createTime": 1505439679696,
+"creatorId": -1,
+"defaultEntity": false,
+"description": "å¾—åˆ†æ˜¯",
+"id": 67,
+"imageSliderUrl": "static/img/silder2.jpg",
+"imageUrl": "static/img/test2.jpg",
+"memberPrice": 8,
+"name": "æ‹¿é“å’–å•¡",
+"objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+"price": 10,
+"slider": true
+  },
+  {
+"canBook": true,
+"classifyId": 62,
+"code": "73dde60a-a030-4913-af8f-40e8c3403860",
+"creatPeriod": "67",
+"createTime": 1505439688471,
+"creatorId": -1,
+"defaultEntity": false,
+"description": "45",
+"id": 69,
+"imageSliderUrl": "static/img/silder3.jpg",
+"imageUrl": "static/img/test3.jpg",
+"memberPrice": 34,
+"name": "çŒ«å±å’–å•¡",
+"objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+"price": 45,
+"slider": false
+  }
+]
+  }
+
+
+##### ä¼šå‘˜ç™»é™†æ¥å£
+
+    const ApiMemberLogin = '/shop/member/show/ui/memberLogin.do';
+
+**æäº¤æ•°æ®**
+
+    { 
+		username: 'lizhe',
+      	password: '658dedfd3a94f5d58ab35cd534d4b484'
+	}
+
+**è¿”å›æ•°æ®**
+
+1. æˆåŠŸ
+
+	`{
+		"balance": 5,
+		"ID": 3,
+		"name": "totti"
+	}`
+
+2. å¤±è´¥
+
+`
+null
+`
+
+##### åˆ›å»ºç”¨æˆ·æ¥å£
+
+    const ApiCreateMember = '/shop/member/show/ui/createMember.do';
+
+**æäº¤æ•°æ®**
+
+	{
+		"username":"",
+		"phone":"18982278872",
+		"password":"55758ada4082b0444445b0aee5c45bc7"
+	}
+
+
+**è¿”å›æ•°æ®**
+
+	{
+		"entityid":"888",
+		"entityName":"Vue"
+	}
+
+
+#####  é‡å¤ç”¨æˆ·åæ ¡éªŒ
+	const ApiIsExistUserName = '/shop/member/show/ui/isExistUserName.do';
+
+**æäº¤æ•°æ®**
+
+	{
+		"totti"
+	}
+
+**è¿”å›æ•°æ®**
+
+1. æœ‰é‡å¤åå­—
+
+	true
+
+2. æ— é‡å¤åå­—
+	
+	false

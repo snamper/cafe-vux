@@ -35,24 +35,24 @@ const appData = require('../data.json')
 const categorys = appData.categorys
 const products = appData.products
 const login = appData.login
+const loginpoor = login.poor
+const loginrich = login.rich
+const loginfail = login.fail
 const cartlist = appData.cartlist
 const register = appData.register
+const registerpoor = register.poor
+const registerrich = register.rich
+const registerother = register.other
 const addValue = appData.addValue
 const cartList = appData.cartList
+const resultTrue = appData.result.true
+const resultFalse = appData.result.false
 
 
 /* define router  */
 var apiRoutes = express.Router()
 apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) {
-  res.json({
-    data: categorys
-  })
-})
-
-apiRoutes.get('/product/show/ui/getProducts.do', function (req, res) {
-  res.json({
-    data: products
-  })
+  res.json(categorys)
 })
 
 apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res) {
@@ -60,17 +60,11 @@ apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res)
   console.log('memberLogin.do data is ');
   console.log(user);
   if(user.username==='totti'){
-    res.json({
-      data: login.poor
-    })
+    res.json(loginpoor)
   } else if(user.username==='rich') {
-    res.json({
-      data: login.rich
-    })
+    res.json(loginrich)
   } else {
-    res.json({
-      data: login.fail
-    })
+    res.json(loginfail)
   }
 })
 
@@ -79,58 +73,39 @@ apiRoutes.post('/member/show/ui/createMember.do', jsonParser, function (req, res
   console.log('createMember.do data is ');
   console.log(user);
   if(user.username==="totti"){
-    res.json({
-      data: register.poor
-    })
+    res.json(registerpoor)
   }else if(user.username==="david") {
-    res.json({
-      data: register.rich
-    })
+    res.json(registerrich)
   }else{
-    res.json({
-      data: register.other
-    })
+    res.json(registerother)
   }
-  
 })
 
 apiRoutes.post('/member/show/ui/isExistUserName.do', jsonParser, function (req, res) {
   let user = req.body;
-  console.log('isExistUserName.do data is ');
-  if(user.username === 'totti' || user.username === 'david')
+  console.log('isExistUserName.do data is ' + JSON.stringify(user));
+  if(user === 'totti' || user === 'david')
   {
-    res.json({
-      data: true
-    })
+    res.json('true')
   }else{
-    res.json({
-      data: false
-    })
+    res.json('false')
   }  
 })
 
 apiRoutes.get('/product/show/ui/getRecordList.do',function(req,res){
-  res.json({
-    data: cartlist
-  })
+  res.json(cartlist)
 })
 
 apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
-  res.json({
-    data:addValue
-  })
+  res.json(addValue)
 })
 
 apiRoutes.get('/product/show/ui/saveRecordList.do',function(req,res){
-  res.json({
-    data: true
-  })
+  res.json('true')
 })
 
 apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
-  res.json({
-    data:cartList
-  })
+  res.json('false')
 })
 
 
@@ -183,7 +158,11 @@ app.use(devMiddleware)
 const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-const uri = 'http://localhost:' + port
+const ipAddress = 'localhost'
+
+// const uri = 'http://localhost:' + port
+
+const uri = 'http://' + ipAddress + ':' + port
 
 var _resolve
 var _reject
@@ -203,7 +182,8 @@ devMiddleware.waitUntilValid(() => {
       _reject(err)
     }
     process.env.PORT = port
-    var uri = 'http://localhost:' + port
+    // var uri = 'http://localhost:' + port
+    // var uri = 'http://' + ipAddress + ':' + port
     console.log('> Listening at ' + uri + '\n')
     // when env is testing, don't need open it
     if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {

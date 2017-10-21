@@ -21,7 +21,7 @@
                         <flexbox-item :span="3/5">
                             <div class="buy-wrapper">
                                 <group>
-                                    <x-number button-style="round" v-model="product.count"></x-number>
+                                    <x-number button-style="round" v-model="product.count" :fillable="fillable"></x-number>
                                 </group>
                             </div>
                         </flexbox-item>
@@ -35,6 +35,11 @@
 <script type="text/ecmascript-6">
 import { Flexbox, FlexboxItem, XNumber, Group } from 'vux';
 export default {
+    data() {
+        return {
+            fillable: true
+        };
+    },
     props: {
         product: {
             type: Object
@@ -73,11 +78,11 @@ export default {
                     margin: 5px
                     .price
                         display inline-block
-                        font-size 10px
+                        font-size 9px
                         padding 5px 2px
                     .memberprice
                         display inline-block
-                        font-size 14px
+                        font-size 13px
                         padding 5px 2px
                         color: red
                         font-weight bold

@@ -1,5 +1,5 @@
 <template>
-    <div class="menu-wrapper">
+    <div class="menu-wrapper" v-if="categorys">
         <logo></logo>
         <divider>商品列表</divider>
         <div class="categorys" v-for="(category,key) in categorys" :key="key">

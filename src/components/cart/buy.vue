@@ -173,6 +173,14 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
 .loginRegister-wrapper
+    .buy-wrapper
+        .paid-wrapper
+            display flex
+            width 100%
+            .weui-btn
+                margin 0 30%
+                background-color #58B7FF
+                color #fff
     .pay-wrapper
         .readme
             font-size 24px

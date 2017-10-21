@@ -28,6 +28,9 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: process.env.PORT || 9999,
+    // disable host check to access using ip address vistor
+    disableHostCheck: true,
+    // public: '192.168.3.11:9999',
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

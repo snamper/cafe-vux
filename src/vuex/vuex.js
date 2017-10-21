@@ -111,7 +111,7 @@ export const store = new Vuex.Store({
     initCategorys: function (state) {
       log.info('Now get the AJAX to API(' + ApiCategorys + ')');
       axios.get(ApiCategorys).then(function (response) {
-          let categorys = response.data.data;
+          let categorys = response.data;
           log.debug('AJAX response is ' + JSON.stringify(categorys));
           state.categorys = categorys;
         })
@@ -120,7 +120,7 @@ export const store = new Vuex.Store({
         });
     },
     countCategorys: function (state, param) {
-      log.info('setting count attr in products');
+      log.debug('setting count attr in products');
       for (let category in state.categorys) {
         state.categorys[category].forEach((product) => {
           if (param === product) {
@@ -134,16 +134,18 @@ export const store = new Vuex.Store({
       }
     },
     clearCount: function (state) {
-      for (let category in this.categorys) {
-        this.categorys[category].forEach((product) => {
+      // log.info('Now Clear count');
+      for (let category in state.categorys) {
+        state.categorys[category].forEach((product) => {
           product.count = 0;
+          // log.debug('clear product(' + product.name + ') count  to ' + product.count);
         });
       }
     },
     login: function (state, playload) {
       log.info('Now get the AJAX to API(' + ApiMemberLogin + ')');
       axios.post(ApiMemberLogin, playload).then((response) => {
-        let result = response.data.data;
+        let result = response.data;
         log.debug('ajax response is ' + JSON.stringify(result));
         if (result !== null) {
           state.member = result;
@@ -159,7 +161,7 @@ export const store = new Vuex.Store({
     register: function (state, payload) {
       log.info('Now get the AJAX to API(' + ApiCreateMember + ')');
       axios.post(ApiCreateMember, payload).then((response) => {
-        let result = response.data.data;
+        let result = response.data;
         log.debug('response data is ' + JSON.stringify(result));
         if (result !== null) {
           let member = {

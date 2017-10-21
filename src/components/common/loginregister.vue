@@ -73,7 +73,7 @@ export default {
         submitRegister: function() {
             let message = {
                 'username': this.registerInfo.username,
-                'phone': this.registerInfo.phone,
+                'phone': this.registerInfo.phone.replace(/\s/g, ''),
                 'password': md5(this.registerInfo.password)
             };
             log.debug('Register user is ' + JSON.stringify(message));
@@ -137,13 +137,12 @@ export default {
             log.info('submit resister name is ' + this.registerInfo.username);
             if (this.registerInfo.username !== '') {
                 log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
-                let username = { 'username': this.registerInfo.username };
-                this.$http.post(ApiIsExistUserName, username).then((response) => {
+                this.$http.post(ApiIsExistUserName, this.registerInfo.username).then((response) => {
                     log.info('is ' + this.registerInfo.username + ' exist?');
-                    let result = response.data.data;
+                    let result = response.data;
                     log.info('ajax response is ' + result);
                     /* username already exist */
-                    if (result) {
+                    if (result === 'true') {
                         this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
                         this.$refs.username.reset();
                     }
