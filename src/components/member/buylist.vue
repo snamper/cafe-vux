@@ -18,7 +18,7 @@ export default {
             type: Object
         }
     },
-    component: {
+    components: {
         CellFormPreview,
         Group,
         Cell,
@@ -33,8 +33,8 @@ export default {
             let cartLists = [];
             this.buy.details.forEach((product) => {
                 let cartlist = {
-                    label: product.name,
-                    value: product.number + '个 X ' + product.productId + '元 = ' + product.number * product.productId + '元'
+                    label: product.productName,
+                    value: product.number + '个 X ' + product.price + '元 = ' + product.number * product.price + '元'
                 };
                 cartLists.push(cartlist);
             });

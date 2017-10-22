@@ -45,7 +45,6 @@ const registerother = register.other
 const addValue = appData.addValue
 const cartDetailList = appData.cartDetailList
 const cartList = appData.cartList
-const cartDetailList1 = appData.cartDetailList1
 
 
 /* define router  */
@@ -107,8 +106,7 @@ apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body;
   if(user.userId !== ''){
     if(user.needDetail){
-      // res.json(cartDetailList);
-      res.json(cartDetailList1);
+      res.json(cartDetailList);
     }else{
       res.json(cartList);
     }

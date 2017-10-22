@@ -84,11 +84,12 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-.member-wrapper
-    .showInfo
-        .weui-panel
-            .weui-panel__hd
-                font-size 20px
-                font-weight 700
-                color black
+.about-wrapper
+    .member-wrapper
+        .showInfo
+            .weui-panel
+                .weui-panel__hd
+                    font-size 20px
+                    font-weight 700
+                    color black
 </style>
