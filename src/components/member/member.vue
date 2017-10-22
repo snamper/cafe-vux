@@ -7,21 +7,23 @@
             </div>
             <div class="showInfo" v-else>
                 <card :header="{title:'你好，' + member.name}" @click.native="showmodify"></card>
-                <divider>2017年10月15日22时21分</divider>
-                <group>
-                    <cell title="您购买的商品总价" :value="total"></cell>
-                    <cell-form-preview :list="cartLists"></cell-form-preview>
-                </group>
+                <div class="buylist-wrapper" v-if="buys" v-for="buy in buys">
+                    <buylist :buy="buy"></buylist>
+                </div>
+                <div v-else>
+                    <divider>您还没有购买任何产品</divider>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
-import { CellFormPreview, Group, Cell, Divider, Card } from 'vux';
+import { Card } from 'vux';
 import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
 import Modify from '@/components/common/modify';
+import Buylist from '@/components/member/buylist';
 import Logger from 'chivy';
 import { mapGetters } from 'vuex';
 const log = new Logger('cafe/member');
@@ -32,14 +34,21 @@ export default {
         };
     },
     components: {
-        CellFormPreview,
-        Cell,
-        Group,
-        Divider,
         Card,
         'logo': Logo,
         'loginregister': LoginRegister,
-        'modify': Modify
+        'modify': Modify,
+        'buylist': Buylist
+    },
+    mounted: function() {
+        if (this.member !== null) {
+            let user = {
+                'userId': this.member.ID,
+                'needDetail': true
+            };
+        log.debug('get product list\'s user is ' + JSON.stringify(user));
+        this.$store.commit('getBuyList', user);
+        }
     },
     computed: {
         ...mapGetters([
@@ -49,22 +58,13 @@ export default {
             'cartList',
             'cartMemberList'
         ]),
+        buys: function() {
+            return this.$store.state.buylist;
+        },
+        time: function() {
+        },
         member: function() {
             return this.$store.state.member;
-        },
-        total: function() {
-            return '￥' + this.totalPrice + '元';
-        },
-        cartLists: function() {
-            let cartLists = [];
-            this.cartProducts.forEach((product) => {
-                let cartlist = {
-                    label: product.name,
-                    value: product.count + '个 X ' + product.price + '元 = ' + product.count * product.price + '元'
-                };
-                cartLists.push(cartlist);
-            });
-            return cartLists;
         },
         memberName: function() {
             if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {

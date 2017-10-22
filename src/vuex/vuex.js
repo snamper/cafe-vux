@@ -8,11 +8,13 @@ Vue.use(Vuex);
 const ApiCategorys = '/shop/category/show/ui/getCategoriedProducts.do';
 const ApiMemberLogin = '/shop/member/show/ui/memberLogin.do';
 const ApiCreateMember = '/shop/member/show/ui/createMember.do';
+const ApiGetRecordList = '/shop/product/show/ui/getRecordList.do';
 
 export const store = new Vuex.Store({
   state: {
     categorys: '',
-    member: ''
+    member: '',
+    buylist: ''
   },
   getters: {
     products: function (state) {
@@ -173,8 +175,12 @@ export const store = new Vuex.Store({
         }
       });
     },
-    testClear: function (state) {
-      state.member = '';
+    getBuyList: function (state, payload) {
+      log.info('Now get the AJAX to API(' + ApiGetRecordList + ')');
+      axios.post(ApiGetRecordList, payload).then((response) => {
+        let result = response.data;
+        state.buylist = result;
+      });
     }
   },
   actions: {

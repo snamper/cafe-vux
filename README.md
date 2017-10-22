@@ -7,63 +7,63 @@
 
 **返回数据**
 
-{
-"甜品": [{
-  "canBook": true,
-  "classifyId": 70,
-  "code": "0090645a-2ca6-4a5b-b250-13a8403930d5",
-  "creatPeriod": "40",
-  "createTime": 1505439759644,
-  "creatorId": -1,
-  "defaultEntity": false,
-  "description": "慕斯蛋糕",
-  "id": 71,
-  "imageSliderUrl": "static/img/silder1.jpg",
-  "imageUrl": "static/img/test1.jpg",
-  "memberPrice": 45,
-  "name": "慕斯蛋糕",
-  "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
-  "price": 50,
-  "slider": true
-}],
-"咖啡": [{
-"canBook": false,
-"classifyId": 62,
-"code": "5cf0fd83-4a3d-4014-9a66-745fdf80222c",
-"creatPeriod": "34",
-"createTime": 1505439679696,
-"creatorId": -1,
-"defaultEntity": false,
-"description": "得分是",
-"id": 67,
-"imageSliderUrl": "static/img/silder2.jpg",
-"imageUrl": "static/img/test2.jpg",
-"memberPrice": 8,
-"name": "拿铁咖啡",
-"objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
-"price": 10,
-"slider": true
-  },
-  {
-"canBook": true,
-"classifyId": 62,
-"code": "73dde60a-a030-4913-af8f-40e8c3403860",
-"creatPeriod": "67",
-"createTime": 1505439688471,
-"creatorId": -1,
-"defaultEntity": false,
-"description": "45",
-"id": 69,
-"imageSliderUrl": "static/img/silder3.jpg",
-"imageUrl": "static/img/test3.jpg",
-"memberPrice": 34,
-"name": "猫屎咖啡",
-"objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
-"price": 45,
-"slider": false
-  }
-]
-  }
+	{
+	"甜品": [{
+	  "canBook": true,
+	  "classifyId": 70,
+	  "code": "0090645a-2ca6-4a5b-b250-13a8403930d5",
+	  "creatPeriod": "40",
+	  "createTime": 1505439759644,
+	  "creatorId": -1,
+	  "defaultEntity": false,
+	  "description": "慕斯蛋糕",
+	  "id": 71,
+	  "imageSliderUrl": "static/img/silder1.jpg",
+	  "imageUrl": "static/img/test1.jpg",
+	  "memberPrice": 45,
+	  "name": "慕斯蛋糕",
+	  "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+	  "price": 50,
+	  "slider": true
+	}],
+	"咖啡": [{
+	"canBook": false,
+	"classifyId": 62,
+	"code": "5cf0fd83-4a3d-4014-9a66-745fdf80222c",
+	"creatPeriod": "34",
+	"createTime": 1505439679696,
+	"creatorId": -1,
+	"defaultEntity": false,
+	"description": "得分是",
+	"id": 67,
+	"imageSliderUrl": "static/img/silder2.jpg",
+	"imageUrl": "static/img/test2.jpg",
+	"memberPrice": 8,
+	"name": "拿铁咖啡",
+	"objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+	"price": 10,
+	"slider": true
+	  },
+	  {
+	"canBook": true,
+	"classifyId": 62,
+	"code": "73dde60a-a030-4913-af8f-40e8c3403860",
+	"creatPeriod": "67",
+	"createTime": 1505439688471,
+	"creatorId": -1,
+	"defaultEntity": false,
+	"description": "45",
+	"id": 69,
+	"imageSliderUrl": "static/img/silder3.jpg",
+	"imageUrl": "static/img/test3.jpg",
+	"memberPrice": 34,
+	"name": "猫屎咖啡",
+	"objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+	"price": 45,
+	"slider": false
+	  }
+	]
+	  }
 
 
 ##### 会员登陆接口
@@ -134,7 +134,7 @@ null
 	false
 
 ##### 获取用户购物清单
-	const ApiGetRecordList = '/shop/product/show/ui/getRecordList.do ';
+	const ApiGetRecordList = '/shop/product/show/ui/getRecordList.do';
 
 **提交数据**
 

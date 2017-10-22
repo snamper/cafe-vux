@@ -7,7 +7,7 @@
             <div class="login-wrapper" v-if="index === 0">
                 <group>
                     <x-input label-width="3em" text-align="left" title="用户名" name="username"  type="text" v-model="loginInfo.username" :required="true"></x-input>
-                    <x-input label-width="3em" text-align="left" title="密码" name="password"  type="password" v-model="loginInfo.password" :required="true"></x-input>
+                    <x-input label-width="3em" text-align="left" title="密码" name="password"  type="password" v-model="loginInfo.password" :required="true" @on-enter="login"></x-input>
                 </group>
                 <div class="button">
                     <x-button @click.native="login">登陆</x-button>
@@ -18,7 +18,7 @@
                     <x-input label-width="4em" title="手机号码" name="phone" type="tel" mask="999 9999 9999" is-type="china-mobile" :required="true" v-model="registerInfo.phone" ref="phone"></x-input>
                     <x-input label-width="4em" title="用户名" name="username" type="text" :min='3' :max='16' v-model="registerInfo.username" @on-blur="duplicateUsername" ref="username"></x-input>
                     <x-input label-width="4em" title="密码" name="password" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.password" ref="password"></x-input>
-                    <x-input label-width="4em" title="确认密码" name="confirmPassword" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.confirmpsd" :is-type="verifypsd" ref="repassword"></x-input>
+                    <x-input label-width="4em" title="确认密码" name="confirmPassword" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.confirmpsd" :is-type="verifypsd" ref="repassword" @on-enter="register"></x-input>
                 </group>
                 <div class="button">
                     <x-button @click.native="register">注册</x-button>
@@ -102,7 +102,7 @@ export default {
                 this.$vux.toast.text('用户名或者密码不能为空', 'middle');
             } else {
                 this.$store.dispatch('loginin', this.submitLogin);
-                setTimeout(this.loginStatus(), 2000);
+                setTimeout(this.loginStatus(), 3000);
             }
         },
         showregister: function() {

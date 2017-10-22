@@ -38,15 +38,14 @@ const login = appData.login
 const loginpoor = login.poor
 const loginrich = login.rich
 const loginfail = login.fail
-const cartlist = appData.cartlist
 const register = appData.register
 const registerpoor = register.poor
 const registerrich = register.rich
 const registerother = register.other
 const addValue = appData.addValue
+const cartDetailList = appData.cartDetailList
 const cartList = appData.cartList
-const resultTrue = appData.result.true
-const resultFalse = appData.result.false
+const cartDetailList1 = appData.cartDetailList1
 
 
 /* define router  */
@@ -92,10 +91,6 @@ apiRoutes.post('/member/show/ui/isExistUserName.do', jsonParser, function (req, 
   }  
 })
 
-apiRoutes.get('/product/show/ui/getRecordList.do',function(req,res){
-  res.json(cartlist)
-})
-
 apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
   res.json(addValue)
 })
@@ -108,6 +103,17 @@ apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
   res.json('false')
 })
 
+apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
+  let user = req.body;
+  if(user.userId !== ''){
+    if(user.needDetail){
+      // res.json(cartDetailList);
+      res.json(cartDetailList1);
+    }else{
+      res.json(cartList);
+    }
+  }
+})
 
 /* setting router address */
 app.use('/shop', apiRoutes);
