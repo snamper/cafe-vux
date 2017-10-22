@@ -147,79 +147,85 @@ null
 
 1. needDetail为真
  
-
 		[{
-		  "amount": 56,
-		  "cashOrBanlance": " ",
-		  "code": "34c9829f-d57d-4e35-a8cb-51b861467b21",
-		  "createTime": 1508251634463,
-		  "creatorId": -1,
-		  "defaultEntity": false,
-		  "details": [{
-		    "amount": 12,
-		    "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
-		    "createTime": 1508251633955,
+		    "amount": 66,
+		    "cashOrBanlance": " ",
+		    "code": "34c9829f-d57d-4e35-a8cb-51b861467b21",
+		    "createTime": 1508251634463,
 		    "creatorId": -1,
 		    "defaultEntity": false,
-		    "id": 100,
-		    "number": 2,
-		    "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
-		    "productId": 2,
-		    "recordId": 99
+		    "details": [{
+		      "amount": 22,
+		      "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
+		      "createTime": 1508251633955,
+		      "creatorId": -1,
+		      "defaultEntity": false,
+		      "id": 100,
+		      "number": 2,
+		      "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+		      "price":11,
+		      "productName":"慕斯蛋糕",
+		      "productId": 2,
+		      "recordId": 99
+		    }, {
+		      "amount": 44,
+		      "code": "c4abae95-d9d0-408d-8397-57c12fd125c1",
+		      "createTime": 1508251633955,
+		      "creatorId": -1,
+		      "defaultEntity": false,
+		      "id": 101,
+		      "number": 2,
+		      "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+		      "productId": 3,
+		      "price":22,
+		      "productName":"美式咖啡",
+		      "recordId": 99
+		    }],
+		    "id": 99,
+		    "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
+		    "status": "success",
+		    "userId": 84,
+		    "userName": "test3"
 		  }, {
-		    "amount": 6,
-		    "code": "c4abae95-d9d0-408d-8397-57c12fd125c1",
-		    "createTime": 1508251633955,
+		    "amount": 124,
+		    "cashOrBanlance": " ",
+		    "code": "55280e74-0e83-458a-8998-788cb5a9176d",
+		    "createTime": 1508251795107,
 		    "creatorId": -1,
 		    "defaultEntity": false,
-		    "id": 101,
-		    "number": 3,
-		    "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
-		    "productId": 3,
-		    "recordId": 99
-		  }],
-		  "id": 99,
-		  "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-		  "status": "success",
-		  "userId": 84,
-		  "userName": "test3"
-		}, {
-		  "amount": 56,
-		  "cashOrBanlance": " ",
-		  "code": "55280e74-0e83-458a-8998-788cb5a9176d",
-		  "createTime": 1508251795107,
-		  "creatorId": -1,
-		  "defaultEntity": false,
-		  "details": [{
-		    "amount": 12,
-		    "code": "f9f4c8a8-ec93-4974-9c10-30c0c81be62d",
-		    "createTime": 1508251708535,
-		    "creatorId": -1,
-		    "defaultEntity": false,
-		    "id": 103,
-		    "number": 2,
-		    "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
-		    "productId": 2,
-		    "recordId": 102
-		  }, {
-		    "amount": 6,
-		    "code": "b0c0d78f-3d38-4cd6-9902-7246cf47f980",
-		    "createTime": 1508251708535,
-		    "creatorId": -1,
-		    "defaultEntity": false,
-		    "id": 104,
-		    "number": 3,
-		    "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
-		    "productId": 3,
-		    "recordId": 102
-		  }],
-		  "id": 102,
-		  "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-		  "status": "success",
-		  "userId": 84,
-		  "userName": "test3"
-		}]
-
+		    "details": [{
+		      "amount": 94,
+		      "code": "f9f4c8a8-ec93-4974-9c10-30c0c81be62d",
+		      "createTime": 1508251708535,
+		      "creatorId": -1,
+		      "defaultEntity": false,
+		      "id": 103,
+		      "number": 2,
+		      "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+		      "productId": 3,
+		      "price":32,
+		      "productName":"摩卡咖啡",
+		      "recordId": 102
+		    }, {
+		      "amount": 30,
+		      "code": "b0c0d78f-3d38-4cd6-9902-7246cf47f980",
+		      "createTime": 1508251708535,
+		      "creatorId": -1,
+		      "defaultEntity": false,
+		      "id": 104,
+		      "number": 3,
+		      "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+		      "productId": 3,
+		      "price":10,
+		      "productName":"杯子蛋糕",
+		      "recordId": 102
+		    }],
+		    "id": 102,
+		    "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
+		    "status": "success",
+		    "userId": 84,
+		    "userName": "test3"
+		  }]
 
 2. needDetail为假
 
