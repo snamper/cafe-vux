@@ -60,11 +60,7 @@ apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res)
   console.log(user);
   if(user.name==='totti'){
     res.json(loginpoor)
-<<<<<<< HEAD
-  } else if(user.name==='rich') {
-=======
-  } else if(user.username==='david') {
->>>>>>> remotes/origin/master
+  } else if(user.name==='david') {
     res.json(loginrich)
   } else {
     res.json(loginfail)
@@ -75,6 +71,9 @@ apiRoutes.post('/member/show/ui/createMember.do', jsonParser, function (req, res
   let user = req.body;
   console.log('createMember.do data is ');
   console.log(user);
+  if(user.success)
+
+
   if(user.username==="totti"){
     res.json(registerpoor)
   }else if(user.username==="david") {

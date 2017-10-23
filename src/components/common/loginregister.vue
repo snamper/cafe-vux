@@ -67,17 +67,17 @@ export default {
         },
         submitLogin: function() {
            let message = {
-                'username': this.loginInfo.username,
-                'password': md5(this.loginInfo.password)
+                'name': this.loginInfo.username,
+                'passWd': md5(this.loginInfo.password)
             };
             log.debug('login user is ' + JSON.stringify(message));
             return message;
         },
         submitRegister: function() {
             let message = {
-                'username': this.registerInfo.username,
+                'name': this.registerInfo.username,
                 'phone': this.registerInfo.phone.replace(/\s/g, ''),
-                'password': md5(this.registerInfo.password)
+                'passWd': md5(this.registerInfo.password)
             };
             log.debug('Register user is ' + JSON.stringify(message));
             return message;
@@ -162,14 +162,9 @@ export default {
         duplicateUsername: function() {
             log.debug('submit resister name is ' + this.registerInfo.username);
             if (this.registerInfo.username !== '') {
-<<<<<<< HEAD
                 log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
                 let name = {'entityName': this.registerInfo.username}
                 this.$http.post(ApiIsExistUserName, name).then((response) => {
-=======
-                log.debug('Now get the AJAX to API(' + ApiIsExistUserName + ')');
-                axios.post(ApiIsExistUserName, this.registerInfo.username).then((response) => {
->>>>>>> remotes/origin/master
                     log.info('is ' + this.registerInfo.username + ' exist?');
                     let result = response.data;
                     log.info('ajax response is ' + result);

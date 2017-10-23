@@ -62,7 +62,7 @@
       "ID": 3,
       "name": "totti"
     },
-    "rich":{
+    "rich": {
       "balance": 500,
       "ID": 13,
       "name": "david"
@@ -71,16 +71,58 @@
   },
   "register": {
     "poor": {
-      "entityid": "3",
-      "entityName": "totti"
+      "entityId": "3",
+      "entityName": "totti",
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "0",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+      },
+      "success": true
     },
-    "rich":{
-      "entityid": "13",
-      "entityName": "david"
+    "rich": {
+      "entityId": "13",
+      "entityName": "david",
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "0",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+      },
+      "success": true
     },
-    "other":{
-      "entityid": "888",
-      "entityName": "Vue"
+    "other": {
+      "entityId": "888",
+      "entityName": "Vue",
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "0",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+      },
+      "success": true
     }
   },
   "addValue": {
@@ -103,8 +145,8 @@
       "id": 100,
       "number": 2,
       "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
-      "price":11,
-      "productName":"慕斯蛋糕",
+      "price": 11,
+      "productName": "慕斯蛋糕",
       "productId": 2,
       "recordId": 99
     }, {
@@ -117,8 +159,8 @@
       "number": 2,
       "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
       "productId": 3,
-      "price":22,
-      "productName":"美式咖啡",
+      "price": 22,
+      "productName": "美式咖啡",
       "recordId": 99
     }],
     "id": 99,
@@ -143,8 +185,8 @@
       "number": 2,
       "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
       "productId": 3,
-      "price":32,
-      "productName":"摩卡咖啡",
+      "price": 32,
+      "productName": "摩卡咖啡",
       "recordId": 102
     }, {
       "amount": 30,
@@ -156,8 +198,8 @@
       "number": 3,
       "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
       "productId": 3,
-      "price":10,
-      "productName":"杯子蛋糕",
+      "price": 10,
+      "productName": "杯子蛋糕",
       "recordId": 102
     }],
     "id": 102,
@@ -166,7 +208,7 @@
     "userId": 84,
     "userName": "test3"
   }],
-  "cartList":[{
+  "cartList": [{
     "amount": 56,
     "cashOrBanlance": " ",
     "code": "34c9829f-d57d-4e35-a8cb-51b861467b21",

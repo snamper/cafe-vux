@@ -141,9 +141,14 @@ export const store = new Vuex.Store({
       }
       log.info('Clear count finished');
     },
-    saveMember: function (state, playload) {
+    saveMember: function (state, payload) {
       log.debug('before save member, the member is ' + JSON.stringify(state.member));
-      state.member = playload;
+      let member = {
+        'balance': payload.balance,
+        'id': payload.id,
+        'name': payload.name
+      };
+      state.member = member;
       log.debug('After save member, the member is ' + JSON.stringify(state.member));
     },
     getMember: function (state) {
