@@ -137,7 +137,7 @@ export default {
                     if (result !== null) {
                         let member = {
                             'balance': 0,
-                            'ID': result.entityid,
+                            'ID': result.entityId,
                             'name': result.entityName
                         };
                         log.debug('save member to vuex. member is ' + JSON.stringify(member));
