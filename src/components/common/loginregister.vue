@@ -137,7 +137,8 @@ export default {
             log.info('submit resister name is ' + this.registerInfo.username);
             if (this.registerInfo.username !== '') {
                 log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
-                this.$http.post(ApiIsExistUserName, this.registerInfo.username).then((response) => {
+                let name = {'entityName': this.registerInfo.username}
+                this.$http.post(ApiIsExistUserName, name).then((response) => {
                     log.info('is ' + this.registerInfo.username + ' exist?');
                     let result = response.data;
                     log.info('ajax response is ' + result);
