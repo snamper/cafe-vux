@@ -6,9 +6,11 @@
                 <loginregister></loginregister>
             </div>
             <div class="showInfo" v-else>
-                <card :header="{title:'你好，' + member.name}" @click.native="showmodify"></card>
-                <div class="buylist-wrapper" v-if="buys" v-for="buy in buys">
-                    <buylist :buy="buy"></buylist>
+                <card :header="{title:'你好，' + member.name + '，购物清单如下'}" @click.native="showmodify"></card>
+                <div class="buylist-wrapper" v-if="buys" >
+                    <div v-for="(buy,index) in buys" :key="index">
+                        <buylist :buy="buy"></buylist>
+                    </div>
                 </div>
                 <div v-else>
                     <divider>您还没有购买任何产品</divider>
@@ -19,7 +21,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { Card } from 'vux';
+import { Card, Divider } from 'vux';
 import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
 import Modify from '@/components/common/modify';
@@ -35,6 +37,7 @@ export default {
     },
     components: {
         Card,
+        Divider,
         'logo': Logo,
         'loginregister': LoginRegister,
         'modify': Modify,

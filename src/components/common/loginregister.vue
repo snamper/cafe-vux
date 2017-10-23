@@ -31,8 +31,11 @@
 <script type="text/ecmascript-6">
 import { md5, Group, XButton, XInput, Toast, Tab, TabItem } from 'vux';
 import Logger from 'chivy';
+import axios from 'axios';
 const log = new Logger('cafe/loginregister');
 const ApiIsExistUserName = '/shop/member/show/ui/isExistUserName.do';
+const ApiMemberLogin = '/shop/member/show/ui/memberLogin.do';
+const ApiCreateMember = '/shop/member/show/ui/createMember.do';
 export default {
     data() {
         return {
@@ -81,28 +84,31 @@ export default {
         }
     },
     methods: {
-        loginStatus: function() {
-            log.debug('loginStatus: the member data is ' + JSON.stringify(this.member));
-            if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
-                this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
-            } else {
-                this.$vux.toast.text('登陆成功', 'middle');
-            }
-        },
-        registerStatus: function() {
-            log.debug('registerStatus: the member data is ' + JSON.stringify(this.member));
-            if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
-                this.$vux.toast.text('注册成功', 'middle');
-            } else {
-                this.$vux.toast.text('服务器故障，请重新注册', 'middle');
-            }
-        },
         login: function() {
             if (this.loginInfo.username === '' || this.loginInfo.password === '') {
                 this.$vux.toast.text('用户名或者密码不能为空', 'middle');
             } else {
-                this.$store.dispatch('loginin', this.submitLogin);
-                setTimeout(this.loginStatus(), 3000);
+                /* 注册AJAX请求 */
+                log.info('Now get the AJAX to API(' + ApiMemberLogin + ')');
+                axios.post(ApiMemberLogin, this.submitLogin).then((response) => {
+                    let result = response.data;
+                    log.debug('ajax response is ' + JSON.stringify(result));
+                    if (result !== null) {
+                        this.$store.commit('saveMember', result);
+                        log.info('Save login user to sessionStorage');
+                        sessionStorage.setItem('member', JSON.stringify(result));
+                        this.$vux.toast.text('登陆成功', 'middle');
+                        let user = {
+                            'userId': this.member.ID,
+                            'needDetail': true
+                        };
+                        log.debug('get product list\'s user is ' + JSON.stringify(user));
+                        this.$store.commit('getBuyList', user);
+                    } else {
+                        this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
+                        this.loginInfo.password = '';
+                    }
+                });
             }
         },
         showregister: function() {
@@ -123,7 +129,27 @@ export default {
                 this.$refs.password.reset();
                 this.$refs.repassword.reset();
             } else {
-                this.$store.dispatch('registerit', this.submitRegister);
+                /* 注册 */
+                log.debug('Now get the AJAX to API(' + ApiCreateMember + ')');
+                axios.post(ApiCreateMember, this.submitRegister).then((response) => {
+                    let result = response.data;
+                    log.debug('AJAX API(' + ApiCreateMember + ') response data is ' + JSON.stringify(result));
+                    if (result !== null) {
+                        let member = {
+                            'balance': 0,
+                            'ID': result.entityId,
+                            'name': result.entityName
+                        };
+                        log.debug('save member to vuex. member is ' + JSON.stringify(member));
+                        this.$store.commit('saveMember', member);
+                        log.info('Save login user to sessionStorage');
+                        sessionStorage.setItem('member', JSON.stringify(member));
+                        log.info('finish to save sessionStorage');
+                        this.$vux.toast.text('注册成功', 'middle');
+                    } else {
+                        this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
+                    }
+                });
             }
         },
         verifypsd: function() {
@@ -134,11 +160,16 @@ export default {
             }
         },
         duplicateUsername: function() {
-            log.info('submit resister name is ' + this.registerInfo.username);
+            log.debug('submit resister name is ' + this.registerInfo.username);
             if (this.registerInfo.username !== '') {
+<<<<<<< HEAD
                 log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
                 let name = {'entityName': this.registerInfo.username}
                 this.$http.post(ApiIsExistUserName, name).then((response) => {
+=======
+                log.debug('Now get the AJAX to API(' + ApiIsExistUserName + ')');
+                axios.post(ApiIsExistUserName, this.registerInfo.username).then((response) => {
+>>>>>>> remotes/origin/master
                     log.info('is ' + this.registerInfo.username + ' exist?');
                     let result = response.data;
                     log.info('ajax response is ' + result);
@@ -149,9 +180,6 @@ export default {
                     }
                 });
             }
-        },
-        test: function() {
-            log.error('test button click');
         }
     }
 };

@@ -60,7 +60,11 @@ apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res)
   console.log(user);
   if(user.name==='totti'){
     res.json(loginpoor)
+<<<<<<< HEAD
   } else if(user.name==='rich') {
+=======
+  } else if(user.username==='david') {
+>>>>>>> remotes/origin/master
     res.json(loginrich)
   } else {
     res.json(loginfail)
@@ -106,7 +110,8 @@ apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
 
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body;
-  if(user.userId !== ''){
+  console.log(JSON.stringify(user));
+  if(user.userId === 3){
     if(user.needDetail){
       res.json(cartDetailList);
     }else{

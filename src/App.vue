@@ -38,10 +38,12 @@ export default {
     Badge
   },
   created: function() {
+    log.info('call initCategorys function to init categorys data');
     let categorys = this.$store.commit('initCategorys');
     log.debug('products data is ' + JSON.stringify(categorys));
   },
   mounted: function() {
+    log.info('call getmember function to init member');
     this.$store.commit('getMember');
   },
   computed: {
@@ -50,9 +52,6 @@ export default {
     })
   },
   methods: {
-    clear: function() {
-      this.$store.commit('testClear');
-    }
   }
 };
 </script>

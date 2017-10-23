@@ -6,10 +6,7 @@ const log = new Logger('cafe/Vuex');
 Vue.use(Vuex);
 
 const ApiCategorys = '/shop/category/show/ui/getCategoriedProducts.do';
-const ApiMemberLogin = '/shop/member/show/ui/memberLogin.do';
-const ApiCreateMember = '/shop/member/show/ui/createMember.do';
 const ApiGetRecordList = '/shop/product/show/ui/getRecordList.do';
-
 export const store = new Vuex.Store({
   state: {
     categorys: '',
@@ -111,10 +108,10 @@ export const store = new Vuex.Store({
   },
   mutations: {
     initCategorys: function (state) {
-      log.info('Now get the AJAX to API(' + ApiCategorys + ')');
+      log.debug('Now get the AJAX to API(' + ApiCategorys + ')');
       axios.get(ApiCategorys).then(function (response) {
           let categorys = response.data;
-          log.debug('AJAX response is ' + JSON.stringify(categorys));
+          log.debug('AJAX API(' + ApiCategorys + ')response is ' + JSON.stringify(categorys));
           state.categorys = categorys;
         })
         .catch(function (error) {
@@ -122,7 +119,7 @@ export const store = new Vuex.Store({
         });
     },
     countCategorys: function (state, param) {
-      log.debug('setting count attr in products');
+      log.debug('setting count attr in product: ' + JSON.stringify(param));
       for (let category in state.categorys) {
         state.categorys[category].forEach((product) => {
           if (param === product) {
@@ -136,59 +133,32 @@ export const store = new Vuex.Store({
       }
     },
     clearCount: function (state) {
-      // log.info('Now Clear count');
+      log.info('Now clear count');
       for (let category in state.categorys) {
         state.categorys[category].forEach((product) => {
           product.count = 0;
-          // log.debug('clear product(' + product.name + ') count  to ' + product.count);
         });
       }
+      log.info('Clear count finished');
     },
-    login: function (state, playload) {
-      log.info('Now get the AJAX to API(' + ApiMemberLogin + ')');
-      axios.post(ApiMemberLogin, playload).then((response) => {
-        let result = response.data;
-        log.debug('ajax response is ' + JSON.stringify(result));
-        if (result !== null) {
-          state.member = result;
-          log.debug('state member data is ' + JSON.stringify(state.member));
-          log.info('Save login user to sessionStorage');
-          sessionStorage.setItem('member', JSON.stringify(state.member));
-        }
-      });
+    saveMember: function (state, playload) {
+      log.debug('before save member, the member is ' + JSON.stringify(state.member));
+      state.member = playload;
+      log.debug('After save member, the member is ' + JSON.stringify(state.member));
     },
     getMember: function (state) {
       state.member = JSON.parse(sessionStorage.getItem('member'));
-    },
-    register: function (state, payload) {
-      log.info('Now get the AJAX to API(' + ApiCreateMember + ')');
-      axios.post(ApiCreateMember, payload).then((response) => {
-        let result = response.data;
-        log.debug('response data is ' + JSON.stringify(result));
-        if (result !== null) {
-          let member = {
-            'balance': 0,
-            'ID': result.entityid,
-            'name': result.entityName
-          };
-          state.member = member;
-        }
-      });
+      log.debug('Get member from sesionstorage is ' + JSON.stringify(state.member));
     },
     getBuyList: function (state, payload) {
-      log.info('Now get the AJAX to API(' + ApiGetRecordList + ')');
+      log.debug('Now get the AJAX to API(' + ApiGetRecordList + ')');
       axios.post(ApiGetRecordList, payload).then((response) => {
         let result = response.data;
+        log.debug('AJAX API(' + ApiGetRecordList + ') response is ' + JSON.stringify(result));
         state.buylist = result;
       });
     }
   },
   actions: {
-    loginin: function (context, payload) {
-      context.commit('login', payload);
-    },
-    registerit: function(context, payload) {
-      context.commit('register', payload);
-    }
   }
 });
