@@ -108,7 +108,6 @@ export default {
             return '￥' + this.member.balance + '元';
         },
         memberName: function() {
-            // if member is empty or member.name is empty show
             if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
                 return false;
             } else {
@@ -121,15 +120,18 @@ export default {
             if (this.balancePay) {
                 log.info('choose balance pay');
                 if (this.member.balance >= this.totalMemberPrice) {
-                    this.isPay = false;
                     this.realpay('Balance');
+                    setTimeout(this.showPay(), 2000);
                 } else {
                     this.$vux.toast.text('余额不足，请先充值', 'middle');
                 }
             } else {
-                this.isPay = false;
                 this.realpay('Cash');
+                setTimeout(this.showPay(), 2000);
             }
+        },
+        showPay: function() {
+            this.isPay = false;
         },
         realpay: function(cashOrBalance) {
             log.info('Pay type is ' + cashOrBalance);

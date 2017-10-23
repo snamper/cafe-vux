@@ -52,8 +52,6 @@ export default {
         Group
     },
     computed: {
-        value: function() {
-        }
     }
 };
 </script>

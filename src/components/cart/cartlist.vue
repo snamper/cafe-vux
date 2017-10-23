@@ -56,7 +56,7 @@ export default {
     },
     methods: {
         clear: function() {
-            console.log('click');
+            console.log('click clear button');
             this.$store.commit('clearCount');
         }
     }
