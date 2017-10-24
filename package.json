@@ -21,7 +21,8 @@
     "better-scroll": "^0.1.11",
     "babel-runtime": "^6.0.0",
     "chivy":"^0.1.5",
-    "blueimp-md5":"^2.10.0"
+    "blueimp-md5":"^2.10.0",
+    "animated-vue":"^0.5.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

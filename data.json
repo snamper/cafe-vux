@@ -58,6 +58,7 @@
   },
   "login": {
     "poor": {
+      "status": true,
       "balance": 5,
       "cardGrade": "",
       "cardNo": "",
@@ -70,6 +71,7 @@
       "name": "totti"
     },
     "rich": {
+      "status": true,
       "balance": 500,
       "cardGrade": "",
       "cardNo": "",
@@ -81,7 +83,9 @@
       "id": 10,
       "name": "david"
     },
-    "fail": null
+    "fail": {
+      "status": false
+    }
   },
   "register": {
     "poor": {
