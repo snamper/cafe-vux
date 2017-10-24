@@ -162,6 +162,11 @@ export const store = new Vuex.Store({
         log.debug('AJAX API(' + ApiGetRecordList + ') response is ' + JSON.stringify(result));
         state.buylist = result;
       });
+    },
+    loginout: function(state) {
+      state.member = '';
+      state.buylist = '';
+      sessionStorage.removeItem('member');
     }
   },
   actions: {
