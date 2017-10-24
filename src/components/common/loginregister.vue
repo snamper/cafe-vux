@@ -91,10 +91,9 @@ export default {
                 /* 注册AJAX请求 */
                 log.info('Now get the AJAX to API(' + ApiMemberLogin + ')');
                 axios.post(ApiMemberLogin, this.submitLogin).then((response) => {
-                    console.log(response);
                     let result = response.data;
                     log.debug('ajax response is ' + JSON.stringify(result));
-                    if (result !== null) {
+                    if (result.status) {
                         this.$store.commit('saveMember', result);
                         log.info('Save login user to sessionStorage');
                         sessionStorage.setItem('member', JSON.stringify(result));

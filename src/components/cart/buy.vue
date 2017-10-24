@@ -39,7 +39,8 @@
                 <x-button @click.native="payit">去支付</x-button>
             </div>
         </div>
-        <div class="pay-wrapper" v-else>
+        <animated-fade-in-right>
+        <div class="pay-wrapper" v-if="!isPay">
             <div class="readme">请选择扫描支付</div>
             <flexbox>
                 <flexbox-item>
@@ -56,6 +57,7 @@
                 </flexbox-item>
             </flexbox>
         </div>
+        </animated-fade-in-right>
     </div>
 </template>
 
@@ -122,14 +124,14 @@ export default {
                 if (this.member.balance >= this.totalMemberPrice) {
                     this.realpay('Balance');
                     this.$store.commit('clearCount');
-                    setTimeout(this.showPay(), 2000);
+                    this.showPay();
                 } else {
                     this.$vux.toast.text('余额不足，请先充值', 'middle');
                 }
             } else {
                 this.realpay('Cash');
                 this.$store.commit('clearCount');
-                setTimeout(this.showPay(), 2000);
+                this.showPay();
             }
         },
         showPay: function() {

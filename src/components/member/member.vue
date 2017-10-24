@@ -15,13 +15,16 @@
                 <div v-else>
                     <divider>您还没有购买任何产品</divider>
                 </div>
+                <div class="paid-wrapper">
+                    <x-button @click.native="loginout">注销</x-button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
-import { Card, Divider } from 'vux';
+import { Card, Divider, XButton } from 'vux';
 import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
 import Modify from '@/components/common/modify';
@@ -38,13 +41,15 @@ export default {
     components: {
         Card,
         Divider,
+        XButton,
         'logo': Logo,
         'loginregister': LoginRegister,
         'modify': Modify,
         'buylist': Buylist
     },
     mounted: function() {
-        if (this.member !== null) {
+        log.debug('member name is ' + this.member.name);
+        if (this.member.name !== '' || typeof (this.member.name) !== 'undefined') {
             let user = {
                 'userId': this.member.ID,
                 'needDetail': true
@@ -81,6 +86,9 @@ export default {
         showmodify: function() {
             log.info('show modify HMI');
             this.modify = true;
+        },
+        loginout: function() {
+            this.$store.commit('loginout');
         }
     }
 };
@@ -90,6 +98,13 @@ export default {
 .about-wrapper
     .member-wrapper
         .showInfo
+            .paid-wrapper
+                display flex
+                width 100%
+                .weui-btn
+                    margin 0 30%
+                    background-color #58B7FF
+                    color #fff
             .weui-panel
                 .weui-panel__hd
                     font-size 20px
