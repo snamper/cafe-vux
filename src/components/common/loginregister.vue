@@ -99,7 +99,7 @@ export default {
                         sessionStorage.setItem('member', JSON.stringify(result));
                         this.$vux.toast.text('登陆成功', 'middle');
                         let user = {
-                            'userId': this.member.ID,
+                            'userId': this.member.id,
                             'needDetail': true
                         };
                         log.debug('get product list\'s user is ' + JSON.stringify(user));
@@ -163,7 +163,8 @@ export default {
             log.debug('submit resister name is ' + this.registerInfo.username);
             if (this.registerInfo.username !== '') {
                 log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
-                let name = {'entityName': this.registerInfo.username}
+                let name = {'entityName': this.registerInfo.username};
+                log.debug('submit verify user is ' + JSON.stringify(name));
                 this.$http.post(ApiIsExistUserName, name).then((response) => {
                     log.info('is ' + this.registerInfo.username + ' exist?');
                     let result = response.data;

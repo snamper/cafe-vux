@@ -59,12 +59,26 @@
   "login": {
     "poor": {
       "balance": 5,
-      "ID": 3,
+      "cardGrade": "",
+      "cardNo": "",
+      "cardStatus": "",
+      "createTime": "2017-10-23 21:04:13",
+      "description": "",
+      "gender": "Male",
+      "handNo": "",
+      "id": 107,
       "name": "totti"
     },
     "rich": {
       "balance": 500,
-      "ID": 13,
+      "cardGrade": "",
+      "cardNo": "",
+      "cardStatus": "",
+      "createTime": "2017-10-23 21:04:13",
+      "description": "",
+      "gender": "Male",
+      "handNo": "",
+      "id": 10,
       "name": "david"
     },
     "fail": null

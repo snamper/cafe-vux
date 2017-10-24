@@ -69,16 +69,12 @@ apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res)
 
 apiRoutes.post('/member/show/ui/createMember.do', jsonParser, function (req, res) {
   let user = req.body;
-  console.log('createMember.do data is ');
-  console.log(user);
-  if(user.success)
-
-
-  if(user.username==="totti"){
+  console.log('createMember.do data is ' + JSON.stringify(user));
+  if (user.name === 'totti') {
     res.json(registerpoor)
-  }else if(user.username==="david") {
+  } else if (user.name === 'david') {
     res.json(registerrich)
-  }else{
+  } else {
     res.json(registerother)
   }
 })
@@ -110,7 +106,7 @@ apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body;
   console.log(JSON.stringify(user));
-  if(user.userId === 3){
+  if(user.userId === 107){
     if(user.needDetail){
       res.json(cartDetailList);
     }else{
