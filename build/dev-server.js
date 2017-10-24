@@ -56,12 +56,13 @@ apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) 
 apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res) {
   // {"name":"ccc","passWd":"dad"}
   let user = req.body;
-  console.log('memberLogin.do data is ');
-  console.log(user);
+  console.log('memberLogin.do data is ' +JSON.stringify(user));
   if(user.name==='totti'){
     res.json(loginpoor)
   } else if(user.name==='david') {
     res.json(loginrich)
+  }else{
+    res.json(loginfail);
   }
 })
 
