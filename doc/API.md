@@ -58,3 +58,10 @@
 
 	{"entityId":"107","entityName":"ccc","envData":{"endRow":-1,"language":"","pageNo":-1,"pageSize":-1,"realTotalRows":-1,"responseStatus":"0","startRow":-1,"totalPages":-1,"totalRows":-1,"userIp":"","userName":""},"success":true}
 	
+### 商品购买接口
+
+	const ApiSaveRecordList = '/shop/product/show/ui/saveRecordList.do';
+
+**入参**
+
+**回参**

@@ -121,12 +121,14 @@ export default {
                 log.info('choose balance pay');
                 if (this.member.balance >= this.totalMemberPrice) {
                     this.realpay('Balance');
+                    this.$store.commit('clearCount');
                     setTimeout(this.showPay(), 2000);
                 } else {
                     this.$vux.toast.text('余额不足，请先充值', 'middle');
                 }
             } else {
                 this.realpay('Cash');
+                this.$store.commit('clearCount');
                 setTimeout(this.showPay(), 2000);
             }
         },

@@ -62,8 +62,6 @@ apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res)
     res.json(loginpoor)
   } else if(user.name==='david') {
     res.json(loginrich)
-  } else {
-    res.json(loginfail)
   }
 })
 
