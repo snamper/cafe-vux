@@ -250,5 +250,56 @@
     "status": "success",
     "userId": 84,
     "userName": "test3"
-  }]
+  }],
+  "buyrecord":{
+    "null":{
+      "entityName": "null",
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "用户不存在",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+      },
+      "success": false
+    },
+    "fail":{
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "余额不足",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+      },
+      "success": false
+    },
+    "success":{
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "0",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+      },
+      "success": true
+    }
+  }
 }
