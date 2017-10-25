@@ -65,6 +65,7 @@
 import { XHeader, Flexbox, FlexboxItem, Group, Cell, Divider, XButton, XSwitch, Card } from 'vux';
 import Logo from '@/components/logo/logo';
 import LoginRegister from '@/components/common/loginregister';
+import axios from 'axios';
 import Logger from 'chivy';
 import { mapGetters } from 'vuex';
 const log = new Logger('cafe/buy');
@@ -123,15 +124,11 @@ export default {
                 log.info('choose balance pay');
                 if (this.member.balance >= this.totalMemberPrice) {
                     this.realpay('Balance');
-                    this.$store.commit('clearCount');
-                    this.showPay();
                 } else {
                     this.$vux.toast.text('余额不足，请先充值', 'middle');
                 }
             } else {
                 this.realpay('Cash');
-                this.$store.commit('clearCount');
-                this.showPay();
             }
         },
         showPay: function() {
@@ -169,8 +166,16 @@ export default {
             }
             log.info('Now get the AJAX to API(' + ApiSaveRecordList + ')');
             log.debug('Buy List is ' + JSON.stringify(buylist));
-            this.$http.get(ApiSaveRecordList, buylist).then((response) => {
-                this.$vux.toast.text('购买成功,请付款后关注订单状态', 'middle');
+            axios.post(ApiSaveRecordList, buylist).then((response) => {
+                 let result = response.data;
+                 log.debug('ajax API(' + ApiSaveRecordList + ') response is ' + JSON.stringify(result));
+                 if (result.success) {
+                     this.$vux.toast.text('购买成功,请付款后关注订单状态', 'middle');
+                     this.$store.commit('clearCount');
+                     this.showPay();
+                 } else {
+                     this.$vux.toast.text('购买失败，请重新购买', 'middle');
+                 }
             });
         }
     }

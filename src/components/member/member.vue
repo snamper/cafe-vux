@@ -48,8 +48,8 @@ export default {
     buylist: Buylist
   },
   mounted: function() {
-    log.debug('member name is ' + this.member.name);
     if (this.member !== null) {
+      log.debug('member name is ' + this.member.name);
       if (this.member.name !== '' || typeof this.member.name !== 'undefined') {
         let user = {
           userId: this.member.ID,

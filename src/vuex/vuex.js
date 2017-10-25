@@ -86,7 +86,7 @@ export const store = new Vuex.Store({
       getters.cartProducts.forEach(product => {
         let cartProduct = {
           'productId': product.id,
-          'count': product.count,
+          'number': product.count,
           'amount': product.count * product.price
         };
         products.push(cartProduct);

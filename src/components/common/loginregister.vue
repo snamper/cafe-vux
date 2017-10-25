@@ -170,7 +170,7 @@ export default {
                     let result = response.data;
                     log.info('ajax response is ' + result);
                     /* username already exist */
-                    if (result === 'true') {
+                    if (result.status) {
                         this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
                         this.$refs.username.reset();
                     }

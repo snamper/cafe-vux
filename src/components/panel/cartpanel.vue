@@ -21,7 +21,7 @@
                         <flexbox-item :span="3/5">
                             <div class="buy-wrapper">
                                 <group>
-                                    <x-number button-style="round" v-model="product.count" :fillable="fillable"></x-number>
+                                    <x-number button-style="round" v-model="product.count" ></x-number>
                                 </group>
                             </div>
                         </flexbox-item>
