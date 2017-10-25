@@ -263,5 +263,5 @@
 根据 success字段来判断  entityName和responseStatus 表示原因 
 用户不存在时 success 为false 并且entityName为null， "responseStatus":"用户不存在"
 余额不足时 success 为false 并且 responseStatus":"余额不足"
-成功时 success为 true 
-	
+成功时 success为 true 并且 "responseStatus":"余额支付成功"
+现金支付时 "cashOrBalance":一定不要传BALANCE  会返回 uccess为 true 并且 "responseStatus":"现金支付"

@@ -169,12 +169,15 @@ export default {
             axios.post(ApiSaveRecordList, buylist).then((response) => {
                  let result = response.data;
                  log.debug('ajax API(' + ApiSaveRecordList + ') response is ' + JSON.stringify(result));
-                 if (result.success) {
-                     this.$vux.toast.text('购买成功,请付款后关注订单状态', 'middle');
+                 if (result.success && result.responseStatus === '余额支付成功') {
+                    this.$vux.toast.text('购买成功，已从余额中扣款', 'middle');
+                    this.$store.commit('clearCount');
+                 } else if (result.success && result.responseStatus === '现金支付') {
+                     this.$vux.toast.text('购买成功，请付款', 'middle');
                      this.$store.commit('clearCount');
                      this.showPay();
                  } else {
-                     this.$vux.toast.text('购买失败，请重新购买', 'middle');
+                    this.$vux.toast.text('购买失败，请重新购买', 'middle');
                  }
             });
         }
