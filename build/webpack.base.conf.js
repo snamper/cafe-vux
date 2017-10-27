@@ -1,18 +1,17 @@
 'use strict'
 const path = require('path')
 const utils = require('./utils')
-
-var projectRoot = path.resolve(__dirname, '../')
+const projectRoot = path.resolve(__dirname, '../')
 const vuxLoader = require('vux-loader')
-
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-let webpackConfig = {
+let webpackConfig  = {
   entry: {
     app: './src/main.js'
   },
@@ -78,7 +77,6 @@ let webpackConfig = {
     ]
   }
 }
-
 
 module.exports = vuxLoader.merge(webpackConfig, {
   plugins: ['vux-ui', 'progress-bar', 'duplicate-style']

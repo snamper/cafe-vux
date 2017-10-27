@@ -38,9 +38,7 @@ export const store = new Vuex.Store({
       const hots = [];
       getters.products.forEach((product) => {
         if (product.canBook) {
-          hots.push({
-            'img': product.imageUrl
-          });
+          hots.push(product);
         }
       });
       return hots;

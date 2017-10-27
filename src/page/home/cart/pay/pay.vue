@@ -1,5 +1,5 @@
 <template>
-    <div class="loginRegister-wrapper">
+    <div class="paid-wrapper">
         <x-header title="登陆"></x-header>
         <logo></logo>
         <div class="buy-wrapper" v-if="isPay">
@@ -16,7 +16,7 @@
                 </flexbox-item>
             </flexbox>
             <div class="login" v-if="!memberName">
-                <loginregister></loginregister>
+                <login></login>
             </div>
             <div class="member" v-else>
                 <divider>会员信息</divider>
@@ -46,13 +46,13 @@
                 <flexbox-item>
                     <div class="img-wrapper">
                         <divider>微信支付</divider>
-                        <img src="../../../static/img/test2.jpg">
+                        <img src="../../../../../static/img/test2.jpg">
                     </div>
                 </flexbox-item>
                 <flexbox-item>
                     <div class="img-wrapper">
                         <divider>支付宝支付</divider>
-                        <img src="../../../static/img/test2.jpg">
+                        <img src="../../../../../static/img/test2.jpg">
                     </div>
                 </flexbox-item>
             </flexbox>
@@ -63,9 +63,8 @@
 
 <script type="text/ecmascript-6">
 import { XHeader, Flexbox, FlexboxItem, Group, Cell, Divider, XButton, XSwitch, Card } from 'vux';
+import Login from '../../login/login';
 import Logo from '@/components/logo/logo';
-import LoginRegister from '@/components/common/loginregister';
-import axios from 'axios';
 import Logger from 'chivy';
 import { mapGetters } from 'vuex';
 const log = new Logger('cafe/buy');
@@ -87,8 +86,8 @@ export default {
         XButton,
         XSwitch,
         Card,
-        'logo': Logo,
-        'loginregister': LoginRegister
+        Logo,
+        Login
     },
     computed: {
         ...mapGetters([
@@ -166,7 +165,7 @@ export default {
             }
             log.info('Now get the AJAX to API(' + ApiSaveRecordList + ')');
             log.debug('Buy List is ' + JSON.stringify(buylist));
-            axios.post(ApiSaveRecordList, buylist).then((response) => {
+            this.$http.post(ApiSaveRecordList, buylist).then((response) => {
                  let result = response.data;
                  log.debug('ajax API(' + ApiSaveRecordList + ') response is ' + JSON.stringify(result));
                  if (result.success && result.responseStatus === '余额支付成功') {
@@ -186,7 +185,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-.loginRegister-wrapper
+.paid-wrapper
     .buy-wrapper
         .paid-wrapper
             display flex

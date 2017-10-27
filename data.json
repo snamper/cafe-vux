@@ -17,6 +17,23 @@
       "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
       "price": 50,
       "slider": true
+    },{
+      "canBook": true,
+      "classifyId": 70,
+      "code": "0090645a-2ca6-4a5b-b250-13a8403930d5",
+      "creatPeriod": "40",
+      "createTime": 1505439759644,
+      "creatorId": -1,
+      "defaultEntity": false,
+      "description": "水果蛋糕",
+      "id": 71,
+      "imageSliderUrl": "static/img/silder3.jpg",
+      "imageUrl": "static/img/test3.jpg",
+      "memberPrice": 35,
+      "name": "水果蛋糕",
+      "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+      "price": 70,
+      "slider": true
     }],
     "咖啡": [{
         "canBook": false,

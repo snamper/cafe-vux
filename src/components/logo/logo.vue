@@ -12,7 +12,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 .logo-wrapper
     img
-    width 100%
-    height auto
-
+        width 100%
+        height auto
 </style>

@@ -30,7 +30,7 @@
 <script type="text/ecmascript-6">
 import { Flexbox, FlexboxItem, Group, XNumber, XButton } from 'vux';
 import Logger from 'chivy';
-const log = new Logger('cafe/imgpanel');
+const log = new Logger('cafe/productshow');
 export default {
     props: {
         product: {

@@ -1,6 +1,6 @@
 
 'use strict'
-// Template version: 1.1.1
+// Template version: 1.1.3
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
@@ -28,10 +28,7 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: process.env.PORT || 9999,
-    // disable host check to access using ip address vistor
-    disableHostCheck: true,
-    // public: '192.168.3.11:9999',
-    autoOpenBrowser: true,
+    autoOpenBrowser: false,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},

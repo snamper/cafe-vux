@@ -9,10 +9,10 @@
             <divider>热销商品</divider>
             <grid :cols="2">
                 <grid-item v-for="(product,i) in hots" :key="i">
-                    <img width="100%" height="auto" :src="product.img">
+                    <img width="100%" height="auto" :src="product.imageUrl">
                     <div class="detail-wrapper">
-                        <span class="title">商品1</span>
-                        <span class="price">￥20</span>
+                        <span class="title">{{product.name}}</span>
+                        <span class="price">￥{{product.price}}</span>
                     </div>
                 </grid-item>
             </grid>
@@ -22,8 +22,8 @@
 
 <script type="text/ecmascript-6">
 import { Swiper, Divider, Grid, GridItem } from 'vux';
-import Logo from '@/components/logo/logo';
 import { mapGetters } from 'vuex';
+import Logo from '@/components/logo/logo';
 export default {
     computed: {
         ...mapGetters({
@@ -31,39 +31,15 @@ export default {
             hots: 'hots'
         })
     },
-    methods: {
-    },
     components: {
         Swiper,
         Divider,
         Grid,
         GridItem,
-        'logo': Logo
+        Logo
     }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    .home-wrapper
-        .swiper-wrapper
-            font-size 24px
-        .hot-wrapper
-            font-size 24px
-            .weui-grids
-                padding-bottom 5px
-                .weui-grid
-                    padding 25px 
-                .detail-wrapper
-                    display flex
-                    justify-content space-between
-                    .title
-                        font-size 18px
-                        padding 5px 0
-                        font-weight 700
-                        color black
-                    .price
-                        font-size 18px
-                        color red
-                        padding 5px 0
-                        font-weight 700
 </style>

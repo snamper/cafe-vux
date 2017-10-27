@@ -1,5 +1,5 @@
 <template>
-    <div class="template-wrapper">
+    <div class="list-wrapper">
         <divider>购买日期:{{datetime}}, {{status}}</divider>
         <group>
             <cell title="您购买的商品总价" :value="total"></cell>
@@ -11,7 +11,7 @@
 <script type="text/ecmascript-6">
 import { CellFormPreview, Group, Cell, Divider } from 'vux';
 import Logger from 'chivy';
-const log = new Logger('cafe/member');
+const log = new Logger('cafe/list');
 export default {
     props: {
         buy: {

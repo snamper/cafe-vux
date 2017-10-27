@@ -1,12 +1,11 @@
 <template>
-    <div class="modify-wrapper">
-        <h1>modify</h1>
+    <div class="cart-wrapper">
+        <router-view></router-view>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 export default {
-
 };
 </script>
 

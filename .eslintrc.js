@@ -23,14 +23,10 @@ module.exports = {
     'generator-star-spacing': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    //增加对分号的配置
+    //add semi check(must)
     'semi': ['error', "always"],
     'indent': 0,
-    /* 去掉space-before-function-paren规则 */
-    "space-before-function-paren": 0,
-  },
-  /* 全局注入swiper */
-  'globals': {  
-    "Swiper": true  
-  } 
+    /* igiron space-before-function-paren rule*/
+    "space-before-function-paren": 0
+  }
 }

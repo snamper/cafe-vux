@@ -12,8 +12,9 @@ const express = require('express')
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = require('./webpack.dev.conf')
+
 // body-parse define
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 
 // default port where dev server listens for incoming traffic
 const port = process.env.PORT || config.dev.port
@@ -49,7 +50,6 @@ const resnull = appData.buyrecord.null
 const resfail = appData.buyrecord.fail
 const ressuccess = appData.buyrecord.success
 
-
 /* define router  */
 var apiRoutes = express.Router()
 apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) {
@@ -65,7 +65,7 @@ apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res)
   } else if(user.name==='david') {
     res.json(loginrich)
   }else{
-    res.json(loginfail);
+    res.json(loginfail)
   }
 })
 
@@ -102,35 +102,34 @@ apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
 })
 
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
-  let user = req.body;
-  console.log(JSON.stringify(user));
+  let user = req.body
+  console.log(JSON.stringify(user))
   if(user.userId === 107){
     if(user.needDetail){
-      res.json(cartDetailList);
+      res.json(cartDetailList)
     }else{
-      res.json(cartList);
+      res.json(cartList)
     }
   }
 })
 
 
 apiRoutes.post('/product/show/ui/saveRecordList.do',jsonParser,function(req,res){
-  let user = req.body;
-  console.log(JSON.stringify(user));
+  let user = req.body
+  console.log(JSON.stringify(user))
   if (user.amount < 100) {
-    res.json(resfail);
+    res.json(resfail)
   } else if(user.amount > 100 && user.amount <200) {
-    res.json(ressuccess);
+    res.json(ressuccess)
   } else {
-    res.json(resnull);
+    res.json(resnull)
   }
 })
 
-
 /* setting router address */
-app.use('/shop', apiRoutes);
+app.use('/shop', apiRoutes)
 
-const compiler = webpack(webpackConfig);
+const compiler = webpack(webpackConfig)
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
@@ -157,11 +156,9 @@ app.use(hotMiddleware)
 
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {
-  const options = proxyTable[context]
+  let options = proxyTable[context]
   if (typeof options === 'string') {
-    options = {
-      target: options
-    }
+    options = { target: options }
   }
   app.use(proxyMiddleware(options.filter || context, options))
 })
@@ -176,11 +173,7 @@ app.use(devMiddleware)
 const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-const ipAddress = 'localhost'
-
-// const uri = 'http://localhost:' + port
-
-const uri = 'http://' + ipAddress + ':' + port
+const uri = 'http://localhost:' + port
 
 var _resolve
 var _reject
@@ -200,8 +193,7 @@ devMiddleware.waitUntilValid(() => {
       _reject(err)
     }
     process.env.PORT = port
-    // var uri = 'http://localhost:' + port
-    // var uri = 'http://' + ipAddress + ':' + port
+    var uri = 'http://localhost:' + port
     console.log('> Listening at ' + uri + '\n')
     // when env is testing, don't need open it
     if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
