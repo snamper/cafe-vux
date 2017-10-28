@@ -13,5 +13,6 @@ export default {
 @import "~vux/src/styles/1px.less";
 #app {
   height: 100%;
+  width: 100%
 }
 </style>

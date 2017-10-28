@@ -186,6 +186,8 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
 .paid-wrapper
+    .login
+        margin-top 5px
     .buy-wrapper
         .paid-wrapper
             display flex

@@ -29,7 +29,7 @@
 <script type="text/ecmascript-6">
 import { md5, Group, XButton, XInput, Toast, Tab, TabItem } from 'vux';
 import Logger from 'chivy';
-const log = new Logger('cafe/loginregister');
+const log = new Logger('cafe/login');
 const ApiIsExistUserName = '/shop/member/show/ui/isExistUserName.do';
 const ApiMemberLogin = '/shop/member/show/ui/memberLogin.do';
 const ApiCreateMember = '/shop/member/show/ui/createMember.do';
@@ -131,7 +131,7 @@ export default {
                 this.$http.post(ApiCreateMember, this.submitRegister).then((response) => {
                     let result = response.data;
                     log.debug('AJAX API(' + ApiCreateMember + ') response data is ' + JSON.stringify(result));
-                    if (result !== null) {
+                    if (result.success) {
                         let member = {
                             'balance': 0,
                             'ID': result.entityId,

@@ -3,7 +3,7 @@
         <logo></logo>
         <div class='member-wrapper' >
             <div class='login' v-if='!memberName'>
-                <loginregister></loginregister>
+                <login></login>
             </div>
             <div class='showInfo' v-if='memberName'>
                 <card :header='title' @click.native='showmodify'></card>
