@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Main from '@/page/home/main';
-import Menu from '@/page/home/menu/menu';
-import Home from '@/page/home/home/home';
-import Cart from '@/page/home/cart/cart';
-import CartShow from '@/page/home/cart/cart/cartList';
-import Pay from '@/page/home/cart/pay/pay';
-import Record from '@/page/home/record/record';
-import LoginPage from '@/page/home/login/loginPage';
+import Login from '@/page/login/login';
+import Member from '@/page/member/member';
+import Menu from '@/page/menu/menu';
+import New from '@/page/new/new';
+import Comfirm from '@/page/order/confirm/confirm';
+import Detail from '@/page/order/detail/detail';
+import History from '@/page/order/history/history';
+import Pay from '@/page/pay/pay';
 
 Vue.use(Router);
 
@@ -17,32 +17,41 @@ export default new Router({
       redirect: '/home/home'
     },
     {
-      path: '/login',
-      component: LoginPage
+      path: '/menu',
+      component: Menu
     },
     {
-      path: '/home',
-      component: Main,
-      children: [{
-        path: 'home',
-        component: Home
-      }, {
-        path: 'menu',
-        component: Menu
-      }, {
-        path: 'cart',
-        component: Cart,
-        children: [{
-          path: 'pay',
-          component: Pay
-        }, {
-          path: 'cartlist',
-          component: CartShow
-        }]
-      }, {
-        path: 'record',
-        component: Record
-      }]
+      path: '/member',
+      component: Member
+    },
+    {
+      path: '/new',
+      component: New
+    },
+    {
+      path: '/pay',
+      component: Pay
+    },
+    {
+      path: '/login',
+      component: Login
+    },
+    {
+      path: '/order',
+      redirect: '/order/confirm',
+      chindren: [{
+          path: 'comfirm',
+          component: Comfirm
+        },
+        {
+          path: 'detail',
+          component: Detail
+        },
+        {
+          path: 'history',
+          component: History
+        }
+      ]
     }
   ]
 });

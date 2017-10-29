@@ -1,11 +1,48 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <view-box>
+      <router-view></router-view>
+    </view-box>
+    <tabbar>
+        <tabbar-item :link="{path:'/menu'}">
+          <img slot="icon" src="./common/img/home.png"></img>
+          <span slot="label">菜单</span>
+        </tabbar-item>
+        <tabbar-item :link="{path:'/new'}">
+          <img slot="icon" src="./common/img/menu.png"></img>
+          <span slot="label">新品</span>
+        </tabbar-item>
+        <tabbar-item :link="{path:'/order'}">
+          <img slot="icon" src="./common/img/cart.png"></img>
+          <span slot="label">订单</span>
+        </tabbar-item>
+        <tabbar-item :link="{path:'/member'}">
+          <img slot="icon" src="./common/img/me.png"></img>
+          <span slot="label">我的</span>
+        </tabbar-item>
+      </tabbar>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import { Tabbar, TabbarItem, ViewBox } from 'vux';
+import Logger from 'chivy';
+const log = new Logger('cafe/App');
 export default {
+  components: {
+    Tabbar,
+    TabbarItem,
+    ViewBox
+    },
+  created: function () {
+    log.info('call initCategorys function to init categorys data');
+    let categorys = this.$store.commit('initCategorys');
+    log.debug('products data is ' + JSON.stringify(categorys));
+  },
+  mounted: function () {
+    log.info('call getmember function to init member');
+    this.$store.commit('getMember');
+  }
 };
 </script>
 
@@ -13,6 +50,6 @@ export default {
 @import "~vux/src/styles/1px.less";
 #app {
   height: 100%;
-  width: 100%
+  width: 100%;
 }
 </style>
