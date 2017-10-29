@@ -115,10 +115,9 @@
 返回一个JSON对象，并增加对象名为status。
 
 	{
-		"balance":0,
-		"id":0,
-		"status":true
-	}
+		"status": true/false
+	}	
+	实际格式：{"balance":0,"id":0,"status":"true"}
 
 ### 用户登录接口
 
@@ -132,6 +131,8 @@
 	}
 
 **回参**
+
+增加对象status
 
 	成功：{
 	  "status": true,
@@ -147,11 +148,7 @@
 	  "name": "ccc"
 	}
 	
-	失败：{
-		"balance":0,
-		"id":0,
-		"status":"false"
-	}
+	失败：{"balance":0,"id":0,"status":"false"}
 	
 ### 用户注册接口
 
@@ -190,78 +187,37 @@
 	const ApiSaveRecordList = '/shop/product/show/ui/saveRecordList.do';
 
 **入参**
-	{
-	  "amount": 5,
-	  "userId": 723,
-	  "userName": "bbb",
-	  "cashOrBalance": "BALANCE",
-	  "details": [{
-	    "productId": 2,
-	    "amount": 12,
-	    "number": 2
-	  }, {
-	    "productId": 3,
-	    "amount": 6,
-	    "number": 3
-	  }]
-	}
-
+	{"amount":5,"userId":723,"userName":"bbb","cashOrBalance":"BALANCE","details":[{"productId":2,"amount":12,"number":2},{"productId":3,"amount":6,"number":3}]}
 **回参**
 
-	{
-	  "entityName": "null",
-	  "envData": {
-	    "endRow": -1,
-	    "language": "",
-	    "pageNo": -1,
-	    "pageSize": -1,
-	    "realTotalRows": -1,
-	    "responseStatus": "用户不存在",
-	    "startRow": -1,
-	    "totalPages": -1,
-	    "totalRows": -1,
-	    "userIp": "",
-	    "userName": ""
-	  },
-	  "success": false
-	}
+	{"entityName":"null","envData":{"endRow":-1,"language":"","pageNo":-1,"pageSize":-1,"realTotalRows":-1,
+	"responseStatus":"用户不存在","startRow":-1,"totalPages":-1,"totalRows":-1,"userIp":"","userName":""},
+	"success":false}
 	
-	{
-	  "envData": {
-	    "endRow": -1,
-	    "language": "",
-	    "pageNo": -1,
-	    "pageSize": -1,
-	    "realTotalRows": -1,
-	    "responseStatus": "余额不足",
-	    "startRow": -1,
-	    "totalPages": -1,
-	    "totalRows": -1,
-	    "userIp": "",
-	    "userName": ""
-	  },
-	  "success": false
-	}
+	{"envData":{"endRow":-1,"language":"","pageNo":-1,"pageSize":-1,"realTotalRows":-1,
+	"responseStatus":"余额不足","startRow":-1,"totalPages":-1,"totalRows":-1,"userIp":"","userName":""},
+	"success":false}
 	
-	{
-	  "envData": {
-	    "endRow": -1,
-	    "language": "",
-	    "pageNo": -1,
-	    "pageSize": -1,
-	    "realTotalRows": -1,
-	    "responseStatus": "0",
-	    "startRow": -1,
-	    "totalPages": -1,
-	    "totalRows": -1,
-	    "userIp": "",
-	    "userName": ""
-	  },
-	  "success": true
-	}
-
-根据 success字段来判断  entityName和responseStatus 表示原因 
-用户不存在时 success 为false 并且entityName为null， "responseStatus":"用户不存在"
-余额不足时 success 为false 并且 responseStatus":"余额不足"
-成功时 success为 true 并且 "responseStatus":"余额支付成功"
-现金支付时 "cashOrBalance":一定不要传BALANCE  会返回 uccess为 true 并且 "responseStatus":"现金支付"
+	{"entityId":"138","envData":{"endRow":-1,"language":"","pageNo":-1,"pageSize":-1,"realTotalRows":-1,
+	"responseStatus":"余额支付成功","startRow":-1,"totalPages":-1,"totalRows":-1,"userIp":"","userName":""},
+	"success":true}
+	
+	{"entityId":"135","envData":{"endRow":-1,"language":"","pageNo":-1,"pageSize":-1,"realTotalRows":-1,
+	"responseStatus":"现金支付","startRow":-1,"totalPages":-1,"totalRows":-1,"userIp":"","userName":""},
+	"success":true}
+	
+	//entityId就是recordId 其他不变 成功才会返回id
+	//根据 success字段来判断  entityName和responseStatus 表示原因 
+	//用户不存在时 success 为false 并且entityName为null， "responseStatus":"用户不存在"
+	//余额不足时 success 为false 并且 responseStatus":"余额不足"
+	//成功时 success为 true 并且 "responseStatus":"余额支付成功"
+	//现金支付时 "cashOrBalance":一定不要传BALANCE  会返回 uccess为 true 并且 "responseStatus":"现金支付"
+	
+### “我已付款”按钮响应接口
+	/shop/product/show/ui/alterStatus.do
+**入参**
+	{"RecordID":132,"status":"WAITE4ENSURE"} //对于你来说 status的值就只传WAITE4ENSURE就行了 别传其他 
+**回参**
+	{"envData":{"endRow":-1,"language":"en-US","pageNo":-1,"pageSize":-1,"realTotalRows":-1,
+	"responseStatus":"0","startRow":-1,"totalPages":-1,"totalRows":-1,"userId":0,"userIp":"10.0.0.112"},
+	"success":true}//依然根据success的值来判断成功与否
