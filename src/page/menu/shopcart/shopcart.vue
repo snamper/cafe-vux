@@ -239,7 +239,7 @@
   .shopcart
     position: fixed
     left: 0
-    bottom: 0
+    bottom: 50px
     z-index: 50
     width: 100%
     height: 48px
