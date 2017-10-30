@@ -10,7 +10,7 @@
                 <flexbox :gutter="1">
                 <flexbox-item :span="1/5">
                     <div class="img-wrapper">
-                        <img :src="product.imageUrl" width="100%" height="auto">
+                        <img :src="product.imageUrl" width="65px" height="65px">
                     </div>
                 </flexbox-item>
                 <flexbox-item :span="4/5">

@@ -98,7 +98,7 @@ apiRoutes.post('/member/show/ui/isExistUserName.do', jsonParser, function (req, 
   // {"entityName":"test"}
   let user = req.body;
   console.log('isExistUserName.do data is ' + JSON.stringify(user));
-  if(user.entityName === 'totti' || user.entityName === 'david')
+  if(user.entityName === '13333333333' || user.entityName === '13555555555')
   {
     res.json(duplicateTrue)
   }else{

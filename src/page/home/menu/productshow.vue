@@ -3,7 +3,7 @@
         <flexbox :gutter="5">
             <flexbox-item :span="1/4">
                 <div class="img-wrapper">
-                    <img :src="product.imageUrl" width="100%" height="auto">
+                    <img :src="product.imageUrl" width="100px" height="100px">
                 </div>
             </flexbox-item>
             <flexbox-item :span="3/4">
