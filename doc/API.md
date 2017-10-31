@@ -112,12 +112,7 @@
 
 **回参**
 
-返回一个JSON对象，并增加对象名为status。
-
-	{
-		"status": true/false
-	}	
-	实际格式：{"balance":0,"id":0,"status":"true"}
+	{"balance":0,"id":0,"status":"true"}
 
 ### 用户登录接口
 
@@ -132,23 +127,21 @@
 
 **回参**
 
-增加对象status
 
-	成功：{
-	  "status": true,
-	  "balance": 0,
-	  "cardGrade": "",
-	  "cardNo": "",
-	  "cardStatus": "",
-	  "createTime": "2017-10-23 21:04:13",
-	  "description": "",
-	  "gender": "Male",
-	  "handNo": "",
-	  "id": 107,
-	  "name": "ccc"
-	}
+	成功：{"balance":0,
+		"cardGrade":"",
+		"cardNo":""
+		,"cardStatus":""
+		,"createTime":"2017-10-30 18:51:06",
+		"description":"",
+		"gender":"Male",
+		"handNo":"","id":141,
+		"name":"ccc",
+		"status":true}
 	
-	失败：{"balance":0,"id":0,"status":"false"}
+	失败：{"balance":0,
+			"id":0,
+			"status":false}
 	
 ### 用户注册接口
 
