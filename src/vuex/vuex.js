@@ -11,7 +11,9 @@ export const store = new Vuex.Store({
   state: {
     categorys: '',
     member: '',
-    buylist: ''
+    buylist: '',
+    recordID: '',
+    uuid: ''
   },
   getters: {
     products: function (state) {
@@ -105,6 +107,11 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    changeRecordID: function(state, payload) {
+      log.debug('Before change, the record ID is ' + state.recordID);
+      state.recordID = payload;
+      log.debug('After change, the record ID is ' + state.recordID);
+    },
     initCategorys: function (state) {
       log.debug('Now get the AJAX to API(' + ApiCategorys + ')');
       axios.get(ApiCategorys).then(function (response) {
@@ -147,7 +154,14 @@ export const store = new Vuex.Store({
         'name': payload.name
       };
       state.member = member;
+      // if login clear uuid
+      state.uuid = '';
       log.debug('After save member, the member is ' + JSON.stringify(state.member));
+    },
+    setUUID: function(state, payload) {
+      log.debug('before uuid change, the uuid is ' + state.uuid);
+      state.uuid = payload;
+      log.debug('after uuid change, the uuid is ' + state.uuid);
     },
     getMember: function (state) {
       state.member = JSON.parse(sessionStorage.getItem('member'));

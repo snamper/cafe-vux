@@ -56,6 +56,9 @@
                     </div>
                 </flexbox-item>
             </flexbox>
+            <div class="paid-wrapper">
+                <x-button @click.native="alreadyPay">我已付款</x-button>
+            </div>
         </div>
         </animated-fade-in-right>
     </div>
@@ -69,6 +72,7 @@ import Logger from 'chivy';
 import { mapGetters } from 'vuex';
 const log = new Logger('cafe/buy');
 const ApiSaveRecordList = '/shop/product/show/ui/saveRecordList.do';
+const ApiAlterStatus = '/shop/product/show/ui/alterStatus.do';
 export default {
     data() {
         return {
@@ -147,7 +151,7 @@ export default {
             } else if (cashOrBalance === 'Cash') {
                 if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
                     buylist = {
-                        'userId': '',
+                        'userId': this.$store.state.uuid,
                         'userName': '',
                         'cashOrBalance': cashOrBalance,
                         'details': this.cartList,
@@ -168,15 +172,36 @@ export default {
             this.$http.post(ApiSaveRecordList, buylist).then((response) => {
                  let result = response.data;
                  log.debug('ajax API(' + ApiSaveRecordList + ') response is ' + JSON.stringify(result));
-                 if (result.success && result.responseStatus === '余额支付成功') {
-                    this.$vux.toast.text('购买成功，已从余额中扣款', 'middle');
+                 if (result.success) {
+                    this.$vux.toast.text('购买成功', 'middle');
+                    if (typeof (result.entityId) !== 'undefined') {
+                        log.debug('record id is ' + result.entityId);
+                        this.$store.commit('changeRecordID', result.entityId);
+                    } else {
+                        log.debug('cash pay, no record id');
+                    }
+                    // clear cart list
                     this.$store.commit('clearCount');
-                 } else if (result.success && result.responseStatus === '现金支付') {
-                     this.$vux.toast.text('购买成功，请付款', 'middle');
-                     this.$store.commit('clearCount');
-                     this.showPay();
+                    this.showPay();
                  } else {
                     this.$vux.toast.text('购买失败，请重新购买', 'middle');
+                 }
+            });
+        },
+        alreadyPay: function() {
+            log.info('Now get the AJAX to API(' + ApiAlterStatus + ')');
+            log.debug('The recordID is ' + JSON.stringify(this.$store.state.recordID));
+            let req = {
+                'RecordID': this.$store.state.recordID,
+                'status': 'WAITE4ENSURE'
+            };
+            this.$http.post(ApiAlterStatus, req).then((response) => {
+                 let result = response.data;
+                 log.debug('ajax API(' + ApiAlterStatus + ') response is ' + JSON.stringify(result));
+                 if (result.success) {
+                     this.$vux.toast.text('已通知店家，请耐心等候付款确认', 'middle');
+                 } else {
+                     this.$vux.toast.text('服务器故障，请重新确认', 'middle');
                  }
             });
         }

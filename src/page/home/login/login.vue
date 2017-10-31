@@ -14,8 +14,8 @@
         </div>
         <div class="register-wrapper" v-if="index === 1">
             <group>
-                <x-input label-width="4em" title="手机号码" name="phone" type="tel" mask="999 9999 9999" is-type="china-mobile" :required="true" v-model="registerInfo.phone" ref="phone"></x-input>
-                <x-input label-width="4em" title="用户名" name="username" type="text" :min='3' :max='16' v-model="registerInfo.username" @on-blur="duplicateUsername" ref="username"></x-input>
+                <x-input label-width="4em" title="手机号码" name="phone" type="tel" mask="999 9999 9999" is-type="china-mobile" :required="true" v-model="registerInfo.phone" ref="phone" @on-blur="duplicateUsername"></x-input>
+                <x-input label-width="4em" title="用户名" name="username" type="text" :min='3' :max='16' v-model="registerInfo.username" ref="username"></x-input>
                 <x-input label-width="4em" title="密码" name="password" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.password" ref="password"></x-input>
                 <x-input label-width="4em" title="确认密码" name="confirmPassword" type="password" :min='6' :max='16' :required="true" v-model="registerInfo.confirmpsd" :is-type="verifypsd" ref="repassword" @on-enter="register"></x-input>
             </group>
@@ -72,8 +72,8 @@ export default {
         },
         submitRegister: function () {
             let message = {
-                'name': this.registerInfo.username,
-                'phone': this.registerInfo.phone.replace(/\s/g, ''),
+                'username': this.registerInfo.username,
+                'name': this.registerInfo.phone.replace(/\s/g, ''),
                 'passWd': md5(this.registerInfo.password)
             };
             log.debug('Register user is ' + JSON.stringify(message));
@@ -157,10 +157,10 @@ export default {
             }
         },
         duplicateUsername: function () {
-            log.debug('submit resister name is ' + this.registerInfo.username);
-            if (this.registerInfo.username !== '') {
+            log.debug('submit resister name is ' + this.registerInfo.phone);
+            if (this.registerInfo.phone !== '') {
                 log.info('Now get the AJAX to API(' + ApiIsExistUserName + ')');
-                let name = { 'entityName': this.registerInfo.username };
+                let name = { 'entityName': this.registerInfo.phone.replace(/\s/g, '') };
                 log.debug('submit verify user is ' + JSON.stringify(name));
                 this.$http.post(ApiIsExistUserName, name).then((response) => {
                     log.info('is ' + this.registerInfo.username + ' exist?');
@@ -169,7 +169,7 @@ export default {
                     /* username already exist */
                     if (result.status) {
                         this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
-                        this.$refs.username.reset();
+                        this.$refs.phone.reset();
                     }
                 });
             }

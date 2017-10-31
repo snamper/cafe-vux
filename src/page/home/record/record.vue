@@ -6,7 +6,7 @@
                 <login></login>
             </div>
             <div class='showInfo' v-if='memberName'>
-                <card :header='title' @click.native='showmodify'></card>
+                <card :header='cartTitle' @click.native='showmodify'></card>
                 <div class='buylist-wrapper' v-if='buys' >
                     <div v-for='(buy,index) in buys' :key='index'>
                         <list :buy='buy'></list>
@@ -48,9 +48,10 @@ export default {
   mounted: function() {
     if (this.member !== null) {
       log.debug('member name is ' + this.member.name);
-      if (this.member.name !== '' || typeof this.member.name !== 'undefined') {
+      log.debug('get member id = ' + this.member.id);
+      if (this.member.name !== '') {
         let user = {
-          userId: this.member.ID,
+          userId: this.member.id,
           needDetail: true
         };
         log.debug('get product list\'s user is ' + JSON.stringify(user));

@@ -9,7 +9,7 @@
             <divider>热销商品</divider>
             <grid :cols="2">
                 <grid-item v-for="(product,i) in hots" :key="i">
-                    <img width="100%" height="auto" :src="product.imageUrl">
+                    <img width="165px" height="165px" :src="product.imageUrl">
                     <div class="detail-wrapper">
                         <span class="title">{{product.name}}</span>
                         <span class="price">￥{{product.price}}</span>

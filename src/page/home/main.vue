@@ -28,7 +28,7 @@
 import { Tabbar, TabbarItem, ViewBox, Badge } from 'vux';
 import Logger from 'chivy';
 import { mapGetters } from 'vuex';
-const log = new Logger('cafe/App');
+const log = new Logger('cafe/main');
 export default {
   name: 'app',
   components: {

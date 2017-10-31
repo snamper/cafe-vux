@@ -7,7 +7,6 @@ import Cart from '@/page/home/cart/cart';
 import CartShow from '@/page/home/cart/cart/cartList';
 import Pay from '@/page/home/cart/pay/pay';
 import Record from '@/page/home/record/record';
-import LoginPage from '@/page/home/login/loginPage';
 
 Vue.use(Router);
 
@@ -15,10 +14,6 @@ export default new Router({
   routes: [{
       path: '/',
       redirect: '/home/home'
-    },
-    {
-      path: '/login',
-      component: LoginPage
     },
     {
       path: '/home',
