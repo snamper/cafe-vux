@@ -151,7 +151,7 @@ export default {
             } else if (cashOrBalance === 'Cash') {
                 if (this.member === null || this.member.name === '' || typeof (this.member.name) === 'undefined') {
                     buylist = {
-                        'userId': '',
+                        'userId': this.$store.state.uuid,
                         'userName': '',
                         'cashOrBalance': cashOrBalance,
                         'details': this.cartList,

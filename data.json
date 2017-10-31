@@ -107,7 +107,7 @@
     "fail": {
        "balance": 0, 
        "id": 0, 
-       "status": "false" 
+       "status": false 
       }
   },
   "register": {

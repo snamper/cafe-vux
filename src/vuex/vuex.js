@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
     categorys: '',
     member: '',
     buylist: '',
-    recordID: ''
+    recordID: '',
+    uuid: ''
   },
   getters: {
     products: function (state) {
@@ -153,7 +154,14 @@ export const store = new Vuex.Store({
         'name': payload.name
       };
       state.member = member;
+      // if login clear uuid
+      state.uuid = '';
       log.debug('After save member, the member is ' + JSON.stringify(state.member));
+    },
+    setUUID: function(state, payload) {
+      log.debug('before uuid change, the uuid is ' + state.uuid);
+      state.uuid = payload;
+      log.debug('after uuid change, the uuid is ' + state.uuid);
     },
     getMember: function (state) {
       state.member = JSON.parse(sessionStorage.getItem('member'));
