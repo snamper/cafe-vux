@@ -92,10 +92,11 @@ export default {
             for (let category in this.categorys) {
                 this.categorys[category].forEach((product) => {
                     if (product.count) {
-                        food.push(food);
+                        foods.push(food);
                     }
                 });
             }
+            log.debug('select food is ' + JSON.stringify(foods));
             /* this.goods.forEach((good) => {
                 good.foods.forEach((food) => {
                     if (food.count) {
@@ -229,7 +230,7 @@ export default {
                 margin-right 2px
                 background-size 12px 12px
                 background-repeat no-repeat
-                &.decrease
+                /* &.decrease
                     bg-image('decrease_3')
                 &.discount
                     bg-image('discount_3')
@@ -238,7 +239,7 @@ export default {
                 &.invoice
                     bg-image('invoice_3')
                 &.special
-                    bg-image('special_3')
+                    bg-image('special_3') */
             .text
                 display table-cell
                 width 56px

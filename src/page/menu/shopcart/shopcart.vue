@@ -104,21 +104,21 @@
       };
     },
     computed: {
-      totalPrice() {
+      totalPrice: function() {
         let total = 0;
         this.selectFoods.forEach((food) => {
           total += food.price * food.count;
         });
         return total;
       },
-      totalCount() {
+      totalCount: function() {
         let count = 0;
         this.selectFoods.forEach((food) => {
           count += food.count;
         });
         return count;
       },
-      payDesc() {
+      payDesc: function() {
         if (this.totalPrice === 0) {
           return `￥${this.minPrice}元起送`;
         } else if (this.totalPrice < this.minPrice) {
@@ -128,14 +128,14 @@
           return '去结算';
         }
       },
-      payClass() {
+      payClass: function() {
         if (this.totalPrice < this.minPrice) {
           return 'not-enough';
         } else {
           return 'enough';
         }
       },
-      listShow() {
+      listShow: function() {
         if (!this.totalCount) {
           this.fold = true;
           return false;
@@ -156,7 +156,7 @@
       }
     },
     methods: {
-      drop(el) {
+      drop: function(el) {
         for (let i = 0; i < this.balls.length; i++) {
           let ball = this.balls[i];
           if (!ball.show) {
@@ -167,30 +167,30 @@
           }
         }
       },
-      toggleList() {
+      toggleList: function() {
         if (!this.totalCount) {
           return;
         }
         this.fold = !this.fold;
       },
-      hideList() {
+      hideList: function() {
         this.fold = true;
       },
-      empty() {
+      empty: function() {
         this.selectFoods.forEach((food) => {
           food.count = 0;
         });
       },
-      pay() {
+      pay: function() {
         if (this.totalPrice < this.minPrice) {
           return;
         }
         window.alert(`支付${this.totalPrice}元`);
       },
-      addFood(target) {
+      addFood: function(target) {
         this.drop(target);
       },
-      beforeDrop(el) {
+      beforeDrop: function(el) {
         let count = this.balls.length;
         while (count--) {
           let ball = this.balls[count];
@@ -207,7 +207,7 @@
           }
         }
       },
-      dropping(el, done) {
+      dropping: function(el, done) {
         /* eslint-disable no-unused-vars */
         let rf = el.offsetHeight;
         this.$nextTick(() => {
@@ -219,7 +219,7 @@
           el.addEventListener('transitionend', done);
         });
       },
-      afterDrop(el) {
+      afterDrop: function(el) {
         let ball = this.dropBalls.shift();
         if (ball) {
           ball.show = false;
