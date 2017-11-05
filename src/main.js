@@ -4,17 +4,13 @@ import Vue from 'vue';
 import FastClick from 'fastclick';
 import App from './App';
 import router from './router';
-import AnimatedVue from 'animated-vue';
-import VueChatScroll from 'vue-chat-scroll';
 import { ToastPlugin, AjaxPlugin } from 'vux';
-import { store } from './vuex/vuex';
-import './common/css/animate.css';
+import { store } from './vuex/index';
+import './common/css/iconfont.css';
 import './common/stylus/index.styl';
 
-Vue.use(VueChatScroll);
 Vue.use(AjaxPlugin);
 Vue.use(ToastPlugin);
-Vue.use(AnimatedVue);
 Vue.config.productionTip = false;
 FastClick.attach(document.body);
 

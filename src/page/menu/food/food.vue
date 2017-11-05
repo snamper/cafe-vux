@@ -62,10 +62,10 @@
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
   import Vue from 'vue';
-  // import {formatDate} from './date';
-  import cartcontrol from '../cartcontrol/cartcontrol';
-  import ratingselect from '../ratingselect/ratingselect';
-  import split from '../split/split';
+  import {formatDate} from 'common/js/date';
+  import cartcontrol from 'components/cartcontrol/cartcontrol';
+  import ratingselect from 'components/ratingselect/ratingselect';
+  import split from 'components/split/split';
 
   const ALL = 2;
 
@@ -138,12 +138,11 @@
         });
       }
     },
-    filters: function() {
-      return '2017-12-25 11:03';
-      /* formatDate(time) {
+    filters: {
+      formatDate(time) {
         let date = new Date(time);
         return formatDate(date, 'yyyy-MM-dd hh:mm');
-      } */
+      }
     },
     components: {
       cartcontrol,
@@ -154,7 +153,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import '../../../common/stylus/mixin.styl'
+  @import "../../common/stylus/mixin.styl"
 
   .food
     position: fixed

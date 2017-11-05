@@ -1,5 +1,5 @@
 <template>
-    <div class="template-wrapper">
+    <div>
     </div>
 </template>
 
@@ -8,5 +8,5 @@ export default {
 };
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
 </style>

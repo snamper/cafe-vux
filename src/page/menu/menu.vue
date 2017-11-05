@@ -1,82 +1,66 @@
 <template>
-    <div class="menu-wrapper">
-        <logo></logo>
-        <div class="goods">
-            <div class="menu-wrapper" ref="menuWrapper">
-                <ul>
-                    <li class="menu-item" v-for="(product, index) in categorys" :key="index" @click="selectMenu(index,$event)" ref="menuList">
-                        <span class="text border-1px">
-                            {{index}}
-                        </span>
-                    </li>
-                </ul>
-            </div>
-            <div class="foods-wrapper" ref="foodsWrapper">
-                <ul>
-                    <li class="food-list" ref="foodList" v-for="(product,index) in categorys" :key="index">
-                        <h1 class="title">{{index}}</h1>
-                        <ul>
-                            <li class="food-item border-1px" v-for="(food,index) in categorys[index]" @click="selectFood(food,$event)">
-                                <div class="icon">
-                                    <img width="57" height="57" :src="food.imageUrl" >
-                                </div>
-                                <div class="content">
-                                    <h2 class="name">{{food.name}}</h2>
-                                    <p class="desc">{{food.description}}</p>
-                                    <div class="extra">
-                                        <span class="count">月售200份</span><span>好评率75%</span>
-                                    </div>
-                                    <div class="price">
-                                        <span class="now">￥{{food.memberPrice}}</span><span class="old" >￥{{food.price}}</span>
-                                    </div>
-                                    <div class="cartcontrol-wrapper">
-                                        <cartcontrol @add="addFood" :food="food"></cartcontrol>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="4"  :minPrice="2"></shopcart> 
-        </div>
+  <div>
+    <div class="goods">
+      <div class="menu-wrapper" ref="menuWrapper">
+        <ul>
+          <li v-for="(item,index) in goods" class="menu-item" @click="selectMenu(index,$event)" ref="menuList">
+          <span class="text border-1px">
+            <span v-show="item.type>0" class="icon"></span>{{item.name}}
+          </span>
+          </li>
+        </ul>
+      </div>
+      <div class="foods-wrapper" ref="foodsWrapper">
+        <ul>
+          <li v-for="item in goods" class="food-list" ref="foodList">
+            <h1 class="title">{{item.name}}</h1>
+            <ul>
+              <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
+                <div class="icon">
+                  <img width="57" height="57" :src="food.icon">
+                </div>
+                <div class="content">
+                  <h2 class="name">{{food.name}}</h2>
+                  <p class="desc">{{food.description}}</p>
+                  <div class="extra">
+                    <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
+                  </div>
+                  <div class="price">
+                    <span class="now">￥{{food.price}}</span><span class="old"
+                                                                  v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                  </div>
+                  <div class="cartcontrol-wrapper">
+                    <cartcontrol @add="addFood" :food="food"></cartcontrol>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
+                :minPrice="seller.minPrice"></shopcart>
     </div>
+    <food @add="addFood" :food="selectedFood" ref="food"></food>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
-import Logo from '../../components/logo/logo';
 import BScroll from 'better-scroll';
 import shopcart from './shopcart/shopcart';
 import cartcontrol from './cartcontrol/cartcontrol';
 import food from './food/food';
-import Logger from 'chivy';
-const log = new Logger('cafe/menu');
-
-// const ERR_OK = 0;
-// const debug = process.env.NODE_ENV !== 'production';
 export default {
-    props: {
-        seller: {
-            type: Object
-        }
-    },
     data() {
         return {
+            goods: [],
             listHeight: [],
             scrollY: 0,
-            selectedFood: {},
-            deliveryPrice: ''
+            selectedFood: {}
         };
     },
     computed: {
-        test: function (obj) {
-            return JSON.stringify(obj);
-        },
-        categorys: function () {
-            log.debug('categorys is ' + JSON.stringify(this.$store.state.categorys));
-            return this.$store.state.categorys;
-        },
-        currentIndex: function() {
+        currentIndex() {
             for (let i = 0; i < this.listHeight.length; i++) {
                 let height1 = this.listHeight[i];
                 let height2 = this.listHeight[i + 1];
@@ -87,73 +71,59 @@ export default {
             }
             return 0;
         },
-        selectFoods: function () {
+        selectFoods() {
             let foods = [];
-            for (let category in this.categorys) {
-                this.categorys[category].forEach((product) => {
-                    if (product.count) {
-                        foods.push(food);
-                    }
-                });
-            }
-            log.debug('select food is ' + JSON.stringify(foods));
-            /* this.goods.forEach((good) => {
+            this.goods.forEach((good) => {
                 good.foods.forEach((food) => {
                     if (food.count) {
                         foods.push(food);
                     }
                 });
-            }); */
+            });
             return foods;
         }
     },
-    created: function() {
-        // this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-        if (this.$store.state.categorys) {
-            this.$nextTick(() => {
-                this._initScroll();
-                this._calculateHeight();
-            });
-        }
-        /* const url = debug ? '/api/goods' : 'http://ustbhuangyi.com/sell/api/goods';
+    created() {
+        this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+
+        const url = debug ? '/api/goods' : 'http://ustbhuangyi.com/sell/api/goods';
         this.$http.get(url).then((response) => {
-          response = response.body;
-          if (response.errno === ERR_OK) {
-            this.goods = response.data;
-            this.$nextTick(() => {
-              this._initScroll();
-              this._calculateHeight();
-            });
-          }
-        }); */
+            response = response.body;
+            if (response.errno === ERR_OK) {
+                this.goods = response.data;
+                this.$nextTick(() => {
+                    this._initScroll();
+                    this._calculateHeight();
+                });
+            }
+        });
     },
     methods: {
-        selectMenu: function(index, event) {
-            /* if (!event._constructed) {
+        selectMenu(index, event) {
+            if (!event._constructed) {
                 return;
-            } */
-            log.debug('click category item');
+            }
             let foodList = this.$refs.foodList;
             let el = foodList[index];
             this.foodsScroll.scrollToElement(el, 300);
         },
-        selectFood: function(food, event) {
-            /* if (!event._constructed) {
+        selectFood(food, event) {
+            if (!event._constructed) {
                 return;
-            } */
+            }
             this.selectedFood = food;
             this.$refs.food.show();
         },
-        addFood: function(target) {
+        addFood(target) {
             this._drop(target);
         },
-        _drop: function(target) {
+        _drop(target) {
             // 体验优化,异步执行下落动画
             this.$nextTick(() => {
                 this.$refs.shopcart.drop(target);
             });
         },
-        _initScroll: function() {
+        _initScroll() {
             this.meunScroll = new BScroll(this.$refs.menuWrapper, {
                 click: true
             });
@@ -170,7 +140,7 @@ export default {
                 }
             });
         },
-        _calculateHeight: function() {
+        _calculateHeight() {
             let foodList = this.$refs.foodList;
             let height = 0;
             this.listHeight.push(height);
@@ -180,7 +150,7 @@ export default {
                 this.listHeight.push(height);
             }
         },
-        _followScroll: function(index) {
+        _followScroll(index) {
             let menuList = this.$refs.menuList;
             let el = menuList[index];
             this.meunScroll.scrollToElement(el, 300, 0, -100);
@@ -189,19 +159,18 @@ export default {
     components: {
         shopcart,
         cartcontrol,
-        food,
-        Logo
+        food
     }
 };
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
 @import '../../common/stylus/mixin.styl'
 .goods
     display flex
     position absolute
-    // top 174px
-    // bottom 46px
+    top 174px
+    bottom 46px
     width 100%
     overflow hidden
     .menu-wrapper
@@ -230,7 +199,7 @@ export default {
                 margin-right 2px
                 background-size 12px 12px
                 background-repeat no-repeat
-                /* &.decrease
+                &.decrease
                     bg-image('decrease_3')
                 &.discount
                     bg-image('discount_3')
@@ -239,7 +208,7 @@ export default {
                 &.invoice
                     bg-image('invoice_3')
                 &.special
-                    bg-image('special_3') */
+                    bg-image('special_3')
             .text
                 display table-cell
                 width 56px

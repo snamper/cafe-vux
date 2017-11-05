@@ -5,19 +5,19 @@
     </view-box>
     <tabbar>
         <tabbar-item :link="{path:'/menu'}">
-          <img slot="icon" src="./common/img/home.png"></img>
+          <span slot="icon" class="iconfont icon-icon"></span>
           <span slot="label">菜单</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/new'}">
-          <img slot="icon" src="./common/img/menu.png"></img>
+        <tabbar-item :link="{path:'/new'}" >
+          <span slot="icon" class="iconfont icon-xinpin"></span>
           <span slot="label">新品</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/order'}">
-          <img slot="icon" src="./common/img/cart.png"></img>
+        <tabbar-item :link="{path:'/order'}" >
+          <span slot="icon" class="iconfont icon-dingdan"></span>
           <span slot="label">订单</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/member'}">
-          <img slot="icon" src="./common/img/me.png"></img>
+        <tabbar-item :link="{path:'/member'}" >
+          <span slot="icon" class="iconfont icon-home"></span>
           <span slot="label">我的</span>
         </tabbar-item>
       </tabbar>
@@ -33,7 +33,7 @@ export default {
     Tabbar,
     TabbarItem,
     ViewBox
-    },
+  },
   created: function () {
     log.info('call initCategorys function to init categorys data');
     let categorys = this.$store.commit('initCategorys');
@@ -51,5 +51,8 @@ export default {
 #app {
   height: 100%;
   width: 100%;
+}
+.iconfont {
+  font-size: 1.5rem;
 }
 </style>
