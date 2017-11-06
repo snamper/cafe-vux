@@ -1,8 +1,10 @@
 import Logger from 'chivy';
 const log = new Logger('cafe/getters');
 
-export const getters = {
+export const getter = {
     selectFoods(state) {
+        log.info('run selectFoods');
+        log.debug('show categorys' + JSON.stringify(state.categorys));
         let foods = [];
         for (let index in state.categorys) {
             this.categorys[index].forEach((product) => {

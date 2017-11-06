@@ -1,2 +1,2 @@
-export const actions = {
+export const action = {
 };

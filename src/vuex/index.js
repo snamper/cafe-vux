@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { getters } from './getters';
+import { getter } from './getters';
 import { mutations } from './mutations';
-import { actions } from './actions';
+import { action } from './actions';
 Vue.use(Vuex);
 
 export const state = {
@@ -13,7 +13,7 @@ export const state = {
 
 export const store = new Vuex.Store({
     state,
-    getters,
+    getter,
     mutations,
-    actions
+    action
 });
