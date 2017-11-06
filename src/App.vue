@@ -26,22 +26,13 @@
 
 <script type="text/ecmascript-6">
 import { Tabbar, TabbarItem, ViewBox } from 'vux';
-import Logger from 'chivy';
-const log = new Logger('cafe/App');
+/* import Logger from 'chivy';
+const log = new Logger('cafe/App'); */
 export default {
   components: {
     Tabbar,
     TabbarItem,
     ViewBox
-  },
-  created: function () {
-    log.info('call initCategorys function to init categorys data');
-    let categorys = this.$store.commit('initCategorys');
-    log.debug('products data is ' + JSON.stringify(categorys));
-  },
-  mounted: function () {
-    log.info('call getmember function to init member');
-    this.$store.commit('getMember');
   }
 };
 </script>

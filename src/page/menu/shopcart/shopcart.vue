@@ -5,7 +5,7 @@
         <div class="content-left">
           <div class="logo-wrapper">
             <div class="logo" :class="{'highlight':totalCount>0}">
-              <i class="icon-shopping_cart" :class="{'highlight':totalCount>0}"></i>
+              <i class="iconfont icon-gouwuche1" :class="{'highlight':totalCount>0}"></i>
             </div>
             <div class="num" v-show="totalCount>0">{{totalCount}}</div>
           </div>
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="ball-container">
-        <div v-for="ball in balls">
+        <div v-for="(ball,index) in balls" :key="index">
           <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
             <div class="ball" v-show="ball.show">
               <div class="inner inner-hook"></div>
@@ -35,7 +35,7 @@
           </div>
           <div class="list-content" ref="listContent">
             <ul>
-              <li class="food" v-for="food in selectFoods">
+              <li class="food" v-for="(food,index) in selectFoods" :key="index">
                 <span class="name">{{food.name}}</span>
                 <div class="price">
                   <span>￥{{food.price*food.count}}</span>
@@ -57,7 +57,7 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
-  import cartcontrol from 'components/cartcontrol/cartcontrol';
+  import cartcontrol from '../cartcontrol/cartcontrol';
 
   export default {
     props: {
@@ -106,18 +106,20 @@
     },
     computed: {
       totalPrice() {
-        let total = 0;
+        /* let total = 0;
         this.selectFoods.forEach((food) => {
           total += food.price * food.count;
         });
-        return total;
+        return total; */
+        return this.$store.getters.totalPrice;
       },
       totalCount() {
-        let count = 0;
+        /* let count = 0;
         this.selectFoods.forEach((food) => {
           count += food.count;
         });
-        return count;
+        return count; */
+        return this.$store.getters.totalCount;
       },
       payDesc() {
         if (this.totalPrice === 0) {
@@ -235,7 +237,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixin.styl"
+  @import "../../../common/stylus/mixin.styl"
 
   .shopcart
     position: fixed

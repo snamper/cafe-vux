@@ -1,21 +1,20 @@
 <template>
   <div>
+    <logo></logo>
     <div class="goods">
       <div class="menu-wrapper" ref="menuWrapper">
         <ul>
-          <li v-for="(item,index) in goods" class="menu-item" @click="selectMenu(index,$event)" ref="menuList">
-          <span class="text border-1px">
-            <span v-show="item.type>0" class="icon"></span>{{item.name}}
-          </span>
+          <li v-for="(item,index) in categorys" class="menu-item" @click="selectMenu(index,$event)" ref="menuList" :key="index">
+            <span class="text border-1px">{{index}}</span>
           </li>
         </ul>
       </div>
       <div class="foods-wrapper" ref="foodsWrapper">
         <ul>
-          <li v-for="item in goods" class="food-list" ref="foodList">
-            <h1 class="title">{{item.name}}</h1>
+          <li v-for="(item,index) in categorys" class="food-list" ref="foodList" :key="index">
+            <h1 class="title">{{index}}</h1>
             <ul>
-              <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
+              <li @click="selectFood(food,$event)" v-for="(food,index) in categorys[index]" class="food-item border-1px" :key="index">
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
                 </div>
@@ -23,11 +22,10 @@
                   <h2 class="name">{{food.name}}</h2>
                   <p class="desc">{{food.description}}</p>
                   <div class="extra">
-                    <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
+                    <span class="count">月售100份</span><span>好评率100%</span>
                   </div>
                   <div class="price">
-                    <span class="now">￥{{food.price}}</span><span class="old"
-                                                                  v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                    <span class="now">￥{{food.memberPrice}}</span><span class="old">￥{{food.price}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
                     <cartcontrol @add="addFood" :food="food"></cartcontrol>
@@ -38,28 +36,33 @@
           </li>
         </ul>
       </div>
-      <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
-                :minPrice="seller.minPrice"></shopcart>
+      <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="15" :minPrice="3"></shopcart>
     </div>
     <food @add="addFood" :food="selectedFood" ref="food"></food>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import { CATEGORY_LIST } from '../../vuex/config';
 import BScroll from 'better-scroll';
 import shopcart from './shopcart/shopcart';
 import cartcontrol from './cartcontrol/cartcontrol';
 import food from './food/food';
+import logo from '../../components/logo/logo';
+import Logger from 'chivy';
+const log = new Logger('cafe/menu');
 export default {
     data() {
         return {
-            goods: [],
             listHeight: [],
             scrollY: 0,
             selectedFood: {}
         };
     },
     computed: {
+        categorys() {
+            return this.$store.state.categorys;
+        },
         currentIndex() {
             for (let i = 0; i < this.listHeight.length; i++) {
                 let height1 = this.listHeight[i];
@@ -72,25 +75,19 @@ export default {
             return 0;
         },
         selectFoods() {
-            let foods = [];
-            this.goods.forEach((good) => {
-                good.foods.forEach((food) => {
-                    if (food.count) {
-                        foods.push(food);
-                    }
-                });
-            });
-            return foods;
+            // 修改为Vuex来管理
+            return this.$store.getters.selectFoods;
         }
     },
     created() {
-        this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-
-        const url = debug ? '/api/goods' : 'http://ustbhuangyi.com/sell/api/goods';
+        const url = CATEGORY_LIST;
+        log.debug('Now get the data from ' + url + ' ');
         this.$http.get(url).then((response) => {
-            response = response.body;
-            if (response.errno === ERR_OK) {
-                this.goods = response.data;
+            let categorys = response.data;
+            log.debug('Get the Categorys is ' + JSON.stringify(categorys));
+            if (categorys !== null) {
+                log.info('Categorys already getted');
+                this.$store.commit('m_categorys', categorys);
                 this.$nextTick(() => {
                     this._initScroll();
                     this._calculateHeight();
@@ -159,7 +156,8 @@ export default {
     components: {
         shopcart,
         cartcontrol,
-        food
+        food,
+        logo
     }
 };
 </script>
@@ -169,8 +167,8 @@ export default {
 .goods
     display flex
     position absolute
-    top 174px
-    bottom 46px
+    /* top 174px
+    bottom 46px */
     width 100%
     overflow hidden
     .menu-wrapper
@@ -199,7 +197,7 @@ export default {
                 margin-right 2px
                 background-size 12px 12px
                 background-repeat no-repeat
-                &.decrease
+                /* &.decrease
                     bg-image('decrease_3')
                 &.discount
                     bg-image('discount_3')
@@ -208,7 +206,7 @@ export default {
                 &.invoice
                     bg-image('invoice_3')
                 &.special
-                    bg-image('special_3')
+                    bg-image('special_3') */
             .text
                 display table-cell
                 width 56px

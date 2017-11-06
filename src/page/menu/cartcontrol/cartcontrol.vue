@@ -2,16 +2,16 @@
   <div class="cartcontrol">
     <transition name="move">
       <div class="cart-decrease" v-show="food.count>0" @click.stop.prevent="decreaseCart">
-        <span class="inner icon-remove_circle_outline"></span>
+        <span class="inner iconfont icon-xiaoiconjian"></span>
       </div>
     </transition>
     <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
-    <div class="cart-add icon-add_circle" @click.stop.prevent="addCart"></div>
+    <div class="cart-add iconfont icon-zengjia" @click.stop.prevent="addCart"></div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import Vue from 'vue';
+  // import Vue from 'vue';
 
   export default {
     props: {
@@ -24,11 +24,12 @@
         if (!event._constructed) {
           return;
         }
-        if (!this.food.count) {
+        this.$store.commit('add_count_categorys', this.food);
+        /* if (!this.food.count) {
           Vue.set(this.food, 'count', 1);
         } else {
           this.food.count++;
-        }
+        } */
         this.$emit('add', event.target);
       },
       decreaseCart(event) {

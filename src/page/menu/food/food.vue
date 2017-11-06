@@ -39,8 +39,8 @@
                         :ratings="food.ratings"></ratingselect>
           <div class="rating-wrapper">
             <ul v-show="food.ratings && food.ratings.length">
-              <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings"
-                  class="rating-item border-1px">
+              <li v-show="needShow(rating.rateType,rating.text)" v-for="(rating,index) in food.ratings"
+                  class="rating-item border-1px" :key="index">
                 <div class="user">
                   <span class="name">{{rating.username}}</span>
                   <img class="avatar" width="12" height="12" :src="rating.avatar">
@@ -62,10 +62,9 @@
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
   import Vue from 'vue';
-  import {formatDate} from 'common/js/date';
-  import cartcontrol from 'components/cartcontrol/cartcontrol';
-  import ratingselect from 'components/ratingselect/ratingselect';
-  import split from 'components/split/split';
+  import cartcontrol from '../cartcontrol/cartcontrol';
+  import ratingselect from '../ratingselect/ratingselect';
+  import split from '../split/split';
 
   const ALL = 2;
 
@@ -140,8 +139,9 @@
     },
     filters: {
       formatDate(time) {
-        let date = new Date(time);
-        return formatDate(date, 'yyyy-MM-dd hh:mm');
+        // let date = new Date(time);
+        // return formatDate(date, 'yyyy-MM-dd hh:mm');
+        return '';
       }
     },
     components: {
@@ -153,7 +153,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixin.styl"
+  @import "../../../common/stylus/mixin.styl"
 
   .food
     position: fixed
