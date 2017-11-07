@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Logger from 'chivy';
-const log = new Logger('cafe/mutations');
+const log = new Logger('vuex/mutations');
 
-export const mutations = {
+export default {
     // 修改分类列表
     m_categorys(state, categorys) {
         log.info('before modify categorys');

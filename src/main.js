@@ -5,7 +5,7 @@ import FastClick from 'fastclick';
 import App from './App';
 import router from './router';
 import { ToastPlugin, AjaxPlugin } from 'vux';
-import { store } from './vuex/index';
+import store from './vuex/';
 import './common/css/iconfont.css';
 import './common/stylus/index.styl';
 

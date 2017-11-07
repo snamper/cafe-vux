@@ -1,19 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { getter } from './getters';
-import { mutations } from './mutations';
-import { action } from './actions';
+// import Logger from 'chivy';
+import state from './state';
+import getters from './getters';
+import mutations from './mutations';
+import actions from './actions';
+// const log = new Logger('cafe/index');
 Vue.use(Vuex);
 
-export const state = {
-    categorys: '', // 商品分类信息
-    memberInfo: '', // 会员信息
-    recordList: '' // 会员购买商品记录
-};
-
-export const store = new Vuex.Store({
+export default new Vuex.Store({
     state,
-    getter,
+    getters,
     mutations,
-    action
+    actions
 });
