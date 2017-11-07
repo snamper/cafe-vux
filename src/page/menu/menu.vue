@@ -2,29 +2,29 @@
     <div>
         <logo></logo>
         <div class="goods">
-            <!-- <div class="menu-wrapper" ref="menuWrapper">
+            <div class="menu-wrapper" ref="menuWrapper">
                 <ul>
-                    <li class="menu-item" v-for="(category,index) in categorys" :key="index">                      
+                    <li class="menu-item" v-for="(category,index) in categorys" :key="index" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)" ref="menuList">                      
                         <span class="text border-1px">
                             {{index}}
                         </span>
                     </li>
                 </ul>
-            </div> -->
+            </div>
             <div class="foods-wrapper" ref="foodsWrapper">
                 <ul>
                     <li class="food-list" ref="foodList" v-for="(category,index) in categorys" :key="index">
                         <h1 class="title">{{index}}</h1>    
                         <ul>
-                            <li class="food-item border-1px" v-for="(food,index) in categorys[index]" :key="index">
+                            <li class="food-item border-1px" v-for="(food,index) in categorys[index]" :key="index" @click="selectFood(food,$event)">
                                 <div class="icon">
-                                    <img width="100" height="100" :src="food.imageUrl">
+                                    <img width="57" height="57" :src="food.imageUrl">
                                 </div>
                                 <div class="content">
                                     <h2 class="name">{{food.name}}</h2>
                                     <p class="desc">{{food.description}}</p>
                                     <div class="extra">
-                                        <span class="count">{{food.name}}</span>
+                                        <span class="count">月售0份</span><span>好评率0%</span>
                                     </div>
                                     <div class="price">
                                         <span class="now">￥{{food.price}}</span>
@@ -44,7 +44,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-// import BScroll from 'better-scroll';
+import BScroll from 'better-scroll';
 import config from '../../config/config';
 import logo from '../../components/logo/logo';
 import Logger from 'chivy';
@@ -52,10 +52,35 @@ const log = new Logger('page/menu/menu');
 export default {
     data() {
         return {
-            categorys: ''
+            categorys: '',
+            listHeight: [],
+            scrollY: 0,
+            selectedFood: {}
         };
     },
     computed: {
+        currentIndex() {
+            for (let i = 0; i < this.listHeight.length; i++) {
+            let height1 = this.listHeight[i];
+            let height2 = this.listHeight[i + 1];
+            if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+                this._followScroll(i);
+                return i;
+            }
+            }
+            return 0;
+        },
+        selectFoods() {
+            let foods = [];
+            this.goods.forEach((good) => {
+            good.foods.forEach((food) => {
+                if (food.count) {
+                foods.push(food);
+                }
+            });
+            });
+            return foods;
+        }
     },
     created: function() {
         const url = config.categorysList;
@@ -67,10 +92,71 @@ export default {
                 log.info('Already get Categorys data');
                 this.categorys = categorys;
                 this.$store.commit('m_categorys', categorys);
+                this.$nextTick(() => {
+                    this._initScroll();
+                    this._calculateHeight();
+                });
             }
         });
     },
     methods: {
+        selectMenu(index, event) {
+            /* if (!event._constructed) {
+                return;
+            } */
+            log.info('click left scroll');
+            let foodList = this.$refs.foodList;
+            let el = foodList[index];
+            this.foodsScroll.scrollToElement(el, 300);
+        },
+        selectFood(food, event) {
+            if (!event._constructed) {
+                return;
+            }
+            this.selectedFood = food;
+            this.$refs.food.show();
+        },
+        addFood(target) {
+            this._drop(target);
+        },
+        _drop(target) {
+            // 体验优化,异步执行下落动画
+            this.$nextTick(() => {
+            this.$refs.shopcart.drop(target);
+            });
+        },
+        _initScroll() {
+            this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+            click: true
+            });
+
+            this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+            click: true,
+            probeType: 3
+            });
+
+            this.foodsScroll.on('scroll', (pos) => {
+            // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
+            if (pos.y <= 0) {
+                this.scrollY = Math.abs(Math.round(pos.y));
+            }
+            });
+        },
+        _calculateHeight() {
+            let foodList = this.$refs.foodList;
+            let height = 0;
+            this.listHeight.push(height);
+            for (let i = 0; i < foodList.length; i++) {
+            let item = foodList[i];
+            height += item.clientHeight;
+            this.listHeight.push(height);
+            }
+        },
+        _followScroll(index) {
+            let menuList = this.$refs.menuList;
+            let el = menuList[index];
+            this.meunScroll.scrollToElement(el, 300, 0, -100);
+        }
     },
     components: {
         logo
@@ -83,9 +169,11 @@ export default {
     .goods
         display flex
         position absolute
+        top 120px
+        bottom 50px
         width 100%
         overflow hidden
-        /* .menu-wrapper
+        .menu-wrapper
             flex 0 0 80px
             width 80px
             background #f3f5f7
@@ -115,7 +203,7 @@ export default {
                     width 56px
                     vertical-align middle
                     border-1px(rgba(7, 17, 27, 0.1))
-                    font-size 12px */
+                    font-size 12px
         .foods-wrapper
             flex 1
             .title

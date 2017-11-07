@@ -1,5 +1,5 @@
 {
-  "categorys": {
+  "categorys2": {
     "甜品": [{
       "canBook": true,
       "classifyId": 70,
@@ -73,7 +73,7 @@
       }
     ]
   },
-  "categorys1": {
+  "categorys": {
     "甜品": [{
       "canBook": true,
       "classifyId": 70,
@@ -506,7 +506,7 @@
         "slider": false
       }
     ],
-    "甜品66": [{
+    "甜品6": [{
       "canBook": true,
       "classifyId": 70,
       "code": "0090645a-2ca6-4a5b-b250-13a8403930d5",

@@ -13,5 +13,5 @@ export default {
 .logo-wrapper
     img
         width 100%
-        height auto
+        height 120px
 </style>

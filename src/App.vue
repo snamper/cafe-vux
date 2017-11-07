@@ -46,4 +46,9 @@ export default {
 .iconfont {
   font-size: 1.5rem;
 }
+.weui-tab {
+  position: fixed;
+  bottom: 50;
+  top: 0;
+}
 </style>
