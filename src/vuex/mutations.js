@@ -10,18 +10,27 @@ export default {
         log.info('after modify categorys');
     },
     add_count_categorys(state, param) {
-        log.debug('setting count attr in product: ' + JSON.stringify(param));
-        for (let category in state.categorys) {
-            state.categorys[category].forEach((product) => {
-            if (param === product) {
-                if (!product.count) {
-                    Vue.set(product, 'count', 1);
-                } else {
-                    product.count++;
+        // log.debug('setting count attr in product: ' + JSON.stringify(param));
+        state.categorys.forEach((category) => {
+            category.list.forEach((product) => {
+                if (param === product) {
+                    if (!product.count) {
+                        Vue.set(product, 'count', 1);
+                    } else {
+                        product.count++;
+                    }
                 }
-            }
             });
-        }
+        });
+    },
+    sub_count_categorys(state, param) {
+        state.categorys.forEach((category) => {
+            category.list.forEach((product) => {
+                if (param === product) {
+                    product.count--;
+                }
+            });
+        });
     },
     getMember(state) {
         state.member = JSON.parse(sessionStorage.getItem('member'));
