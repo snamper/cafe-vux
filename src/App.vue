@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <view-box>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </view-box>
     <tabbar>
         <tabbar-item :link="{path:'/menu'}">

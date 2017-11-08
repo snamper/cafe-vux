@@ -10,13 +10,15 @@
             <div class="num" v-show="totalCount>0">{{totalCount}}</div>
           </div>
           <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
-          <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
+          <div class="desc">另需配送费￥3元</div>
         </div>
-        <div class="content-right" @click.stop.prevent="pay">
-          <div class="pay" :class="payClass">
-            {{payDesc}}
+        <router-link :to="{ path:'/new'}">
+          <div class="content-right" @click.stop.prevent="pay">
+            <div class="pay" :class="payClass">
+              {{payDesc}}
+            </div>
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="ball-container">
         <div v-for="(ball,index) in balls" :key="index">
@@ -58,7 +60,8 @@
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
   import cartcontrol from '../cartcontrol/cartcontrol';
-
+  import Logger from 'chivy';
+  const log = new Logger('page/menu/shopcart');
   export default {
     data() {
       return {
@@ -81,7 +84,6 @@
         ],
         dropBalls: [],
         fold: true,
-        deliveryPrice: 0,
         minPrice: 0
       };
     },
@@ -170,7 +172,8 @@
         if (this.totalPrice < this.minPrice) {
           return;
         }
-        window.alert(`支付${this.totalPrice}元`);
+        // window.alert(`支付${this.totalPrice}元`);
+        log.debug('支付' + this.totalPrice + '元');
       },
       addFood(target) {
         this.drop(target);

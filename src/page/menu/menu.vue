@@ -27,7 +27,7 @@
                     <span class="count">月售0份</span><span>好评率0%</span>
                   </div>
                   <div class="price">
-                    <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.memberPrice}}</span>
+                    <span class="now">￥{{food.price}}</span><span class="old">￥{{food.memberPrice}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
                     <cartcontrol @add="addFood" :food="food"></cartcontrol>
