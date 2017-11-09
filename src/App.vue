@@ -28,9 +28,23 @@
 
 <script type="text/ecmascript-6">
 import { Tabbar, TabbarItem, ViewBox } from 'vux';
-/* import Logger from 'chivy';
-const log = new Logger('cafe/App'); */
+import Logger from 'chivy';
+const log = new Logger('cafe/App');
 export default {
+  created: function () {
+    log.debug('created uuid here');
+    log.debug(this.setUUID());
+    this.$store.commit('setUUID', this.setUUID());
+    log.debug('uuid is ' + this.$store.state.uuid);
+  },
+  methods: {
+    setUUID: function () {
+      function S4() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      }
+      return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
+    }
+  },
   components: {
     Tabbar,
     TabbarItem,

@@ -37,18 +37,6 @@ export default {
             });
         }
     });
-    /* if (state.categorys !== '') {
-        state.categorys.forEach((category) => {
-            category.list.forEach((food) => {
-                // 超过10个新品的时候就不再添加了
-                if (food.slider && sliders.length < 10) {
-                    sliders.push({
-                        'img': food.imageSliderUrl
-                    });
-                }
-            });
-        });
-    } */
     return sliders;
   },
   hots(state, getters) {
@@ -63,5 +51,26 @@ export default {
         }
     });
     return hots;
+  },
+  totalMemberPrice(state, getters) {
+    let total = 0;
+    getters.selectFoods.forEach((food) => {
+      total += food.memberPrice * food.count;
+    });
+    return total;
+  },
+  totalPrice(state, getters) {
+    let total = 0;
+    getters.selectFoods.forEach((food) => {
+      total += food.price * food.count;
+    });
+    return total;
+  },
+  totalCount(state, getters) {
+    let count = 0;
+    getters.selectFoods.forEach((food) => {
+      count += food.count;
+    });
+    return count;
   }
 };

@@ -35,5 +35,10 @@ export default {
     getMember(state) {
         state.member = JSON.parse(sessionStorage.getItem('member'));
         log.debug('Get member from sesionstorage is ' + JSON.stringify(state.member));
+    },
+    setUUID(state, payload) {
+        log.debug('before uuid change, the uuid is ' + state.uuid);
+        state.uuid = payload;
+        log.debug('after uuid change, the uuid is ' + state.uuid);
     }
 };

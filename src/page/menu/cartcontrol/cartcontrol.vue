@@ -22,18 +22,10 @@
     methods: {
       addCart(event) {
         this.$store.commit('add_count_categorys', this.food);
-        /* if (!this.food.count) {
-          Vue.set(this.food, 'count', 1);
-        } else {
-          this.food.count++;
-        } */
         this.$emit('add', event.target);
       },
       decreaseCart() {
        this.$store.commit('sub_count_categorys', this.food);
-        /* if (this.food.count) {
-          this.food.count--;
-        } */
       }
     }
   };

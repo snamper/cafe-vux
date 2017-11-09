@@ -27,7 +27,7 @@
                     <span class="count">月售0份</span><span>好评率0%</span>
                   </div>
                   <div class="price">
-                    <span class="now">￥{{food.price}}</span><span class="old">￥{{food.memberPrice}}</span>
+                    <span class="now">￥{{food.memberPrice}}</span><span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
                     <cartcontrol @add="addFood" :food="food"></cartcontrol>
@@ -242,9 +242,13 @@
               font-size: 14px
               color: rgb(240, 20, 20)
             .old
-              text-decoration: line-through
-              font-size: 10px
+              font-size: 12px
+              color: rgb(7, 17, 27)
+            .desc
+              font-size 10px
               color: rgb(147, 153, 159)
+              font-weight 700
+              margin-right 2px
           .cartcontrol-wrapper
             position: absolute
             right: 0
