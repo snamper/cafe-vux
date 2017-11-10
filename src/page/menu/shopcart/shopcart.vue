@@ -12,13 +12,11 @@
           <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalMemberPrice}}</div>
           <div class="desc">非会员价￥{{totalPrice}}元</div>
         </div>
-        <router-link :to="{ path:'/new'}">
           <div class="content-right" @click.stop.prevent="pay">
             <div class="pay" :class="payClass">
               {{payDesc}}
             </div>
           </div>
-        </router-link>
       </div>
       <div class="ball-container">
         <div v-for="(ball,index) in balls" :key="index">
@@ -84,8 +82,7 @@
           }
         ],
         dropBalls: [],
-        fold: true,
-        minPrice: 0
+        fold: true
       };
     },
     computed: {
@@ -97,20 +94,12 @@
       ]),
       payDesc() {
         return '去结算';
-        /* if (this.totalPrice === 0) {
-          return `￥${this.minPrice}元起送`;
-        } else if (this.totalPrice < this.minPrice) {
-          let diff = this.minPrice - this.totalPrice;
-          return `还差￥${diff}元起送`;
-        } else {
-          return '去结算';
-        } */
       },
       payClass() {
-        if (this.totalPrice < this.minPrice) {
-          return 'not-enough';
-        } else {
+        if (this.totalPrice > 0) {
           return 'enough';
+        } else {
+          return 'not-enough';
         }
       },
       listShow() {
@@ -160,11 +149,12 @@
         });
       },
       pay() {
-        if (this.totalPrice < this.minPrice) {
-          return;
+        if (this.totalPrice > 0) {
+          this.$router.push({ path: 'new' });
+        } else {
+          this.$router.push({ path: 'order' });
+          log.debug('not buy any product');
         }
-        // window.alert(`支付${this.totalPrice}元`);
-        log.debug('支付' + this.totalPrice + '元');
       },
       addFood(target) {
         this.drop(target);

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <loading v-model="isLoading"></loading>
     <view-box>
       <keep-alive>
         <router-view></router-view>
@@ -14,7 +15,7 @@
           <span slot="icon" class="iconfont icon-xinpin"></span>
           <span slot="label">新品</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/order'}" >
+        <tabbar-item :link="{path:'/orderlist'}" >
           <span slot="icon" class="iconfont icon-dingdan"></span>
           <span slot="label">订单</span>
         </tabbar-item>
@@ -27,7 +28,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { Tabbar, TabbarItem, ViewBox } from 'vux';
+import { Tabbar, TabbarItem, ViewBox, Loading } from 'vux';
+import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('cafe/App');
 export default {
@@ -36,6 +38,11 @@ export default {
     log.debug(this.setUUID());
     this.$store.commit('setUUID', this.setUUID());
     log.debug('uuid is ' + this.$store.state.uuid);
+  },
+  computed: {
+    ...mapState({
+      isLoading: state => state.vux.isLoading
+    })
   },
   methods: {
     setUUID: function () {
@@ -48,7 +55,8 @@ export default {
   components: {
     Tabbar,
     TabbarItem,
-    ViewBox
+    ViewBox,
+    Loading
   }
 };
 </script>
