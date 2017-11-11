@@ -1,5 +1,5 @@
-import Logger from 'chivy';
-const log = new Logger('vuex/getters');
+// import Logger from 'chivy';
+// const log = new Logger('vuex/getters');
 export default {
   selectFoods(state) {
     let foods = [];
@@ -9,7 +9,7 @@ export default {
             category.list.forEach((food) => {
                 if (food.count > 0) {
                     // log.debug('food is ' + JSON.stringify(food));
-                    log.info('add ' + food.name + ' to selectFoods');
+                    // log.info('add ' + food.name + ' to selectFoods');
                     foods.push(food);
                 }
             });

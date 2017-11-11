@@ -150,7 +150,7 @@
       },
       pay() {
         if (this.totalPrice > 0) {
-          this.$router.push({ path: 'new' });
+          this.$router.push({ path: 'order' });
         } else {
           this.$router.push({ path: 'order' });
           log.debug('not buy any product');

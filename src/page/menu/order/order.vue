@@ -8,34 +8,63 @@
                 <h1>登陆/注册</h1>
             </div>
         </div>
-        <div class="order-wrapper">
+        <div class="order-wrapper" ref="orderWrapper">
             <divider>您的订单</divider>
             <ul>
-                <li class="order-list">
+                <li class="order-list border-1px" v-for="(food,item) in selectFoods" :key="item">
                     <div class="avator">
-                         <img src="../../../../static/img/avator.jpg" width="35px" height="35px">
+                         <img :src="food.imageUrl" width="35px" height="35px">
                     </div>
                     <div class="content">
-                        <div class="name">咖啡</div>
-                        <div class="number">x2</div>
-                        <div class="totalprice">￥46</div>
+                        <div class="name">{{food.name}}</div>
+                        <div class="number">x{{food.count}}</div>
+                        <div class="total">￥{{food.count*food.price}}</div>
                     </div>
                 </li>
             </ul>
+            <div class="totalprice">
+                <div class="price">总价￥{{totalPrice}}</div><div class="member">会员价￥{{totalMemberPrice}}</div>
+            </div>
         </div>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
+import BScroll from 'better-scroll';
 import { Divider } from 'vux';
+import { mapGetters } from 'vuex';
+import Logger from 'chivy';
+const log = new Logger('page/menu/order');
 export default {
+    computed: {
+        ...mapGetters([
+            'selectFoods',
+            'totalPrice',
+            'totalMemberPrice'
+        ])
+    },
+    created() {
+        if (this.selectFoods.length > 0) {
+            log.debug('already selected food');
+            this.$nextTick(() => {
+                log.debug('init scroll');
+                this._initScroll();
+            });
+        }
+    },
     components: {
         Divider
+    },
+    methods: {
+        _initScroll() {
+            this.meunScroll = new BScroll(this.$refs.orderWrapper, {});
+        }
     }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import "../../../common/stylus/mixin.styl"
 .login-wrapper
     width 100%
     height 100px
@@ -54,6 +83,11 @@ export default {
         display inline-block
         font-size 1.3rem
 .order-wrapper
+    position absolute
+    width 100%
+    top 100px
+    bottom 50px
+    overflow: hidden 
     .order-list
         width 100%
         height 70px
@@ -67,17 +101,28 @@ export default {
             text-align center
         .content 
             flex-grow 3
-            text-align right
-            .name, .number,.totalprice
+            display flex
+            .name, .number,.total
                 display inline-block
-                border 1px solid black
                 width 100%
             .name
                 text-align left
-                margin-right 0.5rem
             .number
-                margin-right 0.2rem
-            .totalprice
-                margin-right 0.3rem
-            
+                text-align right
+            .total
+                text-align center
+    .totalprice
+        width 100%
+        height 2rem
+        display flex
+        justify-content center
+        align-items center
+        .price,.member
+            display inline-block
+            width 100%
+            font-size 1rem
+        .price
+            text-align center
+        .member
+            text-align center
 </style>
