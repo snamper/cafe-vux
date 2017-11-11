@@ -1,44 +1,49 @@
 <template>
   <div>
-    <logo></logo>
-    <div class="goods">
-      <div class="menu-wrapper" ref="menuWrapper">
-        <ul>
-          <li v-for="(item,index) in goods" :key="index" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)" ref="menuList">
-          <span class="text border-1px">
-            <span v-show="item.type>0" class="icon"></span>{{item.name}}
-          </span>
-          </li>
-        </ul>
+    <div class="main-wrapper" v-show="!showOrder">
+      <logo></logo>
+      <div class="goods">
+        <div class="menu-wrapper" ref="menuWrapper">
+          <ul>
+            <li v-for="(item,index) in goods" :key="index" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)" ref="menuList">
+            <span class="text border-1px">
+              <span v-show="item.type>0" class="icon"></span>{{item.name}}
+            </span>
+            </li>
+          </ul>
+        </div>
+        <div class="foods-wrapper" ref="foodsWrapper">
+          <ul>
+            <li v-for="(item,index) in goods" :key="index" class="food-list" ref="foodList">
+              <h1 class="title">{{item.name}}</h1>
+              <ul>
+                <li v-for="(food,index) in item.list" :key="index" class="food-item border-1px">
+                  <div class="icon">
+                    <img width="57" height="57" :src="food.imageUrl">
+                  </div>
+                  <div class="content">
+                    <h2 class="name">{{food.name}}</h2>
+                    <p class="desc">{{food.description}}</p>
+                    <div class="extra">
+                      <span class="count">月售0份</span><span>好评率0%</span>
+                    </div>
+                    <div class="price">
+                      <span class="now">￥{{food.memberPrice}}</span><span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>
+                    </div>
+                    <div class="cartcontrol-wrapper">
+                      <cartcontrol @add="addFood" :food="food"></cartcontrol>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <shopcart ref="shopcart"></shopcart>
       </div>
-      <div class="foods-wrapper" ref="foodsWrapper">
-        <ul>
-          <li v-for="(item,index) in goods" :key="index" class="food-list" ref="foodList">
-            <h1 class="title">{{item.name}}</h1>
-            <ul>
-              <li v-for="(food,index) in item.list" :key="index" class="food-item border-1px">
-                <div class="icon">
-                  <img width="57" height="57" :src="food.imageUrl">
-                </div>
-                <div class="content">
-                  <h2 class="name">{{food.name}}</h2>
-                  <p class="desc">{{food.description}}</p>
-                  <div class="extra">
-                    <span class="count">月售0份</span><span>好评率0%</span>
-                  </div>
-                  <div class="price">
-                    <span class="now">￥{{food.memberPrice}}</span><span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>
-                  </div>
-                  <div class="cartcontrol-wrapper">
-                    <cartcontrol @add="addFood" :food="food"></cartcontrol>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <shopcart ref="shopcart"></shopcart>
+    </div>
+    <div v-show="showOrder">
+      <order></order>
     </div>
   </div>
 </template>
@@ -49,6 +54,7 @@
   import cartcontrol from './cartcontrol/cartcontrol';
   import logo from '../../components/logo/logo';
   import config from '../../config/config';
+  import order from './order/order.vue';
   import Logger from 'chivy';
   const log = new Logger('page/menu/menu');
 
@@ -62,6 +68,10 @@
       };
     },
     computed: {
+      showOrder() {
+        log.debug('showOrder is ' + this.$store.state.showOrder);
+        return this.$store.state.showOrder;
+      },
       currentIndex() {
         for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[i];
@@ -75,6 +85,7 @@
       }
     },
     created() {
+      this.$store.commit('showOrder', false);
       const url = config.categorysList;
       log.info('AJAX address is ' + url);
       this.$http.get(url).then((response) => {
@@ -148,7 +159,8 @@
     components: {
       shopcart,
       cartcontrol,
-      logo
+      logo,
+      order
     }
   };
 </script>

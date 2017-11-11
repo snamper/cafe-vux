@@ -40,5 +40,8 @@ export default {
         log.debug('before uuid change, the uuid is ' + state.uuid);
         state.uuid = payload;
         log.debug('after uuid change, the uuid is ' + state.uuid);
+    },
+    showOrder(state, payload) {
+        state.showOrder = payload;
     }
 };

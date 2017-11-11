@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="order">
+        <x-header title="use prop:title" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="showmenu"></x-header>
         <div class="login-wrapper">
             <div class="avator">
                 <img src="../../../../static/img/avator.jpg" width="70px" height="70px">
@@ -8,12 +9,12 @@
                 <h1>登陆/注册</h1>
             </div>
         </div>
-        <div class="order-wrapper" ref="orderWrapper">
-            <divider>您的订单</divider>
+        <divider>您的订单</divider>
+        <div class="order-wrapper" ref="orderList">
             <ul>
                 <li class="order-list border-1px" v-for="(food,item) in selectFoods" :key="item">
                     <div class="avator">
-                         <img :src="food.imageUrl" width="35px" height="35px">
+                        <img :src="food.imageUrl" width="35px" height="35px">
                     </div>
                     <div class="content">
                         <div class="name">{{food.name}}</div>
@@ -31,7 +32,7 @@
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
-import { Divider } from 'vux';
+import { Divider, XHeader } from 'vux';
 import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('page/menu/order');
@@ -44,20 +45,27 @@ export default {
         ])
     },
     created() {
-        if (this.selectFoods.length > 0) {
-            log.debug('already selected food');
-            this.$nextTick(() => {
-                log.debug('init scroll');
-                this._initScroll();
-            });
-        }
+        log.debug('created');
+    },
+    mounted() {
+        log.debug('mounted');
+        this.$nextTick(() => {
+            log.debug('init scroll');
+            this._initScroll();
+        });
     },
     components: {
-        Divider
+        Divider,
+        XHeader
     },
     methods: {
         _initScroll() {
-            this.meunScroll = new BScroll(this.$refs.orderWrapper, {});
+            this.orderList = new BScroll(this.$refs.orderList, {
+                click: true
+            });
+        },
+        showmenu() {
+            this.$store.commit('showOrder', false);
         }
     }
 };
@@ -65,64 +73,67 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import "../../../common/stylus/mixin.styl"
-.login-wrapper
-    width 100%
-    height 100px
-    display flex
-    justify-content center
-    align-items center
-    background-color rgb(238, 234, 232)
-    .avator
-        flex-grow 1
-        display inline-block
-        text-align center
-        img
-            border-radius:50%;
-    .text
-        flex-grow 4
-        display inline-block
-        font-size 1.3rem
-.order-wrapper
-    position absolute
-    width 100%
-    top 100px
-    bottom 50px
-    overflow: hidden 
-    .order-list
+
+.order
+    height 100%
+    .login-wrapper
         width 100%
-        height 70px
+        height 100px
         display flex
         justify-content center
         align-items center
-        .avator, .content
-            display inline-block
+        background-color rgb(238, 234, 232)
         .avator
             flex-grow 1
+            display inline-block
             text-align center
-        .content 
-            flex-grow 3
+            img
+                border-radius:50%;
+        .text
+            flex-grow 4
+            display inline-block
+            font-size 1.3rem
+    .order-wrapper
+        position absolute
+        width 100%
+        top 182px
+        bottom 50px
+        overflow: hidden
+        .order-list
+            width 100%
+            height 70px
             display flex
-            .name, .number,.total
+            justify-content center
+            align-items center
+            .avator, .content
+                display inline-block
+            .avator
+                flex-grow 1
+                text-align center
+            .content 
+                flex-grow 3
+                display flex
+                .name, .number,.total
+                    display inline-block
+                    width 100%
+                .name
+                    text-align left
+                .number
+                    text-align right
+                .total
+                    text-align center
+        .totalprice
+            width 100%
+            height 2rem
+            display flex
+            justify-content center
+            align-items center
+            .price,.member
                 display inline-block
                 width 100%
-            .name
-                text-align left
-            .number
-                text-align right
-            .total
+                font-size 1rem
+            .price
                 text-align center
-    .totalprice
-        width 100%
-        height 2rem
-        display flex
-        justify-content center
-        align-items center
-        .price,.member
-            display inline-block
-            width 100%
-            font-size 1rem
-        .price
-            text-align center
-        .member
-            text-align center
+            .member
+                text-align center
 </style>
