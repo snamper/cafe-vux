@@ -109,6 +109,7 @@
         }
         let show = !this.fold;
         if (show) {
+          log.debug('scroll show listShow');
           this.$nextTick(() => {
             if (!this.scroll) {
               this.scroll = new BScroll(this.$refs.listContent, {
@@ -150,7 +151,8 @@
       },
       pay() {
         if (this.totalPrice > 0) {
-          this.$store.commit('showOrder', true);
+          this.$router.push({ path: 'order' });
+          // this.$store.commit('showOrder', true);
         } else {
           // this.$router.push({ path: 'order' });
           log.debug('not buy any product');

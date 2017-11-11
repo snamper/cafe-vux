@@ -22,49 +22,66 @@
                         <div class="total">￥{{food.count*food.price}}</div>
                     </div>
                 </li>
+                <div class="totalprice-wrapper">
+                    <div class="price">总价￥{{totalPrice}}</div><div class="member">会员价￥{{totalMemberPrice}}</div>
+                </div>
             </ul>
-            <div class="totalprice">
-                <div class="price">总价￥{{totalPrice}}</div><div class="member">会员价￥{{totalMemberPrice}}</div>
-            </div>
         </div>
+        <ordercart></ordercart>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
+import ordercart from './ordercart/ordercart';
 import { Divider, XHeader } from 'vux';
 import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('page/menu/order');
 export default {
+    data() {
+        return {
+            show: true
+        };
+    },
+    created() {
+        if (this.selectFoods.length === 0) {
+            this.$router.push({ path: 'menu' });
+        }
+    },
+    mounted() {
+        log.info('mounted');
+        if (this.selectFoods.length > 0) {
+            log.debug('scroll show orderListShow');
+            this.$nextTick(() => {
+                if (!this.scroll) {
+                    log.debug('created scroll');
+                    this.scroll = new BScroll(this.$refs.orderList, {
+                        click: true
+                    });
+                } else {
+                    log.debug('refresh scroll');
+                    this.scroll.refresh();
+                }
+            });
+        }
+    },
     computed: {
         ...mapGetters([
             'selectFoods',
             'totalPrice',
-            'totalMemberPrice'
+            'totalMemberPrice',
+            'products'
         ])
-    },
-    created() {
-        log.debug('created');
-    },
-    mounted() {
-        log.debug('mounted');
-        this.$nextTick(() => {
-            log.debug('init scroll');
-            this._initScroll();
-        });
     },
     components: {
         Divider,
-        XHeader
+        XHeader,
+        ordercart
     },
     methods: {
-        _initScroll() {
-            this.orderList = new BScroll(this.$refs.orderList, {
-                click: true
-            });
-        },
         showmenu() {
+            this.show = false;
             this.$store.commit('showOrder', false);
         }
     }
@@ -122,7 +139,7 @@ export default {
                     text-align right
                 .total
                     text-align center
-        .totalprice
+        .totalprice-wrapper
             width 100%
             height 2rem
             display flex

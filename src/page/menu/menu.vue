@@ -56,7 +56,7 @@
   import config from '../../config/config';
   import order from './order/order.vue';
   import Logger from 'chivy';
-  const log = new Logger('page/menu/menu');
+  const log = new Logger('page/menu');
 
   export default {
     data() {
@@ -69,7 +69,7 @@
     },
     computed: {
       showOrder() {
-        log.debug('showOrder is ' + this.$store.state.showOrder);
+        // log.debug('showOrder is ' + this.$store.state.showOrder);
         return this.$store.state.showOrder;
       },
       currentIndex() {
@@ -172,7 +172,7 @@
     display: flex
     position: absolute
     top: 120px
-    bottom: 96px
+    bottom: 99px
     width: 100%
     overflow: hidden
     .menu-wrapper

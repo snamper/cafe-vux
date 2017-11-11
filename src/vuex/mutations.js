@@ -5,9 +5,9 @@ const log = new Logger('vuex/mutations');
 export default {
     // 修改分类列表
     m_categorys(state, categorys) {
-        log.info('before modify categorys');
+        // log.info('before modify categorys');
         state.categorys = categorys;
-        log.info('after modify categorys');
+        // log.info('after modify categorys');
     },
     add_count_categorys(state, param) {
         // log.debug('setting count attr in product: ' + JSON.stringify(param));
