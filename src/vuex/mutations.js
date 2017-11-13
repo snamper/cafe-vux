@@ -43,5 +43,8 @@ export default {
     },
     showOrder(state, payload) {
         state.showOrder = payload;
+    },
+    setMember(state, payload) {
+        state.memberInfo = payload;
     }
 };

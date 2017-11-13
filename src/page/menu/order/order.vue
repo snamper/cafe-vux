@@ -1,12 +1,20 @@
 <template>
     <div class="order">
-        <x-header title="use prop:title" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="showmenu"></x-header>
-        <div class="login-wrapper">
+        <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="showmenu"></x-header>
+        <div class="login-wrapper" v-show="!member">
             <div class="avator">
                 <img src="../../../../static/img/avator.jpg" width="70px" height="70px">
             </div>
             <div class="text">
                 <h1>登陆/注册</h1>
+            </div>
+        </div>
+        <div class="member-wrapper" v-show="member">
+            <div class="avator">
+                <img src="../../../../static/img/avator.jpg" width="70px" height="70px">
+            </div>
+            <div class="text">
+                <h1>{{member.name}},您的会员卡余额是￥{{member.balance}}</h1>
             </div>
         </div>
         <divider>您的订单</divider>
@@ -22,19 +30,29 @@
                         <div class="total">￥{{food.count*food.price}}</div>
                     </div>
                 </li>
-                <div class="totalprice-wrapper">
-                    <div class="price">总价￥{{totalPrice}}</div><div class="member">会员价￥{{totalMemberPrice}}</div>
+                <div class="normalshow" v-show="!member">
+                    <div class="totalprice-wrapper">
+                        <div class="title">总价</div><div class="price">￥{{totalPrice}}</div>
+                    </div>
+                    <div class="memberprice-wrapper">
+                        <div class="title">会员价</div><div class="price">￥{{totalMemberPrice}}</div>
+                    </div>
+                </div>
+                <div class="membershow" v-show="member">
+                    <div class="memberprice-wrapper">
+                        <div class="title">会员价</div><div class="price">￥{{totalMemberPrice}}</div>
+                    </div>
                 </div>
             </ul>
         </div>
-        <ordercart></ordercart>
+        <ordercart :member="member"></ordercart>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
 import ordercart from './ordercart/ordercart';
-import { Divider, XHeader } from 'vux';
+import { Divider, XHeader, Group, XSwitch } from 'vux';
 import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('page/menu/order');
@@ -48,6 +66,12 @@ export default {
         if (this.selectFoods.length === 0) {
             this.$router.push({ path: 'menu' });
         }
+        // Test
+        let member = {
+            'name': 'totti',
+            'balance': 1000
+        };
+        this.$store.commit('setMember', member);
     },
     mounted() {
         log.info('mounted');
@@ -72,12 +96,17 @@ export default {
             'totalPrice',
             'totalMemberPrice',
             'products'
-        ])
+        ]),
+        member() {
+            return this.$store.state.memberInfo;
+        }
     },
     components: {
         Divider,
         XHeader,
-        ordercart
+        ordercart,
+        Group,
+        XSwitch
     },
     methods: {
         showmenu() {
@@ -93,7 +122,7 @@ export default {
 
 .order
     height 100%
-    .login-wrapper
+    .login-wrapper,.member-wrapper
         width 100%
         height 100px
         display flex
@@ -110,6 +139,24 @@ export default {
             flex-grow 4
             display inline-block
             font-size 1.3rem
+    .member-wrapper
+        width 100%
+        height 100px
+        display flex
+        justify-content center
+        align-items center
+        background-color rgb(238, 234, 232)
+        .avator
+            flex-grow 1
+            display inline-block
+            text-align center
+            img
+                border-radius:50%;
+        .text
+            flex-grow 4
+            display inline-block
+            margin-left 0.3rem
+            font-size 1rem
     .order-wrapper
         position absolute
         width 100%
@@ -139,18 +186,20 @@ export default {
                     text-align right
                 .total
                     text-align center
-        .totalprice-wrapper
+        .totalprice-wrapper,.memberprice-wrapper
             width 100%
             height 2rem
             display flex
             justify-content center
             align-items center
-            .price,.member
-                display inline-block
+            .title,.price
                 width 100%
-                font-size 1rem
+                line-height 18px
+            .title
+                text-align left
+                padding-left 3rem 
             .price
-                text-align center
-            .member
-                text-align center
+                text-align right
+                padding-right 1.7rem
+
 </style>
