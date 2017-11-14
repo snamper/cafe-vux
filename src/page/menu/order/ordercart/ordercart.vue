@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         pay() {
-            this.$router.push({ path: 'pay' });
+            this.$router.push({ path: '/pay' });
         }
     },
     components: {

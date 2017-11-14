@@ -64,7 +64,7 @@ export default {
     },
     created() {
         if (this.selectFoods.length === 0) {
-            this.$router.push({ path: 'menu' });
+            this.$router.push({ path: '/menu' });
         }
         // Test
         let member = {

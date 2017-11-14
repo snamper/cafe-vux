@@ -151,7 +151,7 @@
       },
       pay() {
         if (this.totalPrice > 0) {
-          this.$router.push({ path: 'order' });
+          this.$router.push({ path: '/order' });
           // this.$store.commit('showOrder', true);
         } else {
           // this.$router.push({ path: 'order' });
