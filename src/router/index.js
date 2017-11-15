@@ -5,6 +5,7 @@ import New from '@/page/new/new';
 import Order from '@/page/menu/order/order';
 import Pay from '@/page/menu/pay/pay';
 import OrderList from '@/page/orderlist/orderlist';
+import Login from '@/page/login/login';
 
 Vue.use(Router);
 
@@ -32,7 +33,10 @@ export default new Router({
     {
       path: '/orderlist',
       component: OrderList
+    },
+    {
+      path: '/login',
+      component: Login
     }
-
   ]
 });

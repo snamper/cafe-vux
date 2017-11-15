@@ -105,8 +105,9 @@ export default {
     width 100%
     display flex
     justify-content center
-    img
-        margin 0 150px
+    margin 10px 0
+    .weui-btn
+        margin 0 5%
 .qrcode
     width 100%
     margin 10px 0

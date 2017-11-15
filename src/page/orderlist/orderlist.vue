@@ -17,10 +17,13 @@
 <script type="text/ecmascript-6">
 import logo from '../../components/logo/logo';
 import detail from './detail/detail';
+import Logger from 'chivy';
+const log = new Logger('page/orderlist');
 export default {
     methods: {
         showDetail() {
-            this.$refs.detail.show();
+            log.info('show Detail order infomation');
+            this.$refs.detail.showit();
         }
     },
     components: {
