@@ -15,26 +15,32 @@ export default new Router({
       redirect: '/menu'
     },
     {
+      // 主页
       path: '/menu',
       component: Menu
     },
     {
+      // 新品推荐
       path: '/new',
       component: New
     },
     {
+      // 订单详情
       path: '/order',
       component: Order
     },
     {
+      // 支付页面
       path: '/pay',
       component: Pay
     },
     {
+      // 历史订单
       path: '/orderlist',
       component: OrderList
     },
     {
+      // 登陆页面
       path: '/login',
       component: Login
     }

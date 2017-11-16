@@ -1,20 +1,20 @@
 <template>
     <div class="order">
-        <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="showmenu"></x-header>
-        <div class="login-wrapper" v-show="!member">
+        <x-header title="" :left-options="{showBack: true, preventGoBack: false}"></x-header>
+        <div class="login-wrapper" v-show="!memberInfo">
             <div class="avator">
-                <img src="../../../../static/img/avator.jpg" width="70px" height="70px">
+                <avator img="../../../../static/img/avator.jpg" size='70' radius='50'></avator>
             </div>
             <div class="text">
-                <h1>登陆/注册</h1>
+                <h1 @click="loginPage">登陆/注册</h1>
             </div>
         </div>
-        <div class="member-wrapper" v-show="member">
+        <div class="member-wrapper" v-show="memberInfo">
             <div class="avator">
-                <img src="../../../../static/img/avator.jpg" width="70px" height="70px">
+                <avator img="../../../../static/img/avator.jpg" size='70' radius='50'></avator>
             </div>
             <div class="text">
-                <h1>{{member.name}},您的会员卡余额是￥{{member.balance}}</h1>
+                <h1>{{memberInfo.name}},您的会员卡余额是￥{{memberInfo.balance}}</h1>
             </div>
         </div>
         <divider>您的订单</divider>
@@ -22,7 +22,7 @@
             <ul>
                 <li class="order-list border-1px" v-for="(food,item) in selectFoods" :key="item">
                     <div class="avator">
-                        <img :src="food.imageUrl" width="35px" height="35px">
+                        <avator :img="food.imageUrl" size='50' radius='20'></avator>
                     </div>
                     <div class="content">
                         <div class="name">{{food.name}}</div>
@@ -30,7 +30,7 @@
                         <div class="total">￥{{food.count*food.price}}</div>
                     </div>
                 </li>
-                <div class="normalshow" v-show="!member">
+                <div class="normalshow" v-show="!memberInfo">
                     <div class="totalprice-wrapper">
                         <div class="title">总价</div><div class="price">￥{{totalPrice}}</div>
                     </div>
@@ -38,20 +38,21 @@
                         <div class="title">会员价</div><div class="price">￥{{totalMemberPrice}}</div>
                     </div>
                 </div>
-                <div class="membershow" v-show="member">
+                <div class="membershow" v-show="memberInfo">
                     <div class="memberprice-wrapper">
                         <div class="title">会员价</div><div class="price">￥{{totalMemberPrice}}</div>
                     </div>
                 </div>
             </ul>
         </div>
-        <ordercart :member="member"></ordercart>
+        <ordercart></ordercart>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
 import ordercart from './ordercart/ordercart';
+import avator from '../../../components/avator/avator';
 import { Divider, XHeader, Group, XSwitch } from 'vux';
 import { mapGetters } from 'vuex';
 import Logger from 'chivy';
@@ -63,15 +64,10 @@ export default {
         };
     },
     created() {
+        // 当购物车为空的时候，返回到主页面
         if (this.selectFoods.length === 0) {
-            this.$router.push({ path: '/menu' });
+            this.$router.push({path: '/menu'});
         }
-        // Test
-        let member = {
-            'name': 'totti',
-            'balance': 1000
-        };
-        this.$store.commit('setMember', member);
     },
     mounted() {
         log.info('mounted');
@@ -97,7 +93,7 @@ export default {
             'totalMemberPrice',
             'products'
         ]),
-        member() {
+        memberInfo() {
             return this.$store.state.memberInfo;
         }
     },
@@ -106,12 +102,12 @@ export default {
         XHeader,
         ordercart,
         Group,
-        XSwitch
+        XSwitch,
+        avator
     },
     methods: {
-        showmenu() {
-            this.show = false;
-            this.$store.commit('showOrder', false);
+        loginPage() {
+            this.$router.push({ path: '/login' });
         }
     }
 };

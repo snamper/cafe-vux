@@ -41,10 +41,10 @@ export default {
         state.uuid = payload;
         log.debug('after uuid change, the uuid is ' + state.uuid);
     },
-    showOrder(state, payload) {
-        state.showOrder = payload;
-    },
     setMember(state, payload) {
         state.memberInfo = payload;
+    },
+    setCashorBalance(state, payload) {
+        state.cashOrBalance = payload;
     }
 };

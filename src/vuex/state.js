@@ -3,5 +3,5 @@ export default {
     memberInfo: '', // 会员信息
     recordList: '', // 会员购买商品记录
     uuid: '', // UUID当没有登陆的时候用这个ID作为会员ID
-    showOrder: false // 是否显示订单列表
+    cashOrBalance: '' // 现金还是余额支付
 };

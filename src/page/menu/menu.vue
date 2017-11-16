@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="main-wrapper" v-show="!showOrder">
+    <div class="main-wrapper">
       <logo></logo>
       <div class="goods">
         <div class="menu-wrapper" ref="menuWrapper">
@@ -42,9 +42,6 @@
         <shopcart ref="shopcart"></shopcart>
       </div>
     </div>
-    <div v-show="showOrder">
-      <order></order>
-    </div>
   </div>
 </template>
 
@@ -54,7 +51,6 @@
   import cartcontrol from './cartcontrol/cartcontrol';
   import logo from '../../components/logo/logo';
   import config from '../../config/config';
-  import order from './order/order.vue';
   import Logger from 'chivy';
   const log = new Logger('page/menu');
 
@@ -68,10 +64,6 @@
       };
     },
     computed: {
-      showOrder() {
-        // log.debug('showOrder is ' + this.$store.state.showOrder);
-        return this.$store.state.showOrder;
-      },
       currentIndex() {
         for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[i];
@@ -85,7 +77,6 @@
       }
     },
     created() {
-      this.$store.commit('showOrder', false);
       const url = config.categorysList;
       log.info('AJAX address is ' + url);
       this.$http.get(url).then((response) => {
@@ -159,8 +150,7 @@
     components: {
       shopcart,
       cartcontrol,
-      logo,
-      order
+      logo
     }
   };
 </script>
