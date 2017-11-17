@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="confirm">
-             <x-button type="primary" @click.native="payit">确认支付￥144元</x-button>
+             <x-button type="primary" @click.native="payit">确认支付￥{{totalPayPrice}}元</x-button>
         </div>
         <div class="qrcode">
             <img src="../../../../static/img/alipay.jpg" v-show="alipay">
@@ -82,6 +82,13 @@ export default {
         ]),
         memberInfo() {
             return this.$store.state.memberInfo;
+        },
+        totalPayPrice() {
+            if (memberInfo.name !== '') {
+                return this.totalMemberPrice;
+            } else {
+                return this.totalPrice;
+            }
         }
     },
     components: {

@@ -80,8 +80,8 @@ export default {
                         this.$store.commit('setMember', member);
                         log.info('Save login user to sessionStorage');
                         sessionStorage.setItem('member', JSON.stringify(member));
-                        log.info('clear uuid');
-                        this.$store.commit('setUUID', '');
+                        // log.info('clear uuid');
+                        // this.$store.commit('setUUID', '');
                         this.$vux.toast.text('登陆成功', 'middle');
                         this.$router.push({path: '/order'});
                     } else {
@@ -118,8 +118,8 @@ export default {
                         log.info('Save register user to sessionStorage');
                         sessionStorage.setItem('member', JSON.stringify(member));
                         log.info('finish to save sessionStorage');
-                        log.info('clear uuid');
-                        this.$store.commit('setUUID', '');
+                        // log.info('clear uuid');
+                        // this.$store.commit('setUUID', '');
                         this.$vux.toast.text('注册成功', 'middle');
                         this.$router.push({path: '/order'});
                     } else {
