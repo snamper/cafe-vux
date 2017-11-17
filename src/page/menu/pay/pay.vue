@@ -94,11 +94,17 @@ export default {
             this.qrcode = false;
         },
         payit() {
+            let url = config.buyGoods;
+            log.debug('' + url);
             if (this.memberInfo.balance < this.totalPayPrice && this.balance) {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
+            } else if (this.balance) {
+                // 会员提交
+                // let data = this.record('CASH');
+            } else if (this.memberInfo) {
+                // 会员现金提交
             } else {
-                let url = config.buyGoods;
-                log.debug('' + url);
+                // 非会员现金提交
             }
         }
     },
@@ -118,6 +124,37 @@ export default {
             } else {
                 return this.totalMemberPrice;
             }
+        },
+        record(type) {
+            let record = {
+                'amount': this.totalMemberPrice,
+                'userId': this.memberInfo.id,
+                'userName': this.memberInfo.name,
+                'cashOrBalance': type,
+                'details': this.details(type)
+            };
+            return record;
+        },
+        details(type) {
+            let details = [];
+            this.selectFoods.forEach((good) => {
+                let detail = '';
+                if (type === 'CASH') {
+                    detail = {
+                    'productId': good.code,
+                    'amount': good.count * good.memberPrice,
+                    'number': good.count
+                    };
+                } else if (type === 'BALANCE') {
+                    detail = {
+                    'productId': good.code,
+                    'amount': good.count * good.price,
+                    'number': good.count
+                    };
+                }
+                details.push(detail);
+            });
+            return details;
         }
     },
     components: {
