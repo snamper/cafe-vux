@@ -27,10 +27,21 @@
                 <check-icon :value.sync="wechat"></check-icon>
             </div>
         </div>
+        <div class="balance" v-show="memberInfo">
+            <div class="img">
+                <avator img='../../../../static/img/avator.jpg' size='50' radius='50'></avator>
+            </div>
+            <div class="text">
+               余额支付（￥{{memberInfo.balance}}）
+            </div>
+            <div class="select" @click="disableQRCord">
+                <check-icon :value.sync="balance"></check-icon>
+            </div>
+        </div>
         <div class="confirm">
              <x-button type="primary" @click.native="payit">确认支付￥{{totalPayPrice}}元</x-button>
         </div>
-        <div class="qrcode">
+        <div class="qrcode" v-show="qrcode">
             <img src="../../../../static/img/alipay.jpg" v-show="alipay">
             <img src="../../../../static/img/wechat.jpg" v-show="wechat">
         </div>
@@ -51,26 +62,44 @@ const log = new Logger('page/menu/pay');
 export default {
     data() {
         return {
+            qrcode: true,
             alipay: true,
-            wechat: false
+            wechat: false,
+            balance: false
         };
     },
     created() {
-        log.info('pay created');
-        this.$router.push({path: '/menu'});
+        // 当购物车为空的时候，返回到主页面
+        if (this.selectFoods.length === 0) {
+            this.$router.push({path: '/menu'});
+        }
     },
     methods: {
         showAlipayQRcode() {
             this.alipay = true;
             this.wechat = false;
+            this.balance = false;
+            this.qrcode = true;
         },
         showWechatQRcode() {
             this.alipay = false;
             this.wechat = true;
+            this.balance = false;
+            this.qrcode = true;
+        },
+        disableQRCord() {
+            this.alipay = false;
+            this.wechat = false;
+            this.balance = true;
+            this.qrcode = false;
         },
         payit() {
-            let url = config.buyGoods;
-            log.debug('' + url);
+            if (this.memberInfo.balance < this.totalPayPrice && this.balance) {
+                this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
+            } else {
+                let url = config.buyGoods;
+                log.debug('' + url);
+            }
         }
     },
     computed: {
@@ -84,10 +113,10 @@ export default {
             return this.$store.state.memberInfo;
         },
         totalPayPrice() {
-            if (memberInfo.name !== '') {
-                return this.totalMemberPrice;
-            } else {
+            if (!this.memberInfo) {
                 return this.totalPrice;
+            } else {
+                return this.totalMemberPrice;
             }
         }
     },
@@ -112,7 +141,7 @@ export default {
             line-height 1.5rem
             height 1.5rem 
             font-size 1.2rem
-    .alipay,.wechat
+    .alipay,.wechat,.balance
         margin 0.3rem
         width 97%
         height 50px
@@ -128,10 +157,11 @@ export default {
             img
                 border-radius:50%;
         .text
-            flex-grow 3
+            flex-grow 1
+            flex-basis 60%
             display flex
             align-items center
-            font-size 1.2rem
+            font-size 1rem
         .select
             flex-grow 1
             display flex

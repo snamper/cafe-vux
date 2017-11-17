@@ -30,19 +30,6 @@
                         <div class="total">￥{{food.count*food.price}}</div>
                     </div>
                 </li>
-                <div class="normalshow" v-show="!memberInfo">
-                    <div class="totalprice-wrapper">
-                        <div class="title">总价</div><div class="price">￥{{totalPrice}}</div>
-                    </div>
-                    <div class="memberprice-wrapper">
-                        <div class="title">会员价</div><div class="price">￥{{totalMemberPrice}}</div>
-                    </div>
-                </div>
-                <div class="membershow" v-show="memberInfo">
-                    <div class="memberprice-wrapper">
-                        <div class="title">会员价</div><div class="price">￥{{totalMemberPrice}}</div>
-                    </div>
-                </div>
             </ul>
         </div>
         <ordercart></ordercart>

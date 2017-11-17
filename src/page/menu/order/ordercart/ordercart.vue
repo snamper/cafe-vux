@@ -1,23 +1,12 @@
 <template>
     <div>
         <div class="ordercart-wrapper">
-            <div class="left-wrapper" v-show="!memberInfo">
-                <div class="left">
+            <div class="left-wrapper">
+                <div class="left" v-show="!memberInfo">
                     <span class="title">待支付</span><span class="price">￥{{totalPrice}}</span>
                 </div>
                 <div class="right">
                     <span class="title">会员价</span><span class="price">￥{{totalMemberPrice}}</span>
-                </div>
-            </div>
-            <div class="left-wrapper" v-show="memberInfo">
-                <div class="left">
-                    <span class="title">待支付</span><span class="price">￥{{totalMemberPrice}}</span>
-                </div>
-                <div class="right">
-                    <!-- <group>
-                        <x-switch title="余额扣款"></x-switch>
-                    </group> -->
-                    <span class="title">余额扣款</span><input type="checkbox" class="weui-switch" v-model="select">
                 </div>
             </div>
             <div class="right-wrapper">
@@ -48,18 +37,7 @@ export default {
     },
     methods: {
         pay() {
-            if (this.select) {
-                if (this.memberInfo.balance >= this.totalMemberPrice) {
-                    this.$store.commit('cashOrBalance', 'balance');
-                    this.$router.push({path: '/pay'});
-                } else {
-                    this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
-                    this.select = false;
-                }
-            } else {
-                this.$store.commit('cashOrBalance', 'cash');
-                this.$router.push({path: '/pay'});
-            }
+            this.$router.push({path: '/pay'});
         }
     },
     components: {
