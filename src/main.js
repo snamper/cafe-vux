@@ -4,13 +4,14 @@ import Vue from 'vue';
 import FastClick from 'fastclick';
 import App from './App';
 import router from './router';
-import { ToastPlugin, AjaxPlugin } from 'vux';
+import { ToastPlugin, AjaxPlugin, AlertPlugin } from 'vux';
 import store from './vuex/';
 import './common/css/iconfont.css';
 import './common/stylus/index.styl';
 
 Vue.use(AjaxPlugin);
 Vue.use(ToastPlugin);
+Vue.use(AlertPlugin);
 Vue.config.productionTip = false;
 FastClick.attach(document.body);
 

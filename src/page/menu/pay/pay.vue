@@ -59,6 +59,9 @@ import avator from '../../../components/avator/avator';
 import { CheckIcon, XButton, XHeader } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('page/menu/pay');
+const CASH = 'CASH';
+const BALANCE = 'BALANCE';
+const VISITOR = 'VISITOR';
 export default {
     data() {
         return {
@@ -93,19 +96,97 @@ export default {
             this.balance = true;
             this.qrcode = false;
         },
+        record(type) {
+            let record = '';
+            if (type === BALANCE) {
+                record = {
+                    'amount': this.totalPayPrice,
+                    'userId': this.memberInfo.id,
+                    'userName': this.memberInfo.name,
+                    'cashOrBalance': type,
+                    'details': this.details(type)
+                };
+            } else if (type === CASH && this.memberInfo) {
+                record = {
+                    'amount': this.totalPayPrice,
+                    'userId': this.memberInfo.id,
+                    'userName': this.memberInfo.name,
+                    'cashOrBalance': type,
+                    'details': this.details(type)
+                };
+            } else {
+                record = {
+                    'amount': this.totalPayPrice,
+                    'userId': this.$store.state.uuid,
+                    'userName': VISITOR,
+                    'cashOrBalance': type,
+                    'details': this.details(type)
+                };
+            }
+            return record;
+        },
+        details(type) {
+            let details = [];
+            this.selectFoods.forEach((good) => {
+                let detail = '';
+                if (type === CASH) {
+                    detail = {
+                    'productId': good.code,
+                    'amount': good.count * good.memberPrice,
+                    'number': good.count
+                    };
+                } else if (type === BALANCE) {
+                    detail = {
+                    'productId': good.code,
+                    'amount': good.count * good.price,
+                    'number': good.count
+                    };
+                }
+                details.push(detail);
+            });
+            return details;
+        },
         payit() {
-            let url = config.buyGoods;
-            log.debug('' + url);
             if (this.memberInfo.balance < this.totalPayPrice && this.balance) {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
             } else if (this.balance) {
                 // 会员提交
-                // let data = this.record('CASH');
+                let data = this.record(BALANCE);
+                log.debug(JSON.stringify(data));
+                this.realpay(data);
             } else if (this.memberInfo) {
                 // 会员现金提交
+                let data = this.record(CASH);
+                log.debug(JSON.stringify(data));
+                this.realpay(data);
             } else {
                 // 非会员现金提交
+                let data = this.record(CASH);
+                log.debug(JSON.stringify(data));
+                this.realpay(data);
             }
+        },
+        realpay(data) {
+            let url = config.buyGoods;
+            log.debug('data is ' + JSON.stringify(data));
+            log.debug('' + url);
+            log.info('Now get the AJAX to API(' + url + ')');
+            this.$http.post(url, data).then((response) => {
+                let result = response.data;
+                if (result.success) {
+                    // 支付成功
+                    this.$vux.alert.show({
+                        title: '支付成功',
+                        content: '您已支付成功，点击我已付款提醒卖家',
+                        onShow () {
+                            console.log('Plugin: I\'m showing');
+                        },
+                        onHide () {
+                            console.log('Plugin: I\'m hiding');
+                        }
+                    });
+                }
+            });
         }
     },
     computed: {
@@ -124,37 +205,6 @@ export default {
             } else {
                 return this.totalMemberPrice;
             }
-        },
-        record(type) {
-            let record = {
-                'amount': this.totalMemberPrice,
-                'userId': this.memberInfo.id,
-                'userName': this.memberInfo.name,
-                'cashOrBalance': type,
-                'details': this.details(type)
-            };
-            return record;
-        },
-        details(type) {
-            let details = [];
-            this.selectFoods.forEach((good) => {
-                let detail = '';
-                if (type === 'CASH') {
-                    detail = {
-                    'productId': good.code,
-                    'amount': good.count * good.memberPrice,
-                    'number': good.count
-                    };
-                } else if (type === 'BALANCE') {
-                    detail = {
-                    'productId': good.code,
-                    'amount': good.count * good.price,
-                    'number': good.count
-                    };
-                }
-                details.push(detail);
-            });
-            return details;
         }
     },
     components: {

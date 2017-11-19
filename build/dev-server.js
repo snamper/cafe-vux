@@ -103,7 +103,7 @@ apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
 
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body
-  console.log(JSON.stringify(user))
+  console.log('getRecordList.do data is ' + JSON.stringify(user))
   if(user.userId === 107){
     if(user.needDetail){
       res.json(cartDetailList)
@@ -116,12 +116,15 @@ apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
 
 apiRoutes.post('/product/show/ui/saveRecordList.do',jsonParser,function(req,res){
   let user = req.body
-  console.log(JSON.stringify(user))
+  console.log('saveRecordList.do data is ' + JSON.stringify(user))
   if (user.amount < 100) {
+    console.log('user.amount <100')
     res.json(resfail)
-  } else if(user.amount > 100 && user.amount <200) {
+  } else if(user.amount > 100 && user.amount <10000) {
+    console.log('user.amount >100 && < 10000')
     res.json(ressuccess)
   } else {
+    console.log('other')
     res.json(resnull)
   }
 })
