@@ -2,7 +2,7 @@
     <div class="detail-wrapper" v-show="show">
         <x-header title="订单详情" :left-options="{preventGoBack: true}" @on-click-back="close"></x-header>
         <logo></logo>
-        <div class="order-wrapper" ref="orderList">
+        <div class="order-wrapper">
             <ul>
                 <li class="order-list border-1px">
                     <div class="avator">
@@ -53,12 +53,14 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .detail-wrapper
-    position absolute
+    position fixed
     top 0px
     left 0px
     bottom 50px
+    z-index 500
+    width 100%
     .order-wrapper
-        position absolute
+        position fixed
         width 100%
         top 182px
         bottom 50px

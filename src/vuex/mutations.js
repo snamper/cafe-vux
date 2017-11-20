@@ -53,5 +53,11 @@ export default {
                 food.count = 0;
             });
         });
+    },
+    setrecordList(state, payload) {
+        state.recordList = payload;
+    },
+    setlistShow(state, payload) {
+        state.listShow = payload;
     }
 };
