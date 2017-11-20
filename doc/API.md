@@ -309,3 +309,47 @@ status的值就只传WAITE4ENSURE就行了
 	  },
 	  "success": true
 	}
+
+### 修改状态接口
+	/shop/product/show/ui/alterStatus.do
+	**入参**
+	/*入参 Status 有4个状态
+		WAITE4PAY("WAITE4PAY")//待付款 数据库默认状态
+		WAITE4ENSURE("WAITE4ENSURE")//已付款待确认
+		ENSURE2PAID("ENSURE2PAID")//已确认付款
+		SUCCESS("SUCCESS")//成功
+	*/
+	{
+		"RecordID":74,
+		"status":"WAITE4ENSURE" 
+	}
+	**回参**
+    {
+        "envData":
+        {
+            "endRow": -1,
+            "language": "en-US",
+            "pageNo": -1,
+            "pageSize": -1,
+            "realTotalRows": -1,
+            "responseStatus": "0",
+            "startRow": -1,
+            "totalPages": -1,
+            "totalRows": -1,
+            "userId": 0,
+            "userIp": "192.168.1.141"
+        },
+        "success": true
+    }
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
