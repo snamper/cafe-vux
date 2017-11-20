@@ -10,5 +10,7 @@ export default {
     // 用户注册接口
     userRegister: '/shop/member/show/ui/createMember.do',
     // 商品购买接口
-    buyGoods: '/shop/product/show/ui/saveRecordList.do'
+    buyGoods: '/shop/product/show/ui/saveRecordList.do',
+    // 获取订单状态的接口
+    recordStatus: '/shop/product/show/ui/alterStatus.do'
 };

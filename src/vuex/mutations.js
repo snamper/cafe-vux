@@ -46,5 +46,12 @@ export default {
     },
     setCashorBalance(state, payload) {
         state.cashOrBalance = payload;
+    },
+    clearCarts(state) {
+        state.categorys.forEach((category) => {
+            category.list.forEach((food) => {
+                food.count = 0;
+            });
+        });
     }
 };

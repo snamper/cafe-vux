@@ -32,25 +32,20 @@ import { Tabbar, TabbarItem, ViewBox, Loading } from 'vux';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('cafe/App');
+const uuidv4 = require('uuid/v4');
 export default {
   created: function () {
+    let uuid = '';
+    uuid = uuidv4();
     log.debug('created uuid here');
-    log.debug(this.setUUID());
-    this.$store.commit('setUUID', this.setUUID());
+    log.debug(uuid);
+    this.$store.commit('setUUID', uuid);
     log.debug('uuid is ' + this.$store.state.uuid);
   },
   computed: {
     ...mapState({
       isLoading: state => state.vux.isLoading
     })
-  },
-  methods: {
-    setUUID: function () {
-      function S4() {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-      }
-      return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
-    }
   },
   components: {
     Tabbar,

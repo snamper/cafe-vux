@@ -46,7 +46,7 @@
             <img src="../../../../static/img/wechat.jpg" v-show="wechat">
         </div>
         <div class="already">
-             <x-button mini plain>我已付款</x-button>
+             <x-button mini plain @click.native="paiedNow">我已付款</x-button>
         </div>
     </div>
 </template>
@@ -169,24 +169,29 @@ export default {
         realpay(data) {
             let url = config.buyGoods;
             log.debug('data is ' + JSON.stringify(data));
-            log.debug('' + url);
+            log.debug('ajax' + url);
             log.info('Now get the AJAX to API(' + url + ')');
             this.$http.post(url, data).then((response) => {
                 let result = response.data;
                 if (result.success) {
                     // 支付成功
+                    // 清空SelectFoods
+                    this.$store.commit('clearCarts');
                     this.$vux.alert.show({
                         title: '支付成功',
-                        content: '您已支付成功，点击我已付款提醒卖家',
-                        onShow () {
-                            console.log('Plugin: I\'m showing');
-                        },
-                        onHide () {
-                            console.log('Plugin: I\'m hiding');
-                        }
+                        content: '点击【我已付款】提醒卖家'
+                    });
+                } else {
+                    this.$vux.alert.show({
+                        title: '支付失败',
+                        content: '请稍后再试'
                     });
                 }
             });
+        },
+        paiedNow() {
+            let url = config.recordStatus;
+            log.debug('ajax' + url);
         }
     },
     computed: {
