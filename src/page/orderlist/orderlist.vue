@@ -4,10 +4,17 @@
             <logo></logo>
             <div class="orderlist-wrapper" v-if="showList">
                 <p class="title" v-if="!memberInfo">游客，您的本次订单如下</p>
-                <ul>
+                <p class="title" v-if="memberInfo">{{memberInfo.name}}，您的历史订单如下</p>
+                <ul v-if="!memberInfo">
                     <li class="orderlist" @click="showDetail">
                         <div class="time">购买日期：<span class="time">{{recordList.datetime}}</span></div>
-                        <div class="status">购买状态：<span class="status">{{recordList.status}}</span></div>
+                        <div class="status">订单状态：<span class="status">{{recordList.status}}</span></div>
+                    </li>
+                </ul>
+                <ul v-if="memberInfo">
+                    <li class="orderlist" @click="showDetail" v-for="(item,index) in orderlist" :key="index">
+                        <div class="time">购买日期：<span class="time">{{orderlist.datetime}}</span></div>
+                        <div class="status">订单状态：<span class="status">{{orderlist.status}}</span></div>
                     </li>
                 </ul>
             </div>
@@ -15,13 +22,11 @@
                 <p class="title">亲，您还没有购买任何商品</p>
             </div>
         </div>
-        <detail ref="detail"></detail>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 import logo from '../../components/logo/logo';
-import detail from './detail/detail';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist');
@@ -43,12 +48,12 @@ export default {
     methods: {
         showDetail() {
             log.info('show Detail order infomation');
-            this.$refs.detail.showit();
+            /* this.$refs.detail.showit(); */
+            this.$router.push({path: '/detail', param: ''});
         }
     },
     components: {
-        logo,
-        detail
+        logo
     }
 };
 </script>

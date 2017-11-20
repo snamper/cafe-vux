@@ -1,6 +1,6 @@
 <template>
-    <div class="detail-wrapper" v-show="show">
-        <x-header title="订单详情" :left-options="{preventGoBack: true}" @on-click-back="close"></x-header>
+    <div class="detail-wrapper">
+        <x-header title="订单详情" :left-options="{preventGoBack: true}" @on-click-back="back"></x-header>
         <logo></logo>
         <div class="order-wrapper">
             <ul>
@@ -16,7 +16,7 @@
                 </li>
                 <div class="normalshow">
                     <div class="memberprice-wrapper">
-                        <div class="title">会员价</div><div class="price">￥38</div>
+                        <div class="title">总价</div><div class="price">￥38</div>
                     </div>
                 </div>
             </ul>
@@ -30,18 +30,16 @@ import { XHeader } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist/detail');
 export default {
-    data() {
-        return {
-            show: false
-        };
+    created() {
+        if (!this.recordList || !this.memberRecordList) {
+             this.$router.push({path: '/orderlist'});
+        }
     },
     methods: {
-        showit() {
-            log.info('show detail');
-            this.show = true;
-        },
-        close() {
-            this.show = false;
+        back() {
+            log.info('back to detaillist page');
+            // 返回列表页
+            this.$router.push({path: '/orderlist'});
         }
     },
     components: {
