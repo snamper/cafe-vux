@@ -9,9 +9,9 @@
                     <li v-for="(item,index) in recordList" :key="index">
                         <div class="time">
                             购买日期：
-                            <span class="time">{{item.createTime}}</span>
+                            <span class="time">{{buyDateTime(item.createTime)}}</span>
                             订单状态：
-                            <span class="status">{{item.status}}</span>
+                            <span class="status">{{showStatus(item.status)}}</span>
                         </div>
                         <divider>详情</divider>
                         <ul>
@@ -28,6 +28,7 @@
                                 </div>
                             </li>
                         </ul>
+                        <divider></divider>
                         <div class="summary">
                             <div class="title">总价</div><div class="price">￥{{item.amount}}</div>
                         </div>
@@ -44,20 +45,28 @@
 <script type="text/ecmascript-6">
 import logo from '../../components/logo/logo';
 import config from '../../config/config';
+import util from '../../common/js/util';
 import { mapState } from 'vuex';
 import { Divider } from 'vux';
 import avator from '../../components/avator/avator';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist');
+const WAITE4PAY = '待付款';
+const WAITE4ENSURE = '已付款';
+const ENSURE2PAID = '已确认';
+const SUCCESS = '成功';
 export default {
     created() {
         // 获取购买记录并存入列表,区分会员和非会员
+        log.debug('memberinfo is ' + this.memberInfo);
         if (!this.memberInfo) {
             // 非会员
-            this.getRecordList(this.memberInfo.ID);
+            log.debug('uuid is ' + this.$store.state.uuid);
+            this.getRecordList(this.$store.state.uuid);
         } else {
             // 会员
-            this.getRecordList(this.$store.state.uuid);
+            log.debug('member id is ' + this.memberInfo.ID);
+            this.getRecordList(this.memberInfo.ID);
         }
     },
     computed: {
@@ -86,6 +95,7 @@ export default {
             this.$refs.detail.showit();
         },
         getRecordList(userid) {
+            log.debug('userid ' + userid);
             let url = config.recordList;
             let data = {
                 'userId': userid,
@@ -98,6 +108,24 @@ export default {
                     this.$store.commit('setrecordList', result);
                 }
             });
+        },
+        buyDateTime(date) {
+            let format = util.formatDate(date);
+            let result = format.Year + '' + format.Month + '' + format.Day + ' ' + format.Hour + ':' + format.Minute;
+            return result;
+        },
+        showStatus(status) {
+            let result = status;
+            if (status === 'WAITE4PAY') {
+                result = WAITE4PAY;
+            } else if (status === 'WAITE4ENSURE') {
+                result = WAITE4ENSURE;
+            } else if (status === 'ENSURE2PAID') {
+                result = ENSURE2PAID;
+            } else if (status === 'SUCCESS') {
+                result = SUCCESS;
+            }
+            return result;
         }
     },
     components: {

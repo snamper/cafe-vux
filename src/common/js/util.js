@@ -8,5 +8,17 @@ export default {
     'getkey': function getKey(key) {
         log.info('get key(' + key + ') from sessionStorage');
         return JSON.parse(sessionStorage.getItem(key));
+    },
+    'formatDate': function formatDate(date) {
+        var datetime = new Date(date);
+        var format = {
+            'Year': 1900 + datetime.getYear(),
+            'Month': (datetime.getMonth() + 1),
+            'Day': datetime.getDate(),
+            'Hour': datetime.getHours(),
+            'Minute': datetime.getMinutes(),
+            'Second': datetime.getSeconds()
+        };
+        return format;
     }
 };

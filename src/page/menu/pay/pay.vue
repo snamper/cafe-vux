@@ -46,7 +46,7 @@
             <img src="../../../../static/img/wechat.jpg" v-show="wechat">
         </div>
         <div class="already">
-             <x-button mini plain @click.native="paiedNow">我已付款</x-button>
+             <x-button mini plain @click.native="alertStatus">我已付款</x-button>
         </div>
     </div>
 </template>
@@ -189,7 +189,7 @@ export default {
                 }
             });
         },
-        paiedNow() {
+        alertStatus() {
             let url = config.recordStatus;
             log.debug('ajax' + url);
         }

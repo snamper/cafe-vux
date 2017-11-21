@@ -104,12 +104,10 @@ apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body
   console.log('getRecordList.do data is ' + JSON.stringify(user))
-  if(user.userId === 107){
-    if(user.needDetail){
-      res.json(cartDetailList)
-    }else{
-      res.json(cartList)
-    }
+  if(user.needDetail){
+    res.json(cartDetailList)
+  }else{
+    res.json(cartList)
   }
 })
 
