@@ -57,7 +57,7 @@ export default {
     setrecordList(state, payload) {
         state.recordList = payload;
     },
-    setlistShow(state, payload) {
-        state.listShow = payload;
+    setuuid(state, payload) {
+        state.uuid = payload;
     }
 };

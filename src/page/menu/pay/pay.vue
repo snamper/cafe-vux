@@ -56,7 +56,7 @@ import logo from '../../../components/logo/logo';
 import config from '../../../config/config';
 import { mapGetters } from 'vuex';
 import avator from '../../../components/avator/avator';
-import { CheckIcon, XButton, XHeader, dateFormat } from 'vux';
+import { CheckIcon, XButton, XHeader } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('page/menu/pay');
 const CASH = 'CASH';
@@ -175,8 +175,6 @@ export default {
                 let result = response.data;
                 if (result.success) {
                     // 支付成功
-                    // 记录订单信息到state中
-                    this.recordList();
                     // 清空SelectFoods
                     this.$store.commit('clearCarts');
                     this.$vux.alert.show({
@@ -190,18 +188,6 @@ export default {
                     });
                 }
             });
-        },
-        recordList() {
-            let list = {
-                'amount': this.totalPayPrice,
-                'id': this.$store.state.uuid,
-                'status': '已购买',
-                'name': '游客',
-                'datetime': dateFormat(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-                'detail': this.detail
-            };
-            this.$store.commit('setrecordList', list);
-            // 存入sessionStorage中
         },
         paiedNow() {
             let url = config.recordStatus;

@@ -5,16 +5,32 @@
             <div class="orderlist-wrapper" v-if="showList">
                 <p class="title" v-if="!memberInfo">游客，您的本次订单如下</p>
                 <p class="title" v-if="memberInfo">{{memberInfo.name}}，您的历史订单如下</p>
-                <ul v-if="!memberInfo">
-                    <li class="orderlist" @click="showDetail">
-                        <div class="time">购买日期：<span class="time">{{recordList.datetime}}</span></div>
-                        <div class="status">订单状态：<span class="status">{{recordList.status}}</span></div>
-                    </li>
-                </ul>
-                <ul v-if="memberInfo">
-                    <li class="orderlist" @click="showDetail" v-for="(item,index) in orderlist" :key="index">
-                        <div class="time">购买日期：<span class="time">{{orderlist.datetime}}</span></div>
-                        <div class="status">订单状态：<span class="status">{{orderlist.status}}</span></div>
+                <ul>
+                    <li v-for="(item,index) in recordList" :key="index">
+                        <div class="time">
+                            购买日期：
+                            <span class="time">{{item.createTime}}</span>
+                            订单状态：
+                            <span class="status">{{item.status}}</span>
+                        </div>
+                        <divider>详情</divider>
+                        <ul>
+                            <li v-for="(good,index) in item.details" :key="index">
+                                <div class="detail">
+                                    <div class="avator">
+                                        <avator :img="good.imageUrl" size='35' radius='50'></avator>
+                                    </div>
+                                    <div class="content">
+                                        <div class="name">{{good.name}}</div>
+                                        <div class="number">x{{good.number}}</div>
+                                        <div class="total">￥{{good.amount}}</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="summary">
+                            <div class="title">总价</div><div class="price">￥{{item.amount}}</div>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -27,15 +43,27 @@
 
 <script type="text/ecmascript-6">
 import logo from '../../components/logo/logo';
+import config from '../../config/config';
 import { mapState } from 'vuex';
+import { Divider } from 'vux';
+import avator from '../../components/avator/avator';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist');
 export default {
+    created() {
+        // 获取购买记录并存入列表,区分会员和非会员
+        if (!this.memberInfo) {
+            // 非会员
+            this.getRecordList(this.memberInfo.ID);
+        } else {
+            // 会员
+            this.getRecordList(this.$store.state.uuid);
+        }
+    },
     computed: {
         ...mapState([
             'memberInfo',
-            'recordList',
-            'memberRecordList'
+            'recordList'
         ]),
         showList() {
             if (this.recordList || this.memberRecordList) {
@@ -43,17 +71,39 @@ export default {
             } else {
                 return false;
             }
+        },
+        totalPrice() {
+            let total = 0;
+            this.recordList.detail.forEach((good) => {
+                total = total + good.count * good.price;
+            });
+            return total;
         }
     },
     methods: {
         showDetail() {
             log.info('show Detail order infomation');
-            /* this.$refs.detail.showit(); */
-            this.$router.push({path: '/detail', param: ''});
+            this.$refs.detail.showit();
+        },
+        getRecordList(userid) {
+            let url = config.recordList;
+            let data = {
+                'userId': userid,
+                'needDetail': true
+            };
+            this.$http.post(url, data).then((response) => {
+                 let result = response.data;
+                // 存入state中
+                if (result.length !== 0) {
+                    this.$store.commit('setrecordList', result);
+                }
+            });
         }
     },
     components: {
-        logo
+        logo,
+        avator,
+        Divider
     }
 };
 </script>
@@ -66,22 +116,44 @@ export default {
             line-height 24px
             text-align left
             padding 10px 5px 10px 5px
-        .orderlist
+        .detail
             width 100%
-            height 60px
-            padding 5px
+            height 70px
             display flex
+            justify-content center
             align-items center
-            .time,.status
+            .avator, .content
                 display inline-block
-            .time 
+            .avator
                 flex-grow 1
-                .time
-                    color red
-            .status
-                flex-grow 1
-                .status
-                    color red
+                text-align center
+            .content 
+                flex-grow 3
+                display flex
+                .name, .number,.total
+                    display inline-block
+                    width 100%
+                .name
+                    text-align left
+                .number
+                    text-align right
+                .total
+                    text-align center
+        .summary
+            width 100%
+            height 2rem
+            display flex
+            justify-content center
+            align-items center
+            .title,.price
+                width 100%
+                line-height 18px
+            .title
+                text-align left
+                padding-left 3rem 
+            .price
+                text-align right
+                padding-right 2rem
     .non-order
         .title
             line-height 24px

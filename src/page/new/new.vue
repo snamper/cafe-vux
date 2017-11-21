@@ -25,7 +25,15 @@
 <script type="text/ecmascript-6">
 import { Swiper, Divider, Grid, GridItem } from 'vux';
 import logo from '../../components/logo/logo';
+import Logger from 'chivy';
+const log = new Logger('cafe/new');
 export default {
+    created() {
+        log.debug('created');
+    },
+    mounted() {
+        log.debug('mounted');
+    },
     computed: {
         sliders() {
             return this.$store.getters.sliders;

@@ -2,8 +2,9 @@
   <div id="app">
     <view-box>
       <keep-alive>
-        <router-view></router-view>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     </view-box>
     <tabbar>
         <tabbar-item :link="{path:'/menu'}">
@@ -30,16 +31,20 @@
 import { Tabbar, TabbarItem, ViewBox, Loading } from 'vux';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
+import util from './common/js/util';
+import session from './config/session';
 const log = new Logger('cafe/App');
 const uuidv4 = require('uuid/v4');
 export default {
   created: function () {
-    let uuid = '';
-    uuid = uuidv4();
-    log.debug('created uuid here');
-    log.debug(uuid);
+    // 读取sessionStorage中是否存在UUID，如果存在则写入state中，如果不存在，则生成并写入sessionStorage中。
+    let uuid = util.getkey(session.uuid);
+    if (uuid === null) {
+      log.debug('cannot get uuid from sessionStorage');
+      uuid = uuidv4();
+      util.setkey(session.uuid, uuid);
+    }
     this.$store.commit('setUUID', uuid);
-    log.debug('uuid is ' + this.$store.state.uuid);
   },
   computed: {
     ...mapState({

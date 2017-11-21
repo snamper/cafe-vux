@@ -6,7 +6,7 @@ import Order from '@/page/menu/order/order';
 import Pay from '@/page/menu/pay/pay';
 import OrderList from '@/page/orderlist/orderlist';
 import Login from '@/page/login/login';
-import Detail from '@/page/orderlist/detail/detail';
+/* import Detail from '@/page/orderlist/detail/detail'; */
 
 Vue.use(Router);
 
@@ -18,7 +18,10 @@ export default new Router({
     {
       // 主页
       path: '/menu',
-      component: Menu
+      component: Menu,
+      meta: {
+        keepAlive: true // 需要被缓存
+      }
     },
     {
       // 新品推荐
@@ -44,11 +47,11 @@ export default new Router({
       // 登陆页面
       path: '/login',
       component: Login
-    },
+    }/* ,
     {
       // 详情页面
       path: '/detail',
       component: Detail
-    }
+    } */
   ]
 });
