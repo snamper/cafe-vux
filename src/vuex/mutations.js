@@ -59,5 +59,8 @@ export default {
     },
     setuuid(state, payload) {
         state.uuid = payload;
+    },
+    setrecordId(state, payload) {
+        state.recordId = payload;
     }
 };

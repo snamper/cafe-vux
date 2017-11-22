@@ -49,6 +49,7 @@ const cartList = appData.cartList
 const resnull = appData.buyrecord.null
 const resfail = appData.buyrecord.fail
 const ressuccess = appData.buyrecord.success
+const alterStatus = appData.alterStatus
 
 /* define router  */
 var apiRoutes = express.Router()
@@ -97,8 +98,10 @@ apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
   res.json(addValue)
 })
 
-apiRoutes.get('/product/show/ui/getDetailList.do',function(req,res){
-  res.json('false')
+apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser,function(req,res){
+  let user = req.body
+  console.log('alterStatus.do data is ' + JSON.stringify(user))
+  res.json(alterStatus)
 })
 
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){

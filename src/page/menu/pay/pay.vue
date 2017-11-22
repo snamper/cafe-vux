@@ -62,6 +62,7 @@ const log = new Logger('page/menu/pay');
 const CASH = 'CASH';
 const BALANCE = 'BALANCE';
 const VISITOR = 'VISITOR';
+const WAITE4ENSURE = '已付款';
 export default {
     data() {
         return {
@@ -174,9 +175,8 @@ export default {
             this.$http.post(url, data).then((response) => {
                 let result = response.data;
                 if (result.success) {
-                    // 支付成功
-                    // 清空SelectFoods
-                    this.$store.commit('clearCarts');
+                    // 支付成功， 记录recordId
+                    this.$store.commit('setrecordId', result.entityId);
                     this.$vux.alert.show({
                         title: '支付成功',
                         content: '点击【我已付款】提醒卖家'
@@ -192,6 +192,27 @@ export default {
         alertStatus() {
             let url = config.recordStatus;
             log.debug('ajax' + url);
+            if (this.$store.state.recordId) {
+                let data = {
+                    'RecordID': this.$store.state.recordId,
+                    'status': WAITE4ENSURE
+                };
+                this.$http.post(url, data).then((response) => {
+                    let result = response.data;
+                    if (result.success) {
+                        // 清空recordID
+                        this.$store.commit('setrecordId', '');
+                        // 清空SelectFoods 什么时候清空购物车是一个问题
+                        this.$store.commit('clearCarts');
+                        this.$vux.alert.show({
+                            title: '付款提醒',
+                            content: '已提醒店家，店家会尽快确认付款信息'
+                        });
+                    }
+                });
+            } else {
+                this.$vux.toast.text('请先确认支付', 'middle');
+            }
         }
     },
     computed: {

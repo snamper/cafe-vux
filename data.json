@@ -337,13 +337,14 @@
       "success": false
     },
     "success": {
+      "entityId": "138",
       "envData": {
         "endRow": -1,
         "language": "",
         "pageNo": -1,
         "pageSize": -1,
         "realTotalRows": -1,
-        "responseStatus": "0",
+        "responseStatus": "余额支付成功",
         "startRow": -1,
         "totalPages": -1,
         "totalRows": -1,
@@ -352,5 +353,21 @@
       },
       "success": true
     }
+  },
+  "alterStatus": {
+    "envData": {
+      "endRow": -1,
+      "language": "en-US",
+      "pageNo": -1,
+      "pageSize": -1,
+      "realTotalRows": -1,
+      "responseStatus": "0",
+      "startRow": -1,
+      "totalPages": -1,
+      "totalRows": -1,
+      "userId": 0,
+      "userIp": "10.0.0.112"
+    },
+    "success": true
   }
 }
