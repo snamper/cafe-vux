@@ -139,6 +139,11 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .list-wrapper
     .orderlist-wrapper
+        position absolute
+        width 100%
+        top 120px
+        bottom 50px
+        overflow hidden
         .title
             height 24px
             line-height 24px

@@ -1,7 +1,6 @@
 <template>
     <div class="pay">
         <x-header title="" :left-options="{showBack: true, preventGoBack: false}"></x-header>
-        <logo></logo>
         <div class="pay-wrapper">
             <p class="desc">请选择支付方式</p>
         </div>

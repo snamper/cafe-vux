@@ -51,6 +51,7 @@ export default {
         };
     },
     created() {
+        log.debug('created');
         // 当购物车为空的时候，返回到主页面
         if (this.selectFoods.length === 0) {
             this.$router.push({path: '/menu'});
@@ -144,7 +145,7 @@ export default {
         position absolute
         width 100%
         top 182px
-        bottom 50px
+        bottom 100px
         overflow: hidden
         .order-list
             width 100%
