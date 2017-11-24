@@ -64,9 +64,7 @@ export default {
             this.$nextTick(() => {
                 if (!this.scroll) {
                     log.debug('created scroll');
-                    this.scroll = new BScroll(this.$refs.orderList, {
-                        click: true
-                    });
+                    this.scroll = new BScroll(this.$refs.orderList, {});
                 } else {
                     log.debug('refresh scroll');
                     this.scroll.refresh();

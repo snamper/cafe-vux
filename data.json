@@ -395,6 +395,36 @@
           "recordId": 99
         },
         {
+          "amount": 22,
+          "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
+          "createTime": 1508251633955,
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 100,
+          "number": 2,
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+          "price": 11,
+          "productName": "慕斯蛋糕",
+          "productId": 2,
+          "recordId": 99
+        },
+        {
+          "amount": 22,
+          "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
+          "createTime": 1508251633955,
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 100,
+          "number": 2,
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+          "price": 11,
+          "productName": "慕斯蛋糕",
+          "productId": 2,
+          "recordId": 99
+        },
+        {
           "amount": 44,
           "code": "c4abae95-d9d0-408d-8397-57c12fd125c1",
           "createTime": 1508251633955,
@@ -438,6 +468,36 @@
           "price": 32,
           "productName": "摩卡咖啡",
           "recordId": 102
+        },
+        {
+          "amount": 22,
+          "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
+          "createTime": 1508251633955,
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 100,
+          "number": 2,
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+          "price": 11,
+          "productName": "慕斯蛋糕",
+          "productId": 2,
+          "recordId": 99
+        },
+        {
+          "amount": 22,
+          "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
+          "createTime": 1508251633955,
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 100,
+          "number": 2,
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+          "price": 11,
+          "productName": "慕斯蛋糕",
+          "productId": 2,
+          "recordId": 99
         },
         {
           "amount": 30,
