@@ -1,8 +1,9 @@
 <template>
     <div class="pay">
-        <x-header title="" :left-options="{showBack: true, preventGoBack: false}"></x-header>
+        <x-header title="" :left-options="{showBack: true, preventGoBack: false}" title="支付页面"></x-header>
         <div class="pay-wrapper">
             <p class="desc">请选择支付方式</p>
+            <split></split>
         </div>
         <div class="alipay">
             <div class="img">
@@ -37,6 +38,7 @@
                 <check-icon :value.sync="balance"></check-icon>
             </div>
         </div>
+        <split></split>
         <div class="confirm">
              <x-button type="primary" @click.native="payit">确认支付￥{{totalPayPrice}}元</x-button>
         </div>
@@ -53,6 +55,7 @@
 <script type="text/ecmascript-6">
 import logo from '../../../components/logo/logo';
 import config from '../../../config/config';
+import split from '../../../components/split/split';
 import { mapGetters } from 'vuex';
 import avator from '../../../components/avator/avator';
 import { CheckIcon, XButton, XHeader } from 'vux';
@@ -244,7 +247,8 @@ export default {
         CheckIcon,
         XButton,
         XHeader,
-        avator
+        avator,
+        split
     }
 };
 </script>
@@ -255,8 +259,8 @@ export default {
     .pay-wrapper
         width 100%       
         .desc
-            margin-top 0.3rem
-            padding-left 0.3rem
+            margin 0.3rem 0
+            padding 0 0.3rem
             line-height 1.5rem
             height 1.5rem 
             font-size 1.2rem

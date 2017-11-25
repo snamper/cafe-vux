@@ -29,10 +29,10 @@
                                     </div>
                                 </li>
                             </ul>
-                            <divider></divider>
                             <div class="summary">
                                 <div class="title">总价</div><div class="price">￥{{item.amount}}</div>
                             </div>
+                            <split></split>
                         </li>
                     </ul>
                 </div>
@@ -46,6 +46,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import split from '../../components/split/split';
 import BScroll from 'better-scroll';
 import logo from '../../components/logo/logo';
 import config from '../../config/config';
@@ -61,22 +62,13 @@ const ENSURE2PAID = '已确认';
 const SUCCESS = '成功';
 export default {
     created() {
-        // 获取购买记录并存入列表,区分会员和非会员
-        log.debug('memberinfo is ' + this.memberInfo);
-        if (!this.memberInfo) {
-            // 非会员
-            log.debug('uuid is ' + this.$store.state.uuid);
-            this.getRecordList(this.$store.state.uuid);
-        } else {
-            // 会员
-            log.debug('member id is ' + this.memberInfo.ID);
-            this.getRecordList(this.memberInfo.ID);
-        }
+        this.__init();
     },
     mounted() {
         log.info('mounted');
         log.debug('detils length is ' + this.recordList.length);
-        if (this.recordList.length > 0) {
+        if (this.recordList.length === 0) {
+        } else {
             log.debug('scroll show orderListShow');
             this.$nextTick(() => {
                 if (!this.scroll) {
@@ -112,6 +104,19 @@ export default {
         }
     },
     methods: {
+        async __init() {
+            // 获取购买记录并存入列表,区分会员和非会员
+            log.debug('memberinfo is ' + this.memberInfo);
+            if (!this.memberInfo) {
+                // 非会员
+                log.debug('uuid is ' + this.$store.state.uuid);
+                this.getRecordList(this.$store.state.uuid);
+            } else {
+                // 会员
+                log.debug('member id is ' + this.memberInfo.ID);
+                this.getRecordList(this.memberInfo.ID);
+            }
+        },
         showDetail() {
             log.info('show Detail order infomation');
             this.$refs.detail.showit();
@@ -153,7 +158,8 @@ export default {
     components: {
         logo,
         avator,
-        Divider
+        Divider,
+        split
     }
 };
 </script>
@@ -172,6 +178,8 @@ export default {
             top 164px
             bottom 50px
             overflow hidden
+            .time
+                padding 0.3rem 0
             .detail
                 width 100%
                 height 70px
@@ -195,21 +203,21 @@ export default {
                         text-align right
                     .total
                         text-align center
-        .summary
-            width 100%
-            height 2rem
-            display flex
-            justify-content center
-            align-items center
-            .title,.price
+            .summary
                 width 100%
-                line-height 18px
-            .title
-                text-align left
-                padding-left 3rem 
-            .price
-                text-align right
-                padding-right 2rem
+                height 2rem
+                display flex
+                justify-content center
+                align-items center
+                .title,.price
+                    width 100%
+                    line-height 18px
+                .title
+                    text-align left
+                    padding-left 3rem 
+                .price
+                    text-align right
+                    padding-right 2rem
     .non-order
         .title
             line-height 24px
