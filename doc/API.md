@@ -184,13 +184,25 @@
 	{
 	  "amount": 5,
 	  "userId": 723,
+	  "userCode":"xxxx",
 	  "userName": "bbb",
 	  "cashOrBalance": "BALANCE",
 	  "details": [
 	    { "productId": 2, "amount": 12, "number": 2 },
 	    { "productId": 3, "amount": 6, "number": 3 }
 	  ]
-	}
+	} //登陆
+	
+	{
+	  "amount": 5,
+	  "userCode": "xxxx",
+	  "userName": "bbb",
+	  "cashOrBalance": "CASH",
+	  "details": [
+	    { "productId": 2, "amount": 12, "number": 2 },
+	    { "productId": 3, "amount": 6, "number": 3 }
+	  ]
+	}//游客
 
 **回参**
 
