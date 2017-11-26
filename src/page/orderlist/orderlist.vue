@@ -66,9 +66,8 @@ export default {
     },
     mounted() {
         log.info('mounted');
-        log.debug('detils length is ' + this.recordList.length);
-        if (this.recordList.length === 0) {
-        } else {
+        log.warn('detils length is ' + this.recordList.length);
+        if (this.recordList.length !== 0) {
             log.debug('scroll show orderListShow');
             this.$nextTick(() => {
                 if (!this.scroll) {
