@@ -1,6 +1,6 @@
 <template>
     <div>
-        <x-header title="" :left-options="{showBack: true, preventGoBack: false}"></x-header>
+        <!-- <x-header title="" :left-options="{showBack: true, preventGoBack: false}"></x-header> -->
         <logo></logo>
         <div class="login-wrapper" >
             <div class="login-input" v-show="show">
@@ -10,7 +10,7 @@
                     <x-button type="primary" @click.native="login">登陆</x-button>
                     <div class="txt-wrapper">
                         <div class="forget">忘记密码</div>
-                        <div class="vistor">游客访问</div>
+                        <div class="vistor" @click="visitor">游客访问</div>
                         <div class="register" @click="showRegister">注册</div>
                     </div>
                 </group>
@@ -146,6 +146,9 @@ export default {
                     }
                 });
             }
+        },
+        visitor() {
+            this.$router.push({path: '/order'});
         }
     },
     computed: {

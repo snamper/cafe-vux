@@ -1,6 +1,6 @@
 <template>
     <div class="pay">
-        <x-header title="" :left-options="{showBack: true, preventGoBack: false}" title="支付页面"></x-header>
+        <x-header title="" :left-options="{showBack: true, preventGoBack: true}" title="支付页面" @on-click-back="back"></x-header>
         <div class="pay-wrapper">
             <p class="desc">请选择支付方式</p>
             <split></split>
@@ -215,6 +215,9 @@ export default {
             } else {
                 this.$vux.toast.text('请先确认支付', 'middle');
             }
+        },
+        back() {
+            this.$router.push({path: '/order'});
         }
     },
     computed: {

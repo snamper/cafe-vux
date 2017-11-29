@@ -6,7 +6,7 @@ import Order from '@/page/menu/order/order';
 import Pay from '@/page/menu/pay/pay';
 import OrderList from '@/page/orderlist/orderlist';
 import Login from '@/page/login/login';
-/* import Detail from '@/page/orderlist/detail/detail'; */
+import Member from '@/page/member/member';
 
 Vue.use(Router);
 
@@ -47,11 +47,10 @@ export default new Router({
       // 登陆页面
       path: '/login',
       component: Login
-    }/* ,
+    },
     {
-      // 详情页面
-      path: '/detail',
-      component: Detail
-    } */
+      path: '/member',
+      component: Member
+    }
   ]
 });

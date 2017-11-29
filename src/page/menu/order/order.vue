@@ -1,22 +1,8 @@
 <template>
     <div class="order">
-        <x-header title="" :left-options="{showBack: true, preventGoBack: false}"></x-header>
-        <div class="login-wrapper" v-show="!memberInfo">
-            <div class="avator">
-                <avator img="../../../../static/img/avator.jpg" size='70' radius='50'></avator>
-            </div>
-            <div class="text">
-                <h1 @click="loginPage">登陆/注册</h1>
-            </div>
-        </div>
-        <div class="member-wrapper" v-show="memberInfo">
-            <div class="avator">
-                <avator img="../../../../static/img/avator.jpg" size='70' radius='50'></avator>
-            </div>
-            <div class="text">
-                <h1>{{memberInfo.name}},您的会员卡余额是￥{{memberInfo.balance}}</h1>
-            </div>
-        </div>
+        <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
+        <loginbar :image="image" v-show="!memberInfo"></loginbar>
+        <memberbar :image="image" :memberInfo="memberInfo" v-show="memberInfo"></memberbar>
         <divider>您的订单</divider>
         <div class="order-wrapper" ref="orderList">
             <ul>
@@ -39,15 +25,18 @@
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
 import ordercart from './ordercart/ordercart';
+import loginbar from '../../../components/loginbar/loginbar';
+import memberbar from '../../../components/loginbar/memberbar';
 import avator from '../../../components/avator/avator';
 import { Divider, XHeader, Group, XSwitch } from 'vux';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('page/menu/order');
 export default {
     data() {
         return {
-            show: true
+            show: true,
+            image: '../../../../static/img/avator.jpg'
         };
     },
     created() {
@@ -79,9 +68,9 @@ export default {
             'totalMemberPrice',
             'products'
         ]),
-        memberInfo() {
-            return this.$store.state.memberInfo;
-        }
+        ...mapState([
+            'memberInfo'
+        ])
     },
     components: {
         Divider,
@@ -89,11 +78,16 @@ export default {
         ordercart,
         Group,
         XSwitch,
+        loginbar,
+        memberbar,
         avator
     },
     methods: {
         loginPage() {
             this.$router.push({ path: '/login' });
+        },
+        back() {
+            this.$router.push({ path: '/menu' });
         }
     }
 };
