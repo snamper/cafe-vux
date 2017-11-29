@@ -11,6 +11,8 @@ import logo from '../../components/logo/logo';
 import loginbar from '../../components/loginbar/loginbar';
 import memberbar from '../../components/loginbar/memberbar';
 import { mapState } from 'vuex';
+import Logger from 'chivy';
+const log = new Logger('cafe/member');
 export default {
     data() {
         return {
@@ -18,6 +20,7 @@ export default {
         };
     },
     mounted() {
+        log.info(typeof (this.memberInfo));
         if (!this.memberInfo) {
             this.$router.push({path: '/login'});
         }
