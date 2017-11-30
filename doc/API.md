@@ -50,10 +50,13 @@
 备注：这两个入参可选填
 
 	{
-	  "userId": "84",
+	  "userId": "84",//long
 	  "needDetail": "true"
-	}
-	
+	}//会员登录
+	{
+	  "userCode": "abc",//string
+	  "needDetail": "true"
+	}//游客登录
 	
 **回参**
 
