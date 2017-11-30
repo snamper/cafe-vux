@@ -63,8 +63,8 @@ import Logger from 'chivy';
 const log = new Logger('page/menu/pay');
 const CASH = 'CASH';
 const BALANCE = 'BALANCE';
-const VISITOR = 'VISITOR';
-const WAITE4ENSURE = '已付款';
+const VISITOR = '游客';
+const WAITE4ENSURE = 'WAITE4ENSURE';
 export default {
     data() {
         return {
@@ -105,6 +105,7 @@ export default {
                 record = {
                     'amount': this.totalPayPrice,
                     'userId': this.memberInfo.id,
+                    'userCode': this.$store.state.uuid,
                     'userName': this.memberInfo.name,
                     'cashOrBalance': type,
                     'details': this.details(type)
@@ -113,6 +114,7 @@ export default {
                 record = {
                     'amount': this.totalPayPrice,
                     'userId': this.memberInfo.id,
+                    'userCode': this.$store.state.uuid,
                     'userName': this.memberInfo.name,
                     'cashOrBalance': type,
                     'details': this.details(type)
@@ -120,7 +122,7 @@ export default {
             } else {
                 record = {
                     'amount': this.totalPayPrice,
-                    'userId': this.$store.state.uuid,
+                    'userCode': this.$store.state.uuid,
                     'userName': VISITOR,
                     'cashOrBalance': type,
                     'details': this.details(type)
@@ -134,13 +136,13 @@ export default {
                 let detail = '';
                 if (type === CASH) {
                     detail = {
-                    'productId': good.code,
+                    'productId': good.id,
                     'amount': good.count * good.memberPrice,
                     'number': good.count
                     };
                 } else if (type === BALANCE) {
                     detail = {
-                    'productId': good.code,
+                    'productId': good.id,
                     'amount': good.count * good.price,
                     'number': good.count
                     };
