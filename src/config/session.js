@@ -1,3 +1,4 @@
 export default {
-    'uuid': 'uuid'
+    'uuid': 'uuid',
+    'member': 'member'
 };

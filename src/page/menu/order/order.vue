@@ -72,6 +72,14 @@ export default {
             'memberInfo'
         ])
     },
+    methods: {
+        loginPage() {
+            this.$router.push({ path: '/login' });
+        },
+        back() {
+            this.$router.push({ path: '/menu' });
+        }
+    },
     components: {
         Divider,
         XHeader,
@@ -81,14 +89,6 @@ export default {
         loginbar,
         memberbar,
         avator
-    },
-    methods: {
-        loginPage() {
-            this.$router.push({ path: '/login' });
-        },
-        back() {
-            this.$router.push({ path: '/menu' });
-        }
     }
 };
 </script>

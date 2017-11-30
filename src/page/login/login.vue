@@ -32,6 +32,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+import session from '../../config/session';
+import util from '../../common/js/util';
 import config from '../../config/config';
 import logo from '../../components/logo/logo';
 import { md5, XInput, Group, XButton, XHeader, Toast } from 'vux';
@@ -79,11 +81,9 @@ export default {
                         };
                         this.$store.commit('setMember', member);
                         log.info('Save login user to sessionStorage');
-                        sessionStorage.setItem('member', JSON.stringify(member));
-                        // log.info('clear uuid');
-                        // this.$store.commit('setUUID', '');
+                        util.setkey(session.member, member);
                         this.$vux.toast.text('登陆成功', 'middle');
-                        this.$router.push({path: '/order'});
+                        this.$router.back();
                     } else {
                         this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
                         this.loginUser.psd = '';
@@ -148,7 +148,7 @@ export default {
             }
         },
         visitor() {
-            this.$router.push({path: '/order'});
+            this.$router.back();
         }
     },
     computed: {

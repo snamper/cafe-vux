@@ -9,8 +9,8 @@
                     <span class="title">会员价</span><span class="price">￥{{totalMemberPrice}}</span>
                 </div>
             </div>
-            <div class="right-wrapper">
-                <h1 class="center" @click="pay">去支付</h1>
+            <div class="right-wrapper" @click="pay">
+                <h1 class="center">去支付</h1>
             </div>
         </div>
     </div>

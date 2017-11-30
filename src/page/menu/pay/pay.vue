@@ -210,6 +210,7 @@ export default {
                             title: '付款提醒',
                             content: '已提醒店家，店家会尽快确认付款信息'
                         });
+                        this.$router.push({path: '/orderlist'});
                     }
                 });
             } else {
