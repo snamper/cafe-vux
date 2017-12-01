@@ -109,24 +109,33 @@ export default {
             if (!this.memberInfo) {
                 // 非会员
                 log.debug('uuid is ' + this.$store.state.uuid);
-                this.getRecordList(this.$store.state.uuid);
+                this.getVisitorRecordList(this.$store.state.uuid);
             } else {
                 // 会员
                 log.debug('member id is ' + this.memberInfo.ID);
-                this.getRecordList(this.memberInfo.ID);
+                this.getMemberRecordList(this.memberInfo.ID);
             }
         },
         showDetail() {
             log.info('show Detail order infomation');
             this.$refs.detail.showit();
         },
-        getRecordList(userid) {
-            log.debug('userid ' + userid);
-            let url = config.recordList;
+        getVisitorRecordList(userid) {
+            let data = {
+                'userCode': userid,
+                'needDetail': true
+            };
+            this.saveRecordList(data);
+        },
+        getMemberRecordList(userid) {
             let data = {
                 'userId': userid,
                 'needDetail': true
             };
+            this.saveRecordList(data);
+        },
+        saveRecordList(data) {
+            let url = config.recordList;
             this.$http.post(url, data).then((response) => {
                  let result = response.data;
                 // 存入state中
