@@ -100,33 +100,38 @@ export default {
             this.qrcode = false;
         },
         record(type) {
+            log.debug('this memberInfo is ' + JSON.stringify(this.memberInfo));
             let record = '';
             if (type === BALANCE) {
                 record = {
                     'amount': this.totalPayPrice,
-                    'userId': this.memberInfo.id,
+                    'userId': this.memberInfo.ID,
                     'userCode': this.$store.state.uuid,
                     'userName': this.memberInfo.name,
                     'cashOrBalance': type,
                     'details': this.details(type)
                 };
-            } else if (type === CASH && this.memberInfo) {
-                record = {
-                    'amount': this.totalPayPrice,
-                    'userId': this.memberInfo.id,
-                    'userCode': this.$store.state.uuid,
-                    'userName': this.memberInfo.name,
-                    'cashOrBalance': type,
-                    'details': this.details(type)
-                };
-            } else {
-                record = {
-                    'amount': this.totalPayPrice,
-                    'userCode': this.$store.state.uuid,
-                    'userName': VISITOR,
-                    'cashOrBalance': type,
-                    'details': this.details(type)
-                };
+            } else if (type === CASH) {
+                if (this.memberInfo) {
+                    log.debug('memberinfo exist');
+                    record = {
+                        'amount': this.totalPayPrice,
+                        'userId': this.memberInfo.ID,
+                        'userCode': this.$store.state.uuid,
+                        'userName': this.memberInfo.name,
+                        'cashOrBalance': type,
+                        'details': this.details(type)
+                    };
+                } else {
+                    log.debug('memberinfo not exist');
+                    record = {
+                        'amount': this.totalPayPrice,
+                        'userCode': this.$store.state.uuid,
+                        'userName': VISITOR,
+                        'cashOrBalance': type,
+                        'details': this.details(type)
+                    };
+                }
             }
             return record;
         },
@@ -242,8 +247,10 @@ export default {
         },
         totalPayPrice() {
             if (!this.memberInfo) {
+                log.debug('memberinfo is not exist');
                 return this.totalPrice;
             } else {
+                log.debug('memberinfo is exist');
                 return this.totalMemberPrice;
             }
         }

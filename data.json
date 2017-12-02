@@ -286,7 +286,7 @@
   "login": {
     "poor": {
       "status": true,
-      "balance": 15,
+      "balance": 1500,
       "cardGrade": "",
       "cardNo": "",
       "cardStatus": "",
