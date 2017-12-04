@@ -61,13 +61,18 @@ const WAITE4ENSURE = '已付款';
 const ENSURE2PAID = '已确认';
 const SUCCESS = '成功';
 export default {
+    data() {
+        return {
+            recordList: null
+        };
+    },
     created() {
         this.__init();
     },
     mounted() {
         log.info('mounted');
         log.warn('detils length is ' + this.recordList.length);
-        if (this.recordList.length !== 0) {
+        if (this.recordList!==null && this.recordList.length !== 0) {
             log.debug('scroll show orderListShow');
             this.$nextTick(() => {
                 if (!this.scroll) {
@@ -84,8 +89,7 @@ export default {
     },
     computed: {
         ...mapState([
-            'memberInfo',
-            'recordList'
+            'memberInfo'
         ]),
         showList() {
             if (this.recordList || this.memberRecordList) {
@@ -140,6 +144,7 @@ export default {
                  let result = response.data;
                 // 存入state中
                 if (result.length !== 0) {
+                    this.recordList = result;
                     this.$store.commit('setrecordList', result);
                 }
             });

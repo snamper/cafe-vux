@@ -46,6 +46,8 @@ export default {
     }
     this.$store.commit('setUUID', uuid);
   },
+  methods: {
+  },
   computed: {
     ...mapState({
       isLoading: state => state.vux.isLoading
