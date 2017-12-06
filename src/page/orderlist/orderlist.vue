@@ -2,7 +2,7 @@
     <div>
         <div class="list-wrapper">
             <logo></logo>
-            <div class="orderlist-wrapper" v-if="showList">
+            <div class="orderlist-wrapper" v-if="recordList">
                 <p class="title" v-if="!memberInfo">游客，您的本次订单如下</p>
                 <p class="title" v-if="memberInfo">{{memberInfo.name}}，您的历史订单如下</p>
                 <div class="scroll-wrapper" ref="scrollWrapper">
@@ -63,28 +63,32 @@ const SUCCESS = '成功';
 export default {
     data() {
         return {
+            loading: false,
             recordList: null
         };
     },
     created() {
         this.__init();
     },
+    beforeRouteEnter 
     mounted() {
         log.info('mounted');
-        log.warn('detils length is ' + this.recordList.length);
-        if (this.recordList!==null && this.recordList.length !== 0) {
-            log.debug('scroll show orderListShow');
-            this.$nextTick(() => {
-                if (!this.scroll) {
-                    log.debug('created scroll');
-                    this.scroll = new BScroll(this.$refs.scrollWrapper, {
-                        click: true
-                    });
-                } else {
-                    log.debug('refresh scroll');
-                    this.scroll.refresh();
-                }
-            });
+        log.info('recordList is ' + JSON.stringify(this.recordList));
+        if (this.recordList !== null) {
+            if (this.recordList.length !== 0) {
+                log.debug('scroll show orderListShow');
+                this.$nextTick(() => {
+                    if (!this.scroll) {
+                        log.debug('created scroll');
+                        this.scroll = new BScroll(this.$refs.scrollWrapper, {
+                            click: true
+                        });
+                    } else {
+                        log.debug('refresh scroll');
+                        this.scroll.refresh();
+                    }
+                });
+            }
         }
     },
     computed: {
@@ -106,8 +110,12 @@ export default {
             return total;
         }
     },
+    watch: {
+        '$route': '__init'
+    },
     methods: {
         async __init() {
+            this.loading = true;
             // 获取购买记录并存入列表,区分会员和非会员
             log.debug('memberinfo is ' + this.memberInfo);
             if (!this.memberInfo) {
@@ -140,8 +148,11 @@ export default {
         },
         saveRecordList(data) {
             let url = config.recordList;
+            log.debug('ajax get response url is ' + url);
             this.$http.post(url, data).then((response) => {
-                 let result = response.data;
+                let result = response.data;
+                log.debug('response data is ' + JSON.stringify(result));
+                this.loading = false;
                 // 存入state中
                 if (result.length !== 0) {
                     this.recordList = result;
