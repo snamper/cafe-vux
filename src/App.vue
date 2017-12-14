@@ -28,24 +28,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-<<<<<<< HEAD
-import Logger from 'chivy';
-const log = new Logger('cafe/App');
-export default {
-  created: function () {
-    log.debug('created uuid here');
-    log.debug(this.setUUID());
-    this.$store.commit('setUUID', this.setUUID());
-    log.debug('uuid is ' + this.$store.state.uuid);
-  },
-  methods: {
-    setUUID: function () {
-      function S4() {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-      }
-      return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
-    }
-=======
 import { Tabbar, TabbarItem, ViewBox, Loading } from 'vux';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
@@ -76,7 +58,6 @@ export default {
     TabbarItem,
     ViewBox,
     Loading
->>>>>>> shop
   }
 };
 </script>
@@ -86,8 +67,6 @@ export default {
 #app {
   height: 100%;
   width: 100%;
-<<<<<<< HEAD
-=======
 }
 .iconfont {
   font-size: 1.5rem;
@@ -96,6 +75,5 @@ export default {
   position: fixed;
   bottom: 50;
   top: 0;
->>>>>>> shop
 }
 </style>

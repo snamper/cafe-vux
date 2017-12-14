@@ -36,34 +36,13 @@ const appData = require('../data.json')
 const categorys = appData.categorys
 const products = appData.products
 const login = appData.login
-const duiplicate = appData.duiplicate
-const register = appData.register
-const cartDetailList = appData.cartDetailList
-const cartList = appData.cartList
-const alreadyPay = appData.alreaypay
-const dup = appData.duiplicate
-
 const loginpoor = login.poor
 const loginrich = login.rich
 const loginfail = login.fail
-
+const register = appData.register
 const registerpoor = register.poor
 const registerrich = register.rich
 const registerother = register.other
-<<<<<<< HEAD
-
-const duplicateTrue = dup.true
-const duplicateFalse = dup.false
-
-// null user
-const recordNull = appData.buyrecord.null
-// balance fail
-const recordBalancdFail = appData.buyrecord.balancefail
-// balance success
-const recordBalanceSuccess = appData.buyrecord.balancesuccess
-// cash success
-const recordCashSuccess = appData.buyrecord.cashsuccess
-=======
 const addValue = appData.addValue
 const cartDetailList = appData.cartDetailList
 const cartList = appData.cartList
@@ -71,7 +50,6 @@ const resnull = appData.buyrecord.null
 const resfail = appData.buyrecord.fail
 const ressuccess = appData.buyrecord.success
 const alterStatus = appData.alterStatus
->>>>>>> shop
 
 /* define router  */
 var apiRoutes = express.Router()
@@ -108,25 +86,14 @@ apiRoutes.post('/member/show/ui/isExistUserName.do', jsonParser, function (req, 
   // {"entityName":"test"}
   let user = req.body;
   console.log('isExistUserName.do data is ' + JSON.stringify(user));
-  if(user.entityName === '13333333333' || user.entityName === '13555555555')
+  if(user.entityName === 'totti' || user.entityName === 'david')
   {
-    res.json(duplicateTrue)
+    res.json('true')
   }else{
-    res.json(duplicateFalse)
+    res.json('false')
   }  
 })
 
-<<<<<<< HEAD
-apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
-  let user = req.body
-  console.log('getRecordList.do data is ' + JSON.stringify(user));  
-  if(user.userId !== '' || typof (user.userId) !== 'undefined'){
-    if(user.needDetail){
-      res.json(cartDetailList)
-    }else{
-      res.json(cartList)
-    }
-=======
 apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
   res.json(addValue)
 })
@@ -144,41 +111,12 @@ apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
     res.json(cartDetailList)
   }else{
     res.json(cartList)
->>>>>>> shop
   }
 })
+
 
 apiRoutes.post('/product/show/ui/saveRecordList.do',jsonParser,function(req,res){
-  /* {
-	  "amount": 5,
-	  "userId": 723,
-	  "userName": "bbb",
-	  "cashOrBalance": "BALANCE",
-	  "details": [
-	    { "productId": 2, "amount": 12, "number": 2 },
-	    { "productId": 3, "amount": 6, "number": 3 }
-	  ]
-	} */
   let user = req.body
-<<<<<<< HEAD
-  console.log('saveRecordList.do data is ' +JSON.stringify(user)); 
-  if(user.cashOrBalance === 'Cash'){
-    res.json(recordCashSuccess);
-  }else if(user.cashOrBalance === 'Balance'){
-    if(user.userName=== 'totti' || user.userName === 'david'){
-      res.json(recordBalanceSuccess);
-    }else{
-      res.json(recordBalancdFail);
-    }
-  }
-})
-
-apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser, function(req,res){
-  let user = req.body
-  console.log('alterStatus.do data is ' +JSON.stringify(user)); 
-  if(user.status === 'WAITE4ENSURE'){
-    res.json(alreadyPay);
-=======
   console.log('saveRecordList.do data is ' + JSON.stringify(user))
   if (user.amount < 100) {
     console.log('user.amount <100')
@@ -189,7 +127,6 @@ apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser, function(req,res){
   } else {
     console.log('other')
     res.json(resnull)
->>>>>>> shop
   }
 })
 

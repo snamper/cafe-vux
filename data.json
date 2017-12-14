@@ -1,84 +1,4 @@
 {
-<<<<<<< HEAD
-  "categorys": {
-    "甜品": [
-      {
-        "canBook": true,
-        "classifyId": 70,
-        "code": "0090645a-2ca6-4a5b-b250-13a8403930d5",
-        "creatPeriod": "40",
-        "createTime": 1505439759644,
-        "creatorId": -1,
-        "defaultEntity": false,
-        "description": "慕斯蛋糕",
-        "id": 71,
-        "imageSliderUrl": "static/img/silder1.jpg",
-        "imageUrl": "static/img/test1.jpg",
-        "memberPrice": 45,
-        "name": "慕斯蛋糕",
-        "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
-        "price": 50,
-        "slider": true
-      },
-      {
-        "canBook": true,
-        "classifyId": 70,
-        "code": "0090645a-2ca6-4a5b-b250-13a8403930d5",
-        "creatPeriod": "40",
-        "createTime": 1505439759644,
-        "creatorId": -1,
-        "defaultEntity": false,
-        "description": "水果蛋糕",
-        "id": 71,
-        "imageSliderUrl": "static/img/silder3.jpg",
-        "imageUrl": "static/img/test3.jpg",
-        "memberPrice": 35,
-        "name": "水果蛋糕",
-        "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
-        "price": 70,
-        "slider": true
-      }
-    ],
-    "咖啡": [
-      {
-        "canBook": false,
-        "classifyId": 62,
-        "code": "5cf0fd83-4a3d-4014-9a66-745fdf80222c",
-        "creatPeriod": "34",
-        "createTime": 1505439679696,
-        "creatorId": -1,
-        "defaultEntity": false,
-        "description": "得分是",
-        "id": 67,
-        "imageSliderUrl": "static/img/silder2.jpg",
-        "imageUrl": "static/img/test2.jpg",
-        "memberPrice": 8,
-        "name": "拿铁咖啡",
-        "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
-        "price": 10,
-        "slider": true
-      },
-      {
-        "canBook": true,
-        "classifyId": 62,
-        "code": "73dde60a-a030-4913-af8f-40e8c3403860",
-        "creatPeriod": "67",
-        "createTime": 1505439688471,
-        "creatorId": -1,
-        "defaultEntity": false,
-        "description": "45",
-        "id": 69,
-        "imageSliderUrl": "static/img/silder3.jpg",
-        "imageUrl": "static/img/test3.jpg",
-        "memberPrice": 34,
-        "name": "猫屎咖啡",
-        "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
-        "price": 45,
-        "slider": false
-      }
-    ]
-  },
-=======
   "categorys": [
     {
       "name": "甜品",
@@ -363,7 +283,6 @@
       ]
     }
   ],
->>>>>>> shop
   "login": {
     "poor": {
       "status": true,
@@ -392,14 +311,12 @@
       "name": "david"
     },
     "fail": {
-       "balance": 0, 
-       "id": 0, 
-       "status": false 
-      }
+      "status": false
+    }
   },
   "register": {
     "poor": {
-      "entityId": "1",
+      "entityId": "3",
       "entityName": "totti",
       "envData": {
         "endRow": -1,
@@ -417,7 +334,7 @@
       "success": true
     },
     "rich": {
-      "entityId": "2",
+      "entityId": "13",
       "entityName": "david",
       "envData": {
         "endRow": -1,
@@ -435,7 +352,7 @@
       "success": true
     },
     "other": {
-      "entityId": "3",
+      "entityId": "888",
       "entityName": "Vue",
       "envData": {
         "endRow": -1,
@@ -470,8 +387,6 @@
           "defaultEntity": false,
           "id": 100,
           "number": 2,
-<<<<<<< HEAD
-=======
           "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
           "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
           "price": 11,
@@ -503,7 +418,6 @@
           "id": 100,
           "number": 2,
           "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
->>>>>>> shop
           "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
           "price": 11,
           "productName": "慕斯蛋糕",
@@ -518,10 +432,7 @@
           "defaultEntity": false,
           "id": 101,
           "number": 2,
-<<<<<<< HEAD
-=======
           "imageUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
->>>>>>> shop
           "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
           "productId": 3,
           "price": 22,
@@ -531,15 +442,9 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-<<<<<<< HEAD
-      "status": "waitpay",
-      "userId": 84,
-      "userName": "totti"
-=======
       "status": "WAITE4PAY",
       "userId": 84,
       "userName": "test3"
->>>>>>> shop
     },
     {
       "amount": 124,
@@ -550,21 +455,14 @@
       "defaultEntity": false,
       "details": [
         {
-<<<<<<< HEAD
-          "amount": 94,
-=======
           "amount": 64,
->>>>>>> shop
           "code": "f9f4c8a8-ec93-4974-9c10-30c0c81be62d",
           "createTime": 1508251708535,
           "creatorId": -1,
           "defaultEntity": false,
           "id": 103,
           "number": 2,
-<<<<<<< HEAD
-=======
           "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
->>>>>>> shop
           "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
           "productId": 3,
           "price": 32,
@@ -572,8 +470,6 @@
           "recordId": 102
         },
         {
-<<<<<<< HEAD
-=======
           "amount": 22,
           "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
           "createTime": 1508251633955,
@@ -604,7 +500,6 @@
           "recordId": 99
         },
         {
->>>>>>> shop
           "amount": 30,
           "code": "b0c0d78f-3d38-4cd6-9902-7246cf47f980",
           "createTime": 1508251708535,
@@ -614,10 +509,7 @@
           "number": 3,
           "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
           "productId": 3,
-<<<<<<< HEAD
-=======
           "imageUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
->>>>>>> shop
           "price": 10,
           "productName": "杯子蛋糕",
           "recordId": 102
@@ -625,15 +517,9 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-<<<<<<< HEAD
-      "status": "success",
-      "userId": 84,
-      "userName": "david"
-=======
       "status": "WAITE4ENSURE",
       "userId": 84,
       "userName": "test3"
->>>>>>> shop
     }
   ],
   "cartList": [
@@ -646,11 +532,7 @@
       "defaultEntity": false,
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-<<<<<<< HEAD
-      "status": "success",
-=======
       "status": "ENSURE2PAID",
->>>>>>> shop
       "userId": 84,
       "userName": "test3"
     },
@@ -663,11 +545,7 @@
       "defaultEntity": false,
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-<<<<<<< HEAD
-      "status": "success",
-=======
       "status": "SUCCESS",
->>>>>>> shop
       "userId": 84,
       "userName": "test3"
     }
@@ -690,11 +568,7 @@
       },
       "success": false
     },
-<<<<<<< HEAD
-    "balancefail": {
-=======
     "fail": {
->>>>>>> shop
       "envData": {
         "endRow": -1,
         "language": "",
@@ -710,11 +584,7 @@
       },
       "success": false
     },
-<<<<<<< HEAD
-    "balancesuccess": {
-=======
     "success": {
->>>>>>> shop
       "entityId": "138",
       "envData": {
         "endRow": -1,
@@ -730,49 +600,8 @@
         "userName": ""
       },
       "success": true
-    },
-    "cashsuccess": {
-      "envData": {
-        "endRow": -1,
-        "language": "",
-        "pageNo": -1,
-        "pageSize": -1,
-        "realTotalRows": -1,
-        "responseStatus": "现金支付",
-        "startRow": -1,
-        "totalPages": -1,
-        "totalRows": -1,
-        "userIp": "",
-        "userName": ""
-      },
-      "success": true
     }
   },
-  "duiplicate": {
-    "true": {
-      "status": true
-    },
-    "false":{
-      "status": false
-    }
-  },
-<<<<<<< HEAD
-  "alreaypay":{
-    "envData": {
-	    "endRow": -1,
-	    "language": "en-US",
-	    "pageNo": -1,
-	    "pageSize": -1,
-	    "realTotalRows": -1,
-	    "responseStatus": "0",
-	    "startRow": -1,
-	    "totalPages": -1,
-	    "totalRows": -1,
-	    "userId": 0,
-	    "userIp": "10.0.0.112"
-	  },
-	  "success": true
-=======
   "alterStatus": {
     "envData": {
       "endRow": -1,
@@ -788,6 +617,5 @@
       "userIp": "10.0.0.112"
     },
     "success": true
->>>>>>> shop
   }
 }
