@@ -70,7 +70,6 @@ export default {
     created() {
         this.__init();
     },
-    beforeRouteEnter 
     mounted() {
         log.info('mounted');
         log.info('recordList is ' + JSON.stringify(this.recordList));
