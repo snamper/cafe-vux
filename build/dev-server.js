@@ -50,6 +50,7 @@ const loginfail = login.fail
 const registerpoor = register.poor
 const registerrich = register.rich
 const registerother = register.other
+<<<<<<< HEAD
 
 const duplicateTrue = dup.true
 const duplicateFalse = dup.false
@@ -62,6 +63,15 @@ const recordBalancdFail = appData.buyrecord.balancefail
 const recordBalanceSuccess = appData.buyrecord.balancesuccess
 // cash success
 const recordCashSuccess = appData.buyrecord.cashsuccess
+=======
+const addValue = appData.addValue
+const cartDetailList = appData.cartDetailList
+const cartList = appData.cartList
+const resnull = appData.buyrecord.null
+const resfail = appData.buyrecord.fail
+const ressuccess = appData.buyrecord.success
+const alterStatus = appData.alterStatus
+>>>>>>> shop
 
 /* define router  */
 var apiRoutes = express.Router()
@@ -106,6 +116,7 @@ apiRoutes.post('/member/show/ui/isExistUserName.do', jsonParser, function (req, 
   }  
 })
 
+<<<<<<< HEAD
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body
   console.log('getRecordList.do data is ' + JSON.stringify(user));  
@@ -115,6 +126,25 @@ apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
     }else{
       res.json(cartList)
     }
+=======
+apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
+  res.json(addValue)
+})
+
+apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser,function(req,res){
+  let user = req.body
+  console.log('alterStatus.do data is ' + JSON.stringify(user))
+  res.json(alterStatus)
+})
+
+apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
+  let user = req.body
+  console.log('getRecordList.do data is ' + JSON.stringify(user))
+  if(user.needDetail){
+    res.json(cartDetailList)
+  }else{
+    res.json(cartList)
+>>>>>>> shop
   }
 })
 
@@ -130,6 +160,7 @@ apiRoutes.post('/product/show/ui/saveRecordList.do',jsonParser,function(req,res)
 	  ]
 	} */
   let user = req.body
+<<<<<<< HEAD
   console.log('saveRecordList.do data is ' +JSON.stringify(user)); 
   if(user.cashOrBalance === 'Cash'){
     res.json(recordCashSuccess);
@@ -147,6 +178,18 @@ apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser, function(req,res){
   console.log('alterStatus.do data is ' +JSON.stringify(user)); 
   if(user.status === 'WAITE4ENSURE'){
     res.json(alreadyPay);
+=======
+  console.log('saveRecordList.do data is ' + JSON.stringify(user))
+  if (user.amount < 100) {
+    console.log('user.amount <100')
+    res.json(resfail)
+  } else if(user.amount > 100 && user.amount <10000) {
+    console.log('user.amount >100 && < 10000')
+    res.json(ressuccess)
+  } else {
+    console.log('other')
+    res.json(resnull)
+>>>>>>> shop
   }
 })
 

@@ -4,19 +4,37 @@ import Vue from 'vue';
 import FastClick from 'fastclick';
 import App from './App';
 import router from './router';
-import AnimatedVue from 'animated-vue';
-import VueChatScroll from 'vue-chat-scroll';
-import { ToastPlugin, AjaxPlugin } from 'vux';
-import { store } from './vuex/vuex';
-import './common/css/animate.css';
+import { ToastPlugin, AjaxPlugin, AlertPlugin } from 'vux';
+import store from './vuex/';
+import './common/css/iconfont.css';
 import './common/stylus/index.styl';
 
-Vue.use(VueChatScroll);
 Vue.use(AjaxPlugin);
 Vue.use(ToastPlugin);
-Vue.use(AnimatedVue);
+Vue.use(AlertPlugin);
 Vue.config.productionTip = false;
 FastClick.attach(document.body);
+
+// 注册一个module来保存状态
+store.registerModule('vux', {
+  state: {
+    isLoading: false
+  },
+  mutations: {
+    updateLoadingStatus(state, payload) {
+      state.isLoading = payload.isLoading;
+    }
+  }
+});
+// 然后使用vue-router的beforeEach和afterEach来更改loading状态
+router.beforeEach(function(to, from, next) {
+  store.commit('updateLoadingStatus', {isLoading: true});
+  next();
+});
+
+router.afterEach(function(to, from, next) {
+  store.commit('updateLoadingStatus', {isLoading: false});
+});
 
 /* eslint-disable no-new */
 new Vue({
