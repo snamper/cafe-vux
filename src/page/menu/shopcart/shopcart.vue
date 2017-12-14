@@ -9,8 +9,8 @@
             </div>
             <div class="num" v-show="totalCount>0">{{totalCount}}</div>
           </div>
-          <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalMemberPrice}}</div>
-          <div class="desc">非会员价￥{{totalPrice}}元</div>
+          <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
+          <!-- <div class="desc">非会员价￥{{totalPrice}}元</div> -->
         </div>
           <div class="content-right" @click.stop.prevent="pay">
             <div class="pay" :class="payClass">
@@ -93,7 +93,7 @@
         'totalCount'
       ]),
       payDesc() {
-        return '去结算';
+        return '去付款';
       },
       payClass() {
         if (this.totalPrice > 0) {
@@ -151,7 +151,7 @@
       },
       pay() {
         if (this.totalPrice > 0) {
-          this.$router.push({ path: '/order' });
+          this.$router.push({ path: '/pay' });
           // this.$store.commit('showOrder', true);
         } else {
           // this.$router.push({ path: 'order' });

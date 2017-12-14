@@ -2,12 +2,12 @@
     <div class="pay">
         <x-header title="" :left-options="{showBack: true, preventGoBack: true}" title="支付页面" @on-click-back="back"></x-header>
         <div class="pay-wrapper">
-            <p class="desc">请选择支付方式</p>
+            <!-- <p class="desc">请选择支付方式</p> -->
             <split></split>
         </div>
         <div class="alipay">
             <div class="img">
-                <avator img='../../../../static/img/avator.jpg' size='50' radius='50'></avator>
+                <avator img='../../../../static/img/alipay.png' size='50' radius='50'></avator>
             </div>
             <div class="text">
                 支付宝
@@ -18,7 +18,7 @@
         </div>
         <div class="wechat">
             <div class="img">
-                <avator img='../../../../static/img/avator.jpg' size='50' radius='50'></avator>
+                <avator img='../../../../static/img/wechat.png' size='50' radius='50'></avator>
             </div>
             <div class="text">
                 微信支付
@@ -46,9 +46,9 @@
             <img src="../../../../static/img/alipay.jpg" v-show="alipay">
             <img src="../../../../static/img/wechat.jpg" v-show="wechat">
         </div>
-        <div class="already">
+        <!-- <div class="already">
              <x-button mini plain @click.native="alertStatus">我已付款</x-button>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -225,7 +225,7 @@ export default {
             }
         },
         back() {
-            this.$router.push({path: '/order'});
+            this.$router.push({path: '/menu'});
         }
     },
     computed: {

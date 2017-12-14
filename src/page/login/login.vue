@@ -1,31 +1,37 @@
 <template>
     <div>
+        <div class="loading" v-if="true">
+            <logo></logo>
+           <p>网站建设中，敬请期待</p> 
+        </div>
+        <div v-if="false">
         <!-- <x-header title="" :left-options="{showBack: true, preventGoBack: false}"></x-header> -->
-        <logo></logo>
-        <div class="login-wrapper" >
-            <div class="login-input" v-show="show">
-                <group >
-                    <x-input label-width="3em" text-align="left" placeholder="用户名/手机号码"  type="text" :required="true" v-model='loginUser.name'></x-input>
-                    <x-input label-width="3em" text-align="left" placeholder="密码"  type="password" :required="true" v-model='loginUser.psd' @on-enter="login"></x-input>
-                    <x-button type="primary" @click.native="login">登陆</x-button>
-                    <div class="txt-wrapper">
-                        <div class="forget">忘记密码</div>
-                        <div class="vistor" @click="visitor">游客访问</div>
-                        <div class="register" @click="showRegister">注册</div>
-                    </div>
-                </group>
-            </div>
-            <div class="register-input" v-show="!show">
-                <group>
-                    <x-input label-width="3em" text-align="left" placeholder="手机号码" mask="999 9999 9999" type="tel" :required="true" v-model='registerUser.phone' is-type="china-mobile" ref="phone" @on-blur="duplicateUsername"></x-input>
-                    <x-input label-width="3em" text-align="left" placeholder="用户名"  type="text" v-model='registerUser.name' ref="username"></x-input>
-                    <x-input label-width="3em" text-align="left" placeholder="输入密码"  type="password" :required="true" v-model='registerUser.psd' ref="password"></x-input>
-                    <x-input label-width="3em" text-align="left" placeholder="确认密码"  type="password" :required="true" v-model='registerUser.repsd' ref="repassword" @on-enter="register"></x-input>
-                    <x-button type="primary" @click.native="register">注册</x-button>
-                    <div class="txt-wrapper" @click="showLogin">
-                        已有账户，登陆
-                    </div>
-                </group>
+            <logo></logo>
+            <div class="login-wrapper" >
+                <div class="login-input" v-show="show">
+                    <group >
+                        <x-input label-width="3em" text-align="left" placeholder="用户名/手机号码"  type="text" :required="true" v-model='loginUser.name'></x-input>
+                        <x-input label-width="3em" text-align="left" placeholder="密码"  type="password" :required="true" v-model='loginUser.psd' @on-enter="login"></x-input>
+                        <x-button type="primary" @click.native="login">登陆</x-button>
+                        <div class="txt-wrapper">
+                            <div class="forget">忘记密码</div>
+                            <div class="vistor" @click="visitor">游客访问</div>
+                            <div class="register" @click="showRegister">注册</div>
+                        </div>
+                    </group>
+                </div>
+                <div class="register-input" v-show="!show">
+                    <group>
+                        <x-input label-width="3em" text-align="left" placeholder="手机号码" mask="999 9999 9999" type="tel" :required="true" v-model='registerUser.phone' is-type="china-mobile" ref="phone" @on-blur="duplicateUsername"></x-input>
+                        <x-input label-width="3em" text-align="left" placeholder="用户名"  type="text" v-model='registerUser.name' ref="username"></x-input>
+                        <x-input label-width="3em" text-align="left" placeholder="输入密码"  type="password" :required="true" v-model='registerUser.psd' ref="password"></x-input>
+                        <x-input label-width="3em" text-align="left" placeholder="确认密码"  type="password" :required="true" v-model='registerUser.repsd' ref="repassword" @on-enter="register"></x-input>
+                        <x-button type="primary" @click.native="register">注册</x-button>
+                        <div class="txt-wrapper" @click="showLogin">
+                            已有账户，登陆
+                        </div>
+                    </group>
+                </div>
             </div>
         </div>
     </div>
@@ -182,6 +188,9 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+.loading
+    p
+        font-size 35px
 .login-wrapper
     position absolute
     width 100%
