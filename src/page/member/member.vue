@@ -4,7 +4,7 @@
         <memberbar :image="image" :memberInfo="memberInfo" v-show="memberInfo"></memberbar>
         <div class="modify-wrapper" v-show="memberInfo">
             <div class="password">
-                <cell title="修改密码" is-link></cell>
+                <cell title="修改密码" is-link @click.native="modify"></cell>
             </div>
             <div class="birthday">
                 <cell title="修改生日" is-link></cell>
@@ -49,6 +49,9 @@ export default {
             this.$store.commit('setMember', '');
             util.setkey(session.member, '');
             this.$router.push({path: '/login'});
+        },
+        modify() {
+            this.$router.push({path: '/modifyPasswd'});
         }
     },
     components: {

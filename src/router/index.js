@@ -7,6 +7,7 @@ import Pay from '@/page/menu/pay/pay';
 import OrderList from '@/page/orderlist/orderlist';
 import Login from '@/page/login/login';
 import Member from '@/page/member/member';
+import modPwd from '@/page/member/modifyPasswd';
 
 Vue.use(Router);
 
@@ -51,6 +52,10 @@ export default new Router({
     {
       path: '/member',
       component: Member
+    },
+    {
+      path: '/modifyPasswd',
+      component: modPwd
     }
   ]
 });
