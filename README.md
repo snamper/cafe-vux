@@ -1,6 +1,6 @@
-# shop
+# master
 
-> shop
+> master
 
 ## Build Setup
 

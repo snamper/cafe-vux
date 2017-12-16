@@ -23,12 +23,12 @@
                   </div>
                   <div class="content">
                     <h2 class="name">{{food.name}}</h2>
-                    <!-- <p class="desc">{{food.description}}</p> -->
-                    <!-- <div class="extra">
+                    <p class="desc">{{food.description}}</p>
+                    <div class="extra">
                       <span class="count">月售0份</span><span>好评率0%</span>
-                    </div> -->
+                    </div>
                     <div class="price">
-                      <span class="now">￥{{food.price}}</span>
+                      <span class="now">￥{{food.memberPrice}}</span><span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>
                     </div>
                     <div class="cartcontrol-wrapper">
                       <cartcontrol @add="addFood" :food="food"></cartcontrol>
@@ -223,7 +223,6 @@
           .name
             margin: 2px 0 8px 0
             height: 14px
-            font-weight 700
             line-height: 14px
             font-size: 14px
             color: rgb(7, 17, 27)

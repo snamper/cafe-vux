@@ -1,10 +1,7 @@
 <template>
-    <div class="main">
-        <div class="loading" v-if="true">
-            <logo></logo>
-           <p>网站建设中，敬请期待</p> 
-        </div>
-        <div class="list-wrapper" v-if="false">
+    <div>
+
+        <div class="list-wrapper">
             <logo></logo>
             <div class="orderlist-wrapper" v-if="recordList">
                 <p class="title" v-if="!memberInfo">游客，您的本次订单如下</p>
@@ -192,70 +189,64 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.main
-    width 100%
-    height 100%
-    .loading
-        p
-            font-size 35px
-    .list-wrapper
-        .orderlist-wrapper
-            .title
-                height 24px
-                line-height 24px
-                text-align left
-                padding 10px 5px 10px 5px
-            .scroll-wrapper
-                position absolute
+.list-wrapper
+    .orderlist-wrapper
+        .title
+            height 24px
+            line-height 24px
+            text-align left
+            padding 10px 5px 10px 5px
+        .scroll-wrapper
+            position absolute
+            width 100%
+            top 164px
+            bottom 50px
+            overflow hidden
+            .time
+                padding 0.3rem 0
+            .detail
                 width 100%
-                top 164px
-                bottom 50px
-                overflow hidden
-                .time
-                    padding 0.3rem 0
-                .detail
-                    width 100%
-                    height 70px
+                height 70px
+                display flex
+                justify-content center
+                align-items center
+                .avator, .content
+                    display inline-block
+                .avator
+                    flex-grow 1
+                    text-align center
+                .content 
+                    flex-grow 3
                     display flex
-                    justify-content center
-                    align-items center
-                    .avator, .content
+                    .name, .number,.total
                         display inline-block
-                    .avator
-                        flex-grow 1
-                        text-align center
-                    .content 
-                        flex-grow 3
-                        display flex
-                        .name, .number,.total
-                            display inline-block
-                            width 100%
-                        .name
-                            text-align left
-                        .number
-                            text-align right
-                        .total
-                            text-align center
-                .summary
-                    width 100%
-                    height 2rem
-                    display flex
-                    justify-content center
-                    align-items center
-                    .title,.price
                         width 100%
-                        line-height 18px
-                    .title
+                    .name
                         text-align left
-                        padding-left 3rem 
-                    .price
+                    .number
                         text-align right
-                        padding-right 2rem
-        .non-order
-            .title
-                line-height 24px
-                font-size 24px
-                padding 10px 5px
-                text-align center
+                    .total
+                        text-align center
+            .summary
+                width 100%
+                height 2rem
+                display flex
+                justify-content center
+                align-items center
+                .title,.price
+                    width 100%
+                    line-height 18px
+                .title
+                    text-align left
+                    padding-left 3rem 
+                .price
+                    text-align right
+                    padding-right 2rem
+    .non-order
+        .title
+            line-height 24px
+            font-size 24px
+            padding 10px 5px
+            text-align center
 
 </style>
