@@ -17,7 +17,7 @@
             <li v-for="(item,index) in goods" :key="index" class="food-list" ref="foodList">
               <h1 class="title">{{item.name}}</h1>
               <ul>
-                <li v-for="(food,index) in item.list" :key="index" class="food-item border-1px">
+                <li @click="selectFood(food,$event)" v-for="(food,index) in item.list" :key="index" class="food-item border-1px">
                   <div class="icon">
                     <img width="57" height="57" :src="food.imageUrl">
                   </div>
@@ -41,6 +41,7 @@
         </div>
         <shopcart ref="shopcart"></shopcart>
       </div>
+      <food @add="addFood" :food="selectedFood" ref="food"></food>
     </div>
   </div>
 </template>
@@ -49,6 +50,7 @@
   import BScroll from 'better-scroll';
   import shopcart from './shopcart/shopcart';
   import cartcontrol from './cartcontrol/cartcontrol';
+  import food from './food/food';
   import logo from '../../components/logo/logo';
   import config from '../../config/config';
   import Logger from 'chivy';
@@ -150,7 +152,8 @@
     components: {
       shopcart,
       cartcontrol,
-      logo
+      logo,
+      food
     }
   };
 </script>
@@ -223,6 +226,7 @@
           .name
             margin: 2px 0 8px 0
             height: 14px
+            font-weight 700
             line-height: 14px
             font-size: 14px
             color: rgb(7, 17, 27)

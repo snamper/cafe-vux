@@ -7,7 +7,7 @@
         </div>
         <div class="alipay">
             <div class="img">
-                <avator img='../../../../static/img/avator.jpg' size='50' radius='50'></avator>
+                <avator img='../../../../static/img/alipay.png' size='50' radius='50'></avator>
             </div>
             <div class="text">
                 支付宝
@@ -18,7 +18,7 @@
         </div>
         <div class="wechat">
             <div class="img">
-                <avator img='../../../../static/img/avator.jpg' size='50' radius='50'></avator>
+                <avator img='../../../../static/img/wechat.png' size='50' radius='50'></avator>
             </div>
             <div class="text">
                 微信支付
