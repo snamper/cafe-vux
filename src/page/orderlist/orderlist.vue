@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="list-wrapper">
             <logo></logo>
             <div class="orderlist-wrapper" v-if="recordList">
@@ -37,7 +36,6 @@
                         </li>
                     </ul>
                 </div>
-                
             </div>
             <div class="non-order" v-if="!showList">
                 <p class="title">亲，您还没有购买任何商品</p>

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Main from '@/page/main/main';
 import Menu from '@/page/menu/menu';
 import New from '@/page/new/new';
 import Order from '@/page/menu/order/order';
@@ -14,7 +15,31 @@ Vue.use(Router);
 export default new Router({
   routes: [{
       path: '/',
-      redirect: '/menu'
+      component: Main,
+      children: [{
+        path: 'menu',
+        component: Menu,
+        meta: {
+          keepAlive: true
+        }
+      },
+      {
+        path: '/new',
+        component: New
+      },
+      {
+        path: '/orderlist',
+        component: OrderList
+      },
+      {
+        path: '/member',
+        component: Member
+      },
+      {
+        // 登陆页面
+        path: '/login',
+        component: Login
+      }]
     },
     {
       // 主页
@@ -25,11 +50,6 @@ export default new Router({
       }
     },
     {
-      // 新品推荐
-      path: '/new',
-      component: New
-    },
-    {
       // 订单详情
       path: '/order',
       component: Order
@@ -38,20 +58,6 @@ export default new Router({
       // 支付页面
       path: '/pay',
       component: Pay
-    },
-    {
-      // 历史订单
-      path: '/orderlist',
-      component: OrderList
-    },
-    {
-      // 登陆页面
-      path: '/login',
-      component: Login
-    },
-    {
-      path: '/member',
-      component: Member
     },
     {
       path: '/modifyPasswd',
