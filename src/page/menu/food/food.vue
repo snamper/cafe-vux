@@ -1,36 +1,38 @@
 <template>
   <transition name="move">
-    <div v-show="showFlag" class="food" ref="food">
-      <x-header :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
-      <div class="food-content">
-        <div class="image-header">
-          <img :src="food.imageUrl">
-        </div>
-        <div class="content">
-          <h1 class="title">{{food.name}}</h1>
-          <!-- <div class="detail">
-            <span class="sell-count">月售{{food.sellCount}}份</span>
-            <span class="rating">好评率{{food.rating}}%</span>
-          </div> -->
-          <div class="price">
-            <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+    
+      <div v-show="showFlag" class="food" ref="food">
+        <x-header :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
+        <div class="food-content">
+          <div class="image-header">
+            <img :src="food.imageUrl">
           </div>
-          <div class="cartcontrol-wrapper">
-            <cartcontrol @add="addFood" :food="food"></cartcontrol>
-          </div>
-          <transition name="fade">
-            <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">
-              加入购物车
+          <div class="content">
+            <h1 class="title">{{food.name}}</h1>
+            <!-- <div class="detail">
+              <span class="sell-count">月售{{food.sellCount}}份</span>
+              <span class="rating">好评率{{food.rating}}%</span>
+            </div> -->
+            <div class="price">
+              <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
             </div>
-          </transition>
-        </div>
-        <split v-show="food.info"></split>
-        <div class="info" v-show="food.info">
-          <h1 class="title">商品信息</h1>
-          <p class="text">{{food.info}}</p>
+            <div class="cartcontrol-wrapper">
+              <cartcontrol @add="addFood" :food="food"></cartcontrol>
+            </div>
+            <transition name="fade">
+              <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">
+                加入购物车
+              </div>
+            </transition>
+          </div>
+          <split v-show="food.info"></split>
+          <div class="info" v-show="food.info">
+            <h1 class="title">商品信息</h1>
+            <p class="text">{{food.info}}</p>
+          </div>
         </div>
       </div>
-    </div>
+    
   </transition>
 </template>
 
@@ -39,7 +41,7 @@
   import Vue from 'vue';
   import split from '../../../components/split/split';
   import cartcontrol from '../cartcontrol/cartcontrol';
-  import { XHeader } from 'vux';
+  import { XHeader, ViewBox } from 'vux';
   import Logger from 'chivy';
   const log = new Logger('page/food');
 
@@ -102,7 +104,8 @@
     components: {
       cartcontrol,
       split,
-      XHeader
+      XHeader,
+      ViewBox
     }
   };
 </script>

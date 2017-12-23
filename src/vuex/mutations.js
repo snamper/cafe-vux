@@ -3,6 +3,9 @@ import Logger from 'chivy';
 const log = new Logger('vuex/mutations');
 
 export default {
+    updateLoadingStatus (state, payload) {
+        state.isLoading = payload.isLoading;
+    },
     // 修改分类列表
     m_categorys(state, categorys) {
         // log.info('before modify categorys');

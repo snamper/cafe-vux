@@ -1,4 +1,5 @@
 export default {
+    isLoading: false,
     categorys: '', // 商品分类信息
     memberInfo: '', // 会员信息
     recordList: '', // 购买商品记录

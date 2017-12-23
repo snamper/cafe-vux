@@ -42,14 +42,6 @@ export default new Router({
       }]
     },
     {
-      // 主页
-      path: '/menu',
-      component: Menu,
-      meta: {
-        keepAlive: true // 需要被缓存
-      }
-    },
-    {
       // 订单详情
       path: '/order',
       component: Order

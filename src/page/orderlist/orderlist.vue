@@ -1,5 +1,8 @@
 <template>
     <div>
+        <loading v-model="isLoading">
+            正在查询中
+        </loading>
         <div class="list-wrapper">
             <logo></logo>
             <div class="orderlist-wrapper" v-if="recordList">
@@ -51,7 +54,7 @@ import logo from '../../components/logo/logo';
 import config from '../../config/config';
 import util from '../../common/js/util';
 import { mapState } from 'vuex';
-import { Divider } from 'vux';
+import { Divider, Loading } from 'vux';
 import avator from '../../components/avator/avator';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist');
@@ -66,12 +69,16 @@ export default {
             recordList: null
         };
     },
+    beforeRouteEnter (to, from, next) {
+        log.debug('test waiting');
+        next(vm => {
+            vm.$store.commit('updateLoadingStatus', {isLoading: true});
+        });
+    },
     created() {
         this.__init();
     },
     mounted() {
-        log.info('mounted');
-        log.info('recordList is ' + JSON.stringify(this.recordList));
         if (this.recordList !== null) {
             if (this.recordList.length !== 0) {
                 log.debug('scroll show orderListShow');
@@ -93,6 +100,9 @@ export default {
         ...mapState([
             'memberInfo'
         ]),
+        isLoading() {
+            return this.$store.state.isLoading;
+        },
         showList() {
             if (this.recordList || this.memberRecordList) {
                 return true;
@@ -149,7 +159,7 @@ export default {
             log.debug('ajax get response url is ' + url);
             this.$http.post(url, data).then((response) => {
                 let result = response.data;
-                log.debug('response data is ' + JSON.stringify(result));
+                // log.debug('response data is ' + JSON.stringify(result));
                 this.loading = false;
                 // 存入state中
                 if (result.length !== 0) {
@@ -181,7 +191,8 @@ export default {
         logo,
         avator,
         Divider,
-        split
+        split,
+        Loading
     }
 };
 </script>
