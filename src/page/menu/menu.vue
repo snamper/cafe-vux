@@ -25,7 +25,7 @@
                     <h2 class="name">{{food.name}}</h2>
                     <p class="desc">{{food.description}}</p>
                     <div class="extra">
-                      <span class="count">月售0份</span><span>好评率0%</span>
+                      <span class="count">月售0份</span>
                     </div>
                     <div class="price">
                       <span class="now">￥{{food.memberPrice}}</span><span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>

@@ -3,8 +3,8 @@
         <div class="avator">
             <avator :img="image" size='70' radius='50'></avator>
         </div>
-        <div class="text">
-            <h1 @click="loginPage">登陆/注册</h1>
+        <div class="text" @click="loginPage">
+            <h1 >登陆/注册</h1>
         </div>
     </div>
 </template>

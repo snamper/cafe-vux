@@ -1,9 +1,7 @@
 <template>
     <div>
-        <loading v-model="isLoading">
-            正在查询中
-        </loading>
-        <div class="list-wrapper">
+        <loading v-model="isLoading"></loading>
+        <div class="list-wrapper" v-if="recordList">
             <logo></logo>
             <div class="orderlist-wrapper" v-if="recordList">
                 <p class="title" v-if="!memberInfo">游客，您的本次订单如下</p>
@@ -40,7 +38,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="non-order" v-if="!showList">
+            <div class="non-order" v-if="!recordList">
                 <p class="title">亲，您还没有购买任何商品</p>
             </div>
         </div>
@@ -72,37 +70,22 @@ export default {
     beforeRouteEnter (to, from, next) {
         log.debug('test waiting');
         next(vm => {
+            // 获取vux的实例
             vm.$store.commit('updateLoadingStatus', {isLoading: true});
+            log.debug('显示loading');
+            vm.init();
+            log.debug('scroll');
+            vm.$store.commit('updateLoadingStatus', {isLoading: false});
+             log.debug('关闭loading显示');
         });
     },
-    created() {
-        this.__init();
-    },
     mounted() {
-        if (this.recordList !== null) {
-            if (this.recordList.length !== 0) {
-                log.debug('scroll show orderListShow');
-                this.$nextTick(() => {
-                    if (!this.scroll) {
-                        log.debug('created scroll');
-                        this.scroll = new BScroll(this.$refs.scrollWrapper, {
-                            click: true
-                        });
-                    } else {
-                        log.debug('refresh scroll');
-                        this.scroll.refresh();
-                    }
-                });
-            }
-        }
     },
     computed: {
         ...mapState([
-            'memberInfo'
+            'memberInfo',
+            'isLoading'
         ]),
-        isLoading() {
-            return this.$store.state.isLoading;
-        },
         showList() {
             if (this.recordList || this.memberRecordList) {
                 return true;
@@ -118,11 +101,26 @@ export default {
             return total;
         }
     },
-    watch: {
-        '$route': '__init'
-    },
     methods: {
-        async __init() {
+        scrollit() {
+            if (this.recordList !== null) {
+                if (this.recordList.length !== 0) {
+                    log.debug('scroll show orderListShow');
+                    this.$nextTick(() => {
+                        if (!this.scroll) {
+                            log.debug('created scroll');
+                            this.scroll = new BScroll(this.$refs.scrollWrapper, {
+                                click: true
+                        });
+                        } else {
+                            log.debug('refresh scroll');
+                            this.scroll.refresh();
+                        }
+                    });
+                }
+            }
+        },
+        init() {
             this.loading = true;
             // 获取购买记录并存入列表,区分会员和非会员
             log.debug('memberinfo is ' + this.memberInfo);
@@ -165,6 +163,7 @@ export default {
                 if (result.length !== 0) {
                     this.recordList = result;
                     this.$store.commit('setrecordList', result);
+                    this.scrollit();
                 }
             });
         },

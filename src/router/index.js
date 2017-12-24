@@ -13,9 +13,11 @@ import modPwd from '@/page/member/modifyPasswd';
 Vue.use(Router);
 
 export default new Router({
-  routes: [{
+  routes: [
+      {
       path: '/',
       component: Main,
+      redirect: '/menu',
       children: [{
         path: 'menu',
         component: Menu,
@@ -24,20 +26,20 @@ export default new Router({
         }
       },
       {
-        path: '/new',
+        path: 'new',
         component: New
       },
       {
-        path: '/orderlist',
+        path: 'orderlist',
         component: OrderList
       },
       {
-        path: '/member',
+        path: 'member',
         component: Member
       },
       {
         // 登陆页面
-        path: '/login',
+        path: 'login',
         component: Login
       }]
     },

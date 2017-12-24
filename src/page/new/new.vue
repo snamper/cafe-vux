@@ -29,10 +29,10 @@ import Logger from 'chivy';
 const log = new Logger('cafe/new');
 export default {
     created() {
+        if (this.$store.state.categorys === '') {
+            this.$router.push({path: '/menu'});
+        }
         log.debug('created');
-    },
-    mounted() {
-        log.debug('mounted');
     },
     computed: {
         sliders() {

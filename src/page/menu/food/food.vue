@@ -1,6 +1,5 @@
 <template>
   <transition name="move">
-    
       <div v-show="showFlag" class="food" ref="food">
         <x-header :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
         <div class="food-content">
@@ -127,16 +126,14 @@
     &.move-enter, &.move-leave-active
       transform: translate3d(100%, 0, 0)
     .image-header
-      position: relative
-      width: 100%
-      height: 0
-      padding-top: 100%
+      display flex
+      justify-content center
+      align-items center
+      width 100%
       img
-        position: absolute
-        top: 0
-        left: 0
-        width: 100%
-        height: 100%
+        width 80%
+        height 80%
+        padding 1rem 0
       .back
         position: absolute
         top: 10px
