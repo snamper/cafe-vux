@@ -9,17 +9,6 @@
                 <div class="scroll-wrapper" ref="scrollWrapper">
                     <ul>
                         <li v-for="(item,index) in recordList" :key="index">
-                            <split></split>
-                            <div class="title">
-                                订单号: {{item.code}}
-                            </div>
-                            <div class="detail">
-                                <span>共<span class="No">{{item.details.length}}</span>件商品，实付款: <span class="price">￥{{item.amount}}</span></span>
-                            </div>
-                        </li>
-                    </ul>
-                    <!-- <ul>
-                        <li v-for="(item,index) in recordList" :key="index">
                             <div class="time">
                                 购买日期：
                                 <span class="time">{{buyDateTime(item.createTime)}}</span>
@@ -46,7 +35,7 @@
                             </div>
                             <split></split>
                         </li>
-                    </ul> -->
+                    </ul>
                 </div>
             </div>
             <div class="non-order" v-if="!recordList">
@@ -221,19 +210,46 @@ export default {
             top 164px
             bottom 50px
             overflow hidden
-            .title
-                padding-left 1rem
+            .time
+                padding 0.3rem 0
             .detail
-                text-align right
-                padding-right 20px
-                padding-bottom 5px
+                width 100%
+                height 70px
+                display flex
+                justify-content center
+                align-items center
+                .avator, .content
+                    display inline-block
+                .avator
+                    flex-grow 1
+                    text-align center
+                .content 
+                    flex-grow 3
+                    display flex
+                    .name, .number,.total
+                        display inline-block
+                        width 100%
+                    .name
+                        text-align left
+                    .number
+                        text-align right
+                    .total
+                        text-align center
+            .summary
+                width 100%
+                height 2rem
+                display flex
+                justify-content center
+                align-items center
+                .title,.price
+                    width 100%
+                    line-height 18px
+                .title
+                    text-align left
+                    padding-left 3rem 
                 .price
-                    font-weight 500
-                    color red
-                .No
-                    font-weight 700
-                    color black
-                    padding 0 5px
+                    text-align right
+                    padding-right 2rem
     .non-order
         .title
             line-height 24px

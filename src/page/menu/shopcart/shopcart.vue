@@ -9,8 +9,8 @@
             </div>
             <div class="num" v-show="totalCount>0">{{totalCount}}</div>
           </div>
-          <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalMemberPrice}}</div>
-          <div class="desc">非会员价￥{{totalPrice}}元</div>
+          <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
+          <div class="desc" v-if="totalMemberPrice>0">会员价￥{{totalMemberPrice}}元</div>
         </div>
           <div class="content-right" @click.stop.prevent="pay">
             <div class="pay" :class="payClass">
