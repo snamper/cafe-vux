@@ -17,7 +17,7 @@ export default new Router({
       {
       path: '/',
       component: Main,
-      redirect: '/menu',
+      redirect: '/new',
       children: [{
         path: 'menu',
         component: Menu,
