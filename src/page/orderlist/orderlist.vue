@@ -8,7 +8,7 @@
                 <p class="title" v-if="memberInfo">{{memberInfo.name}}，您的历史订单如下</p>
                 <div class="scroll-wrapper" ref="scrollWrapper">
                     <ul>
-                        <li v-for="(item,index) in recordList" :key="index">
+                        <li @click="selectList(item,$event)" v-for="(item,index) in recordList" :key="index">
                             <split></split>
                             <div class="title">
                                 订单号: {{item.code}}
@@ -18,41 +18,14 @@
                             </div>
                         </li>
                     </ul>
-                    <!-- <ul>
-                        <li v-for="(item,index) in recordList" :key="index">
-                            <div class="time">
-                                购买日期：
-                                <span class="time">{{buyDateTime(item.createTime)}}</span>
-                                订单状态：
-                                <span class="status">{{showStatus(item.status)}}</span>
-                            </div>
-                            <divider>详情</divider>
-                            <ul>
-                                <li v-for="(good,index) in item.details" :key="index">
-                                    <div class="detail">
-                                        <div class="avator">
-                                            <avator :img="good.imageUrl" size='35' radius='50'></avator>
-                                        </div>
-                                        <div class="content">
-                                            <div class="name">{{good.productName}}</div>
-                                            <div class="number">x{{good.number}}</div>
-                                            <div class="total">￥{{good.amount}}</div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="summary">
-                                <div class="title">总价</div><div class="price">￥{{item.amount}}</div>
-                            </div>
-                            <split></split>
-                        </li>
-                    </ul> -->
                 </div>
             </div>
             <div class="non-order" v-if="!recordList">
                 <p class="title">亲，您还没有购买任何商品</p>
             </div>
         </div>
+        <detail :list="selectedList" ref="detail"></detail>
+        <!-- <food @add="addFood" :food="selectedFood" ref="food"></food> -->
     </div>
 </template>
 
@@ -62,6 +35,7 @@ import BScroll from 'better-scroll';
 import logo from '../../components/logo/logo';
 import config from '../../config/config';
 import util from '../../common/js/util';
+import detail from './detail';
 import { mapState } from 'vuex';
 import { Divider, Loading } from 'vux';
 import avator from '../../components/avator/avator';
@@ -75,7 +49,8 @@ export default {
     data() {
         return {
             loading: false,
-            recordList: null
+            recordList: null,
+            selectedList: null
         };
     },
     beforeRouteEnter (to, from, next) {
@@ -89,8 +64,6 @@ export default {
             vm.$store.commit('updateLoadingStatus', {isLoading: false});
              log.debug('关闭loading显示');
         });
-    },
-    mounted() {
     },
     computed: {
         ...mapState([
@@ -113,6 +86,10 @@ export default {
         }
     },
     methods: {
+        selectList(item) {
+            this.selectedList = item;
+            this.$refs.detail.show();
+        },
         scrollit() {
             if (this.recordList !== null) {
                 if (this.recordList.length !== 0) {
@@ -202,7 +179,8 @@ export default {
         avator,
         Divider,
         split,
-        Loading
+        Loading,
+        detail
     }
 };
 </script>

@@ -35,17 +35,15 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import BScroll from 'better-scroll';
-  import Vue from 'vue';
-  import split from '../../../components/split/split';
-  import cartcontrol from '../cartcontrol/cartcontrol';
-  import { XHeader } from 'vux';
-  import Logger from 'chivy';
-  const log = new Logger('page/food');
+// import BScroll from 'better-scroll';
+import split from '../../components/split/split';
+import { XHeader } from 'vux';
+import Logger from 'chivy';
+const log = new Logger('page/orderlist/detail');
 
-  export default {
+export default {
     props: {
-      food: {
+      list: {
         type: Object
       }
     },
@@ -55,59 +53,29 @@
       };
     },
     methods: {
-      back() {
-        this.hide();
-      },
-      show() {
-        log.debug('food');
+        show() {
+        log.debug('list');
         this.showFlag = true;
-        this.onlyContent = true;
-        this.$nextTick(() => {
-          if (!this.scroll) {
-            this.scroll = new BScroll(this.$refs.food, {
-              click: true
-            });
-          } else {
-            this.scroll.refresh();
-          }
-        });
-      },
-      hide() {
-        this.showFlag = false;
-      },
-      addFirst(event) {
-        if (!event._constructed) {
-          return;
-        }
-        this.$emit('add', event.target);
-        Vue.set(this.food, 'count', 1);
-      },
-      needShow(type, text) {
-        if (this.onlyContent && !text) {
-          return false;
-        }
-        return this.selectType;
-      },
-      addFood(target) {
-        this.$emit('add', target);
-      },
-      toggleContent() {
-        this.onlyContent = !this.onlyContent;
-        this.$nextTick(() => {
-          this.scroll.refresh();
-        });
+        // this.$nextTick(() => {
+        //   if (!this.scroll) {
+        //     this.scroll = new BScroll(this.$refs.food, {
+        //       click: true
+        //     });
+        //   } else {
+        //     this.scroll.refresh();
+        //   }
+        // });
       }
     },
     components: {
-      cartcontrol,
       split,
       XHeader
     }
-  };
+};
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
-  @import "../../../common/stylus/mixin.styl"
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+ @import "../../common/stylus/mixin.styl"
 
   .food
     position: fixed
