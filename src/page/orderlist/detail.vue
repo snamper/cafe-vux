@@ -7,7 +7,7 @@
           <span class="time">{{buyDateTime(list.createTime)}}</span>
         </div>
         <divider>详情</divider>
-        <div class="detail-wrapper">
+        <div class="detail-wrapper" ref="detailWrapper">
           <ul>
             <li v-for="(good,index) in list.details" :key="index">
                 <div class="detail">
@@ -23,16 +23,16 @@
             </li>
           </ul>
           <split></split>
-          <div class="summary">
+        </div>
+        <div class="summary">
               <div class="title">总价</div><div class="price">￥{{list.amount}}</div>
           </div>
-        </div>
       </div>
   </transition>
 </template>
 
 <script type="text/ecmascript-6">
-// import BScroll from 'better-scroll';
+import BScroll from 'better-scroll';
 import split from '../../components/split/split';
 import avator from '../../components/avator/avator';
 import { XHeader, Divider } from 'vux';
@@ -55,15 +55,15 @@ export default {
         show() {
         log.debug('list');
         this.showFlag = true;
-        // this.$nextTick(() => {
-        //   if (!this.scroll) {
-        //     this.scroll = new BScroll(this.$refs.food, {
-        //       click: true
-        //     });
-        //   } else {
-        //     this.scroll.refresh();
-        //   }
-        // });
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.detailWrapper, {
+              click: true
+            });
+          } else {
+            this.scroll.refresh();
+          }
+        });
       },
       back() {
         this.showFlag = false;
@@ -118,7 +118,7 @@ export default {
       position absolute
       width 100%
       top 108px
-      bottom 50px
+      bottom 40px
       overflow hidden
       .time
           padding 0.3rem 0
@@ -145,19 +145,22 @@ export default {
                   text-align right
               .total
                   text-align center
-      .summary
-        width 100%
-        height 2rem
-        display flex
-        justify-content center
-        align-items center
-        .title,.price
-            width 100%
-            line-height 18px
-        .title
-            text-align left
-            padding-left 3rem 
-        .price
-            text-align right
-            padding-right 2rem
+    .summary
+      position absolute
+      bottom 0px
+      right 0px
+      width 100%
+      height 2rem
+      display flex
+      justify-content center
+      align-items center
+      .title,.price
+          width 100%
+          line-height 18px
+      .title
+          text-align left
+          padding-left 3rem 
+      .price
+          text-align right
+          padding-right 2rem
 </style>
