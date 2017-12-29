@@ -2,30 +2,11 @@
   <transition name="move">
       <div v-show="showFlag" class="food" ref="food" v-if="list">
         <x-header :title="orderid" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
-        <flow>
-          <flow-state state="1" title="已付款" is-done></flow-state>
-          <flow-line is-done></flow-line>
-          <flow-state state="2" title="已发货" is-done></flow-state>
-          <flow-line :tip="progress"></flow-line>
-          <flow-state state="3" title="待收货"></flow-state>
-          <flow-line></flow-line>
-          <flow-state state="4"  title="完成"></flow-state>
-          <flow-line></flow-line>
-        </flow>
-        <divider>订单详情</divider>
-        <div class="orderinfo">
-          <div class="orderNumber">
-            <span class="left">订单号:</span>
-            <span class="right">tian201712281512xx01</span>
-          </div>
-          <div class="datetime">
-            <span class="left">下单时间:</span>
-            <span class="right">2017-12-28 15:12</span>
-          </div>
-          <div class="detailtitle">
-            物品清单
-          </div>
+        <div class="detail-desciption">
+          <span class="title">结算时间</span>
+          <span class="time">{{buyDateTime(list.createTime)}}</span>
         </div>
+        <divider>详情</divider>
         <div class="detail-wrapper" ref="detailWrapper">
           <ul>
             <li v-for="(good,index) in list.details" :key="index">
@@ -41,16 +22,21 @@
                 </div>
             </li>
           </ul>
+          <split></split>
+          <split></split>
         </div>
+        <div class="summary">
+              <div class="title">总价</div><div class="price">￥{{list.amount}}</div>
+          </div>
       </div>
   </transition>
 </template>
 
 <script type="text/ecmascript-6">
-// import BScroll from 'better-scroll';
+import BScroll from 'better-scroll';
 import split from '../../components/split/split';
 import avator from '../../components/avator/avator';
-import { XHeader, Divider, Flow, FlowState, FlowLine } from 'vux';
+import { XHeader, Divider } from 'vux';
 import util from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist/detail');
@@ -69,24 +55,21 @@ export default {
     computed: {
       orderid() {
         return '订单号: ' + this.list.id.toString();
-      },
-      progress() {
-        return '进行中';
       }
     },
     methods: {
-      show() {
+        show() {
         log.debug('list');
         this.showFlag = true;
-        // this.$nextTick(() => {
-        //   if (!this.scroll) {
-        //     this.scroll = new BScroll(this.$refs.detailWrapper, {
-        //       click: true
-        //     });
-        //   } else {
-        //     this.scroll.refresh();
-        //   }
-        // });
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.detailWrapper, {
+              click: true
+            });
+          } else {
+            this.scroll.refresh();
+          }
+        });
       },
       back() {
         this.showFlag = false;
@@ -95,22 +78,13 @@ export default {
             let format = util.formatDate(date);
             let result = format.Year + '-' + format.Month + '-' + format.Day + ' ' + format.Hour + ':' + format.Minute;
             return result;
-      },
-      getStatus() {
-        this.$router.push({path: '/orderlist/status'});
-      },
-      getDetail() {
-        this.$router.push({path: '/orderlist/detailInfo'});
       }
     },
     components: {
       split,
       XHeader,
       Divider,
-      avator,
-      Flow,
-      FlowState,
-      FlowLine
+      avator
     }
 };
 </script>
@@ -131,30 +105,25 @@ export default {
       transition: all 0.2s linear
     &.move-enter, &.move-leave-active
       transform: translate3d(100%, 0, 0)
-    .orderinfo
-      .orderNumber,.datetime,.detailtitle
-        padding 5px 0
-        height 20px
-        .left,.right
-          font-size 18px
-          line-height 18px
-      .detailtitle
-        padding-left 10px
-      .orderNumber,.datetime
-        display flex
-        justify-content center
-        .left,.right
-          flex-grow 1
-        .left
-          text-align left
-          padding-left 10px
-        .right 
-          text-align right
-          padding-right 10px
+    .detail-desciption
+      height 30px
+      display flex
+      align-items center
+      .title,.time
+        font-size 16px
+        padding-top 5px
+        padding-bottom 5px
+      .title
+        flex-grow 1
+        padding-left 20px
+      .time
+        flex-grow 1
+        text-align right
+        padding-right 10px
     .detail-wrapper
       position absolute
       width 100%
-      top 250px
+      top 108px
       bottom 40px
       overflow hidden
       .time

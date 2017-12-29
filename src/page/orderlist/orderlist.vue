@@ -11,8 +11,10 @@
                         <li @click="selectList(item,$event)" v-for="(item,index) in recordList" :key="index">
                             <split></split>
                             <div class="title">
-                                订单号: {{item.code}}
+                                <span class="orderNo">{{date(item.createTime)}}  {{time(item.createTime)}}</span>
+                                <span class="status">{{orderStatus(item.status)}}</span>                                
                             </div>
+                            <imagelist :list="item.details"></imagelist>
                             <div class="detail">
                                 <span>共<span class="No">{{item.details.length}}</span>件商品，实付款: <span class="price">￥{{item.amount}}</span></span>
                             </div>
@@ -36,9 +38,9 @@ import logo from '../../components/logo/logo';
 import config from '../../config/config';
 import util from '../../common/js/util';
 import detail from './detail';
+import imagelist from './imageList';
 import { mapState } from 'vuex';
 import { Divider, Loading } from 'vux';
-import avator from '../../components/avator/avator';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist');
 const WAITE4PAY = '待付款';
@@ -86,6 +88,28 @@ export default {
         }
     },
     methods: {
+        date(datetime) {
+            let format = util.formatDate(datetime);
+            let result = format.Year + '-' + format.Month + '-' + format.Day;
+            return result;
+        },
+        time(datetime) {
+            let format = util.formatDate(datetime);
+            let result = format.Hour + ':' + format.Minute;
+            return result;
+        },
+        orderStatus(status) {
+            // log.debug(status);
+            if (status === 'WAITE4PAY') {
+                return WAITE4PAY;
+            } else if (status === 'WAITE4ENSURE') {
+                return WAITE4ENSURE;
+            } else if (status === 'ENSURE2PAID') {
+                return ENSURE2PAID;
+            } else if (status === 'SUCCESS') {
+                return SUCCESS;
+            }
+        },
         selectList(item) {
             this.selectedList = item;
             this.$refs.detail.show();
@@ -155,11 +179,6 @@ export default {
                 }
             });
         },
-        buyDateTime(date) {
-            let format = util.formatDate(date);
-            let result = format.Year + '' + format.Month + '' + format.Day + ' ' + format.Hour + ':' + format.Minute;
-            return result;
-        },
         showStatus(status) {
             let result = status;
             if (status === 'WAITE4PAY') {
@@ -176,11 +195,11 @@ export default {
     },
     components: {
         logo,
-        avator,
         Divider,
         split,
         Loading,
-        detail
+        detail,
+        imagelist
     }
 };
 </script>
@@ -200,11 +219,21 @@ export default {
             bottom 50px
             overflow hidden
             .title
-                padding-left 1rem
+                display flex
+                justify-content center
+                .orderNo
+                    flex-grow 1
+                    text-align left
+                    padding-left 7px
+                .status
+                    flex-grow 1
+                    text-align right
+                    padding-right 7px
             .detail
                 text-align right
-                padding-right 20px
-                padding-bottom 5px
+                padding 10px 20px 5px 0px
+                .price,.no
+                    font-size 20px
                 .price
                     font-weight 500
                     color red

@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "start": "npm run dev",
+    "company": "npm run dev --host 10.100.193.166",
+    "home": "npm run dev --host 192.168.9.11",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src"
   },
