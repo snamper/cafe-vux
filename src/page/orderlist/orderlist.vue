@@ -8,7 +8,8 @@
                 <p class="title" v-if="memberInfo">{{memberInfo.name}}，您的历史订单如下</p>
                 <div class="scroll-wrapper" ref="scrollWrapper">
                     <ul>
-                        <li @click="selectList(item,$event)" v-for="(item,index) in recordList" :key="index">
+                        <!-- <li @click="selectList(item,$event)" v-for="(item,index) in recordList" :key="index"> -->
+                        <li @click="showDetailPage(item)" v-for="(item,index) in recordList" :key="index">                        
                             <split></split>
                             <div class="title">
                                 <span class="orderNo">{{date(item.createTime)}}  {{time(item.createTime)}}</span>
@@ -191,6 +192,10 @@ export default {
                 result = SUCCESS;
             }
             return result;
+        },
+        showDetailPage(order) {
+            log.debug('orderid is ' + order.id);
+            this.$router.push({name: 'orderDetail', params: {recordID: order.id}});
         }
     },
     components: {

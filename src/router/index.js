@@ -9,6 +9,7 @@ import OrderList from '@/page/orderlist/orderlist';
 import Login from '@/page/login/login';
 import Member from '@/page/member/member';
 import modPwd from '@/page/member/modifyPasswd';
+import OrderDetail from '@/page/orderlist/orderDetail';
 
 Vue.use(Router);
 
@@ -47,6 +48,11 @@ export default new Router({
       // 订单详情
       path: '/order',
       component: Order
+    },
+    {
+      path: '/orderDetail/:recordID',
+      name: 'orderDetail',
+      component: OrderDetail
     },
     {
       // 支付页面
