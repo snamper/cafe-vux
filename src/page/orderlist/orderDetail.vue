@@ -19,6 +19,11 @@ import order from './order';
 import Logger from 'chivy';
 const log = new Logger('page/orderDetail');
 export default {
+    created() {
+        if (typeof (this.record) === 'undefined') {
+            this.$router.push({path: '/orderlist'});
+        }
+    },
     data() {
         return {
             show: true

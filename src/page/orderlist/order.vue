@@ -20,7 +20,7 @@
                 </div>
             </li>
             <div class="totalprice">
-                <div class="number">￥300.00</div>
+                <div class="number">￥{{product.amount}}</div>
                 <div class="total">实付</div>
             </div>
           </ul>
@@ -40,14 +40,17 @@ export default {
             type: Object
         }
     },
+    created() {
+        log.error('is data fetched? ' + this.product !== null);
+    },
     mounted() {
-        // this.scrollit();
+        this.scrollit();
     },
     methods: {
         scrollit() {
             if (this.product !== null) {
                 if (this.product.details.length !== 0) {
-                    log.debug('scroll show orderListShow');
+                    log.debug('scroll show orderlist');
                     this.$nextTick(() => {
                         if (!this.scroll) {
                             log.debug('created scroll');
@@ -118,5 +121,5 @@ export default {
             margin 0 10px
         .number,.total
             font-size 16px
-            padding 12px 0px
+            padding 12px 10px
 </style>

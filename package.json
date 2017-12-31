@@ -8,6 +8,7 @@
     "dev": "node build/dev-server.js",
     "company": "npm run dev --host 10.100.193.166",
     "home": "npm run dev --host 192.168.9.11",
+    "workshop": "npm run dev --host 192.168.12.19",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src"
   },
