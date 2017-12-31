@@ -8,7 +8,6 @@
                 <p class="title" v-if="memberInfo">{{memberInfo.name}}，您的历史订单如下</p>
                 <div class="scroll-wrapper" ref="scrollWrapper">
                     <ul>
-                        <!-- <li @click="selectList(item,$event)" v-for="(item,index) in recordList" :key="index"> -->
                         <li @click="showDetailPage(item)" v-for="(item,index) in recordList" :key="index">                        
                             <split></split>
                             <div class="title">
@@ -27,7 +26,7 @@
                 <p class="title">亲，您还没有购买任何商品</p>
             </div>
         </div>
-        <detail :list="selectedList" ref="detail"></detail>
+        <!-- <detail :list="selectedList" ref="detail"></detail> -->
         <!-- <food @add="addFood" :food="selectedFood" ref="food"></food> -->
     </div>
 </template>
@@ -38,7 +37,6 @@ import BScroll from 'better-scroll';
 import logo from '../../components/logo/logo';
 import config from '../../config/config';
 import util from '../../common/js/util';
-import detail from './detail';
 import imagelist from './imageList';
 import { mapState } from 'vuex';
 import { Divider, Loading } from 'vux';
@@ -57,7 +55,6 @@ export default {
         };
     },
     beforeRouteEnter (to, from, next) {
-        log.debug('test waiting');
         next(vm => {
             // 获取vux的实例
             vm.$store.commit('updateLoadingStatus', {isLoading: true});
@@ -111,10 +108,6 @@ export default {
                 return SUCCESS;
             }
         },
-        selectList(item) {
-            this.selectedList = item;
-            this.$refs.detail.show();
-        },
         scrollit() {
             if (this.recordList !== null) {
                 if (this.recordList.length !== 0) {
@@ -146,10 +139,6 @@ export default {
                 log.debug('member id is ' + this.memberInfo.ID);
                 this.getMemberRecordList(this.memberInfo.ID);
             }
-        },
-        showDetail() {
-            log.info('show Detail order infomation');
-            this.$refs.detail.showit();
         },
         getVisitorRecordList(userid) {
             let data = {
@@ -195,7 +184,7 @@ export default {
         },
         showDetailPage(order) {
             log.debug('orderid is ' + order.id);
-            this.$router.push({name: 'orderDetail', params: {recordID: order.id}});
+            this.$router.push({name: 'orderDetail', params: {record: order}});
         }
     },
     components: {
@@ -203,7 +192,6 @@ export default {
         Divider,
         split,
         Loading,
-        detail,
         imagelist
     }
 };

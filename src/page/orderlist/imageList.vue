@@ -13,8 +13,8 @@
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
 import avator from '../../components/avator/avator';
-import Logger from 'chivy';
-const log = new Logger('page/imageList');
+// import Logger from 'chivy';
+// const log = new Logger('page/imageList');
 export default {
     props: {
         list: {
@@ -30,7 +30,6 @@ export default {
         this.$refs.imageHeader.style.width = width + 'px';
         this.$nextTick(() => {
             if (!this.scroll) {
-                log.debug('here');
                 this.scroll = new BScroll(this.$refs.image, {
                     startX: 0,
                     click: true,
@@ -39,7 +38,6 @@ export default {
                     eventPassthrough: 'vertical'
                 });
             } else {
-                 log.debug('there');
                 this.scroll.refresh();
             }
         });

@@ -18,7 +18,7 @@ export default new Router({
       {
       path: '/',
       component: Main,
-      redirect: '/new',
+      redirect: '/menu',
       children: [{
         path: 'menu',
         component: Menu,
@@ -50,9 +50,10 @@ export default new Router({
       component: Order
     },
     {
-      path: '/orderDetail/:recordID',
+      path: '/orderDetail',
       name: 'orderDetail',
-      component: OrderDetail
+      component: OrderDetail,
+      props: true
     },
     {
       // 支付页面

@@ -712,7 +712,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAITE4PAY",
+      "status": "ENSURE2PAID",
       "userId": 84,
       "userName": "test3"
     },
@@ -787,7 +787,7 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAITE4ENSURE",
+      "status": "ENSURE2PAID",
       "userId": 84,
       "userName": "test3"
     },
@@ -862,7 +862,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAITE4PAY",
+      "status": "SUCCESS",
       "userId": 84,
       "userName": "test3"
     },
@@ -937,7 +937,7 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAITE4ENSURE",
+      "status": "SUCCESS",
       "userId": 84,
       "userName": "test3"
     },
