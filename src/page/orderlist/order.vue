@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="detail">
+        <div class="detail vux-1px-b">
             <div class="name">名称</div>
             <div class="number">数量</div>
             <div class="total">总价</div>
         </div>
         <div class="detail-wrapper" ref="detailWrapper">
           <ul>
-            <li v-for="(good,index) in product.details" :key="index">
+            <li v-for="(good,index) in product.details" :key="index" class="vux-1px-b">
                 <div class="detail">
                     <div class="avator">
                         <avator :img="good.imageUrl" size='35' radius='50'></avator>
@@ -29,6 +29,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import { Divider } from 'vux';
 import avator from '../../components/avator/avator';
 import BScroll from 'better-scroll';
 import Logger from 'chivy';
@@ -40,20 +41,31 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(() => {
-          if (!this.scroll) {
-            log.debug('scroll created');
-            this.scroll = new BScroll(this.$refs.detailWrapper, {
-                click: true
-            });
-          } else {
-            log.debug('scroll refresh');
-            this.scroll.refresh();
-          }
-        });
+        // this.scrollit();
+    },
+    methods: {
+        scrollit() {
+            if (this.product !== null) {
+                if (this.product.details.length !== 0) {
+                    log.debug('scroll show orderListShow');
+                    this.$nextTick(() => {
+                        if (!this.scroll) {
+                            log.debug('created scroll');
+                            this.scroll = new BScroll(this.$refs.detailWrapper, {
+                                click: true
+                        });
+                        } else {
+                            log.debug('refresh scroll');
+                            this.scroll.refresh();
+                        }
+                    });
+                }
+            }
+        }
     },
     components: {
-        avator
+        avator,
+        Divider
     }
 };
 </script>
@@ -72,12 +84,12 @@ export default {
 .detail-wrapper
     position absolute
     width 100%
-    top 110px
+    top 120px
     bottom 20px
-    overflow hidden
+    // overflow hidden
     .detail
         width 100%
-        height 60px
+        height 40px
         display flex
         justify-content center
         align-items center
