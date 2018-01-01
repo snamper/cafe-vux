@@ -177,16 +177,16 @@
       .buy
         position: absolute
         right: 18px
-        bottom: 10px
+        bottom: 12px
         z-index: 10
-        height: 24px
+        height: 26px
         line-height: 24px
         padding: 0 12px
         box-sizing: border-box
         border-radius: 12px
         font-size: 10px
         color: #fff
-        background: rgb(0, 160, 220)
+        background: rgb(9, 187, 7)
         opacity: 1
         &.fade-enter-active, &.fade-leave-active
           transition: all 0.2s

@@ -2,11 +2,11 @@
   <div class="cartcontrol">
     <transition name="move">
       <div class="cart-decrease" v-show="food.count>0" @click.stop.prevent="decreaseCart">
-        <span class="inner iconfont icon-xiaoiconjian"></span>
+        <span class="inner iconfont icon-sub1"></span>
       </div>
     </transition>
     <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
-    <div class="cart-add iconfont icon-zengjia" @click.stop.prevent="addCart"></div>
+    <div class="cart-add iconfont icon-c_add" @click.stop.prevent="addCart"></div>
   </div>
 </template>
 
@@ -43,7 +43,7 @@
         display: inline-block
         line-height: 24px
         font-size: 24px
-        color: rgb(0, 160, 220)
+        color: rgb(9, 187, 7)
         transition: all 0.4s linear
         transform: rotate(0)
       &.move-enter-active, &.move-leave-active
@@ -67,5 +67,5 @@
       padding: 6px
       line-height: 24px
       font-size: 24px
-      color: rgb(0, 160, 220)
+      color: rgb(9, 187, 7)
 </style>

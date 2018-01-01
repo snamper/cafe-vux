@@ -242,7 +242,7 @@
             text-align: center
             background: #2b343c
             &.highlight
-              background: rgb(0, 160, 220)
+              background: rgb(9, 187, 7)
             .icon-gouwuche1
               line-height: 44px
               font-size: 24px
@@ -334,7 +334,7 @@
         .empty
           float: right
           font-size: 12px
-          color: rgb(0, 160, 220)
+          color: rgb(9, 187, 7)
 
       .list-content
         padding: 0 18px
