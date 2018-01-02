@@ -40,12 +40,6 @@ export default {
             type: Object
         }
     },
-    created() {
-        log.error('is data fetched? ' + this.product !== null);
-    },
-    mounted() {
-        this.scrollit();
-    },
     methods: {
         scrollit() {
             if (this.product !== null) {
@@ -89,7 +83,7 @@ export default {
     width 100%
     top 120px
     bottom 20px
-    // overflow hidden
+    overflow hidden
     .detail
         width 100%
         height 40px

@@ -7,7 +7,7 @@
         </tab>
         <div class="show">
             <process v-show="show" :product="record"></process>
-            <order v-show="!show" :product="record"></order>
+            <order v-show="!show" :product="record" ref="order"></order>
         </div>
     </div>
 </template>
@@ -47,6 +47,7 @@ export default {
         },
         showOrderDetail() {
             this.show = false;
+            this.$refs.order.scrollit();
         },
         showOrderList() {
             log.debug('show orderlist page');

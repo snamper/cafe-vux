@@ -183,7 +183,7 @@ export default {
             return result;
         },
         showDetailPage(order) {
-            log.debug('orderid is ' + order.id);
+            // log.debug('orderid is ' + order.id);
             this.$router.push({name: 'orderDetail', params: {record: order}});
         }
     },
