@@ -22,7 +22,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="non-order" v-if="!recordList">
+            <div class="non-order" v-if="recordList.length===0">
                 <p class="title">亲，您还没有购买任何商品</p>
             </div>
         </div>
