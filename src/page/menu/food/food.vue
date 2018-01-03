@@ -13,7 +13,7 @@
               <span class="rating">好评率{{food.rating}}%</span>
             </div> -->
             <div class="price">
-              <span>会员价</span><span class="now">￥{{food.memberPrice}}</span><span>非会员价</span><span class="old" v-show="food.price">￥{{food.price}}</span>
+              <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span></span><span>非会员价</span><span class="old" v-show="food.price">￥{{food.price}}</span>
             </div>
             <div class="cartcontrol-wrapper">
               <cartcontrol @add="addFood" :food="food"></cartcontrol>

@@ -28,7 +28,7 @@
                       <span class="count">月售0份</span>
                     </div> -->
                     <div class="price">
-                      <span class="desc">会员价格</span><span class="now">￥{{food.memberPrice}}</span>
+                      <span class="desc" v-if="food.memberPrice!==0">会员价格</span><span class="now">￥{{food.memberPrice}}</span>
                     </div>
                     <div class="price">
                       <span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>
