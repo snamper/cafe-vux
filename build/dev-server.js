@@ -34,6 +34,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 /* define the data for ajax read */
 const appData = require('../data.json')
 const categorys = appData.categorys
+const categorys1 = appData.categorys1
 const products = appData.products
 const login = appData.login
 const loginpoor = login.poor

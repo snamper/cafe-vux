@@ -30,6 +30,7 @@ export default {
 #app {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 }
 .iconfont {
   font-size: 1.5rem;

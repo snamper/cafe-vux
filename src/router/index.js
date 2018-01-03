@@ -42,12 +42,17 @@ export default new Router({
         // 登陆页面
         path: 'login',
         component: Login
+      },
+      {
+        // 订单详情
+        path: 'order',
+        component: Order
+      },
+      {
+        // 支付页面
+        path: 'pay',
+        component: Pay
       }]
-    },
-    {
-      // 订单详情
-      path: '/order',
-      component: Order
     },
     {
       path: '/orderDetail',
@@ -55,11 +60,7 @@ export default new Router({
       component: OrderDetail,
       props: true
     },
-    {
-      // 支付页面
-      path: '/pay',
-      component: Pay
-    },
+
     {
       path: '/modifyPasswd',
       component: modPwd

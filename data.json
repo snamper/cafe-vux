@@ -11,17 +11,14 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
+          "description": "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
           "memberPrice": 45,
           "name": "慕斯蛋糕",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
-          "price": 50,
+          "price": 550,
           "slider": true
         },
         {
@@ -32,13 +29,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
+          "description": "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
           "memberPrice": 35,
           "name": "水果蛋糕",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -58,13 +52,10 @@
           "createTime": 1505439679696,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
+          "description": "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
           "id": 67,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
           "memberPrice": 8,
           "name": "拿铁咖啡",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -79,13 +70,10 @@
           "createTime": 1505439688471,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
+          "description": "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
           "id": 69,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
           "memberPrice": 34,
           "name": "猫屎咖啡",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -105,13 +93,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
+          "description": "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
           "memberPrice": 45,
           "name": "慕斯蛋糕1",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -126,13 +111,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
+          "description": "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
           "memberPrice": 35,
           "name": "水果蛋糕1",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -152,13 +134,10 @@
           "createTime": 1505439679696,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
+          "description": "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
           "id": 67,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
           "memberPrice": 8,
           "name": "拿铁咖啡1",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -173,13 +152,10 @@
           "createTime": 1505439688471,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
+          "description": "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
           "id": 69,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
           "memberPrice": 34,
           "name": "猫屎咖啡1",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -199,13 +175,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
+          "description": "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
           "memberPrice": 45,
           "name": "慕斯蛋糕2",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -220,13 +193,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
+          "description": "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
           "memberPrice": 35,
           "name": "水果蛋糕2",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -246,13 +216,10 @@
           "createTime": 1505439679696,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
+          "description": "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
           "id": 67,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
           "memberPrice": 8,
           "name": "拿铁咖啡2",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -267,13 +234,10 @@
           "createTime": 1505439688471,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
+          "description": "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
           "id": 69,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
           "memberPrice": 34,
           "name": "猫屎咖啡2",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -293,13 +257,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
+          "description": "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
           "memberPrice": 45,
           "name": "慕斯蛋糕",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -314,13 +275,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
+          "description": "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
           "memberPrice": 35,
           "name": "水果蛋糕",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -340,13 +298,10 @@
           "createTime": 1505439679696,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
+          "description": "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
           "id": 67,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
           "memberPrice": 8,
           "name": "拿铁咖啡",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -361,13 +316,10 @@
           "createTime": 1505439688471,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
+          "description": "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
           "id": 69,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
           "memberPrice": 34,
           "name": "猫屎咖啡",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -387,13 +339,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
+          "description": "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
           "memberPrice": 45,
           "name": "慕斯蛋糕1",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -408,13 +357,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
+          "description": "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
           "memberPrice": 35,
           "name": "水果蛋糕1",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -434,13 +380,10 @@
           "createTime": 1505439679696,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
+          "description": "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
           "id": 67,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
           "memberPrice": 8,
           "name": "拿铁咖啡1",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -455,13 +398,10 @@
           "createTime": 1505439688471,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
+          "description": "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
           "id": 69,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
           "memberPrice": 34,
           "name": "猫屎咖啡1",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -481,13 +421,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
+          "description": "慕斯蛋糕是一种以慕斯粉为主材料的糕点。外型、色泽、结构、口味变化丰富，更加自然纯正，通常是加入奶油与凝固剂来制作成浓稠冻状的效果。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
           "memberPrice": 45,
           "name": "慕斯蛋糕2",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -502,13 +439,10 @@
           "createTime": 1505439759644,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
+          "description": "利用一些鲜水果或者一些果酱、果汁、果粒果酱为主要原材料制作而成的一种水果口味的穆斯。一般情况下草莓、芒果、猕猴桃、香蕉、水蜜桃这几种软质水果用得比较多。",
           "id": 71,
-          "imageSliderUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3308833246,2853918385&fm=27&gp=0.jpg",
           "memberPrice": 35,
           "name": "水果蛋糕2",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -528,13 +462,10 @@
           "createTime": 1505439679696,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
+          "description": "拿铁咖啡是意大利浓缩咖啡(Espresso)与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。意大利人早晨的厨房里，照得到阳光的炉子上通常会同时煮着咖啡和牛奶。",
           "id": 67,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2730258368,142120483&fm=27&gp=0.jpg",
           "memberPrice": 8,
           "name": "拿铁咖啡2",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -549,13 +480,10 @@
           "createTime": 1505439688471,
           "creatorId": -1,
           "defaultEntity": false,
-          "description":
-            "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
+          "description": "麝香猫咖啡（Kopi Luwak），又称猫屎咖啡，它是由麝香猫在吃完咖啡果后把咖啡豆原封不动的排出，人们把它的粪便中的咖啡豆提取出来后进行加工而成。",
           "id": 69,
-          "imageSliderUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
-          "imageUrl":
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageSliderUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=572473064,3340900315&fm=27&gp=0.jpg",
           "memberPrice": 34,
           "name": "猫屎咖啡2",
           "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
@@ -563,6 +491,273 @@
           "slider": false
         }
       ]
+    }
+  ],
+  "categorys1": [
+    {
+      "list": [
+        {
+          "canBook": true,
+          "classifyId": 69,
+          "code": "5e540de2-01dc-42b5-af42-994c7b99f610",
+          "createTime": 1514901588000,
+          "createTimeAsString": "2018-01-02 21:59:48",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 70,
+          "imageSliderUrl": "/upload/dongwubinggan-1514901583133.jpg.tmp",
+          "imageUrl": "/upload/dongwubinggan-1514901583133.jpg.tmp",
+          "memberPrice": 0,
+          "name": "动物饼干",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 88,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 69,
+          "code": "249fda2f-ff5c-4e49-9a84-2d5eb221f168",
+          "createTime": 1514901607000,
+          "createTimeAsString": "2018-01-02 22:00:07",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 137,
+          "imageSliderUrl": "/upload/tangshuangbinggan-1513605925001.jpg",
+          "imageUrl": "/upload/tangshuangbinggan-1513605925001.jpg",
+          "memberPrice": 0,
+          "name": "翻糖饼干（定制）",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 168,
+          "slider": true
+        }
+      ],
+      "name": "饼干",
+      "success": true
+    },
+    {
+      "list": [
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "3a7e0c2d-e814-4783-9a9b-92e7a39dd511",
+          "createTime": 1514900077000,
+          "createTimeAsString": "2018-01-02 21:34:37",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 67,
+          "imageSliderUrl": "/upload/shaonvxin-1514900071088.jpg.tmp",
+          "imageUrl": "/upload/shaonvxin-1514900071088.jpg.tmp",
+          "memberPrice": 0,
+          "name": "少女心蛋白糖蛋糕",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 218,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "6718f9f6-a55f-484d-aaab-00d1e3b5beea",
+          "createTime": 1514900838000,
+          "createTimeAsString": "2018-01-02 21:47:18",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 68,
+          "imageSliderUrl": "/upload/bingxueqiyuan-1514900828186.jpg.tmp",
+          "imageUrl": "/upload/bingxueqiyuan-1514900828186.jpg.tmp",
+          "memberPrice": 0,
+          "name": "冰雪奇缘双层",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 468,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "922537ed-15fc-4c4f-aa69-54b53dadf388",
+          "createTime": 1514901948000,
+          "createTimeAsString": "2018-01-02 22:05:48",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 71,
+          "imageSliderUrl": "/upload/beizidangao-1514901939817.jpg.tmp",
+          "imageUrl": "/upload/beizidangao-1514901939817.jpg.tmp",
+          "memberPrice": 0,
+          "name": "杯子蛋糕",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 18,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "2befee52-5607-451a-bd67-bc088864f5c7",
+          "createTime": 1514902285000,
+          "createTimeAsString": "2018-01-02 22:11:25",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 72,
+          "imageSliderUrl": "/upload/fantangbeizi-1514902264306.jpg.tmp",
+          "imageUrl": "/upload/fantangbeizi-1514902264306.jpg.tmp",
+          "memberPrice": 0,
+          "name": "翻糖杯子蛋糕（定制）",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 35,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "6d1eba59-e1f4-4ec8-a4ac-4354868080cb",
+          "createTime": 1513606131000,
+          "createTimeAsString": "2017-12-18 22:08:51",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 129,
+          "imageSliderUrl": "/upload/tilamisu-1513605489286.jpg",
+          "imageUrl": "/upload/tilamisu-1513605489286.jpg",
+          "memberPrice": 0,
+          "name": "提拉米苏",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 218,
+          "slider": true
+        },
+        {
+          "canBook": false,
+          "classifyId": 2,
+          "code": "08f17e71-435c-45e6-a1d3-71464e8f6090",
+          "createTime": 1513172205000,
+          "createTimeAsString": "2017-12-13 21:36:45",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 130,
+          "memberPrice": 0,
+          "name": "芝士蛋糕",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 218,
+          "slider": false
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "d678548b-fa2b-4767-9881-1b33b764b878",
+          "createTime": 1513265483000,
+          "createTimeAsString": "2017-12-14 23:31:23",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 131,
+          "imageSliderUrl": "/upload/_MG_0093-1513265478599.jpg",
+          "imageUrl": "/upload/_MG_0093-1513265478599.jpg",
+          "memberPrice": 0,
+          "name": "巧克力滴落蛋糕",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 228,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "ced93f4a-d25d-4b05-9c7d-aafb25fa2cb2",
+          "createTime": 1514902444000,
+          "createTimeAsString": "2018-01-02 22:14:04",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 132,
+          "imageSliderUrl": "/upload/luodangao-1513605597593.jpg",
+          "imageUrl": "/upload/luodangao-1513605597593.jpg",
+          "memberPrice": 0,
+          "name": "水果裸蛋糕",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 198,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "804b8d51-fff8-4d4a-a969-eb80d9e39713",
+          "createTime": 1514899947000,
+          "createTimeAsString": "2018-01-02 21:32:27",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 133,
+          "imageSliderUrl": "/upload/jiagaolinmian-1514899931364.jpg.tmp",
+          "imageUrl": "/upload/jiagaolinmian-1514899931364.jpg.tmp",
+          "memberPrice": 0,
+          "name": "加高公仔淋面蛋糕",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 238,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "f1ba311c-c4df-46de-9c16-f42b3671bbba",
+          "createTime": 1513605721000,
+          "createTimeAsString": "2017-12-18 22:02:01",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 134,
+          "imageSliderUrl": "/upload/fantangdangao-1513605713993.jpg",
+          "imageUrl": "/upload/fantangdangao-1513605713993.jpg",
+          "memberPrice": 0,
+          "name": "翻糖蛋糕（定制）",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 368,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "cfaeb1b0-6a58-4887-9d52-9630e5921ef5",
+          "createTime": 1513605826000,
+          "createTimeAsString": "2017-12-18 22:03:46",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 135,
+          "imageSliderUrl": "/upload/xianhualuodangao-1513605817966.jpg",
+          "imageUrl": "/upload/xianhualuodangao-1513605817966.jpg",
+          "memberPrice": 0,
+          "name": "鲜花裸蛋糕",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 218,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "275236f4-634e-4b16-9b00-d695e2617a90",
+          "createTime": 1513605882000,
+          "createTimeAsString": "2017-12-18 22:04:42",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 136,
+          "imageSliderUrl": "/upload/dangaojuan-1513605866372.jpg",
+          "imageUrl": "/upload/dangaojuan-1513605866372.jpg",
+          "memberPrice": 0,
+          "name": "蛋糕卷",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 98,
+          "slider": true
+        },
+        {
+          "canBook": true,
+          "classifyId": 2,
+          "code": "9f20e54e-cd95-45c3-91b8-36d284f89089",
+          "createTime": 1513606054000,
+          "createTimeAsString": "2017-12-18 22:07:34",
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 138,
+          "imageSliderUrl": "/upload/caomeinaiyou-1513606049445.jpg",
+          "imageUrl": "/upload/caomeinaiyou-1513606049445.jpg",
+          "memberPrice": 0,
+          "name": "草莓奶油蛋糕",
+          "objClass": "com.xdt.ums.shop.common.entity.ProductImpl",
+          "price": 198,
+          "slider": true
+        }
+      ],
+      "name": "蛋糕",
+      "success": true
     }
   ],
   "login": {

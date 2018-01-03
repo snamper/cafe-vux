@@ -52,7 +52,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .ordercart-wrapper
     position fixed
-    bottom 0px
+    bottom 50px
     width 100%
     height 50px
     display flex

@@ -4,19 +4,8 @@
         <loginbar :image="image" v-show="!memberInfo"></loginbar>
         <memberbar :image="image" :memberInfo="memberInfo" v-show="memberInfo"></memberbar>
         <divider>您的订单</divider>
-        <div class="order-wrapper" ref="orderList">
-            <ul>
-                <li class="order-list border-1px" v-for="(food,item) in selectFoods" :key="item">
-                    <div class="avator">
-                        <avator :img="food.imageUrl" size='50' radius='20'></avator>
-                    </div>
-                    <div class="content">
-                        <div class="name">{{food.name}}</div>
-                        <div class="number">x{{food.count}}</div>
-                        <div class="total">￥{{food.count*food.price}}</div>
-                    </div>
-                </li>
-            </ul>
+        <div class="listwrapper" ref="listwrapper">
+            <list :list="selectFoods" size='50' radius='20'></list>
         </div>
         <ordercart></ordercart>
     </div>
@@ -27,6 +16,7 @@ import BScroll from 'better-scroll';
 import ordercart from './ordercart/ordercart';
 import loginbar from '../../../components/loginbar/loginbar';
 import memberbar from '../../../components/loginbar/memberbar';
+import list from '../../../components/list/list';
 import avator from '../../../components/avator/avator';
 import { Divider, XHeader, Group, XSwitch } from 'vux';
 import { mapGetters, mapState } from 'vuex';
@@ -53,7 +43,7 @@ export default {
             this.$nextTick(() => {
                 if (!this.scroll) {
                     log.debug('created scroll');
-                    this.scroll = new BScroll(this.$refs.orderList, {});
+                    this.scroll = new BScroll(this.$refs.listwrapper, {});
                 } else {
                     log.debug('refresh scroll');
                     this.scroll.refresh();
@@ -88,7 +78,8 @@ export default {
         XSwitch,
         loginbar,
         memberbar,
-        avator
+        avator,
+        list
     }
 };
 </script>
@@ -133,11 +124,17 @@ export default {
             display inline-block
             margin-left 0.3rem
             font-size 1rem
+    .listwrapper
+        position absolute
+        top 182px
+        bottom 100px
+        width 100%
+        overflow  hidden
     .order-wrapper
         position absolute
         width 100%
         top 182px
-        bottom 100px
+        bottom 50px
         overflow: hidden
         .order-list
             width 100%

@@ -5,32 +5,15 @@
             <div class="number">数量</div>
             <div class="total">总价</div>
         </div>
-        <div class="detail-wrapper" ref="detailWrapper">
-          <ul>
-            <li v-for="(good,index) in product.details" :key="index" class="vux-1px-b">
-                <div class="detail">
-                    <div class="avator">
-                        <avator :img="good.imageUrl" size='35' radius='50'></avator>
-                    </div>
-                    <div class="content">
-                        <div class="name">{{good.productName}}</div>
-                        <div class="number">x{{good.number}}</div>
-                        <div class="total">￥{{good.amount}}</div>
-                    </div>
-                </div>
-            </li>
-            <div class="totalprice">
-                <div class="number">￥{{product.amount}}</div>
-                <div class="total">实付</div>
-            </div>
-          </ul>
+        <div class="listwrapper" ref="listwrapper">
+            <list :list="product.details" size="35" radius="50" show="true"></list>
         </div>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 import { Divider } from 'vux';
-import avator from '../../components/avator/avator';
+import list from '../../components/list/list';
 import BScroll from 'better-scroll';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist/order');
@@ -48,7 +31,7 @@ export default {
                     this.$nextTick(() => {
                         if (!this.scroll) {
                             log.debug('created scroll');
-                            this.scroll = new BScroll(this.$refs.detailWrapper, {
+                            this.scroll = new BScroll(this.$refs.listwrapper, {
                                 click: true
                         });
                         } else {
@@ -61,7 +44,7 @@ export default {
         }
     },
     components: {
-        avator,
+        list,
         Divider
     }
 };
@@ -78,10 +61,10 @@ export default {
         text-align center
     .number,.total
         flex-grow 1
-.detail-wrapper
+.listwrapper
     position absolute
     width 100%
-    top 120px
+    top 125px
     bottom 20px
     overflow hidden
     .detail
