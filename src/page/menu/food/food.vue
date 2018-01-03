@@ -13,7 +13,7 @@
               <span class="rating">好评率{{food.rating}}%</span>
             </div> -->
             <div class="price">
-              <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span></span><span>非会员价</span><span class="old" v-show="food.price">￥{{food.price}}</span>
+              <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span><span>非会员价</span></span><span class="old" v-show="food.price">￥{{food.price}}</span>
             </div>
             <div class="cartcontrol-wrapper">
               <cartcontrol @add="addFood" :food="food"></cartcontrol>
@@ -61,13 +61,14 @@
       show() {
         log.debug('food');
         this.showFlag = true;
-        this.onlyContent = true;
         this.$nextTick(() => {
           if (!this.scroll) {
+            log.debug('scroll it in good components');
             this.scroll = new BScroll(this.$refs.food, {
               click: true
             });
           } else {
+            log.debug('refresh it in good components');
             this.scroll.refresh();
           }
         });
@@ -113,7 +114,7 @@
     position: fixed
     left: 0
     top: 0
-    bottom: 48px
+    bottom: 50px
     z-index: 30
     width: 100%
     background: #fff
@@ -128,9 +129,8 @@
       align-items center
       width 100%
       img
-        width 70%
-        height 70%
-        padding 1rem 0
+        width 100%
+        height auto
       .back
         position: absolute
         top: 10px
@@ -140,7 +140,6 @@
           padding: 10px
           font-size: 20px
           color: #fff
-
     .content
       position: relative
       padding: 10px 18px
@@ -169,7 +168,7 @@
           color: rgb(240, 20, 20)
         .old
           font-size: 14px
-          color: rgb(7, 17, 27)
+          color: rgb(240, 20, 20)
       .cartcontrol-wrapper
         position: absolute
         right: 12px

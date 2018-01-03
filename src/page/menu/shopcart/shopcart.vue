@@ -210,8 +210,7 @@
 
   .shopcart
     position: fixed
-    left: 0
-    // bottom: 0
+    left: 0px
     bottom: 50px
     z-index: 50
     width: 100%
