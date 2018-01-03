@@ -64,7 +64,23 @@
 	  "creatorId": 4646433,
 	  "defaultEntity": false,
 	  "description": "464dadgaygdad",
-	  "details": [],
+	  "details": [
+        {
+          "amount": 22,
+          "code": "0cf24a6a-d464-4657-806f-412b508c24d1",
+          "createTime": 1508251633955,
+          "creatorId": -1,
+          "defaultEntity": false,
+          "id": 100,
+          "number": 2,
+          "imageUrl": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1092526953,1928940804&fm=27&gp=0.jpg",
+          "objClass": "com.xdt.ums.shop.common.entity.DetailImpl",
+          "price": 11,
+          "productName": "慕斯蛋糕",
+          "productId": 2,
+          "recordId": 99
+        }
+		],
 	  "id": 69,
 	  "name": "lisi",
 	  "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
