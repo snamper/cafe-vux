@@ -52,7 +52,7 @@ const resfail = appData.buyrecord.fail
 const ressuccess = appData.buyrecord.success
 const alterStatus = appData.alterStatus
 
-const noUser = true
+const noUser = false
 
 /* define router  */
 var apiRoutes = express.Router()

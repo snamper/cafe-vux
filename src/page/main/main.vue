@@ -7,19 +7,19 @@
       <router-view v-if="!$route.meta.keepAlive"></router-view>
     </view-box>
     <tabbar>
-        <tabbar-item :link="{path:'/menu'}">
+        <tabbar-item :link="{path:'/menu'}" :selected="selects.menu">
           <span slot="icon" class="iconfont icon-icon"></span>
           <span slot="label">菜单</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/new'}" >
+        <tabbar-item :link="{path:'/new'}" :selected="selects.new">
           <span slot="icon" class="iconfont icon-xinpin"></span>
           <span slot="label">新品</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/orderlist'}" >
+        <tabbar-item :link="{path:'/orderlist'}" :selected="selects.order">
           <span slot="icon" class="iconfont icon-dingdan"></span>
           <span slot="label">订单</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/member'}" >
+        <tabbar-item :link="{path:'/member'}" :selected="selects.member">
           <span slot="icon" class="iconfont icon-home"></span>
           <span slot="label">我的</span>
         </tabbar-item>
@@ -35,6 +35,11 @@ export default {
     TabbarItem,
     ViewBox,
     Loading
+  },
+  computed: {
+    selects() {
+      return this.$store.state.selects;
+    }
   }
 };
 </script>

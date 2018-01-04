@@ -40,14 +40,14 @@
         </div>
         <split></split>
         <div class="confirm">
-             <x-button :disabled="payitbutton" type="primary" @click.native="payit">确认支付￥{{totalPayPrice}}元</x-button>
+             <x-button :disabled="payitStatus" type="primary" @click.native="payit">确认支付￥{{showPrice}}元</x-button>
         </div>
         <div class="qrcode" v-show="qrcode">
             <img src="../../../../static/img/alipay.jpg" v-show="alipay">
             <img src="../../../../static/img/wechat.jpg" v-show="wechat">
         </div>
         <div class="already">
-             <x-button mini plain @click.native="alertStatus">我已付款</x-button>
+             <x-button mini plain :disabled="payleStatus" @click.native="alertStatus">我已付款</x-button>
         </div>
     </div>
 </template>
@@ -73,7 +73,9 @@ export default {
             alipay: true,
             wechat: false,
             balance: false,
-            payitbutton: false
+            payitStatus: false,
+            payleStatus: true,
+            recordPrice: 0
         };
     },
     created() {
@@ -193,7 +195,11 @@ export default {
                         title: '支付成功',
                         content: '点击【我已付款】提醒卖家'
                     });
-                    this.payitbutton = true;
+                    this.payitStatus = true;
+                    this.recordPrice = this.totalPayPrice;
+                    // 清空SelectFoods 什么时候清空购物车是一个问题
+                    this.$store.commit('clearCarts');
+                    this.payleStatus = false;
                 } else {
                     this.$vux.alert.show({
                         title: '支付失败',
@@ -215,13 +221,11 @@ export default {
                     if (result.success) {
                         // 清空recordID
                         this.$store.commit('setrecordId', '');
-                        // 清空SelectFoods 什么时候清空购物车是一个问题
-                        this.$store.commit('clearCarts');
                         this.$vux.alert.show({
                             title: '付款提醒',
                             content: '已提醒店家，店家会尽快确认付款信息'
                         });
-                        this.$router.push({path: '/orderlist'});
+                        this.payleStatus = true;
                     }
                 });
             } else {
@@ -256,6 +260,13 @@ export default {
             } else {
                 log.debug('memberinfo is exist');
                 return this.totalMemberPrice;
+            }
+        },
+        showPrice() {
+            if (this.totalPayPrice === 0) {
+                return this.recordPrice;
+            } else {
+                return this.totalPayPrice;
             }
         }
     },

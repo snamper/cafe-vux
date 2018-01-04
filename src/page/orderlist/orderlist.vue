@@ -1,7 +1,7 @@
 <template>
     <div>
         <loading v-model="isLoading"></loading>
-        <div class="list-wrapper" v-if="recordList">
+        <div class="list-wrapper">
             <logo></logo>
             <div class="orderlist-wrapper" v-if="recordList">
                 <p class="title" v-if="!memberInfo">游客，您的最近订单如下</p>
@@ -22,7 +22,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="non-order" v-if="recordList.length===0">
+            <div class="non-order" v-if="member">
                 <p class="title">亲，您还没有购买任何商品</p>
             </div>
         </div>
@@ -51,7 +51,8 @@ export default {
         return {
             loading: false,
             recordList: null,
-            selectedList: null
+            selectedList: null,
+            member: false
         };
     },
     beforeRouteEnter (to, from, next) {
@@ -168,9 +169,7 @@ export default {
                     this.scrollit();
                 } else {
                     log.debug('result length is 0');
-                    setTimeout(() => {
-                        this.$router.push({path: '/menu'});
-                    }, 2000);
+                    this.member = true;
                 }
             });
         },

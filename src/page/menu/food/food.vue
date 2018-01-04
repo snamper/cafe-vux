@@ -7,11 +7,6 @@
             <img :src="food.imageUrl">
           </div>
           <div class="content">
-            <!-- <h1 class="title">{{food.name}}</h1> -->
-            <!-- <div class="detail">
-              <span class="sell-count">月售{{food.sellCount}}份</span>
-              <span class="rating">好评率{{food.rating}}%</span>
-            </div> -->
             <div class="price">
               <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span><span>非会员价</span></span><span class="old" v-show="food.price">￥{{food.price}}</span>
             </div>
@@ -114,7 +109,7 @@
     position: fixed
     left: 0
     top: 0
-    bottom: 50px
+    bottom: 100px
     z-index: 30
     width: 100%
     background: #fff

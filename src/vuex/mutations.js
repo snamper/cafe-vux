@@ -61,5 +61,19 @@ export default {
     },
     setrecordId(state, payload) {
         state.recordId = payload;
+    },
+    changeSelect(state, payload) {
+        // {'menu': true, 'new': false, 'order': false, 'member': false}
+        for (let key in payload) {
+            if (key === 'menu') {
+                state.selects.menu = payload[key];
+            } else if (key === 'new') {
+                state.selects.new = payload[key];
+            } else if (key === 'order') {
+                state.selects.order = payload[key];
+            } else if (key === 'member') {
+                state.selects.member = payload[key];
+            }
+        }
     }
 };
