@@ -21,7 +21,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { Swiper, Divider, Grid, GridItem } from 'vux';
+import { Swiper, Divider, Grid, GridItem, Flexbox, FlexboxItem } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('cafe/new');
 export default {
@@ -43,7 +43,9 @@ export default {
         Swiper,
         Divider,
         Grid,
-        GridItem
+        GridItem,
+        Flexbox,
+        FlexboxItem
     }
 };
 </script>
@@ -68,5 +70,6 @@ export default {
                     justify-content center
                     .title
                         margin 0.3rem
+                        font-size 12px
                         color black
 </style>
