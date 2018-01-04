@@ -1,17 +1,21 @@
 <template>
-    <div class="order">
-        <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
-        <loginbar :image="image" v-show="!memberInfo"></loginbar>
-        <memberbar :image="image" :memberInfo="memberInfo" v-show="memberInfo"></memberbar>
-        <divider>您的订单</divider>
-        <div class="listwrapper" ref="listwrapper">
-            <list :list="selectFoods" size='50' radius='20'></list>
+    <div>
+        <div class="order">
+            <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
+            <loginbar :image="image" v-show="!memberInfo"></loginbar>
+            <memberbar :image="image" :memberInfo="memberInfo" v-show="memberInfo"></memberbar>
+            <divider>您的订单</divider>
+            <div class="listwrapper" ref="listwrapper">
+                <list :list="selectFoods" size='50' radius='20'></list>
+            </div>
+            <ordercart></ordercart>
         </div>
-        <ordercart></ordercart>
+        <!-- <pay></pay> -->
     </div>
 </template>
 
 <script type="text/ecmascript-6">
+// import pay from '../pay/pay';
 import BScroll from 'better-scroll';
 import ordercart from './ordercart/ordercart';
 import loginbar from '../../../components/loginbar/loginbar';

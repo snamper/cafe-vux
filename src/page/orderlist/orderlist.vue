@@ -62,7 +62,7 @@ export default {
             vm.init();
             log.debug('scroll');
             vm.$store.commit('updateLoadingStatus', {isLoading: false});
-             log.debug('关闭loading显示');
+            log.debug('关闭loading显示');
         });
     },
     computed: {
@@ -166,6 +166,11 @@ export default {
                     this.recordList = result;
                     this.$store.commit('setrecordList', result);
                     this.scrollit();
+                } else {
+                    log.debug('result length is 0');
+                    setTimeout(() => {
+                        this.$router.push({path: '/menu'});
+                    }, 2000);
                 }
             });
         },

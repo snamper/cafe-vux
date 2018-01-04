@@ -1,6 +1,6 @@
 <template>
     <div class="pay">
-        <x-header title="" :left-options="{showBack: true, preventGoBack: true}" title="支付页面" @on-click-back="back"></x-header>
+        <x-header :left-options="{showBack: true, preventGoBack: true}" title="支付页面" @on-click-back="back"></x-header>
         <div class="pay-wrapper">
             <p class="desc">请选择支付方式</p>
             <split></split>
@@ -40,7 +40,7 @@
         </div>
         <split></split>
         <div class="confirm">
-             <x-button type="primary" @click.native="payit">确认支付￥{{totalPayPrice}}元</x-button>
+             <x-button :disabled="payitbutton" type="primary" @click.native="payit">确认支付￥{{totalPayPrice}}元</x-button>
         </div>
         <div class="qrcode" v-show="qrcode">
             <img src="../../../../static/img/alipay.jpg" v-show="alipay">
@@ -68,10 +68,12 @@ const WAITE4ENSURE = 'WAITE4ENSURE';
 export default {
     data() {
         return {
+            showFlag: false,
             qrcode: true,
             alipay: true,
             wechat: false,
-            balance: false
+            balance: false,
+            payitbutton: false
         };
     },
     created() {
@@ -157,6 +159,7 @@ export default {
             return details;
         },
         payit() {
+            log.debug('pay it button clicked');
             if (this.memberInfo.balance < this.totalPayPrice && this.balance) {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
             } else if (this.balance) {
@@ -190,6 +193,7 @@ export default {
                         title: '支付成功',
                         content: '点击【我已付款】提醒卖家'
                     });
+                    this.payitbutton = true;
                 } else {
                     this.$vux.alert.show({
                         title: '支付失败',

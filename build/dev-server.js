@@ -52,6 +52,8 @@ const resfail = appData.buyrecord.fail
 const ressuccess = appData.buyrecord.success
 const alterStatus = appData.alterStatus
 
+const noUser = true
+
 /* define router  */
 var apiRoutes = express.Router()
 apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) {
@@ -108,10 +110,15 @@ apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser,function(req,res){
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body
   console.log('getRecordList.do data is ' + JSON.stringify(user))
-  if(user.needDetail){
-    res.json(cartDetailList)
-  }else{
-    res.json(cartList)
+  if(!noUser) {
+    if(user.needDetail){
+      res.json(cartDetailList)
+    }else{
+      res.json(cartList)
+    }
+  } else {
+    let result = []
+    res.json(result)
   }
 })
 
