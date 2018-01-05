@@ -47,12 +47,14 @@ export default new Router({
         // 订单详情
         path: 'order',
         component: Order
-      },
-      {
-        // 支付页面
-        path: 'pay',
-        component: Pay
       }]
+    },
+    {
+      // 支付页面
+      name: 'pay',
+      path: '/pay',
+      component: Pay,
+      props: true
     },
     {
       path: '/orderDetail',

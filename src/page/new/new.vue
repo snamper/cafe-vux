@@ -9,8 +9,8 @@
         <div class="hot-wrapper" v-if="hots.length>0" >
             <divider>热销商品</divider>
             <grid :cols="2" >
-                <grid-item v-for="(product,i) in hots" :key="i">
-                    <img width="100%" height="auto" :src="product.img">
+                <grid-item class="vux-1px-b" v-for="(product,i) in hots" :key="i">
+                    <img :src="product.img">
                     <div class="detail-wrapper">
                         <span class="title">{{product.name}}</span>
                     </div>
@@ -59,19 +59,18 @@ export default {
         top 0px
         bottom 50px
         left 0px
-        // overflow hidden
-        .weui-grids
-            .weui-grid
-                margin 0.2rem 0
-                padding 0.2rem
-                text-align center
-                .detail-wrapper
-                    display flex
-                    justify-content center
-                    height 12px
-                    .title
-                        margin 0.3rem
-                        font-size 12px
-                        line-height 12px
-                        color black
+        .weui-grid
+            padding 10px 
+        img
+            width 100%
+            height auto
+        .detail-wrapper
+            height 24px
+            display flex
+            justify-content center
+            align-items center
+            .title
+                font-size 12px
+                line-height 12px
+
 </style>

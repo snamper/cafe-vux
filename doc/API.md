@@ -190,21 +190,21 @@
 	const ApiSaveRecordList = '/shop/product/show/ui/saveRecordList.do';
 
 **入参**
-	{
-	  "amount": 5,
-	  "userId": 723,
-	  "userName": "bbb",
-	  "cashOrBalance": "BALANCE",
-	  "details": [{
-	    "productId": 2,
-	    "amount": 12,
-	    "number": 2
-	  }, {
-	    "productId": 3,
-	    "amount": 6,
-	    "number": 3
-	  }]
-	}
+		{
+			"amount": 5,
+			"userId": 723,
+			"userName": "bbb",
+			"cashOrBalance": "BALANCE",
+			"details": [{
+				"productId": 2,
+				"amount": 12,
+				"number": 2
+			}, {
+				"productId": 3,
+				"amount": 6,
+				"number": 3
+			}]
+		}
 
 **回参**
 

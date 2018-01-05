@@ -41,6 +41,10 @@ export default {
         process,
         order
     },
+    beforeRouteEnter (to, from, next) {
+        // log.debug(from);
+        next();
+    },
     methods: {
         showProcess() {
             this.show = true;

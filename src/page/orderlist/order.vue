@@ -6,7 +6,7 @@
             <div class="total">总价</div>
         </div>
         <div class="listwrapper" ref="listwrapper">
-            <list :list="product.details" size="35" radius="50" show="true"></list>
+            <list :list="product.details" size="35" radius="50" show="show"></list>
         </div>
     </div>
 </template>
@@ -18,6 +18,11 @@ import BScroll from 'better-scroll';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist/order');
 export default {
+    data() {
+        return {
+            show: true
+        };
+    },
     props: {
         product: {
             type: Object

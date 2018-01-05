@@ -66,6 +66,11 @@ const BALANCE = 'BALANCE';
 const VISITOR = '游客';
 const WAITE4ENSURE = 'WAITE4ENSURE';
 export default {
+    props: {
+        product: {
+            type: Object
+        }
+    },
     data() {
         return {
             showFlag: false,
@@ -80,8 +85,13 @@ export default {
     },
     created() {
         // 当购物车为空的时候，返回到主页面
-        if (this.selectFoods.length === 0) {
+        // 并且当路由中的数据为空的时候
+        if (this.selectFoods.length === 0 && typeof (this.product) === 'undefined') {
             this.$router.push({path: '/menu'});
+        }
+        if (typeof (this.product) !== 'undefined') {
+            this.payitStatus = true;
+            this.payleStatus = false;
         }
     },
     methods: {
@@ -211,30 +221,48 @@ export default {
         alertStatus() {
             let url = config.recordStatus;
             log.debug('ajax' + url);
-            if (this.$store.state.recordId) {
+            if (typeof (this.product) !== 'undefined') {
+                let data = {
+                    'RecordID': this.product.id,
+                    'status': WAITE4ENSURE
+                };
+                this.realAlert(url, data);
+            } else if (this.$store.state.recordId) {
                 let data = {
                     'RecordID': this.$store.state.recordId,
                     'status': WAITE4ENSURE
                 };
-                this.$http.post(url, data).then((response) => {
-                    let result = response.data;
-                    if (result.success) {
-                        // 清空recordID
-                        this.$store.commit('setrecordId', '');
-                        this.$vux.alert.show({
-                            title: '付款提醒',
-                            content: '已提醒店家，店家会尽快确认付款信息'
-                        });
-                        this.payleStatus = true;
-                    }
-                });
+                this.realAlert(url, data);
             } else {
                 this.$vux.toast.text('请先确认支付', 'middle');
             }
         },
+        realAlert(url, data) {
+            let _this = this;
+            this.$http.post(url, data).then((response) => {
+                let result = response.data;
+                if (result.success) {
+                    // 清空recordID
+                    this.$store.commit('setrecordId', '');
+                    this.$vux.alert.show({
+                        title: '付款提醒',
+                        content: '已提醒店家，店家会尽快确认付款信息',
+                        onHide() {
+                            _this.$router.push({path: '/orderlist'});
+                            _this.$store.commit('changeSelect', {'menu': false, 'new': false, 'order': true, 'member': false});
+                        }
+                    });
+                    this.payleStatus = true;
+                }
+            });
+        },
         back() {
-            this.$router.push({path: '/order'});
+            this.$router.go(-1);
         }
+    },
+    beforeRouteLeave (to, from, next) {
+        // this.$vux.alert.hide();
+        next();
     },
     computed: {
         ...mapGetters([
@@ -263,7 +291,9 @@ export default {
             }
         },
         showPrice() {
-            if (this.totalPayPrice === 0) {
+            if (typeof (this.product) !== 'undefined') {
+                return this.product.amount;
+            } else if (this.totalPayPrice === 0) {
                 return this.recordPrice;
             } else {
                 return this.totalPayPrice;
