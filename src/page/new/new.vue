@@ -71,7 +71,7 @@ export default {
                     height 24px
                     .title
                         margin 0.3rem
-                        font-size 24px
-                        line-height 24px
+                        font-size 12px
+                        line-height 12px
                         color black
 </style>
