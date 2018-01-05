@@ -8,7 +8,7 @@
         </div>
         <div class="hot-wrapper" v-if="hots.length>0" >
             <divider>热销商品</divider>
-            <grid :cols="4" >
+            <grid :cols="2" >
                 <grid-item v-for="(product,i) in hots" :key="i">
                     <img width="100%" height="auto" :src="product.img">
                     <div class="detail-wrapper">
@@ -68,7 +68,7 @@ export default {
                 .detail-wrapper
                     display flex
                     justify-content center
-                    height 24px
+                    height 12px
                     .title
                         margin 0.3rem
                         font-size 12px
