@@ -68,10 +68,10 @@ export default {
                 .detail-wrapper
                     display flex
                     justify-content center
-                    height 12px
+                    height 24px
                     .title
                         margin 0.3rem
-                        font-size 12px
-                        line-height 12px
+                        font-size 24px
+                        line-height 24px
                         color black
 </style>
