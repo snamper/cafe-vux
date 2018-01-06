@@ -5,7 +5,7 @@
         <div class="image-header">
           <img :src="food.imageUrl">
           <div class="back" @click="hide">
-            <i class="icon-arrow_lift"></i>
+            <i class="iconfont icon-fanhui"></i>
           </div>
       </div>
       <div class="content">
@@ -36,7 +36,6 @@
   import Vue from 'vue';
   import split from '../../../components/split/split';
   import cartcontrol from '../cartcontrol/cartcontrol';
-  import { XHeader } from 'vux';
   import Logger from 'chivy';
   const log = new Logger('page/food');
 
@@ -98,8 +97,7 @@
     },
     components: {
       cartcontrol,
-      split,
-      XHeader
+      split
     }
   };
 </script>
@@ -134,7 +132,7 @@
       .back
         position: absolute
         top: 10px
-        left: 0
+        left: 10px
         .icon-arrow_lift
           display: block
           padding: 10px
