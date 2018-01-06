@@ -6,8 +6,8 @@
                 <swiper :list="sliders" auto loop style="width:100%;height:auto;" dots-class="custom-bottom" dots-position="center"></swiper>
             </div>
         </div>
-        <div class="hot-wrapper" v-if="hots.length>0" >
-            <divider>热销商品</divider>
+        <divider v-if="hots.length>0">热销商品</divider>
+        <div class="hot-wrapper" v-if="hots.length>0" ref="hotWrapper">
             <grid :cols="2" >
                 <grid-item class="vux-1px-b" v-for="(product,i) in hots" :key="i">
                     <img :src="product.img">
@@ -21,6 +21,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import BScroll from 'better-scroll';
 import { Swiper, Divider, Grid, GridItem, Flexbox, FlexboxItem } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('cafe/new');
@@ -30,6 +31,19 @@ export default {
             this.$router.push({path: '/menu'});
         }
         log.debug('created');
+    },
+    mounted() {
+        this.$nextTick(() => {
+            if (!this.scroll) {
+                log.debug('created scroll');
+                this.scroll = new BScroll(this.$refs.hotWrapper, {
+                    click: true
+            });
+            } else {
+                log.debug('refresh scroll');
+                this.scroll.refresh();
+            }
+        });
     },
     computed: {
         sliders() {
@@ -55,10 +69,11 @@ export default {
         .swiper
             margin 5px 3px
     .hot-wrapper
-        position relative
-        top 0px
+        position absolute
+        top 260px
         bottom 50px
         left 0px
+        overflow hidden
         .weui-grid
             padding 10px 
         img
