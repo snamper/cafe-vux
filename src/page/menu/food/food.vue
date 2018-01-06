@@ -1,31 +1,33 @@
 <template>
   <transition name="move">
-      <div v-show="showFlag" class="food" ref="food">
-        <x-header :title="food.name" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
-        <div class="food-content">
-          <div class="image-header">
-            <img :src="food.imageUrl">
+    <div v-show="showFlag" class="food" ref="food">
+      <div class="food-content">
+        <div class="image-header">
+          <img :src="food.imageUrl">
+          <div class="back" @click="hide">
+            <i class="icon-arrow_lift"></i>
           </div>
-          <div class="content">
-            <div class="price">
-              <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span><span>非会员价</span></span><span class="old" v-show="food.price">￥{{food.price}}</span>
-            </div>
-            <div class="cartcontrol-wrapper">
-              <cartcontrol @add="addFood" :food="food"></cartcontrol>
-            </div>
-            <transition name="fade">
-              <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">
-                加入购物车
-              </div>
-            </transition>
-          </div>
-          <split v-show="food.info"></split>
-          <div class="info" v-show="food.description">
-            <h1 class="title">简介</h1>
-            <p class="text">{{food.description}}</p>
-          </div>
+      </div>
+      <div class="content">
+        <div class="price">
+          <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span><span>非会员价</span></span><span class="old" v-show="food.price">￥{{food.price}}</span>
+        </div>
+        <div class="cartcontrol-wrapper">
+          <cartcontrol @add="addFood" :food="food"></cartcontrol>
+        </div>
+        <transition name="fade">
+        <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">
+          加入购物车
+        </div>
+        </transition>
+        </div>
+        <split v-show="food.info"></split>
+        <div class="info" v-show="food.description">
+          <h1 class="title">简介</h1>
+          <p class="text">{{food.description}}</p>
         </div>
       </div>
+    </div>
   </transition>
 </template>
 
@@ -119,13 +121,16 @@
     &.move-enter, &.move-leave-active
       transform: translate3d(100%, 0, 0)
     .image-header
-      display flex
-      justify-content center
-      align-items center
-      width 100%
+      position: relative
+      width: 100%
+      height: 0
+      padding-top: 100%
       img
-        width 100%
-        height auto
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
       .back
         position: absolute
         top: 10px
