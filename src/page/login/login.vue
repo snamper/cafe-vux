@@ -10,7 +10,7 @@
                     <x-button type="primary" @click.native="login">登陆</x-button>
                     <div class="txt-wrapper">
                         <div class="forget">忘记密码</div>
-                        <div class="vistor" @click="visitor">游客访问</div>
+                        <!-- <div class="vistor" @click="visitor">游客访问</div> -->
                         <div class="register" @click="showRegister">注册</div>
                     </div>
                 </group>
@@ -18,7 +18,6 @@
             <div class="register-input" v-show="!show">
                 <group>
                     <x-input label-width="3em" text-align="left" placeholder="手机号码" mask="999 9999 9999" type="tel" :required="true" v-model='registerUser.phone' is-type="china-mobile" ref="phone" @on-blur="duplicateUsername"></x-input>
-                    <x-input label-width="3em" text-align="left" placeholder="用户名"  type="text" v-model='registerUser.name' ref="username"></x-input>
                     <x-input label-width="3em" text-align="left" placeholder="输入密码"  type="password" :required="true" v-model='registerUser.psd' ref="password"></x-input>
                     <x-input label-width="3em" text-align="left" placeholder="确认密码"  type="password" :required="true" v-model='registerUser.repsd' ref="repassword" @on-enter="register"></x-input>
                     <x-button type="primary" @click.native="register">注册</x-button>
@@ -49,7 +48,6 @@ export default {
             },
             registerUser: {
                 phone: '',
-                name: '',
                 psd: '',
                 repsd: ''
             }
