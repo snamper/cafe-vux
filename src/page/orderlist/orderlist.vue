@@ -156,6 +156,7 @@ export default {
             this.saveRecordList(data);
         },
         saveRecordList(data) {
+            // let _this = this;
             let url = config.recordList;
             log.debug('ajax get response url is ' + url);
             this.$http.post(url, data).then((response) => {
@@ -170,6 +171,14 @@ export default {
                 } else {
                     log.debug('result length is 0');
                     this.member = true;
+                    // this.$vux.alert.show({
+                    //     title: '提醒',
+                    //     content: '您还没有购买任何商品,请先购买',
+                    //     onHide() {
+                    //         _this.$store.commit('changeSelect', {'menu': true, 'new': false, 'order': false, 'member': false});
+                    //         _this.$router.push({path: '/menu'});
+                    //     }
+                    // });
                 }
             });
         },
