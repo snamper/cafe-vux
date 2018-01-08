@@ -26,9 +26,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-import BScroll from 'better-scroll';
 import logo from '../../components/logo/logo';
-import { Swiper, Divider, Grid, GridItem, Flexbox, FlexboxItem } from 'vux';
+import { Swiper, Divider } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('cafe/new');
 export default {
@@ -37,19 +36,6 @@ export default {
             this.$router.push({path: '/menu'});
         }
         log.debug('created');
-    },
-    mounted() {
-        this.$nextTick(() => {
-            if (!this.scroll) {
-                log.debug('created scroll');
-                this.scroll = new BScroll(this.$refs.hotWrapper, {
-                    click: true
-            });
-            } else {
-                log.debug('refresh scroll');
-                this.scroll.refresh();
-            }
-        });
     },
     computed: {
         sliders() {
@@ -62,10 +48,6 @@ export default {
     components: {
         Swiper,
         Divider,
-        Grid,
-        GridItem,
-        Flexbox,
-        FlexboxItem,
         logo
     }
 };
