@@ -17,18 +17,6 @@
                     <div class="item-bar vux-1px-b">
                         <cell title="余额" value="1500元" ></cell>
                     </div>
-                    <!-- <div class="item-bar vux-1px-b">
-                        <cell title="手机号码" value="13333333333" is-link @click.native="modifyPhoneNumber"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="性别" value="男" is-link @click.native="modifyPhoneNumber"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="地址" value="四川省成都市成华区" is-link></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="邮箱" value="totti@xxx.com" is-link></cell>
-                    </div> -->
                 </div>
                 <split></split>
                 <div class="bar vux-1px-tb">
@@ -44,7 +32,6 @@
                 <x-button @click.native="loginout" type="primary">注销</x-button>
             </div>
         </div>
-        <detail :member="memberInfo" ref="detailInfo"></detail>
     </div>
 </template>
 
@@ -81,14 +68,14 @@ export default {
         loginout() {
             this.$store.commit('setMember', '');
             util.setkey(session.member, '');
-            this.$router.push({path: '/login'});
+            this.$router.push({name: 'login'});
         },
         modifyPwd() {
             log.debug('show modify page');
         },
         showMore() {
             log.debug('show more info');
-            this.$refs.detailInfo.show();
+            this.$router.push({name: 'info'});
         }
     },
     components: {

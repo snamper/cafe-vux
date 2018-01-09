@@ -1,97 +1,121 @@
 <template>
-    <transition name="move">
-        <div class="detail" v-show="showFlag">
-            <x-header title="会员信息" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="hidden()"></x-header>
-            <div class="memberinfi">
-                <div class="bar  vux-1px-tb">
-                    <cell title="会员信息" ></cell>
+    <div class="detail">
+        <x-header title="会员信息" :left-options="{showBack: true}"></x-header>
+        <logo></logo>
+        <div class="memberinfi">
+            <div class="bar  vux-1px-tb">
+                <cell title="会员信息" ></cell>
+            </div>
+            <div class="info">
+                <div class="item-bar vux-1px-b">
+                    <cell title="用户名" value="philosophy" is-link @click.native="modifyUsername"></cell>
                 </div>
-                <div class="info">
-                    <div class="item-bar vux-1px-b">
-                        <cell title="用户名" value="philosophy" is-link @click.native="modifyUsername"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="会员积分" value="5000分"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="余额" value="1500元"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="手机号码" value="13333333333" is-link @click.native="modifyPhoneNumber"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="性别" value="男" is-link @click.native="modifySex"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="地址" value="四川省成都市成华区" is-link @click.native="modifyAddress"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="邮箱" value="totti@xxx.com" is-link @click.native="modifyEmail"></cell>
-                    </div>
-                    <div class="item-bar vux-1px-b">
-                        <cell title="加入时间" value="2018-01-08" is-link @click.native="modifyEmail"></cell>
-                    </div>
+                <div class="item-bar vux-1px-b">
+                    <cell title="手机号码" value="13333333333" is-link @click.native="modifyPhoneNumber"></cell>
                 </div>
+                <div class="item-bar vux-1px-b">
+                    <popup-picker title="性别" :data="sexType" placeholder="男" v-model="sex" @on-hide="saveSex"></popup-picker>
+                    <!-- <cell title="性别" value="男" is-link @click.native="modifySex"></cell> -->
+                </div>
+                <div class="item-bar vux-1px-b">
+                    <cell title="邮箱" value="totti@xxx.com" is-link @click.native="modifyEmail"></cell>
+                </div>
+                <div class="item-bar vux-1px-b">
+                    <cell title="加入时间" value="2018-01-08"></cell>
+                </div>
+                <spilt></spilt>
+                <div class="item-bar vux-1px-b">
+                    <cell title="会员积分" value="5000分"></cell>
+                </div>
+                <div class="item-bar vux-1px-b">
+                    <cell title="余额" value="1500元"></cell>
+                </div>
+                <spilt></spilt>
+                <div class="item-bar vux-1px-b">
+                    <cell title="所在地区" value="四川省成都市成华区" is-link @click.native="modifyAddress"></cell>
+                </div>
+                <div class="item-bar vux-1px-b">
+                    <cell title="详细地址" value="蜀华街xx号" is-link @click.native="modifyDetailAddress"></cell>
+                </div>
+                
             </div>
         </div>
-    </transition>
+    </div>
 </template>
 
 <script type="text/ecmascript-6">
 // ChinaAddressV4Data
-import { XHeader, Cell, XAddress, Group } from 'vux';
+import { XHeader, Cell, XAddress, Group, PopupPicker } from 'vux';
+import spilt from '../../components/split/split';
+import logo from '../../components/logo/logo';
 import Logger from 'chivy';
 const log = new Logger('cafe/member/detail');
 export default {
     data() {
-      return {
-        showFlag: false
-      };
+        return {
+            content: null,
+            sexType: [['男', '女']],
+            sex: []
+        };
     },
     methods: {
-        show() {
-            this.showFlag = true;
-        },
-        hidden() {
-            this.showFlag = false;
+        jumppage() {
+            this.$router.push({name: 'modify', params: {content: this.content}});
         },
         modifyUsername() {
             log.debug('modifyUsername');
+            this.content = {
+                'title': '设置名字',
+                'input': '名字'
+            };
+            this.jumppage();
         },
         modifyPhoneNumber() {
             log.debug('modifyPhoneNumber');
+            this.content = {
+                'title': '设置手机号',
+                'input': '手机号'
+            };
+            this.jumppage();
+        },
+        modifyDetailAddress() {
+            log.debug('modifyDetailAddress');
+            this.content = {
+                'title': '设置地址',
+                'input': '详细地址'
+            };
+            this.jumppage();
         },
         modifyAddress() {
             log.debug('modifyAddress');
         },
         modifyEmail() {
             log.debug('modifyEmail');
+            this.content = {
+                'title': '设置邮箱',
+                'input': '邮箱'
+            };
+            this.jumppage();
         },
         modifySex() {
             log.debug('modifySex');
+        },
+        saveSex() {
+            log.debug('save sex' + this.sex);
         }
     },
     components: {
         XHeader,
         Cell,
         XAddress,
-        Group
+        Group,
+        spilt,
+        logo,
+        PopupPicker
     }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.detail
-    position  fixed
-    left: 0
-    top: 0
-    bottom: 50px
-    z-index: 30
-    width: 100%
-    background: #fff
-    transform: translate3d(0, 0, 0)
-    &.move-enter-active, &.move-leave-active
-      transition: all 0.2s linear
-    &.move-enter, &.move-leave-active
-      transform: translate3d(100%, 0, 0)
+
 </style>
