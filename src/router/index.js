@@ -6,10 +6,11 @@ import New from '@/page/new/new';
 import Order from '@/page/menu/order/order';
 import Pay from '@/page/menu/pay/pay';
 import OrderList from '@/page/orderlist/orderlist';
+import OrderDetail from '@/page/orderlist/orderDetail';
 import Login from '@/page/login/login';
 import Member from '@/page/member/member';
-import modPwd from '@/page/member/modifyPasswd';
-import OrderDetail from '@/page/orderlist/orderDetail';
+import MemberInfo from '@/page/member/detail';
+import Modify from '@/page/member/common';
 
 Vue.use(Router);
 
@@ -39,7 +40,20 @@ export default new Router({
         component: Member
       },
       {
+        name: 'info',
+        path: 'info',
+        component: MemberInfo,
+        props: true
+      },
+      {
+        name: 'modify',
+        path: 'modify',
+        component: Modify,
+        props: true
+      },
+      {
         // 登陆页面
+        name: 'login',
         path: 'login',
         component: Login
       },
@@ -61,11 +75,6 @@ export default new Router({
       name: 'orderDetail',
       component: OrderDetail,
       props: true
-    },
-
-    {
-      path: '/modifyPasswd',
-      component: modPwd
     }
   ]
 });
