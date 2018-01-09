@@ -144,9 +144,6 @@ export default {
                     }
                 });
             }
-        },
-        visitor() {
-            this.$router.back();
         }
     },
     computed: {
