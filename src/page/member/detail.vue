@@ -15,7 +15,6 @@
                 </div>
                 <div class="item-bar vux-1px-b">
                     <popup-picker title="性别" :data="sexType" placeholder="男" v-model="sex" @on-hide="saveSex"></popup-picker>
-                    <!-- <cell title="性别" value="男" is-link @click.native="modifySex"></cell> -->
                 </div>
                 <div class="item-bar vux-1px-b">
                     <cell title="邮箱" value="totti@xxx.com" is-link @click.native="modifyEmail"></cell>
@@ -32,12 +31,11 @@
                 </div>
                 <spilt></spilt>
                 <div class="item-bar vux-1px-b">
-                    <cell title="所在地区" value="四川省成都市成华区" is-link @click.native="modifyAddress"></cell>
+                    <x-address title="所在地区" :list="addressData" v-model="address" @on-hide="modifyAddress" placeholder="四川省成都市成华区"></x-address>
                 </div>
                 <div class="item-bar vux-1px-b">
-                    <cell title="详细地址" value="蜀华街xx号" is-link @click.native="modifyDetailAddress"></cell>
+                    <cell title="详细地址"  value="蜀华街xx号" is-link @click.native="modifyDetailAddress"></cell>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -45,7 +43,7 @@
 
 <script type="text/ecmascript-6">
 // ChinaAddressV4Data
-import { XHeader, Cell, XAddress, Group, PopupPicker } from 'vux';
+import { XHeader, Cell, XAddress, Group, PopupPicker, ChinaAddressV4Data } from 'vux';
 import spilt from '../../components/split/split';
 import logo from '../../components/logo/logo';
 import Logger from 'chivy';
@@ -55,8 +53,18 @@ export default {
         return {
             content: null,
             sexType: [['男', '女']],
-            sex: []
+            sex: [],
+            addressData: ChinaAddressV4Data,
+            address: []
         };
+    },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            log.debug('from ' + from.path);
+            if (!(from.path === '/member' || from.path === '/modify')) {
+                vm.$router.back();
+            }
+        });
     },
     methods: {
         jumppage() {

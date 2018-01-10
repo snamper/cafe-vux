@@ -54,7 +54,7 @@ export default {
         };
     },
     mounted() {
-        log.info(typeof (this.memberInfo));
+        // log.info(typeof (this.memberInfo));
         if (!this.memberInfo) {
             this.$router.push({path: '/login'});
         }
@@ -72,6 +72,7 @@ export default {
         },
         modifyPwd() {
             log.debug('show modify page');
+            this.$router.push({name: 'pwd'});
         },
         showMore() {
             log.debug('show more info');
