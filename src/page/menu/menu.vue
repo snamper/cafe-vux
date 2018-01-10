@@ -19,16 +19,19 @@
               <ul>
                 <li @click="selectFood(food,$event)" v-for="(food,index) in item.list" :key="index" class="food-item border-1px">
                   <div class="icon">
-                    <img width="57" height="57" :src="food.imageUrl">
+                    <img width="60" height="60" :src="food.imageUrl">
                   </div>
                   <div class="content">
                     <h2 class="name">{{food.name}}</h2>
-                    <p class="desc">{{food.description}}</p>
-                    <div class="extra">
-                      <span class="count">月售0份</span><span>好评率0%</span>
+                    <!-- <p class="desc">{{food.description}}</p> -->
+                    <!-- <div class="extra">
+                      <span class="count">月售0份</span>
+                    </div> -->
+                    <div class="price"  v-if="food.memberPrice!==0">
+                      <span class="desc">会员价格</span><span class="now">￥{{food.memberPrice}}</span>
                     </div>
                     <div class="price">
-                      <span class="now">￥{{food.memberPrice}}</span><span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>
+                      <span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>
                     </div>
                     <div class="cartcontrol-wrapper">
                       <cartcontrol @add="addFood" :food="food"></cartcontrol>
@@ -245,7 +248,7 @@
             line-height: 24px
             .now
               margin-right: 8px
-              font-size: 14px
+              font-size: 12px
               color: rgb(240, 20, 20)
             .old
               font-size: 12px

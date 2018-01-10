@@ -26,15 +26,6 @@ store.registerModule('vux', {
     }
   }
 });
-// 然后使用vue-router的beforeEach和afterEach来更改loading状态
-router.beforeEach(function(to, from, next) {
-  store.commit('updateLoadingStatus', {isLoading: true});
-  next();
-});
-
-router.afterEach(function(to, from, next) {
-  store.commit('updateLoadingStatus', {isLoading: false});
-});
 
 /* eslint-disable no-new */
 new Vue({

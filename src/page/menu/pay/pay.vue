@@ -1,6 +1,6 @@
 <template>
     <div class="pay">
-        <x-header title="" :left-options="{showBack: true, preventGoBack: true}" title="支付页面" @on-click-back="back"></x-header>
+        <x-header :left-options="{showBack: true, preventGoBack: true}" title="支付页面" @on-click-back="back"></x-header>
         <div class="pay-wrapper">
             <p class="desc">请选择支付方式</p>
             <split></split>
@@ -40,14 +40,14 @@
         </div>
         <split></split>
         <div class="confirm">
-             <x-button type="primary" @click.native="payit">确认支付￥{{totalPayPrice}}元</x-button>
+             <x-button :disabled="payitStatus" type="primary" @click.native="payit">确认支付￥{{showPrice}}元</x-button>
         </div>
         <div class="qrcode" v-show="qrcode">
             <img src="../../../../static/img/alipay.jpg" v-show="alipay">
             <img src="../../../../static/img/wechat.jpg" v-show="wechat">
         </div>
         <div class="already">
-             <x-button mini plain @click.native="alertStatus">我已付款</x-button>
+             <x-button mini plain :disabled="payleStatus" @click.native="alertStatus">我已付款</x-button>
         </div>
     </div>
 </template>
@@ -66,18 +66,32 @@ const BALANCE = 'BALANCE';
 const VISITOR = '游客';
 const WAITE4ENSURE = 'WAITE4ENSURE';
 export default {
+    props: {
+        product: {
+            type: Object
+        }
+    },
     data() {
         return {
+            showFlag: false,
             qrcode: true,
             alipay: true,
             wechat: false,
-            balance: false
+            balance: false,
+            payitStatus: false,
+            payleStatus: true,
+            recordPrice: 0
         };
     },
     created() {
         // 当购物车为空的时候，返回到主页面
-        if (this.selectFoods.length === 0) {
+        // 并且当路由中的数据为空的时候
+        if (this.selectFoods.length === 0 && typeof (this.product) === 'undefined') {
             this.$router.push({path: '/menu'});
+        }
+        if (typeof (this.product) !== 'undefined') {
+            this.payitStatus = true;
+            this.payleStatus = false;
         }
     },
     methods: {
@@ -157,6 +171,7 @@ export default {
             return details;
         },
         payit() {
+            log.debug('pay it button clicked');
             if (this.memberInfo.balance < this.totalPayPrice && this.balance) {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
             } else if (this.balance) {
@@ -190,6 +205,11 @@ export default {
                         title: '支付成功',
                         content: '点击【我已付款】提醒卖家'
                     });
+                    this.payitStatus = true;
+                    this.recordPrice = this.totalPayPrice;
+                    // 清空SelectFoods 什么时候清空购物车是一个问题
+                    this.$store.commit('clearCarts');
+                    this.payleStatus = false;
                 } else {
                     this.$vux.alert.show({
                         title: '支付失败',
@@ -201,32 +221,48 @@ export default {
         alertStatus() {
             let url = config.recordStatus;
             log.debug('ajax' + url);
-            if (this.$store.state.recordId) {
+            if (typeof (this.product) !== 'undefined') {
+                let data = {
+                    'RecordID': this.product.id,
+                    'status': WAITE4ENSURE
+                };
+                this.realAlert(url, data);
+            } else if (this.$store.state.recordId) {
                 let data = {
                     'RecordID': this.$store.state.recordId,
                     'status': WAITE4ENSURE
                 };
-                this.$http.post(url, data).then((response) => {
-                    let result = response.data;
-                    if (result.success) {
-                        // 清空recordID
-                        this.$store.commit('setrecordId', '');
-                        // 清空SelectFoods 什么时候清空购物车是一个问题
-                        this.$store.commit('clearCarts');
-                        this.$vux.alert.show({
-                            title: '付款提醒',
-                            content: '已提醒店家，店家会尽快确认付款信息'
-                        });
-                        this.$router.push({path: '/orderlist'});
-                    }
-                });
+                this.realAlert(url, data);
             } else {
                 this.$vux.toast.text('请先确认支付', 'middle');
             }
         },
+        realAlert(url, data) {
+            let _this = this;
+            this.$http.post(url, data).then((response) => {
+                let result = response.data;
+                if (result.success) {
+                    // 清空recordID
+                    this.$store.commit('setrecordId', '');
+                    this.$vux.alert.show({
+                        title: '付款提醒',
+                        content: '已提醒店家，店家会尽快确认付款信息',
+                        onHide() {
+                            _this.$router.push({path: '/orderlist'});
+                            _this.$store.commit('changeSelect', {'menu': false, 'new': false, 'order': true, 'member': false});
+                        }
+                    });
+                    this.payleStatus = true;
+                }
+            });
+        },
         back() {
-            this.$router.push({path: '/order'});
+            this.$router.go(-1);
         }
+    },
+    beforeRouteLeave (to, from, next) {
+        // this.$vux.alert.hide();
+        next();
     },
     computed: {
         ...mapGetters([
@@ -252,6 +288,15 @@ export default {
             } else {
                 log.debug('memberinfo is exist');
                 return this.totalMemberPrice;
+            }
+        },
+        showPrice() {
+            if (typeof (this.product) !== 'undefined') {
+                return this.product.amount;
+            } else if (this.totalPayPrice === 0) {
+                return this.recordPrice;
+            } else {
+                return this.totalPayPrice;
             }
         }
     },

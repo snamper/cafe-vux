@@ -1,48 +1,33 @@
 <template>
     <div>
-
+        <loading v-model="isLoading"></loading>
         <div class="list-wrapper">
             <logo></logo>
             <div class="orderlist-wrapper" v-if="recordList">
-                <p class="title" v-if="!memberInfo">游客，您的本次订单如下</p>
+                <p class="title" v-if="!memberInfo">游客，您的最近订单如下</p>
                 <p class="title" v-if="memberInfo">{{memberInfo.name}}，您的历史订单如下</p>
                 <div class="scroll-wrapper" ref="scrollWrapper">
                     <ul>
-                        <li v-for="(item,index) in recordList" :key="index">
-                            <div class="time">
-                                购买日期：
-                                <span class="time">{{buyDateTime(item.createTime)}}</span>
-                                订单状态：
-                                <span class="status">{{showStatus(item.status)}}</span>
-                            </div>
-                            <divider>详情</divider>
-                            <ul>
-                                <li v-for="(good,index) in item.details" :key="index">
-                                    <div class="detail">
-                                        <div class="avator">
-                                            <avator :img="good.imageUrl" size='35' radius='50'></avator>
-                                        </div>
-                                        <div class="content">
-                                            <div class="name">{{good.productName}}</div>
-                                            <div class="number">x{{good.number}}</div>
-                                            <div class="total">￥{{good.amount}}</div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="summary">
-                                <div class="title">总价</div><div class="price">￥{{item.amount}}</div>
-                            </div>
+                        <li @click="showDetailPage(item)" v-for="(item,index) in recordList" :key="index">                        
                             <split></split>
+                            <div class="title">
+                                <span class="orderNo">{{date(item.createTime)}}  {{time(item.createTime)}}</span>
+                                <span class="status">{{orderStatus(item.status)}}</span>                                
+                            </div>
+                            <imagelist :list="item.details"></imagelist>
+                            <div class="detail">
+                                <span>共<span class="No">{{item.details.length}}</span>件商品，实付款: <span class="price">￥{{item.amount}}</span></span>
+                            </div>
                         </li>
                     </ul>
                 </div>
-                
             </div>
-            <div class="non-order" v-if="!showList">
+            <div class="non-order" v-if="member">
                 <p class="title">亲，您还没有购买任何商品</p>
             </div>
         </div>
+        <!-- <detail :list="selectedList" ref="detail"></detail> -->
+        <!-- <food @add="addFood" :food="selectedFood" ref="food"></food> -->
     </div>
 </template>
 
@@ -52,9 +37,9 @@ import BScroll from 'better-scroll';
 import logo from '../../components/logo/logo';
 import config from '../../config/config';
 import util from '../../common/js/util';
+import imagelist from './imageList';
 import { mapState } from 'vuex';
-import { Divider } from 'vux';
-import avator from '../../components/avator/avator';
+import { Divider, Loading } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('page/orderlist');
 const WAITE4PAY = '待付款';
@@ -65,35 +50,26 @@ export default {
     data() {
         return {
             loading: false,
-            recordList: null
+            recordList: null,
+            selectedList: null,
+            member: false
         };
     },
-    created() {
-        this.__init();
-    },
-    mounted() {
-        log.info('mounted');
-        log.info('recordList is ' + JSON.stringify(this.recordList));
-        if (this.recordList !== null) {
-            if (this.recordList.length !== 0) {
-                log.debug('scroll show orderListShow');
-                this.$nextTick(() => {
-                    if (!this.scroll) {
-                        log.debug('created scroll');
-                        this.scroll = new BScroll(this.$refs.scrollWrapper, {
-                            click: true
-                        });
-                    } else {
-                        log.debug('refresh scroll');
-                        this.scroll.refresh();
-                    }
-                });
-            }
-        }
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            // 获取vux的实例
+            vm.$store.commit('updateLoadingStatus', {isLoading: true});
+            log.debug('显示loading');
+            vm.init();
+            log.debug('scroll');
+            vm.$store.commit('updateLoadingStatus', {isLoading: false});
+            log.debug('关闭loading显示');
+        });
     },
     computed: {
         ...mapState([
-            'memberInfo'
+            'memberInfo',
+            'isLoading'
         ]),
         showList() {
             if (this.recordList || this.memberRecordList) {
@@ -110,11 +86,48 @@ export default {
             return total;
         }
     },
-    watch: {
-        '$route': '__init'
-    },
     methods: {
-        async __init() {
+        date(datetime) {
+            let format = util.formatDate(datetime);
+            let result = format.Year + '-' + format.Month + '-' + format.Day;
+            return result;
+        },
+        time(datetime) {
+            let format = util.formatDate(datetime);
+            let result = format.Hour + ':' + format.Minute;
+            return result;
+        },
+        orderStatus(status) {
+            // log.debug(status);
+            if (status === 'WAITE4PAY') {
+                return WAITE4PAY;
+            } else if (status === 'WAITE4ENSURE') {
+                return WAITE4ENSURE;
+            } else if (status === 'ENSURE2PAID') {
+                return ENSURE2PAID;
+            } else if (status === 'SUCCESS') {
+                return SUCCESS;
+            }
+        },
+        scrollit() {
+            if (this.recordList !== null) {
+                if (this.recordList.length !== 0) {
+                    log.debug('scroll show orderListShow');
+                    this.$nextTick(() => {
+                        if (!this.scroll) {
+                            log.debug('created scroll');
+                            this.scroll = new BScroll(this.$refs.scrollWrapper, {
+                                click: true
+                        });
+                        } else {
+                            log.debug('refresh scroll');
+                            this.scroll.refresh();
+                        }
+                    });
+                }
+            }
+        },
+        init() {
             this.loading = true;
             // 获取购买记录并存入列表,区分会员和非会员
             log.debug('memberinfo is ' + this.memberInfo);
@@ -127,10 +140,6 @@ export default {
                 log.debug('member id is ' + this.memberInfo.ID);
                 this.getMemberRecordList(this.memberInfo.ID);
             }
-        },
-        showDetail() {
-            log.info('show Detail order infomation');
-            this.$refs.detail.showit();
         },
         getVisitorRecordList(userid) {
             let data = {
@@ -147,23 +156,31 @@ export default {
             this.saveRecordList(data);
         },
         saveRecordList(data) {
+            // let _this = this;
             let url = config.recordList;
             log.debug('ajax get response url is ' + url);
             this.$http.post(url, data).then((response) => {
                 let result = response.data;
-                log.debug('response data is ' + JSON.stringify(result));
+                // log.debug('response data is ' + JSON.stringify(result));
                 this.loading = false;
                 // 存入state中
                 if (result.length !== 0) {
                     this.recordList = result;
                     this.$store.commit('setrecordList', result);
+                    this.scrollit();
+                } else {
+                    log.debug('result length is 0');
+                    this.member = true;
+                    // this.$vux.alert.show({
+                    //     title: '提醒',
+                    //     content: '您还没有购买任何商品,请先购买',
+                    //     onHide() {
+                    //         _this.$store.commit('changeSelect', {'menu': true, 'new': false, 'order': false, 'member': false});
+                    //         _this.$router.push({path: '/menu'});
+                    //     }
+                    // });
                 }
             });
-        },
-        buyDateTime(date) {
-            let format = util.formatDate(date);
-            let result = format.Year + '' + format.Month + '' + format.Day + ' ' + format.Hour + ':' + format.Minute;
-            return result;
         },
         showStatus(status) {
             let result = status;
@@ -177,13 +194,18 @@ export default {
                 result = SUCCESS;
             }
             return result;
+        },
+        showDetailPage(order) {
+            // log.debug('orderid is ' + order.id);
+            this.$router.push({name: 'orderDetail', params: {record: order}});
         }
     },
     components: {
         logo,
-        avator,
         Divider,
-        split
+        split,
+        Loading,
+        imagelist
     }
 };
 </script>
@@ -202,46 +224,29 @@ export default {
             top 164px
             bottom 50px
             overflow hidden
-            .time
-                padding 0.3rem 0
-            .detail
-                width 100%
-                height 70px
+            .title
                 display flex
                 justify-content center
-                align-items center
-                .avator, .content
-                    display inline-block
-                .avator
+                .orderNo
                     flex-grow 1
-                    text-align center
-                .content 
-                    flex-grow 3
-                    display flex
-                    .name, .number,.total
-                        display inline-block
-                        width 100%
-                    .name
-                        text-align left
-                    .number
-                        text-align right
-                    .total
-                        text-align center
-            .summary
-                width 100%
-                height 2rem
-                display flex
-                justify-content center
-                align-items center
-                .title,.price
-                    width 100%
-                    line-height 18px
-                .title
                     text-align left
-                    padding-left 3rem 
-                .price
+                    padding-left 7px
+                .status
+                    flex-grow 1
                     text-align right
-                    padding-right 2rem
+                    padding-right 7px
+            .detail
+                text-align right
+                padding 10px 20px 5px 0px
+                .price,.no
+                    font-size 20px
+                .price
+                    font-weight 500
+                    color red
+                .No
+                    font-weight 700
+                    color black
+                    padding 0 5px
     .non-order
         .title
             line-height 24px

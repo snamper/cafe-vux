@@ -151,16 +151,31 @@
 
 	成功：{
 	  "status": true,
+	  //余额
 	  "balance": 0,
 	  "cardGrade": "",
 	  "cardNo": "",
 	  "cardStatus": "",
+	  //创建时间
 	  "createTime": "2017-10-23 21:04:13",
 	  "description": "",
 	  "gender": "Male",
 	  "handNo": "",
 	  "id": 107,
-	  "name": "ccc"
+	  // 用户名
+	  "name": "ccc",
+	  // 积分
+	  "point": "1500",
+      // 手机号码
+	  "phone": "13333333333",
+      // 性别
+	  "sex": "男",
+	  // 邮箱
+	  "email": "ttt@sss.com",
+	  // 所在地区
+	  "Area": "四川省成都市成华区",
+	  // 详细地址
+	  "address": "xx路xx街xx号"
 	}
 	
 	失败：{
@@ -176,7 +191,8 @@
 **入参**
 
 	{
-		"name":"ccc",
+		//后台需要更新为手机号码,而不是用户名
+		"name":"13555556666",
 		"passWd":"dad"
 	}
 
@@ -196,7 +212,7 @@
 	    "totalPages": -1,
 	    "totalRows": -1,
 	    "userIp": "",
-	    "userName": ""
+	    "userName": "13555556666"
 	  },
 	  "success": true
 	}
@@ -206,21 +222,22 @@
 	const ApiSaveRecordList = '/shop/product/show/ui/saveRecordList.do';
 
 **入参**
-	{
-	  "amount": 5,
-	  "userId": 723,
-	  "userName": "bbb",
-	  "cashOrBalance": "BALANCE",
-	  "details": [{
-	    "productId": 2,
-	    "amount": 12,
-	    "number": 2
-	  }, {
-	    "productId": 3,
-	    "amount": 6,
-	    "number": 3
-	  }]
-	}
+
+		{
+			"amount": 5,
+			"userId": 723,
+			"userName": "bbb",
+			"cashOrBalance": "BALANCE",
+			"details": [{
+				"productId": 2,
+				"amount": 12,
+				"number": 2
+			}, {
+				"productId": 3,
+				"amount": 6,
+				"number": 3
+			}]
+		}
 
 **回参**
 
@@ -281,3 +298,43 @@
 余额不足时 success 为false 并且 responseStatus":"余额不足"
 成功时 success为 true 并且 "responseStatus":"余额支付成功"
 现金支付时 "cashOrBalance":一定不要传BALANCE  会返回 uccess为 true 并且 "responseStatus":"现金支付"
+
+
+### 会员信息修改接口
+
+	const Apixxx = '/shop/xxx';
+
+**入参**
+
+	{
+		"id": 107,
+		"type": "username",
+		"value": "test"
+	}
+
+
+类型: username(用户名), phone(手机号码), sex(性别), email(邮箱), address(所在地区), detailAddress(详细地址)
+
+**回参**
+
+	{
+		"success": true
+	}
+
+### 密码修改接口
+
+	const Apixxx = '/shop/xxx';
+
+**入参**
+
+	{
+		"id": 107,
+		"passwd": "xxxxx"
+	}
+
+**回参**
+
+	{
+		"success": true
+	}
+

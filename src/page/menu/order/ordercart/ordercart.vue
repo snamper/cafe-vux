@@ -5,7 +5,7 @@
                 <div class="left" v-show="!memberInfo">
                     <span class="title">待支付</span><span class="price">￥{{totalPrice}}</span>
                 </div>
-                <div class="right">
+                <div class="right" v-if="totalMemberPrice!==0">
                     <span class="title">会员价</span><span class="price">￥{{totalMemberPrice}}</span>
                 </div>
             </div>

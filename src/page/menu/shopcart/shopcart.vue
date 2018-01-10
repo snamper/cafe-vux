@@ -9,8 +9,8 @@
             </div>
             <div class="num" v-show="totalCount>0">{{totalCount}}</div>
           </div>
-          <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalMemberPrice}}</div>
-          <div class="desc">非会员价￥{{totalPrice}}元</div>
+          <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
+          <div class="desc" v-if="totalMemberPrice>0">会员价￥{{totalMemberPrice}}元</div>
         </div>
           <div class="content-right" @click.stop.prevent="pay">
             <div class="pay" :class="payClass">
@@ -210,8 +210,7 @@
 
   .shopcart
     position: fixed
-    left: 0
-    // bottom: 0
+    left: 0px
     bottom: 50px
     z-index: 50
     width: 100%
@@ -242,7 +241,7 @@
             text-align: center
             background: #2b343c
             &.highlight
-              background: rgb(0, 160, 220)
+              background: rgb(9, 187, 7)
             .icon-gouwuche1
               line-height: 44px
               font-size: 24px
@@ -308,7 +307,7 @@
           width: 16px
           height: 16px
           border-radius: 50%
-          background: rgb(0, 160, 220)
+          background: rgb(9, 187, 7)
           transition: all 0.4s linear
     .shopcart-list
       position: absolute
@@ -334,7 +333,7 @@
         .empty
           float: right
           font-size: 12px
-          color: rgb(0, 160, 220)
+          color: rgb(9, 187, 7)
 
       .list-content
         padding: 0 18px

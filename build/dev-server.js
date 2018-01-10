@@ -34,6 +34,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 /* define the data for ajax read */
 const appData = require('../data.json')
 const categorys = appData.categorys
+const categorys1 = appData.categorys1
 const products = appData.products
 const login = appData.login
 const loginpoor = login.poor
@@ -50,6 +51,8 @@ const resnull = appData.buyrecord.null
 const resfail = appData.buyrecord.fail
 const ressuccess = appData.buyrecord.success
 const alterStatus = appData.alterStatus
+
+const noUser = false
 
 /* define router  */
 var apiRoutes = express.Router()
@@ -107,10 +110,15 @@ apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser,function(req,res){
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body
   console.log('getRecordList.do data is ' + JSON.stringify(user))
-  if(user.needDetail){
-    res.json(cartDetailList)
-  }else{
-    res.json(cartList)
+  if(!noUser) {
+    if(user.needDetail){
+      res.json(cartDetailList)
+    }else{
+      res.json(cartList)
+    }
+  } else {
+    let result = []
+    res.json(result)
   }
 })
 
