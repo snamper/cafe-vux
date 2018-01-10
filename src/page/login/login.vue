@@ -55,7 +55,10 @@ export default {
     },
     methods: {
         forgetPwd() {
-            this.$router.push({path: '/forget'});
+            this.$vux.alert.show({
+                // title: '修改密码',
+                content: '请联系管理员修改密码'
+            });
         },
         showRegister() {
             this.show = false;
