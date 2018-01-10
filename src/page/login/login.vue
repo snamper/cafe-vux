@@ -4,14 +4,14 @@
         <logo></logo>
         <div class="login-wrapper" >
             <div class="login-input" v-show="show">
-                <group >
+                <group>
                     <x-input label-width="3em" text-align="left" placeholder="用户名/手机号码"  type="text" :required="true" v-model='loginUser.name'></x-input>
                     <x-input label-width="3em" text-align="left" placeholder="密码"  type="password" :required="true" v-model='loginUser.psd' @on-enter="login"></x-input>
                     <x-button type="primary" @click.native="login">登陆</x-button>
                     <div class="txt-wrapper">
-                        <div class="forget">忘记密码</div>
+                        <div class="forget" @click="forgetPwd">忘记密码</div>
                         <!-- <div class="vistor" @click="visitor">游客访问</div> -->
-                        <div class="register" @click="showRegister">注册</div>
+                        <div class="register" @click="showRegister">注册新用户</div>
                     </div>
                 </group>
             </div>
@@ -54,6 +54,9 @@ export default {
         };
     },
     methods: {
+        forgetPwd() {
+            this.$router.push({path: '/forget'});
+        },
         showRegister() {
             this.show = false;
         },
