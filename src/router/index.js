@@ -11,6 +11,8 @@ import Login from '@/page/login/login';
 import Member from '@/page/member/member';
 import MemberInfo from '@/page/member/detail';
 import Modify from '@/page/member/common';
+import ModifyPwd from '@/page/member/modifyPwd';
+import Forget from '@/page/member/forget';
 
 Vue.use(Router);
 
@@ -40,16 +42,29 @@ export default new Router({
         component: Member
       },
       {
+        // 显示会员信息
         name: 'info',
         path: 'info',
         component: MemberInfo,
         props: true
       },
       {
+        // 修改相关信息
         name: 'modify',
         path: 'modify',
         component: Modify,
         props: true
+      },
+      {
+        name: 'forget',
+        path: 'forget',
+        component: Forget
+      },
+      {
+        // 修改密码
+        name: 'pwd',
+        path: 'pwd',
+        component: ModifyPwd
       },
       {
         // 登陆页面
