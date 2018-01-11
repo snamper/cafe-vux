@@ -12,5 +12,9 @@ export default {
     // 商品购买接口
     buyGoods: '/shop/product/show/ui/saveRecordList.do',
     // 获取订单状态的接口
-    recordStatus: '/shop/product/show/ui/alterStatus.do'
+    recordStatus: '/shop/product/show/ui/alterStatus.do',
+    // 修改会员信息接口
+    basicInfo: '/shop/member/show/ui/modifyBasicInfo.do',
+    // 修改密码接口
+    modifypwd: '/shop/member/show/ui/modifyPassword.do'
 };
