@@ -192,6 +192,7 @@
 
 	{
 		//后台需要更新为手机号码,而不是用户名
+		//这个还没改
 		"name":"13555556666",
 		"passWd":"dad"
 	}
@@ -302,39 +303,68 @@
 
 ### 会员信息修改接口
 
-	const Apixxx = '/shop/xxx';
+	const Apixxx = '/shop/member/show/ui/modifyBasicInfo.do';
 
 **入参**
 
 	{
-		"id": 107,
-		"type": "username",
-		"value": "test"
+		"userId": 107, //对应的会员ID
+		"类型": "value" //不同字段对应的value 一次可传多个字段  
+	}
+	//建议：修改信息的表单一次取得该用户所有数据并自动填入表单，用户只需修改想要修改的信息 然后调用该接口 保存修改好了的信息。
+	例：{
+		"userId": 107,
+		"name": "william"
 	}
 
-
-类型: username(用户名), phone(手机号码), sex(性别), email(邮箱), address(所在地区), detailAddress(详细地址)
+	类型: name(用户名), mobile(手机号码), gender(”M“ 男，”F“ 女 默认是男), email(邮箱), address(所在地区), detailAddress(详细地址)
 
 **回参**
 
 	{
-		"success": true
-	}
+	"envData": {
+		"endRow": -1,
+		"language": "",
+		"pageNo": -1,
+		"pageSize": -1,
+		"realTotalRows": -1,
+		"responseStatus": "success",
+		"startRow": -1,
+		"totalPages": -1,
+		"totalRows": -1,
+		"userIp": "",
+		"userName": ""
+		},
+	"success":  
+	}	
 
 ### 密码修改接口
 
-	const Apixxx = '/shop/xxx';
+	const Apixxx = '/shop/member/show/ui/modifyPassword.do';
 
 **入参**
 
 	{
-		"id": 107,
-		"passwd": "xxxxx"
+		"entityId": "78",
+		"entityName": "passwd"
 	}
 
 **回参**
 
 	{
-		"success": true
-	}
+	"envData": {
+		"endRow": -1,
+		"language": "",
+		"pageNo": -1,
+		"pageSize": -1,
+		"realTotalRows": -1,
+		"responseStatus": "0",
+		"startRow": -1,
+		"totalPages": -1,
+		"totalRows": -1,
+		"userIp": "",
+		"userName": ""
+		},
+	"success": true
+}
 
