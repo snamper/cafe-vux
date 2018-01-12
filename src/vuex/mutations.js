@@ -1,6 +1,8 @@
 import Vue from 'vue';
+import config from '../config/config';
 import Logger from 'chivy';
 const log = new Logger('vuex/mutations');
+const url = config.basicInfo;
 
 export default {
     updateLoadingStatus (state, payload) {
@@ -75,5 +77,31 @@ export default {
                 state.selects.member = payload[key];
             }
         }
+    },
+    modifyMemberInfo(state, payload) {
+        log.debug('payload is ' + JSON.stringify(payload));
+        log.debug('modify url is ' + url);
+        this.$http.post(url, payload).then((response) => {
+            let result = response.data;
+            if (result.success) {
+                // 修改this.memberInfo信息
+                this.$vux.toast.text('修改成功', 'center');
+                if (payload.type === config.type.gender) {
+                    state.memberInfo.gender = payload.gender;
+                } else if (payload.type === config.type.phone) {
+                    state.memberInfo.phone = payload.mobile;
+                } else if (payload.type === config.type.name) {
+                    state.memberInfo.name = payload.name;
+                } else if (payload.type === config.type.email) {
+                    state.memberInfo.email = payload.email;
+                } else if (payload.type === config.type.address) {
+                    state.memberInfo.area = payload.address;
+                } else if (payload.type === config.type.detailAddress) {
+                    state.memberInfo.address = payload.address;
+                }
+            } else {
+                this.$vux.toast.text('修改失败', 'center');
+            }
+        });
     }
 };

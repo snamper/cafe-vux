@@ -16,5 +16,14 @@ export default {
     // 修改会员信息接口
     basicInfo: '/shop/member/show/ui/modifyBasicInfo.do',
     // 修改密码接口
-    modifypwd: '/shop/member/show/ui/modifyPassword.do'
+    modifypwd: '/shop/member/show/ui/modifyPassword.do',
+    // 传递类型
+    type: {
+        'phone': 1,
+        'name': 2,
+        'email': 3,
+        'address': 4,
+        'detailAddress': 5,
+        'gender': 6
+    }
 };

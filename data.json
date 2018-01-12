@@ -772,7 +772,12 @@
       "gender": "Male",
       "handNo": "",
       "id": 107,
-      "name": "totti"
+      "name": "totti",
+      "point": 1500,
+      "phone": "13388889999",
+      "email":"totti_912@sina.com",
+      "area": "四川省成都市成华区",
+      "address": "xx路xx街xx号"
     },
     "rich": {
       "status": true,
@@ -780,12 +785,17 @@
       "cardGrade": "",
       "cardNo": "",
       "cardStatus": "",
-      "createTime": "2017-10-23 21:04:13",
+      "createTime": "2017-11-23 21:02:13",
       "description": "",
-      "gender": "Male",
+      "gender": "Famale",
       "handNo": "",
-      "id": 10,
-      "name": "david"
+      "id": 100,
+      "name": "Rose",
+      "point": 15000,
+      "phone": "13658889999",
+      "email":"david@163.com",
+      "Area": "重庆市沙坪坝区",
+      "address": "xx路xx街xx号"
     },
     "fail": {
       "status": false
@@ -1664,5 +1674,73 @@
       "userIp": "10.0.0.112"
     },
     "success": true
+  },
+  "modifyMemberInfo": {
+    "success": {
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "success",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+      },
+      "success": true
+    },
+    "fail": {
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "fail",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+      },
+      "success": false
+    }
+  },
+  "modifyPwd": {
+    "success": {
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "0",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+        },
+        "success": true
+    },
+    "fail": {
+      "envData": {
+        "endRow": -1,
+        "language": "",
+        "pageNo": -1,
+        "pageSize": -1,
+        "realTotalRows": -1,
+        "responseStatus": "0",
+        "startRow": -1,
+        "totalPages": -1,
+        "totalRows": -1,
+        "userIp": "",
+        "userName": ""
+        },
+        "success": false
+    }
   }
 }
