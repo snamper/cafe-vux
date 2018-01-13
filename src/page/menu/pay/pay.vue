@@ -119,7 +119,7 @@ export default {
             if (type === BALANCE) {
                 record = {
                     'amount': this.totalPayPrice,
-                    'userId': this.memberInfo.ID,
+                    'userId': this.memberInfo.id,
                     'userCode': this.$store.state.uuid,
                     'userName': this.memberInfo.name,
                     'cashOrBalance': type,
@@ -130,7 +130,7 @@ export default {
                     log.debug('memberinfo exist');
                     record = {
                         'amount': this.totalPayPrice,
-                        'userId': this.memberInfo.ID,
+                        'userId': this.memberInfo.id,
                         'userCode': this.$store.state.uuid,
                         'userName': this.memberInfo.name,
                         'cashOrBalance': type,

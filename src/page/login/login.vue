@@ -80,8 +80,15 @@ export default {
                     if (result.status) {
                         let member = {
                             'balance': result.balance,
-                            'ID': result.id,
-                            'name': result.name
+                            'id': result.id,
+                            'name': result.name,
+                            'gender': result.gender,
+                            'point': result.point,
+                            'phone': result.phone,
+                            'email': result.email,
+                            'area': result.area,
+                            'address': result.address,
+                            'createTime': result.createTime
                         };
                         this.$store.commit('setMember', member);
                         log.info('Save login user to sessionStorage');

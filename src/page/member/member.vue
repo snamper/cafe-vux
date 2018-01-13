@@ -9,13 +9,13 @@
                 </div>
                 <div class="info">
                     <div class="item-bar vux-1px-b">
-                        <cell title="用户名" value="philosophy"></cell>
+                        <cell title="昵称" :value="memberInfo.name"></cell>
                     </div>
                     <div class="item-bar vux-1px-b">
-                        <cell title="会员积分" value="5000分" ></cell>
+                        <cell title="会员积分" :value="`${memberInfo.name}分`" ></cell>
                     </div>
                     <div class="item-bar vux-1px-b">
-                        <cell title="余额" value="1500元" ></cell>
+                        <cell title="余额" :value="`${memberInfo.balance}元`" ></cell>
                     </div>
                 </div>
                 <split></split>

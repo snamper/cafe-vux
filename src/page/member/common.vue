@@ -11,6 +11,8 @@
 
 <script type="text/ecmascript-6">
 import { XHeader, XInput, Group } from 'vux';
+import { mapState } from 'vuex';
+import config from '../../config/config';
 import Logger from 'chivy';
 const log = new Logger('cafe/member/common');
 export default {
@@ -25,32 +27,35 @@ export default {
         }
     },
     computed: {
+        ...mapState([
+            'memberInfo'
+        ]),
         type() {
-            if (this.content.input === '手机号') {
+            if (this.content.type === config.type.phone) {
                 return 'tel';
             } else if (this.content.input === '邮箱') {
                 return 'email';
             }
         },
         mask() {
-            if (this.content.input === '手机号') {
+            if (this.content.type === config.type.phone) {
                 return '999 9999 9999';
             }
         },
         min() {
-            if (this.content.input === '名字') {
+            if (this.content.type === config.type.name) {
                 return 2;
             }
         },
         max() {
-            if (this.content.input === '名字') {
+            if (this.content.type === config.type.name) {
                 return 20;
             }
         },
         istype() {
-            if (this.content.input === '手机号') {
+            if (this.content.type === config.type.phone) {
                 return 'china-mobile';
-            } else if (this.content.input === '邮箱') {
+            } else if (this.content.type === config.type.email) {
                 return 'email';
             }
         }
@@ -59,22 +64,41 @@ export default {
         save() {
             log.debug('save');
             if (this.$refs.input.valid) {
-                log.debug('input is ok');
+                log.debug('the value is ' + this.value);
+                let data = {};
+                if (this.content.type === config.type.phone) {
+                    data = {
+                        'type': config.type.phone,
+                        'userId': this.memberInfo.id,
+                        'mobile': this.value
+                    };
+                } else if (this.content.type === config.type.email) {
+                    data = {
+                        'type': config.type.email,
+                        'userId': this.memberInfo.id,
+                        'email': this.value
+                    };
+                } else if (this.content.type === config.type.name) {
+                    data = {
+                        'type': config.type.name,
+                        'userId': this.memberInfo.id,
+                        'name': this.value
+                    };
+                } else if (this.content.type === config.type.detailAddress) {
+                    data = {
+                        'type': config.type.detailAddress,
+                        'userId': this.memberInfo.id,
+                        'detailAddress': this.value
+                    };
+                }
+                this.submitData(data);
             } else {
                 log.debug('input is nok');
+                this.$vux.toast.text('您输入的内容不符合要求,请重试', 'middle');
             }
-            // if (this.content.input === '手机号') {
-            //     let reg = '^(?=\\d{11}$)^1(?:3\\d|4[57]|5[^4\\D]|66|7[^249\\D]|8\\d|9[89])\\d{8}$';
-            //     var re = new RegExp(reg);
-            //     if (re.test(this.value.replace(/\s/g, ''))) {
-            //         log.debug('phone number is correct');
-            //     } else {
-            //         this.$vux.toast.text('请输入正确的手机号码', 'middle');
-            //         this.value = '';
-            //     }
-            // } else if (this.content.input === '邮箱') {
-
-            // }
+        },
+        submitData(data) {
+            log.debug('submit data is ' + JSON.stringify(data));
         }
     },
     components: {

@@ -4,9 +4,10 @@
             <avator img="../../../../static/img/avator.jpg" size='70' radius='50'></avator>
         </div>
         <div class="text">
-            <div class="name">用户: {{memberInfo.name}}</div>
+            <div class="name" v-if="memberInfo.name">昵称: {{memberInfo.name}}</div>
+            <div class="name" v-else>昵称: {{memberInfo.phone}}</div>
             <div class="balance">余额: ￥{{memberInfo.balance}}元</div>
-            <div class="bonuspoint">积分: {{memberInfo.ID}}</div>
+            <div class="bonuspoint">积分: {{memberInfo.point}}</div>
         </div>
     </div>
 </template>

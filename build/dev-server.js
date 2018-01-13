@@ -51,11 +51,33 @@ const resnull = appData.buyrecord.null
 const resfail = appData.buyrecord.fail
 const ressuccess = appData.buyrecord.success
 const alterStatus = appData.alterStatus
+const modifyMemberInfo = appData.modifyMemberInfo
+const modifyPwd = appData.modifyPwd
 
 const noUser = false
 
 /* define router  */
 var apiRoutes = express.Router()
+
+
+apiRoutes.post('/member/show/ui/modifyBasicInfo.do', function(req, res){
+  let user = req.body
+  if(user.userId === 107) {
+    res.json(modifyMemberInfo.success)
+  }else{
+    res.json(modifyMemberInfo.fail)
+  }
+})
+
+apiRoutes.post('/member/show/ui/modifyPassword.do', function(req, res){
+  let user = req.body
+  if(user.entityId === 107){
+    res.json(modifyPwd.success)
+  }else{
+    res.json(modifyPwd.fail)
+  }
+})
+
 apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) {
   res.json(categorys)
 })
