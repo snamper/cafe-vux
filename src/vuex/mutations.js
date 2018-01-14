@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { url } from '../common/js/values';
 import Logger from 'chivy';
 const log = new Logger('vuex/mutations');
 export default {
@@ -46,5 +47,14 @@ export default {
     // 更新商品
     updateStateCategorys(state, payload) {
         state.categorys = payload;
+    },
+    getCategorys(state) {
+        Vue.http.get(url.categorysList).then((response) => {
+            let result = response.data;
+            if (result != null) {
+                log.debug('updateStateCategorys');
+                state.categorys = result;
+            }
+        });
     }
 };

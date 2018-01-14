@@ -51,6 +51,8 @@ import logo from '../../components/logo';
 import food from './food';
 import shopcart from './shopcart';
 import cartcontrol from './cartcontrol';
+import Logger from 'chivy';
+const log = new Logger('page/menu/menu');
 export default {
     data() {
         return {
@@ -60,11 +62,29 @@ export default {
             selectedFood: {}
         };
     },
-    created() {
-        this.$store.dispatch('getCategorys').then(() => {
-            this.goods = this.$store.state.categorys;
-            this.init();
+    beforeRouteEnter(to, from, next) {
+        log.debug('beforeRouteEnter');
+
+        next(vm => {
+            vm.$store.commit('updateLoadingStatus', {isLoading: true});
+            vm.$store.dispatch('getCategorys').then(() => {
+                log.debug(JSON.stringify(vm.$store.state.categorys));
+            });
+            // vm.$store.dispatch('getCategorys').then(() => {
+            //     log.debug(JSON.stringify(this.$store.state.categorys));
+            //     this.goods = this.$store.state.categorys;
+            //     log.debug(JSON.stringify(this.goods));
+            // });
+            vm.$store.commit('updateLoadingStatus', {isLoading: false});
         });
+    },
+    created() {
+        // this.$store.dispatch('getCategorys').then(() => {
+        //     log.debug(JSON.stringify(this.$store.state.categorys));
+        //     this.goods = this.$store.state.categorys;
+        //     log.debug(JSON.stringify(this.goods));
+        //     this.init();
+        // });
     },
     computed: {
         currentIndex() {

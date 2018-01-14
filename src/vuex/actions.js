@@ -87,6 +87,7 @@ export default {
         Vue.http.get(url.categorysList).then((response) => {
             let result = response.data;
             if (result != null) {
+                log.debug('updateStateCategorys');
                 context.commit('updateStateCategorys', result);
             }
         });
