@@ -123,7 +123,7 @@
 **入参**
 
 	{
-	    "entityName": "test"
+	    "name": "123"
 	}
 
 **回参**
@@ -131,11 +131,12 @@
 返回一个JSON对象，并增加对象名为status。
 
 	{
-		"balance":0,
-		"id":0,
-		"status":true
+	"balance": 0,
+	"id": 0,
+	"status": true, //只看status 这个字段
+	"success": false
 	}
-
+	
 ### 用户登录接口
 
     const ApiMemberLogin = '/shop/member/show/ui/memberLogin.do';
@@ -197,22 +198,12 @@
 **回参**
 
 	{
-	  "entityId": "107",
-	  "entityName": "ccc",
-	  "envData": {
-	    "endRow": -1,
-	    "language": "",
-	    "pageNo": -1,
-	    "pageSize": -1,
-	    "realTotalRows": -1,
-	    "responseStatus": "0",
-	    "startRow": -1,
-	    "totalPages": -1,
-	    "totalRows": -1,
-	    "userIp": "",
-	    "userName": "13555556666"
-	  },
-	  "success": true
+	    "balance": 0,
+		"createTime": "18-1-14 下午4:56",
+		"id": 92,
+		"mobile": "13555556666",
+		"status": false,
+		"success": true  //看success字段的值
 	}
 	
 ### 商品购买接口
