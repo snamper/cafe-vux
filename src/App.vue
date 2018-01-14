@@ -5,22 +5,9 @@
 </template>
 
 <script type='text/ecmascript-6'>
-import Logger from 'chivy';
-import session from './config/session';
-import util from './common/js/util';
-const log = new Logger('cafe/App');
-const uuidv4 = require('uuid/v4');
 export default {
   created() {
-    // 读取sessionStorage中是否存在UUID，如果存在则写入state中，如果不存在，则生成并写入sessionStorage中
-    let uuid = util.getkey(session.uuid);
-    if (uuid === null) {
-      log.debug('cannot get uuid from sessionStorage');
-      uuid = uuidv4();
-      util.setkey(session.uuid, uuid);
-    }
-    log.debug('uuid is ' + JSON.stringify(uuid));
-    this.$store.commit('setUUID', uuid);
+    this.$store.dispatch('initUUID');
   }
 };
 </script>
