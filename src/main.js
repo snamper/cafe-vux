@@ -6,6 +6,8 @@ import App from './App';
 import router from './router';
 import { ToastPlugin, AjaxPlugin, AlertPlugin } from 'vux';
 import store from './vuex/';
+import './common/css/iconfont.css';
+import './common/stylus/index.styl';
 
 Vue.use(AjaxPlugin);
 Vue.use(ToastPlugin);

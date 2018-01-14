@@ -75,11 +75,20 @@ export default {
             }
         });
     },
+    // 是否有重复的用户名或者邮箱名
     duplicate(context, payload) {
         Vue.http.post(url.userRegister, payload).then((response) => {
             let result = response.data;
             // 检测是否重名
             context.commit('updateStateDuplicate', result.status);
+        });
+    },
+    getCategorys(context) {
+        Vue.http.get(url.categorysList).then((response) => {
+            let result = response.data;
+            if (result != null) {
+                context.commit('updateStateCategorys', result);
+            }
         });
     }
 };

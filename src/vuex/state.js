@@ -7,5 +7,7 @@ export default {
     status: {
         login: false,
         duplicate: false
-    }
+    },
+    // 商品
+    categorys: null
 };
