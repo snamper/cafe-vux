@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Main from '@/pages/main/main';
 import Login from '@/pages/login/login';
 import Menu from '@/pages/menu/menu';
+import Order from '@/pages/order/order';
 
 Vue.use(Router);
 
@@ -24,6 +25,12 @@ export default new Router({
         name: 'login',
         path: 'login',
         component: Login
+      },
+      {
+        // 购买清单页面
+        name: 'order',
+        path: 'order',
+        component: Order
       }]
     }
   ]

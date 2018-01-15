@@ -86,6 +86,7 @@ export default {
             context.commit('updateStateDuplicate', result.status);
         });
     },
+    // 获取商品分类数据
     getCategorys(context) {
         return new Promise((resolve, reject) => {
             Vue.http.get(url.categorysList).then((response) => {
