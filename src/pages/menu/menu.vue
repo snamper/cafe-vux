@@ -64,17 +64,13 @@ export default {
     },
     beforeRouteEnter(to, from, next) {
         log.debug('beforeRouteEnter');
-
         next(vm => {
             vm.$store.commit('updateLoadingStatus', {isLoading: true});
-            vm.$store.dispatch('getCategorys').then(() => {
-                log.debug(JSON.stringify(vm.$store.state.categorys));
+            vm.$store.dispatch('getCategorys').then((response) => {
+                // log.debug(JSON.stringify(vm.$store.state.categorys));
+                vm.goods = vm.$store.state.categorys;
+                vm.init();
             });
-            // vm.$store.dispatch('getCategorys').then(() => {
-            //     log.debug(JSON.stringify(this.$store.state.categorys));
-            //     this.goods = this.$store.state.categorys;
-            //     log.debug(JSON.stringify(this.goods));
-            // });
             vm.$store.commit('updateLoadingStatus', {isLoading: false});
         });
     },
@@ -199,6 +195,12 @@ export default {
                 margin-right: 2px
                 background-size: 12px 12px
                 background-repeat: no-repeat
+            .text
+                display: table-cell
+                width: 56px
+                vertical-align: middle
+                border-1px(rgba(7, 17, 27, 0.1))
+                font-size: 12px
     .foods-wrapper
         flex: 1
         .title
@@ -229,6 +231,16 @@ export default {
                     line-height: 14px
                     font-size: 14px
                     color: rgb(7, 17, 27)
+                .desc, .extra
+                    line-height: 10px
+                    font-size: 10px
+                    color: rgb(147, 153, 159)
+                .desc
+                    line-height: 12px
+                    margin-bottom: 8px
+                .extra
+                    .count
+                        margin-right: 12px
                 .price
                     font-weight: 700
                     line-height: 24px

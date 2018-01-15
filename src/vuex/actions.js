@@ -10,15 +10,17 @@ Vue.use(AjaxPlugin);
 export default {
     // 初始化uuid
     initUUID(context) {
-        // 读取sessionStorage中是否存在UUID，如果存在则写入state中，如果不存在，则生成并写入sessionStorage中
-        let uuid = getSessionStorage(session.uuid);
-        if (uuid === null) {
-            log.debug('cannot get uuid from sessionStorage');
-            uuid = uuidv4();
-            setSessionStorage(session.uuid, uuid);
-        }
-        log.debug('uuid is ' + JSON.stringify(uuid));
-        context.commit('updateUUID', uuid);
+        return new Promise((resolve, reject) => {
+            // 读取sessionStorage中是否存在UUID，如果存在则写入state中，如果不存在，则生成并写入sessionStorage中
+            let uuid = getSessionStorage(session.uuid);
+            if (uuid === null) {
+                log.debug('cannot get uuid from sessionStorage');
+                uuid = uuidv4();
+                setSessionStorage(session.uuid, uuid);
+            }
+            log.debug('uuid is ' + JSON.stringify(uuid));
+            context.commit('updateUUID', uuid);
+        });
     },
     // 登陆动作,提交到服务端后,存入数据的到SessionStorage,并更新state的状态
     // state状态用于判断是否登陆成功用dispatch().then()来操作
@@ -84,12 +86,15 @@ export default {
         });
     },
     getCategorys(context) {
-        Vue.http.get(url.categorysList).then((response) => {
-            let result = response.data;
-            if (result != null) {
-                log.debug('updateStateCategorys');
-                context.commit('updateStateCategorys', result);
-            }
+        return new Promise((resolve, reject) => {
+            Vue.http.get(url.categorysList).then((response) => {
+                let result = response.data;
+                if (result != null) {
+                    log.debug('updateStateCategorys');
+                    context.commit('updateStateCategorys', result);
+                    resolve();
+                }
+            });
         });
     }
 };
