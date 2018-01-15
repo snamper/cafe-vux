@@ -20,6 +20,7 @@ export default {
             }
             log.debug('uuid is ' + JSON.stringify(uuid));
             context.commit('updateUUID', uuid);
+            resolve();
         });
     },
     // 登陆动作,提交到服务端后,存入数据的到SessionStorage,并更新state的状态

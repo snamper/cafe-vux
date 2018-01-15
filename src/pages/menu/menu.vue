@@ -67,20 +67,11 @@ export default {
         next(vm => {
             vm.$store.commit('updateLoadingStatus', {isLoading: true});
             vm.$store.dispatch('getCategorys').then((response) => {
-                // log.debug(JSON.stringify(vm.$store.state.categorys));
                 vm.goods = vm.$store.state.categorys;
                 vm.init();
             });
             vm.$store.commit('updateLoadingStatus', {isLoading: false});
         });
-    },
-    created() {
-        // this.$store.dispatch('getCategorys').then(() => {
-        //     log.debug(JSON.stringify(this.$store.state.categorys));
-        //     this.goods = this.$store.state.categorys;
-        //     log.debug(JSON.stringify(this.goods));
-        //     this.init();
-        // });
     },
     computed: {
         currentIndex() {
