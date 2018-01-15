@@ -223,16 +223,6 @@ export default {
                     line-height: 14px
                     font-size: 14px
                     color: rgb(7, 17, 27)
-                .desc, .extra
-                    line-height: 10px
-                    font-size: 10px
-                    color: rgb(147, 153, 159)
-                .desc
-                    line-height: 12px
-                    margin-bottom: 8px
-                .extra
-                    .count
-                        margin-right: 12px
                 .price
                     font-weight: 700
                     line-height: 24px
