@@ -26,53 +26,53 @@ export default {
     },
     computed: {
         show() {
-            if (this.product.status === exchangeType.WAITE4PAY.key) {
+            if (this.good.status === exchangeType.WAITE4PAY.key) {
                 return true;
-            } else if (this.product.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
                 return true;
-            } else if (this.product.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
                 return false;
-            } else if (this.product.status === exchangeType.SUCCESS.key) {
+            } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return false;
             }
         },
         status() {
-            if (this.product.status === exchangeType.WAITE4PAY.key) {
+            if (this.good.status === exchangeType.WAITE4PAY.key) {
                 return [true, false, false, false];
-            } else if (this.product.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
                 return [true, true, false, false];
-            } else if (this.product.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
                 return [true, true, true, false];
-            } else if (this.product.status === exchangeType.SUCCESS.key) {
+            } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return [true, true, true, true];
             }
         },
         line() {
-            if (this.product.status === exchangeType.WAITE4PAY.key) {
+            if (this.good.status === exchangeType.WAITE4PAY.key) {
                 return [false, false, false];
-            } else if (this.product.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
                 return [true, false, false];
-            } else if (this.product.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
                 return [true, true, false];
-            } else if (this.product.status === exchangeType.SUCCESS.key) {
+            } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return [true, true, true];
             }
         },
         tips() {
-            if (this.product.status === exchangeType.WAITE4PAY.key) {
+            if (this.good.status === exchangeType.WAITE4PAY.key) {
                 return ['进行中', '', ''];
-            } else if (this.product.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
                 return ['', '进行中', ''];
-            } else if (this.product.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
                 return ['', '', '进行中'];
-            } else if (this.product.status === exchangeType.SUCCESS.key) {
+            } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return ['', '', ''];
             }
         }
     },
     methods: {
         payit() {
-            this.$router.push({name: 'pay', params: {product: this.product}});
+            this.$router.push({name: 'pay', params: {product: this.good}});
         }
     },
     components: {

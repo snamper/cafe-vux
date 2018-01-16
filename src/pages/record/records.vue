@@ -36,7 +36,7 @@ import imagelist from '../../components/img';
 import { mapState } from 'vuex';
 import { Divider } from 'vux';
 import Logger from 'chivy';
-const log = new Logger('page/record/record');
+const log = new Logger('page/record/records');
 export default {
     data() {
         return {
@@ -113,6 +113,7 @@ export default {
             return covertStatus(status);
         },
         showDetailPage(good) {
+            log.debug('jump to record');
             this.$router.push({name: 'record', params: {record: good}});
         }
     },

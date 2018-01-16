@@ -124,6 +124,7 @@ export default {
                     context.commit('updateRecordID', result.entityId);
                     context.commit('updateStatusRecord', true);
                 } else {
+                    log.error('submitRecord failed');
                     context.commit('updateStatusRecord', false);
                 }
                 resolve();

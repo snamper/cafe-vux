@@ -5,7 +5,8 @@ import Login from '@/pages/login/login';
 import Menu from '@/pages/menu/menu';
 import Order from '@/pages/order/order';
 import Pay from '@/pages/order/pay';
-import Record from '@/pages/record/records';
+import Records from '@/pages/record/records';
+import Record from '@/pages/record/record';
 
 Vue.use(Router);
 
@@ -36,15 +37,21 @@ export default new Router({
       },
       {
         // 订单详情
-        path: 'record',
-        component: Record
+        path: 'records',
+        component: Records
       }]
     },
     {
       // 付款页面
       name: 'pay',
-      path: 'pay',
+      path: '/pay',
       component: Pay
+    },
+    {
+      name: 'record',
+      path: '/record',
+      component: Record,
+      props: true
     }
   ]
 });

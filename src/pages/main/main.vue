@@ -15,7 +15,7 @@
           <span slot="icon" class="iconfont icon-xinpin"></span>
           <span slot="label">新品</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/record'}">
+        <tabbar-item :link="{path:'/records'}">
           <span slot="icon" class="iconfont icon-dingdan"></span>
           <span slot="label">订单</span>
         </tabbar-item>

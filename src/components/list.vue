@@ -22,7 +22,7 @@
                     </flexbox-item>
                 </flexbox>
             </li>
-            <div class="total"  v-if="show">
+            <div class="total vux-1px-t"  v-if="show">
                 <flexbox justify="center" :gutter="2">
                     <flexbox-item :span="7">实付</flexbox-item>
                     <flexbox-item :span="1">
@@ -40,6 +40,8 @@
 <script type="text/ecmascript-6">
 import avator from './avator';
 import { Flexbox, FlexboxItem } from 'vux';
+import Logger from 'chivy';
+const log = new Logger('components/list');
 export default {
     props: {
         goods: {
@@ -59,18 +61,20 @@ export default {
     computed: {
         totalCount() {
             let totalCount = 0;
-            this.list.forEach((food) => {
+            // log.debug(JSON.stringify(this.goods));
+            this.goods.forEach((food) => {
                 if (food.count) {
                     totalCount = totalCount + food.count;
                 } else if (food.number) {
                     totalCount = totalCount + food.number;
                 }
             });
+            log.debug('totalCount is ' + totalCount);
             return totalCount;
         },
         totalPrice() {
             let totalPrice = 0;
-            this.list.forEach((food) => {
+            this.goods.forEach((food) => {
                 if (food.count) {
                     totalPrice = totalPrice + food.count * food.price;
                 } else if (food.number) {
@@ -91,8 +95,8 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
     .recordlist
         padding 7px 0
-        .total
-            padding 10px 0
+    .total
+        padding 10px 0
     .line
         padding 2px 0
         .total
