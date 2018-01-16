@@ -76,5 +76,9 @@ export default {
                 food.count = 0;
             });
         });
+    },
+    // 订单列表
+    updateRecordList(state, payload) {
+        state.recordList = payload;
     }
 };

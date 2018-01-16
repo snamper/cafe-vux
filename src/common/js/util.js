@@ -15,13 +15,28 @@ export var getSessionStorage = function getSessionStorage(key) {
 export var formatDate = function formatDate(date) {
     var datetime = new Date(date);
     var format = {
-        'Year': 1900 + datetime.getYear(),
-        'Month': (datetime.getMonth() + 1),
-        'Day': datetime.getDate(),
-        'Hour': datetime.getHours(),
-        'Minute': datetime.getMinutes(),
-        'Second': datetime.getSeconds()
+        Year: 1900 + datetime.getYear(),
+        Month: (datetime.getMonth() + 1),
+        Day: datetime.getDate(),
+        Hour: datetime.getHours(),
+        Minute: datetime.getMinutes(),
+        Second: datetime.getSeconds()
     };
+    if (format.Month <= 9) {
+        format.Month = '0' + format.Month;
+    }
+    if (format.Day <= 9) {
+        format.Day = '0' + format.Day;
+    }
+    if (format.Hour <= 9) {
+        format.Hour = '0' + format.Hour;
+    }
+    if (format.Minute <= 9) {
+        format.Minute = '0' + format.Minute;
+    }
+    if (format.Second <= 9) {
+        format.Second = '0' + format.Second;
+    }
     return format;
 };
 // 根据服务端返回的数据存储男女

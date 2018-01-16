@@ -13,5 +13,7 @@ export default {
     // 购物订单
     recordID: null,
     // 商品
-    categorys: null
+    categorys: null,
+    // 购物清单
+    recordList: null
 };

@@ -137,8 +137,21 @@ export default {
                 let result = response.data;
                 if (result.success) {
                     context.commit('updateStatusAlert', true);
+                    resolve();
                 } else {
                     context.commit('updateStatusAlert', false);
+                    resolve();
+                }
+            });
+        });
+    },
+    getRecordList(context, payload) {
+        return new Promise((resolve, reject) => {
+            Vue.http.post(url.recordList, payload).then((response) => {
+                let result = response.data;
+                if (result.length !== 0) {
+                    context.commit('updateRecordList', result);
+                    resolve();
                 }
             });
         });
