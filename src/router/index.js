@@ -5,7 +5,7 @@ import Login from '@/pages/login/login';
 import Menu from '@/pages/menu/menu';
 import Order from '@/pages/order/order';
 import Pay from '@/pages/order/pay';
-import Record from '@/pages/record/record';
+import Record from '@/pages/record/records';
 
 Vue.use(Router);
 

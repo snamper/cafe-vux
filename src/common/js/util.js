@@ -1,3 +1,4 @@
+import { exchangeType } from './values';
 import Logger from 'chivy';
 const log = new Logger('common/js/util');
 
@@ -37,6 +38,7 @@ export var formatDate = function formatDate(date) {
     if (format.Second <= 9) {
         format.Second = '0' + format.Second;
     }
+    log.debug(JSON.stringify(format));
     return format;
 };
 // 根据服务端返回的数据存储男女
@@ -47,5 +49,17 @@ export var gender = function gender(sex) {
         return '女';
     } else {
         return undefined;
+    }
+};
+// 根据返回状态显示内容
+export var covertStatus = function covertStatus(status) {
+    if (status === exchangeType.WAITE4PAY.key) {
+        return exchangeType.WAITE4PAY.value;
+    } else if (status === exchangeType.WAITE4ENSURE.key) {
+        return exchangeType.WAITE4ENSURE.value;
+    } else if (status === exchangeType.ENSURE2PAID.key) {
+        return exchangeType.ENSURE2PAID.value;
+    } else if (status === exchangeType.SUCCESS.key) {
+        return exchangeType.SUCCESS.value;
     }
 };

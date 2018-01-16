@@ -36,8 +36,20 @@ export var session = {
 };
 // 订单状态
 export var exchangeType = {
-    WAITE4PAY: '待付款',
-    WAITE4ENSURE: '已付款',
-    ENSURE2PAID: '已确认',
-    SUCCESS: '成功'
+    WAITE4PAY: {
+        key: 'WAITE4PAY',
+        value: '待付款'
+    },
+    WAITE4ENSURE: {
+        key: 'WAITE4ENSURE',
+        value: '已付款'
+    },
+    ENSURE2PAID: {
+        key: 'ENSURE2PAID',
+        value: '已确认'
+    },
+    SUCCESS: {
+        key: 'SUCCESS',
+        value: '成功'
+    }
 };

@@ -3,7 +3,7 @@
         <div class="image" ref="image">
             <ul class="imageheader" ref="imageHeader">
                 <li class="imagelist" v-for="(product,index) in list" :key="index" ref="imagelist">
-                    <avator :img="product.imageUrl"  size='50' radius='0'></avator>
+                    <avator :img="product.imageUrl"  :size='size' :radius='radius'></avator>
                 </li>
             </ul>
         </div>
@@ -14,6 +14,12 @@
 import BScroll from 'better-scroll';
 import avator from './avator';
 export default {
+    data() {
+        return {
+            size: 50,
+            radius: 0
+        };
+    },
     props: {
         list: {
             type: Array
