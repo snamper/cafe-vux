@@ -215,7 +215,7 @@
 		{
 			"amount": 5,
 			"userId": 723,
-			"userName": "bbb",
+			"userName": "bbb",  ???为什么要传递username, 这个地方的作用是什么? 目前代码是找不到username的话,就传递的phone,是否可以不传
 			"cashOrBalance": "BALANCE",
 			"details": [{
 				"productId": 2,
