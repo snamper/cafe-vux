@@ -1,3 +1,5 @@
+// import Logger from 'chivy';
+// const log = new Logger('vuex/getters');
 export default{
     selectFoods(state, getters) {
         let foods = [];
@@ -34,8 +36,8 @@ export default{
         let member = 0;
         let count = 0;
         getters.selectFoods.forEach((food) => {
-            normal += food.price + food.count;
-            member += food.memberPrice + food.count;
+            normal += food.price * food.count;
+            member += food.memberPrice * food.count;
             count += food.count;
         });
         let total = {
@@ -43,6 +45,7 @@ export default{
             'member': member,
             'count': count
         };
+        // log.debug('totalAttr is ' + JSON.stringify(total));
         return total;
     }
 };

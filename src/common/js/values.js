@@ -34,3 +34,10 @@ export var session = {
     uuid: 'uuid',
     memberInfo: 'memberInfo'
 };
+// 订单状态
+export var exchangeType = {
+    WAITE4PAY: '待付款',
+    WAITE4ENSURE: '已付款',
+    ENSURE2PAID: '已确认',
+    SUCCESS: '成功'
+};

@@ -1,9 +1,10 @@
 <template>
     <div class="thumb">
-        <blur :blur-amount=40 :url="background" height="120">
-            <p class="center">
+        <blur :blur-amount=40 :url="background" :height="height">
+            <div class="center">
                 <img :src="thumb">
-            </p>
+                <p class="name">{{username}}</p>
+            </div>
         </blur>
     </div>
 </template>
@@ -11,7 +12,15 @@
 <script type="text/ecmascript-6">
 import { Blur } from 'vux';
 export default {
+    data() {
+        return {
+            height: 120
+        };
+    },
     props: {
+        username: {
+            type: String
+        },
         background: {
             type: String
         },
@@ -28,10 +37,14 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .thumb
     .center
-        display flex
-        justify-content center
+        text-align center
+        padding-top 5px
+        color #fff
+        font-size 18px
+        .name
+            padding 3px 0
+            font-size 18px
         img
-            margin 20px 0px
             width: 80px;
             height 80px;
             border-radius: 50%;

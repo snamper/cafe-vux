@@ -8,8 +8,8 @@ export default {
         state.UUID = payload;
     },
     // 更新登陆状态
-    updateStateLogin(state, payload) {
-        log.debug('function (updateStateLogin)' + 'get param is ' + payload);
+    updateStatusLogin(state, payload) {
+        log.debug('function (updateStatusLogin)' + 'get param is ' + payload);
         state.status.login = payload;
     },
     // 更新会员信息
@@ -17,7 +17,7 @@ export default {
         state.memberInfo = payload;
     },
     // 更新是否重名状态
-    updateStateDuplicate(state, payload) {
+    updateStatusDuplicate(state, payload) {
         state.status.duplicate = payload;
     },
     // 增加购买商品
@@ -55,6 +55,26 @@ export default {
                 log.debug('updateStateCategorys');
                 state.categorys = result;
             }
+        });
+    },
+    // 更新购买物品返回状态
+    updateStatusRecord(state, payload) {
+        state.status.record = payload;
+    },
+    // 更新提醒卖家返回状态
+    updateStatusAlert(state, payload) {
+        state.status.alert = payload;
+    },
+    // 购物订单
+    updateRecordID(state, payload) {
+        state.recordID = payload;
+    },
+    // 清空购物车
+    clearCars(state) {
+        state.categorys.forEach((category) => {
+            category.list.forEach((food) => {
+                food.count = 0;
+            });
         });
     }
 };

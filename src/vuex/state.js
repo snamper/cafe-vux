@@ -6,8 +6,12 @@ export default {
     // 状态
     status: {
         login: false,
-        duplicate: false
+        duplicate: false,
+        record: false,
+        alert: false
     },
+    // 购物订单
+    recordID: null,
     // 商品
     categorys: null
 };

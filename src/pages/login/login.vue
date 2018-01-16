@@ -71,6 +71,7 @@ export default {
             } else {
                 /* 注册AJAX请求 */
                 this.$store.dispatch('login', this.ajaxloginUser).then(() => {
+                    log.debug('login status' + this.status.login);
                     if (this.status.login) {
                        this.$vux.toast.text('登陆成功', 'middle');
                        // TODO 跳转到页面

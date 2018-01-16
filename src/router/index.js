@@ -4,6 +4,7 @@ import Main from '@/pages/main/main';
 import Login from '@/pages/login/login';
 import Menu from '@/pages/menu/menu';
 import Order from '@/pages/order/order';
+import Pay from '@/pages/order/pay';
 
 Vue.use(Router);
 
@@ -31,6 +32,12 @@ export default new Router({
         name: 'order',
         path: 'order',
         component: Order
+      },
+      {
+        // 付款页面
+        name: 'pay',
+        path: 'pay',
+        component: Pay
       }]
     }
   ]
