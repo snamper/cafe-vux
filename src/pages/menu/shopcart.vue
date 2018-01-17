@@ -144,8 +144,8 @@ export default {
         },
         pay() {
             if (this.totalAttr.normal > 0) {
-                // TODO
-                log.debug('TODO');
+                // 跳转到订单界面
+                log.debug('jump to order page');
                 this.$router.push({ path: '/order' });
             }
         },

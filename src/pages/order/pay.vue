@@ -8,27 +8,27 @@
         <div class="button">
             <div class="alipay">
                 <div class="img">
-                    <avator :img='alipay.icon' :size="size" :radius='radius'></avator>
+                    <avator :img='payType.alipay.icon' :size="size" :radius='radius'></avator>
                 </div>
-                <div class="text">{{alipay.name}}</div>
+                <div class="text">{{payType.alipay.name}}</div>
                 <div class="select" @click="alipayClick">
                     <check-icon :value.sync="show.alipay" ></check-icon>
                 </div>
             </div>
             <div class="wechat">
                 <div class="img">
-                    <avator :img='wechat.icon' :size="size" :radius='radius'></avator>
+                    <avator :img='payType.wechat.icon' :size="size" :radius='radius'></avator>
                 </div>
-                <div class="text">{{wechat.name}}</div>
+                <div class="text">{{payType.wechat.name}}</div>
                 <div class="select" @click="wechatClick">
                     <check-icon :value.sync="show.wechat"></check-icon>
                 </div>
             </div>
             <div class="balance" v-show="memberInfo!==null">
                 <div class="img">
-                    <avator :img='member.icon' :size="size" :radius='radius'></avator>
+                    <avator :img='payType.member.icon' :size="size" :radius='radius'></avator>
                 </div>
-                <div class="text">余额支付(￥{{balance}})</div>
+                <div class="text">{{payType.member.name}}(￥{{balance}})</div>
                 <div class="select" @click="memberClick">
                     <check-icon :value.sync="show.member"></check-icon>
                 </div>
@@ -58,23 +58,23 @@ const log = new Logger('page/menu/pay');
 const BALANCE = 'BALANCE';
 const CASH = 'CASH';
 export default {
+    beforeRouteEnter(from, to, next) {
+        next(vm => {
+            // 当购物车为空的时候,返回主页面
+            // 当页面不是从record来也返回主页面
+            log.debug('selectfoods length is ' + vm.$store.getters.selectFoods.length);
+            log.debug('from path is ' + JSON.stringify(from.path));
+            log.debug('to path is ' + JSON.stringify(to.path));
+            if (vm.$store.getters.selectFoods.length === 0 && to.path !== '/record') {
+                vm.$router.push({name: 'menu'});
+            }
+        });
+    },
     data() {
         return {
             qrcodeSize: 100,
             size: 50,
             radius: 50,
-            alipay: {
-                'icon': '../../../static/img/alipayicon.png',
-                'name': '支付宝'
-            },
-            wechat: {
-                'icon': '../../../static/img/wechaticon.png',
-                'name': '微信支付'
-            },
-            member: {
-                'icon': '../../../static/img/avator.jpg',
-                'name': '余额支付'
-            },
             show: {
                 alipay: true,
                 wechat: false,
@@ -100,7 +100,8 @@ export default {
             'memberInfo',
             'UUID',
             'status',
-            'recordID'
+            'recordID',
+            'payType'
         ]),
         // 购物总价
         totalPrice() {

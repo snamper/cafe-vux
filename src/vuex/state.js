@@ -26,5 +26,20 @@ export default {
     images: {
         background: '../../static/img/background.jpg',
         avator: '../../static/img/avator.jpg'
+    },
+    // 支付类型
+    payType: {
+        alipay: {
+            'icon': '../../static/img/alipayicon.png',
+            'name': '支付宝'
+        },
+        wechat: {
+            'icon': '../../static/img/wechaticon.png',
+            'name': '微信支付'
+        },
+        member: {
+            'icon': '../../static/img/avator.jpg',
+            'name': '余额支付'
+        }
     }
 };
