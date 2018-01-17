@@ -87,9 +87,9 @@ export default {
     computed: {
         value() {
             if (this.show.alipay) {
-                return payType.alipay.QR;
+                return this.payType.alipay.QR;
             } else if (this.show.wechat) {
-                return payType.wechat.QR;
+                return this.payType.wechat.QR;
             }
         },
         ...mapGetters([

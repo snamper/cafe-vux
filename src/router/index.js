@@ -48,6 +48,7 @@ export default new Router({
       },
       {
         // 订单详情
+        name: 'records',
         path: 'records',
         component: Records
       },

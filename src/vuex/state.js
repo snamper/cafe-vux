@@ -30,16 +30,18 @@ export default {
     // 支付类型
     payType: {
         alipay: {
-            'icon': '../../static/img/alipayicon.png',
-            'name': '支付宝'
+            icon: '../../static/img/alipayicon.png',
+            name: '支付宝',
+            QR: '../../static/img/alipayQR.jpg'
         },
         wechat: {
-            'icon': '../../static/img/wechaticon.png',
-            'name': '微信支付'
+            icon: '../../static/img/wechaticon.png',
+            name: '微信支付',
+            QR: '../../static/img/wechatQR.jpg'
         },
         member: {
-            'icon': '../../static/img/avator.jpg',
-            'name': '余额支付'
+            icon: '../../static/img/avator.jpg',
+            name: '余额支付'
         }
     }
 };
