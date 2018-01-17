@@ -87,9 +87,9 @@ export default {
     computed: {
         value() {
             if (this.show.alipay) {
-                return '../../../static/img/alipayQR.jpg';
+                return payType.alipay.QR;
             } else if (this.show.wechat) {
-                return '../../../static/img/wechatQR.jpg';
+                return payType.wechat.QR;
             }
         },
         ...mapGetters([
@@ -223,7 +223,7 @@ export default {
             }
         },
         alertStatus() {
-            // let _this = this;
+            let _this = this;
             let data = {
                 RecordID: this.recordID,
                 status: exchangeType.WAITE4ENSURE
@@ -234,9 +234,8 @@ export default {
                         title: '付款提醒',
                         content: '已提醒店家，店家会尽快确认付款信息',
                         onHide() {
-                            // TODO
                             log.debug('跳转页面,高亮显示处理');
-                            // _this.$router.push({path: '/orderlist'});
+                            _this.$router.push({name: 'records'});
                         }
                     });
                 }

@@ -62,15 +62,11 @@ export default {
             selectedFood: {}
         };
     },
-    beforeRouteEnter(to, from, next) {
-        log.debug('beforeRouteEnter');
-        next(vm => {
-            vm.$store.commit('updateLoadingStatus', {isLoading: true});
-            vm.$store.dispatch('getCategorys').then((response) => {
-                vm.goods = vm.$store.state.categorys;
-                vm.init();
-            });
-            vm.$store.commit('updateLoadingStatus', {isLoading: false});
+    created() {
+        log.debug('getCategorys');
+        this.$store.dispatch('getCategorys').then((response) => {
+            this.goods = this.$store.state.categorys;
+            this.init();
         });
     },
     computed: {
