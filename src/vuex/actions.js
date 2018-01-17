@@ -1,5 +1,5 @@
-import { setSessionStorage, getSessionStorage, gender } from '../common/js/util';
-import { session, url } from '../common/js/values';
+import { setSessionStorage, getSessionStorage, gender, removeSessionStorage } from '../common/js/util';
+import { session, url, type } from '../common/js/values';
 import Vue from 'vue';
 import { AjaxPlugin } from 'vux';
 import Logger from 'chivy';
@@ -146,12 +146,72 @@ export default {
             });
         });
     },
+    // 获取订单信息
     getRecordList(context, payload) {
         return new Promise((resolve, reject) => {
             Vue.http.post(url.recordList, payload).then((response) => {
                 let result = response.data;
                 if (result.length !== 0) {
                     context.commit('updateRecordList', result);
+                    resolve();
+                }
+            });
+        });
+    },
+    // 注销用户
+    logout(context) {
+        return new Promise((resolve, reject) => {
+            // 重置登陆标志位
+            context.commit('updateStatusLogin', false);
+            // 清空MemberInfo内容
+            context.commit('updatememberInfo', null);
+            // 清空Session中的内容
+            removeSessionStorage(session.memberInfo);
+        });
+    },
+    // 修改信息
+    modifyMemberInfo(context, payload) {
+        return new Promise((resolve, reject) => {
+            let data = null;
+            if (payload.type === type.name) {
+                data = {
+                    userId: payload.userId,
+                    name: payload.name
+                };
+            } else if (payload.type === type.mobile) {
+                data = {
+                    userId: payload.userId,
+                    mobile: payload.mobile
+                };
+            } else if (payload.type === type.gender) {
+                data = {
+                    userId: payload.userId,
+                    gender: payload.gender
+                };
+            } else if (payload.type === type.email) {
+                data = {
+                    userId: payload.userId,
+                    email: payload.email
+                };
+            } else if (payload.type === type.address) {
+                data = {
+                    userId: payload.userId,
+                    address: payload.address
+                };
+            } else if (payload.type === type.detailAddress) {
+                data = {
+                    userId: payload.userId,
+                    detailAddress: payload.detailAddress
+                };
+            }
+            log.debug(JSON.stringify(data));
+            Vue.http.post(url.basicInfo, payload).then((response) => {
+                let result = response.data;
+                if (result.success) {
+                    context.commit('updateStatusInfo', true);
+                    resolve();
+                } else {
+                    context.commit('updateStatusInfo', false);
                     resolve();
                 }
             });

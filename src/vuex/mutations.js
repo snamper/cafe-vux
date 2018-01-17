@@ -80,5 +80,10 @@ export default {
     // 订单列表
     updateRecordList(state, payload) {
         state.recordList = payload;
+    },
+    // 更新会员信息修改状态
+    updateStatusInfo(state, payload) {
+        state.status.info = payload;
     }
+
 };

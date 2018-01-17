@@ -11,7 +11,7 @@
           <span slot="icon" class="iconfont icon-icon"></span>
           <span slot="label">菜单</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/new'}">
+        <tabbar-item :link="{path:'/news'}">
           <span slot="icon" class="iconfont icon-xinpin"></span>
           <span slot="label">新品</span>
         </tabbar-item>

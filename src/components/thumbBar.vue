@@ -1,6 +1,6 @@
 <template>
     <div class="thumb">
-        <blur :blur-amount=40 :url="background" :height="height">
+        <blur :blur-amount=30 :url="background" :height="height">
             <div class="center">
                 <img :src="thumb">
                 <p class="name">{{username}}</p>
@@ -48,5 +48,5 @@ export default {
             width: 80px;
             height 80px;
             border-radius: 50%;
-            border: 4px solid #ececec;
+            border: 1px solid #ececec;
 </style>

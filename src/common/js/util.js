@@ -12,6 +12,12 @@ export var getSessionStorage = function getSessionStorage(key) {
     log.info('get key(' + key + ') from sessionStorage');
     return JSON.parse(sessionStorage.getItem(key));
 };
+// 移除sessionStorage的key
+export var removeSessionStorage = function removeSessionStorage(key) {
+    log.info('remove key(' + key + ') from sessionStorage');
+    sessionStorage.removeItem(key);
+};
+
 // 根据long时间获取具体的年月日时分秒
 export var formatDate = function formatDate(date) {
     var datetime = new Date(date);
@@ -61,5 +67,13 @@ export var covertStatus = function covertStatus(status) {
         return exchangeType.ENSURE2PAID.value;
     } else if (status === exchangeType.SUCCESS.key) {
         return exchangeType.SUCCESS.value;
+    }
+};
+// 对象是否为空
+export var isObjEmpty = function isObjEmpty(obj) {
+    if (obj === null || obj === '' || typeof (obj) === 'undefined') {
+        return true;
+    } else {
+        return false;
     }
 };

@@ -7,6 +7,11 @@ import Order from '@/pages/order/order';
 import Pay from '@/pages/order/pay';
 import Records from '@/pages/record/records';
 import Record from '@/pages/record/record';
+import News from '@/pages/news/news';
+import Member from '@/pages/member/member';
+import MemberInfo from '@/pages/member/detail';
+import PWD from '@/pages/member/pwd';
+import Modify from '@/pages/member/modify';
 
 Vue.use(Router);
 
@@ -17,11 +22,17 @@ export default new Router({
       component: Main,
       redirect: '/menu',
       children: [{
+        name: 'menu',
         path: 'menu',
         component: Menu,
         meta: {
           keepAlive: true
         }
+      },
+      {
+        // 新品推荐
+        path: 'news',
+        component: News
       },
       {
         // 登陆页面
@@ -39,6 +50,31 @@ export default new Router({
         // 订单详情
         path: 'records',
         component: Records
+      },
+      {
+        // 会员信息页
+        name: 'member',
+        path: 'member',
+        component: Member
+      },
+      {
+        // 会员详情页
+        name: 'memberinfo',
+        path: 'memberinfo',
+        component: MemberInfo
+      },
+      {
+        // 密码修改页
+        name: 'pwd',
+        path: 'pwd',
+        component: PWD
+      },
+      {
+        // 会员信息修改页
+        name: 'modify',
+        path: 'modify',
+        component: Modify,
+        props: true
       }]
     },
     {

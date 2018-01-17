@@ -2,7 +2,7 @@
     <div>
         <div class="order">
             <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
-            <thumbBar :background="background" :thumb="thumb" :username="username"></thumbBar>
+            <thumbBar :background="images.background" :thumb="images.avator" :username="username"></thumbBar>
             <divider>您的订单</divider>
             <div class="listwrapper" ref="listwrapper">
                 <list :goods="selectFoods" :size="list.size" :radius="list.radius"></list>
@@ -27,9 +27,7 @@ export default {
             list: {
                 size: 50,
                 radius: 20
-            },
-            background: '../../../static/img/avator.jpg',
-            thumb: '../../../static/img/avator.jpg'
+            }
         };
     },
     computed: {
@@ -37,7 +35,8 @@ export default {
             'selectFoods'
         ]),
         ...mapState([
-            'memberInfo'
+            'memberInfo',
+            'images'
         ]),
         // 显示游客或者显示昵称或者显示电话号码(唯一标识符)
         username() {
@@ -49,6 +48,14 @@ export default {
                 return this.memberInfo.phone;
             }
         }
+    },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            // 如果选中的商品为0,则返回到menu页面
+            if (vm.$store.getters.selectFoods.length === 0) {
+                vm.$router.push({name: 'menu'});
+            }
+        });
     },
     mounted() {
         if (this.selectFoods.length > 0) {

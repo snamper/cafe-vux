@@ -21,12 +21,12 @@ export var url = {
 
 // 传递类型
 export var type = {
-    'phone': 1,
-    'name': 2,
-    'email': 3,
-    'address': 4,
-    'detailAddress': 5,
-    'gender': 6
+    mobile: 'mobile',
+    name: 'name',
+    email: 'email',
+    address: 'address',
+    detailAddress: 'detailAddress',
+    gender: 'gender'
 };
 
 // session的key

@@ -1,6 +1,7 @@
 // import Logger from 'chivy';
 // const log = new Logger('vuex/getters');
 export default{
+    // 被选择的商品
     selectFoods(state, getters) {
         let foods = [];
         getters.products.forEach((food) => {
@@ -10,6 +11,7 @@ export default{
         });
         return foods;
     },
+    // 所有的商品
     products(state) {
         let products = [];
         let categorys = state.categorys;
@@ -22,6 +24,7 @@ export default{
         }
         return products;
     },
+    // 滑动显示的商品
     sliders(state, getters) {
         let sliders = [];
         getters.products.forEach((product) => {
@@ -31,6 +34,7 @@ export default{
         });
         return sliders;
     },
+    // 总价,总会员价,总数量
     totalAttr(state, getters) {
         let normal = 0;
         let member = 0;
