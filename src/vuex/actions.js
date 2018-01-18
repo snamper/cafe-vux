@@ -32,22 +32,30 @@ export default {
                 let result = response.data;
                 // log.debug(JSON.stringify(result));
                 if (result.status) {
-                    let memberInfo = {
-                        'id': result.id,
-                        'name': result.name,
-                        'point': result.point,
-                        'balance': result.balance,
-                        'gender': gender(result.gender),
-                        'phone': result.phone,
-                        'email': result.email,
-                        'area': result.area,
-                        'address': result.address,
-                        'createTime': result.createTime
-                    };
-                    context.commit('updatememberInfo', memberInfo);
-                    // 更新登陆状态
-                    context.commit('updateStatusLogin', true);
-                    resolve();
+                    if (payload.valid) {
+                        log.debug('check pwd');
+                        // 校验密码用
+                        context.commit('updateStatusOld', true);
+                        resolve();
+                    } else {
+                        log.debug('normal login');
+                        let memberInfo = {
+                            'id': result.id,
+                            'name': result.name,
+                            'point': result.point,
+                            'balance': result.balance,
+                            'gender': gender(result.gender),
+                            'phone': result.phone,
+                            'email': result.email,
+                            'area': result.area,
+                            'address': result.address,
+                            'createTime': result.createTime
+                        };
+                        context.commit('updatememberInfo', memberInfo);
+                        // 更新登陆状态
+                        context.commit('updateStatusLogin', true);
+                        resolve();
+                    }
                 } else {
                     // 更新登陆状态
                     context.commit('updateStatusLogin', false);
@@ -216,6 +224,21 @@ export default {
                     resolve();
                 } else {
                     context.commit('updateStatusInfo', false);
+                    resolve();
+                }
+            });
+        });
+    },
+    modifyPwd(context, payload) {
+        log.debug('modifyPwd post data is ' + JSON.stringify(payload));
+        return new Promise((resolve, reject) => {
+            Vue.http.post(url.modifypwd, payload).then((response) => {
+                let result = response.data;
+                if (result.success) {
+                    context.commit('updateStatusPwd', true);
+                    resolve();
+                } else {
+                    context.commit('updateStatusPwd', false);
                     resolve();
                 }
             });

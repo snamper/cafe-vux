@@ -23,6 +23,14 @@ export default {
     updateStatusDuplicate(state, payload) {
         state.status.duplicate = payload;
     },
+    // 更新原密码是否正确状态
+    updateStatusOld(state, payload) {
+        state.status.old = payload;
+    },
+    // 更新原密码是否正确状态
+    updateStatusPwd(state, payload) {
+        state.status.pwd = payload;
+    },
     // 增加购买商品
     addCount(state, payload) {
         state.categorys.forEach((category) => {

@@ -14,7 +14,11 @@ export default {
         // 提醒卖家状态
         alert: false,
         // 修改记录状态
-        info: false
+        info: false,
+        // 原密码校验状态
+        old: false,
+        // 密码修改状态
+        pwd: false
     },
     // 购物订单
     recordID: null,
