@@ -87,7 +87,7 @@ apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res)
   // {"name":"ccc","passWd":"dad"}
   let user = req.body;
   console.log('memberLogin.do data is ' +JSON.stringify(user));
-  if(user.name==='totti'){
+  if(user.name==='totti' || user.name === '13388889999'){
     res.json(loginpoor)
   } else if(user.name==='david') {
     res.json(loginrich)
