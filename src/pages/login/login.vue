@@ -5,7 +5,7 @@
             <div class="login-input" v-show="show">
                 <group>
                     <x-input label-width="3em" text-align="left" placeholder="用户名/手机号码"  type="text" :required="true" v-model='loginUser.name'></x-input>
-                    <x-input label-width="3em" text-align="left" placeholder="密码"  type="password" :required="true" v-model='loginUser.psd' @on-enter="login"></x-input>
+                    <x-input label-width="3em" text-align="left" placeholder="密码"  :min="1" :max="20" type="password" :required="true" v-model='loginUser.psd' @on-enter="login"></x-input>
                     <x-button type="primary" @click.native="login">登陆</x-button>
                     <div class="txt-wrapper">
                         <div class="forget" @click="forgetPwd">忘记密码</div>
@@ -16,8 +16,8 @@
             <div class="register-input" v-show="!show">
                 <group>
                     <x-input label-width="3em" text-align="left" placeholder="手机号码" mask="999 9999 9999" type="tel" :required="true" v-model='registerUser.phone' is-type="china-mobile" ref="phone" @on-blur="duplicateUsername"></x-input>
-                    <x-input label-width="3em" text-align="left" placeholder="输入密码"  type="password" :required="true" v-model='registerUser.psd' ref="password"></x-input>
-                    <x-input label-width="3em" text-align="left" placeholder="确认密码"  type="password" :required="true" v-model='registerUser.repsd' ref="repassword" @on-enter="register"></x-input>
+                    <x-input label-width="3em" text-align="left" placeholder="输入密码" :min="1" :max="20" type="password" :required="true" v-model='registerUser.psd' ref="password"></x-input>
+                    <x-input label-width="3em" text-align="left" placeholder="确认密码" :min="1" :max="20" type="password" :required="true" v-model='registerUser.repsd' ref="repassword" @on-enter="register"></x-input>
                     <x-button type="primary" @click.native="register">注册</x-button>
                     <div class="txt-wrapper" @click="showLogin">
                         已有账户，登陆
