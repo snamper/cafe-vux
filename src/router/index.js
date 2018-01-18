@@ -1,18 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Main from '@/page/main/main';
-import Menu from '@/page/menu/menu';
-import New from '@/page/new/new';
-import Order from '@/page/menu/order/order';
-import Pay from '@/page/menu/pay/pay';
-import OrderList from '@/page/orderlist/orderlist';
-import OrderDetail from '@/page/orderlist/orderDetail';
-import Login from '@/page/login/login';
-import Member from '@/page/member/member';
-import MemberInfo from '@/page/member/detail';
-import Modify from '@/page/member/common';
-import ModifyPwd from '@/page/member/modifyPwd';
-import Forget from '@/page/member/forget';
+import Main from '@/pages/main/main';
+import Login from '@/pages/login/login';
+import Menu from '@/pages/menu/menu';
+import Order from '@/pages/order/order';
+import Pay from '@/pages/order/pay';
+import Records from '@/pages/record/records';
+import Record from '@/pages/record/record';
+import News from '@/pages/news/news';
+import Member from '@/pages/member/member';
+import MemberInfo from '@/pages/member/detail';
+import PWD from '@/pages/member/pwd';
+import Modify from '@/pages/member/modify';
 
 Vue.use(Router);
 
@@ -23,6 +22,7 @@ export default new Router({
       component: Main,
       redirect: '/menu',
       children: [{
+        name: 'menu',
         path: 'menu',
         component: Menu,
         meta: {
@@ -30,41 +30,10 @@ export default new Router({
         }
       },
       {
-        path: 'new',
-        component: New
-      },
-      {
-        path: 'orderlist',
-        component: OrderList
-      },
-      {
-        path: 'member',
-        component: Member
-      },
-      {
-        // 显示会员信息
-        name: 'info',
-        path: 'info',
-        component: MemberInfo,
-        props: true
-      },
-      {
-        // 修改相关信息
-        name: 'modify',
-        path: 'modify',
-        component: Modify,
-        props: true
-      },
-      {
-        name: 'forget',
-        path: 'forget',
-        component: Forget
-      },
-      {
-        // 修改密码
-        name: 'pwd',
-        path: 'pwd',
-        component: ModifyPwd
+        // 新品推荐
+        name: 'news',
+        path: 'news',
+        component: News
       },
       {
         // 登陆页面
@@ -73,22 +42,54 @@ export default new Router({
         component: Login
       },
       {
-        // 订单详情
+        // 购买清单页面
+        name: 'order',
         path: 'order',
         component: Order
+      },
+      {
+        // 订单详情
+        name: 'records',
+        path: 'records',
+        component: Records
+      },
+      {
+        // 会员信息页
+        name: 'member',
+        path: 'member',
+        component: Member
+      },
+      {
+        // 会员详情页
+        name: 'memberinfo',
+        path: 'memberinfo',
+        component: MemberInfo
+      },
+      {
+        // 密码修改页
+        name: 'pwd',
+        path: 'pwd',
+        component: PWD
+      },
+      {
+        // 会员信息修改页
+        name: 'modify',
+        path: 'modify',
+        component: Modify,
+        props: true
       }]
     },
     {
-      // 支付页面
+      // 付款页面
       name: 'pay',
       path: '/pay',
       component: Pay,
       props: true
     },
     {
-      path: '/orderDetail',
-      name: 'orderDetail',
-      component: OrderDetail,
+      name: 'record',
+      path: '/record',
+      component: Record,
       props: true
     }
   ]

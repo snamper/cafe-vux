@@ -59,9 +59,13 @@ const noUser = false
 /* define router  */
 var apiRoutes = express.Router()
 
+apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) {
+  res.json(categorys)
+})
 
-apiRoutes.post('/member/show/ui/modifyBasicInfo.do', function(req, res){
+apiRoutes.post('/member/show/ui/modifyBasicInfo.do', jsonParser, function(req, res){
   let user = req.body
+  console.log('modifyBasicInfo.do data is ' +JSON.stringify(user));
   if(user.userId === 107) {
     res.json(modifyMemberInfo.success)
   }else{
@@ -69,8 +73,9 @@ apiRoutes.post('/member/show/ui/modifyBasicInfo.do', function(req, res){
   }
 })
 
-apiRoutes.post('/member/show/ui/modifyPassword.do', function(req, res){
+apiRoutes.post('/member/show/ui/modifyPassword.do', jsonParser, function(req, res){
   let user = req.body
+  console.log('modifyPassword.do data is ' +JSON.stringify(user));
   if(user.entityId === 107){
     res.json(modifyPwd.success)
   }else{
@@ -78,15 +83,11 @@ apiRoutes.post('/member/show/ui/modifyPassword.do', function(req, res){
   }
 })
 
-apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) {
-  res.json(categorys)
-})
-
 apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res) {
   // {"name":"ccc","passWd":"dad"}
   let user = req.body;
   console.log('memberLogin.do data is ' +JSON.stringify(user));
-  if(user.name==='totti'){
+  if(user.name==='totti' || user.name === '13388889999'){
     res.json(loginpoor)
   } else if(user.name==='david') {
     res.json(loginrich)
