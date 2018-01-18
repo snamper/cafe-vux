@@ -1,5 +1,6 @@
 import Vue from 'vue';
-import { url } from '../common/js/values';
+import { url, type, session } from '../common/js/values';
+import { setSessionStorage } from '../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('vuex/mutations');
 export default {
@@ -15,6 +16,8 @@ export default {
     // 更新会员信息
     updatememberInfo(state, payload) {
         state.memberInfo = payload;
+        // memberInfo有改变的时候更新
+        setSessionStorage(session.memberInfo, state.memberInfo);
     },
     // 更新是否重名状态
     updateStatusDuplicate(state, payload) {
@@ -84,6 +87,24 @@ export default {
     // 更新会员信息修改状态
     updateStatusInfo(state, payload) {
         state.status.info = payload;
+    },
+    // 更新某一项会员信息
+    updateOneMemberInfo(state, payload) {
+        if (payload.type === type.name) {
+            state.memberInfo.name = payload.name;
+        } else if (payload.type === type.mobile) {
+            state.memberInfo.phone = payload.mobile;
+        } else if (payload.type === type.gender) {
+            state.memberInfo.gender = payload.gender;
+        } else if (payload.type === type.email) {
+            state.memberInfo.email = payload.email;
+        } else if (payload.type === type.address) {
+            state.memberInfo.area = payload.address;
+        } else if (payload.type === type.detailAddress) {
+            state.memberInfo.address = payload.detailAddress;
+        }
+        // memberInfo有改变的时候更新
+        setSessionStorage(session.memberInfo, state.memberInfo);
     }
 
 };

@@ -63,26 +63,37 @@ export default {
             // 当购物车为空的时候,返回主页面
             // 当页面不是从record来也返回主页面
             log.debug('selectfoods length is ' + vm.$store.getters.selectFoods.length);
-            log.debug('from path is ' + JSON.stringify(from.path));
-            log.debug('to path is ' + JSON.stringify(to.path));
             if (vm.$store.getters.selectFoods.length === 0 && to.path !== '/record') {
                 vm.$router.push({name: 'menu'});
             }
+            if (to.path === '/record') {
+                log.debug('to path is record');
+                // 置灰订单购买,并开启付款确认
+                vm.$store.state.show.confirm = true;
+                vm.$store.state.show.already = false;
+            } else {
+                vm.$store.state.show.confirm = false;
+                vm.$store.state.show.already = true;
+            }
         });
+    },
+    beforeRouteLeave (from, to, next) {
+        // 离开的时候把recordPrice清零
+        this.recordPrice = 0;
+        next();
     },
     data() {
         return {
             qrcodeSize: 100,
             size: 50,
             radius: 50,
-            show: {
-                alipay: true,
-                wechat: false,
-                member: false,
-                confirm: false,
-                already: true
-            }
+            recordPrice: 0
         };
+    },
+    props: {
+        product: {
+            type: Object
+        }
     },
     computed: {
         value() {
@@ -101,14 +112,23 @@ export default {
             'UUID',
             'status',
             'recordID',
-            'payType'
+            'payType',
+            'show'
         ]),
         // 购物总价
         totalPrice() {
-            if (this.memberInfo !== null) {
+            // 页面从record来的时候显示订单总价
+            // 当有会员登录的情况下,此时计算出来的购物车不为0的时候返回会员价
+            // 当没有会员的时候计算出来的购物车不为0的时候返回普通价
+            // 当计算出来的购物车价格为0的时候,表示已点击过了支付价格,所以此时价格为之前记录的价格.
+            if (typeof (this.product) !== 'undefined') {
+                return this.product.amount;
+            } else if (this.memberInfo !== null && this.totalAttr.member !== 0) {
                 return this.totalAttr.member;
-            } else {
+            } else if (this.totalAttr.normal !== 0) {
                 return this.totalAttr.normal;
+            } else {
+                return this.recordPrice;
             }
         },
         balance() {
@@ -118,23 +138,25 @@ export default {
         },
         details() {
             let details = [];
-            this.selectFoods.forEach((good) => {
-                let detail = '';
-                if (this.show.member) {
-                    detail = {
-                        productId: good.id,
-                        amount: good.count * good.memberPrice,
-                        number: good.count
-                    };
-                } else {
-                    detail = {
-                        productId: good.id,
-                        amount: good.count * good.price,
-                        number: good.count
-                    };
-                }
-                details.push(detail);
-            });
+            if (this.selectFoods.length !== 0) {
+                this.selectFoods.forEach((good) => {
+                    let detail = '';
+                    if (this.show.member) {
+                        detail = {
+                            productId: good.id,
+                            amount: good.count * good.memberPrice,
+                            number: good.count
+                        };
+                    } else {
+                        detail = {
+                            productId: good.id,
+                            amount: good.count * good.price,
+                            number: good.count
+                        };
+                    }
+                    details.push(detail);
+                });
+            }
             return details;
         },
         record() {
@@ -192,7 +214,7 @@ export default {
             };
         },
         back() {
-            this.$router.push({path: '/order'});
+            this.$router.back();
         },
         payit() {
             let _this = this;
@@ -202,16 +224,19 @@ export default {
             if (this.show.member && this.memberInfo.balance < this.totalPrice) {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
             } else {
-                log.debug('是否后期可以考虑干掉这个参数' + this.record.userName);
+                log.debug('是否后期可以考虑干掉这个参数 this.record.userName');
                 this.$store.dispatch('submitRecord', this.record).then(() => {
                     // 判断是否成功
                     if (this.status.record) {
-                        // 清空购物车
-                        this.$store.commit('clearCars');
                         this.$vux.alert.show({
                             title: '支付成功',
                             content: '点击【我已付款】提醒卖家',
                             onHide() {
+                                log.debug(_this.totalPrice);
+                                // 保存价格
+                                _this.recordPrice = _this.totalPrice;
+                                // 清空购物车
+                                _this.$store.commit('clearCars');
                                 _this.show.confirm = true;
                                 _this.show.already = false;
                             }

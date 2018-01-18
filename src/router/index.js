@@ -31,6 +31,7 @@ export default new Router({
       },
       {
         // 新品推荐
+        name: 'news',
         path: 'news',
         component: News
       },
@@ -82,7 +83,8 @@ export default new Router({
       // 付款页面
       name: 'pay',
       path: '/pay',
-      component: Pay
+      component: Pay,
+      props: true
     },
     {
       name: 'record',

@@ -123,7 +123,6 @@ export default {
                 'name': this.loginUser.name,
                 'passWd': md5(this.loginUser.psd)
             };
-            log.debug('login user is ' + JSON.stringify(result));
             return result;
         },
         ajaxregisterUser() {

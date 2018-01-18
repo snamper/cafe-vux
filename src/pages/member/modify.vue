@@ -1,6 +1,6 @@
 <template>
     <transition name="move">
-        <div class="common">
+        <div class="common" v-if="content">
             <x-header :left-options="{showBack: true}" :title="content.title"><a slot="right" @click="save">保存</a></x-header>
             <group>
                 <x-input :title="content.input" v-model="value" :type="type" :mask="mask" :min="min" :max="max" :is-type="istype" ref="input"></x-input>
@@ -10,12 +10,22 @@
 </template>
 
 <script type="text/ecmascript-6">
+import { isObjEmpty } from '../../common/js/util';
 import { XHeader, XInput, Group } from 'vux';
 import { mapState } from 'vuex';
 import { type } from '../../common/js/values';
 import Logger from 'chivy';
 const log = new Logger('page/member/modify');
 export default {
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            log.debug('from ' + from.path);
+            // 当不是从会员详情页跳转到本页,就跳转到member页
+            if (from.path !== '/memberinfo') {
+                vm.$router.push({name: 'member'});
+            }
+        });
+    },
     data() {
         return {
             value: null
@@ -28,7 +38,8 @@ export default {
     },
     computed: {
         ...mapState([
-            'memberInfo'
+            'memberInfo',
+            'status'
         ]),
         type() {
             if (this.content.type === type.mobile) {
@@ -62,7 +73,8 @@ export default {
     },
     methods: {
         save() {
-            if (this.$refs.input.valid) {
+            // 当输入框校验通过且数值不为空的时候,可以提交
+            if (this.$refs.input.valid && !isObjEmpty(this.value)) {
                 log.debug('the value is ' + this.value);
                 let data = {};
                 if (this.content.type === type.phone) {
@@ -100,6 +112,8 @@ export default {
             this.$store.dispatch('modifyMemberInfo', data).then(() => {
                 if (this.status.info) {
                     this.$vux.toast.text('修改成功', 'center');
+                    this.$store.commit('updateOneMemberInfo', data);
+                    this.$router.back();
                     // 重置状态避免问题
                     this.$store.commit('updateStatusInfo', false);
                 }

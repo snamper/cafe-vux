@@ -75,7 +75,7 @@ export default {
             'status'
         ]),
         memberSex() {
-
+            return this.memberInfo.gender;
         }
     },
     methods: {
@@ -103,18 +103,18 @@ export default {
         modifyDetailAddress() {
             log.debug('modifyDetailAddress');
             this.content = {
-                'type': type.address,
-                'title': '设置地址',
-                'input': '详细地址'
+                type: type.detailAddress,
+                title: '设置地址',
+                input: '详细地址'
             };
             this.jumppage();
         },
         modifyEmail() {
             log.debug('modifyEmail');
             this.content = {
-                'type': type.email,
-                'title': '设置邮箱',
-                'input': '邮箱'
+                type: type.email,
+                title: '设置邮箱',
+                input: '邮箱'
             };
             this.jumppage();
         },
@@ -123,18 +123,18 @@ export default {
             let result = value2name(this.address, ChinaAddressV4Data);
             log.debug('adress is modified to ' + result);
             let data = {
-                'type': type.address,
-                'userId': this.memberInfo.id,
-                'address': result
+                type: type.address,
+                userId: this.memberInfo.id,
+                address: result
             };
             this.submitData(data);
         },
         saveSex() {
             log.debug('save sex ' + this.sex);
             let data = {
-                'type': type.gender,
-                'userId': this.memberInfo.id,
-                'gender': this.sex[0]
+                type: type.gender,
+                userId: this.memberInfo.id,
+                gender: this.sex[0]
             };
             this.submitData(data);
         },
@@ -143,6 +143,7 @@ export default {
             this.$store.dispatch('modifyMemberInfo', data).then(() => {
                 if (this.status.info) {
                     this.$vux.toast.text('修改成功', 'center');
+                    this.$store.commit('updateOneMemberInfo', data);
                     // 重置状态避免问题
                     this.$store.commit('updateStatusInfo', false);
                 }

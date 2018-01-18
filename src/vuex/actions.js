@@ -26,6 +26,7 @@ export default {
     // 登陆动作,提交到服务端后,存入数据的到SessionStorage,并更新state的状态
     // state状态用于判断是否登陆成功用dispatch().then()来操作
     login(context, payload) {
+        log.debug('login post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
             Vue.http.post(url.userLogin, payload).then((response) => {
                 let result = response.data;
@@ -44,9 +45,6 @@ export default {
                         'createTime': result.createTime
                     };
                     context.commit('updatememberInfo', memberInfo);
-                    // 存储到sessionStorage中
-                    log.info('Save register user to sessionStorage');
-                    setSessionStorage(session.memberInfo, memberInfo);
                     // 更新登陆状态
                     context.commit('updateStatusLogin', true);
                     resolve();
@@ -60,10 +58,10 @@ export default {
     },
     // 注册动作,成功后返回数据存入memberInfo中
     resigter(context, payload) {
+        log.debug('resigter post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
             Vue.http.post(url.userRegister, payload).then((response) => {
                 let result = response.data;
-                log.debug(JSON.stringify(result));
                 if (result.status) {
                     let memberInfo = {
                         'id': result.entityId,
@@ -93,6 +91,7 @@ export default {
     },
     // 是否有重复的用户名或者邮箱名
     duplicate(context, payload) {
+        log.debug('duplicate post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
             Vue.http.post(url.userRegister, payload).then((response) => {
                 let result = response.data;
@@ -117,6 +116,7 @@ export default {
     },
     // 购买商品提交
     submitRecord(context, payload) {
+        log.debug('submitRecord post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
             Vue.http.post(url.buyGoods, payload).then((response) => {
                 let result = response.data;
@@ -133,6 +133,7 @@ export default {
     },
     // 提醒卖家
     alertStatus(context, payload) {
+        log.debug('alertStatus post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
             Vue.http.post(url.recordStatus, payload).then((response) => {
                 let result = response.data;
@@ -148,6 +149,7 @@ export default {
     },
     // 获取订单信息
     getRecordList(context, payload) {
+        log.debug('getRecordList post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
             Vue.http.post(url.recordList, payload).then((response) => {
                 let result = response.data;
@@ -167,10 +169,12 @@ export default {
             context.commit('updatememberInfo', null);
             // 清空Session中的内容
             removeSessionStorage(session.memberInfo);
+            resolve();
         });
     },
     // 修改信息
     modifyMemberInfo(context, payload) {
+        log.debug('modifyMemberInfo post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
             let data = null;
             if (payload.type === type.name) {
