@@ -80,13 +80,13 @@ export default {
         init() {
             this.loading = true;
             let data = {
-                userCode: null,
+                userId: null,
                 needDetail: true
             };
             if (this.memberInfo === null) {
-                data.userCode = this.UUID;
+                data.userId = this.UUID;
             } else {
-                data.userCode = this.memberInfo.id;
+                data.userId = this.memberInfo.id;
             }
             log.debug(JSON.stringify(data));
             this.$store.dispatch('getRecordList', data).then(() => {

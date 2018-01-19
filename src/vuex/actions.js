@@ -30,7 +30,7 @@ export default {
         return new Promise((resolve, reject) => {
             Vue.http.post(url.userLogin, payload).then((response) => {
                 let result = response.data;
-                // log.debug(JSON.stringify(result));
+                log.debug('login response is ' + JSON.stringify(result));
                 if (result.status) {
                     if (payload.valid) {
                         log.debug('check pwd');
@@ -70,7 +70,9 @@ export default {
         return new Promise((resolve, reject) => {
             Vue.http.post(url.userRegister, payload).then((response) => {
                 let result = response.data;
-                if (result.status) {
+                log.debug('resigter response is ' + JSON.stringify(result));
+                if (result.success) {
+                    log.debug('resigter response is ' + result.status);
                     let memberInfo = {
                         'id': result.entityId,
                         'name': '',
@@ -101,8 +103,9 @@ export default {
     duplicate(context, payload) {
         log.debug('duplicate post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
-            Vue.http.post(url.userRegister, payload).then((response) => {
+            Vue.http.post(url.existUser, payload).then((response) => {
                 let result = response.data;
+                log.debug('duplicate response is ' + JSON.stringify(result));
                 // 检测是否重名
                 context.commit('updateStatusDuplicate', result.status);
                 resolve();
@@ -114,6 +117,7 @@ export default {
         return new Promise((resolve, reject) => {
             Vue.http.get(url.categorysList).then((response) => {
                 let result = response.data;
+                log.debug('getCategorys response is ' + JSON.stringify(result));
                 if (result != null) {
                     log.debug('updateStateCategorys');
                     context.commit('updateStateCategorys', result);
@@ -128,6 +132,7 @@ export default {
         return new Promise((resolve, reject) => {
             Vue.http.post(url.buyGoods, payload).then((response) => {
                 let result = response.data;
+                log.debug('submitRecord response is ' + JSON.stringify(result));
                 if (result.success) {
                     context.commit('updateRecordID', result.entityId);
                     context.commit('updateStatusRecord', true);
@@ -145,6 +150,7 @@ export default {
         return new Promise((resolve, reject) => {
             Vue.http.post(url.recordStatus, payload).then((response) => {
                 let result = response.data;
+                log.debug('alertStatus response is ' + JSON.stringify(result));
                 if (result.success) {
                     context.commit('updateStatusAlert', true);
                     resolve();
@@ -161,6 +167,7 @@ export default {
         return new Promise((resolve, reject) => {
             Vue.http.post(url.recordList, payload).then((response) => {
                 let result = response.data;
+                log.debug('getRecordList response is ' + JSON.stringify(result));
                 if (result.length !== 0) {
                     context.commit('updateRecordList', result);
                     resolve();
@@ -219,6 +226,7 @@ export default {
             log.debug(JSON.stringify(data));
             Vue.http.post(url.basicInfo, payload).then((response) => {
                 let result = response.data;
+                log.debug('modifyMemberInfo response is ' + JSON.stringify(result));
                 if (result.success) {
                     context.commit('updateStatusInfo', true);
                     resolve();
@@ -234,6 +242,7 @@ export default {
         return new Promise((resolve, reject) => {
             Vue.http.post(url.modifypwd, payload).then((response) => {
                 let result = response.data;
+                log.debug('modifyPwd response is ' + JSON.stringify(result));
                 if (result.success) {
                     context.commit('updateStatusPwd', true);
                     resolve();

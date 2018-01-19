@@ -96,8 +96,9 @@ export default {
                 this.$store.dispatch('resigter', this.ajaxregisterUser).then(() => {
                     if (this.status.login) {
                        this.$vux.toast.text('注册成功', 'middle');
-                       // TODO 跳转到页面
-                       // this.$router.push({path: '/order'});
+                       setTimeout(() => {
+                           this.$router.push({name: 'member'});
+                       }, 1000);
                     } else {
                        this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
                     }
@@ -107,7 +108,7 @@ export default {
         // 手机号码重复检测
         duplicateUsername() {
             if (this.registerUser.phone !== '') {
-                let phone = { 'entityName': this.registerUser.phone.replace(/\s/g, '') };
+                let phone = { 'name': this.registerUser.phone.replace(/\s/g, '') };
                 this.$store.dispatch('duplicate', phone).then(() => {
                     if (this.status.duplicate) {
                         this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
@@ -131,7 +132,6 @@ export default {
                 'name': this.registerUser.phone.replace(/\s/g, ''), // 去掉空格
                 'passWd': md5(this.registerUser.psd)
             };
-            log.debug('Register user is ' + JSON.stringify(result));
             return result;
         },
         ...mapState([

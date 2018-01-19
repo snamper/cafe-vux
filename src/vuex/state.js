@@ -49,10 +49,7 @@ export default {
         }
     },
     // 支付页面显示的内容
-    show: {
-        alipay: true,
-        wechat: false,
-        member: false,
+    showbutton: {
         confirm: false,
         already: true
     }

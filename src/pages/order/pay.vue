@@ -36,13 +36,13 @@
         </div>
         <split></split>
         <div class="confirm">
-             <x-button :disabled="show.confirm" type="primary" @click.native="payit">确认支付￥{{totalPrice}}元</x-button>
+             <x-button :disabled="showbutton.confirm" type="primary" @click.native="payit">确认支付￥{{totalPrice}}元</x-button>
         </div>
         <div class="qrcode" v-show="show.alipay||show.wechat">
             <img :src="value">
         </div>
         <div class="already">
-             <x-button mini plain :disabled="show.already"  @click.native="alertStatus">我已付款</x-button>
+             <x-button mini plain :disabled="showbutton.already"  @click.native="alertStatus">我已付款</x-button>
         </div>
     </div>
 </template>
@@ -69,11 +69,11 @@ export default {
             if (to.path === '/record') {
                 log.debug('to path is record');
                 // 置灰订单购买,并开启付款确认
-                vm.$store.state.show.confirm = true;
-                vm.$store.state.show.already = false;
+                vm.$store.state.showbutton.confirm = true;
+                vm.$store.state.showbutton.already = false;
             } else {
-                vm.$store.state.show.confirm = false;
-                vm.$store.state.show.already = true;
+                vm.$store.state.showbutton.confirm = false;
+                vm.$store.state.showbutton.already = true;
             }
         });
     },
@@ -87,7 +87,12 @@ export default {
             qrcodeSize: 100,
             size: 50,
             radius: 50,
-            recordPrice: 0
+            recordPrice: 0,
+            show: {
+                alipay: true,
+                wechat: false,
+                member: false
+            }
         };
     },
     props: {
@@ -113,7 +118,7 @@ export default {
             'status',
             'recordID',
             'payType',
-            'show'
+            'showbutton'
         ]),
         // 购物总价
         totalPrice() {
@@ -237,8 +242,8 @@ export default {
                                 _this.recordPrice = _this.totalPrice;
                                 // 清空购物车
                                 _this.$store.commit('clearCars');
-                                _this.show.confirm = true;
-                                _this.show.already = false;
+                                _this.$store.commit('updateShowButtonConfirmStatus', true);
+                                _this.$store.commit('updateShowButtonAlreadyStatus', false);
                             }
                         });
                     } else {

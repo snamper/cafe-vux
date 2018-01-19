@@ -11,7 +11,7 @@ export var url = {
     userRegister: '/shop/member/show/ui/createMember.do',
     // 商品购买接口
     buyGoods: '/shop/product/show/ui/saveRecordList.do',
-    // 获取订单状态的接口
+    // 更新订单状态的接口
     recordStatus: '/shop/product/show/ui/alterStatus.do',
     // 修改会员信息接口
     basicInfo: '/shop/member/show/ui/modifyBasicInfo.do',

@@ -10,7 +10,7 @@ export default {
     },
     // 更新登陆状态
     updateStatusLogin(state, payload) {
-        log.debug('function (updateStatusLogin)' + 'get param is ' + payload);
+        log.debug('function (updateStatusLogin) ' + 'get param is ' + payload);
         state.status.login = payload;
     },
     // 更新会员信息
@@ -113,6 +113,14 @@ export default {
         }
         // memberInfo有改变的时候更新
         setSessionStorage(session.memberInfo, state.memberInfo);
+    },
+    // 更新showbutton中的confirm状态
+    updateShowButtonConfirmStatus(state, payload) {
+        state.showbutton.confirm = payload;
+    },
+    // 更新showbutton中的already状态
+    updateShowButtonAlreadyStatus(state, payload) {
+        state.showbutton.already = payload;
     }
 
 };
