@@ -908,7 +908,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAITE4PAY",
+      "status": "WAIT4PAY",
       "userId": 84,
       "userName": "test3"
     },
@@ -983,7 +983,7 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAITE4ENSURE",
+      "status": "WAIT4CONFIRM",
       "userId": 84,
       "userName": "test3"
     },
@@ -1058,7 +1058,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "ENSURE2PAID",
+      "status": "CONFIRM2PAID",
       "userId": 84,
       "userName": "test3"
     },
@@ -1133,7 +1133,7 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "ENSURE2PAID",
+      "status": "WAIT4CONFIRM",
       "userId": 84,
       "userName": "test3"
     },
@@ -1358,7 +1358,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAITE4PAY",
+      "status": "WAIT4PAY",
       "userId": 84,
       "userName": "test3"
     },
@@ -1433,7 +1433,7 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAITE4ENSURE",
+      "status": "CONFIRM2PAID",
       "userId": 84,
       "userName": "test3"
     }
@@ -1609,6 +1609,7 @@
       "success": false
     },
     "success": {
+      "entityId": "162",
       "envData": {
         "endRow": -1,
         "language": "",
