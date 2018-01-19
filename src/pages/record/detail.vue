@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div v-if="good">
         <div class="detail vux-1px-b">
             <div class="name">名称</div>
             <div class="number">数量</div>
             <div class="total">总价</div>
         </div>
         <div class="listwrapper" ref="listWrapper">
-            <list :goods="good" :size="size" :radius="radius" show="show"></list>
+            <list :goods="good.details" :size="size" :radius="radius" show="show"></list>
         </div>
     </div>
 </template>
@@ -26,7 +26,7 @@ export default {
     },
     props: {
         good: {
-            type: Array
+            type: Object
         }
     },
     methods: {

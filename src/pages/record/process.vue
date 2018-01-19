@@ -1,16 +1,16 @@
 <template>
     <div>
         <flow orientation="vertical" style="height:250px;">
-            <flow-state state="1" title="待付款" :is-done="status[0]"></flow-state>
+            <flow-state state="1" title="待付款" :is-done="isDoneStatus[0]"></flow-state>
             <flow-line :tip="tips[0]" :is-done="line[0]"></flow-line>
-            <flow-state state="2" title="已付款" :is-done="status[1]"></flow-state>
+            <flow-state state="2" title="已付款" :is-done="isDoneStatus[1]"></flow-state>
             <flow-line :tip="tips[1]" :is-done="line[1]"></flow-line>
-            <flow-state state="3" title="已确认" :is-done="status[2]"></flow-state>
+            <flow-state state="3" title="已确认" :is-done="isDoneStatus[2]"></flow-state>
             <flow-line :tip="tips[2]" :is-done="line[2]"></flow-line>
-            <flow-state state="4" title="成功" :is-done="status[3]"></flow-state>
+            <flow-state state="4" title="成功" :is-done="isDoneStatus[3]"></flow-state>
         </flow>
-        <div class="confirm" v-if="show">
-             <x-button type="primary" @click.native="payit">我要付款</x-button>
+        <div class="confirm" v-if="show.flag">
+             <x-button type="primary" @click.native="payit">{{show.title}}</x-button>
         </div>
     </div>
 </template>
@@ -18,6 +18,11 @@
 <script type="text/ecmascript-6">
 import { Flow, FlowState, FlowLine, XButton } from 'vux';
 import { exchangeType } from '../../common/js/values';
+import { mapState } from 'vuex';
+import Logger from 'chivy';
+const log = new Logger('page/record/process');
+const pay = '我要付款';
+const alert = '提醒卖家';
 export default {
     props: {
         good: {
@@ -25,23 +30,34 @@ export default {
         }
     },
     computed: {
+        ...mapState([
+            'recordID',
+            'status'
+        ]),
         show() {
+            let result = {
+                flag: false,
+                title: ''
+            };
             if (this.good.status === exchangeType.WAITE4PAY.key) {
-                return true;
-            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
-                return true;
-            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
-                return false;
+                result.flag = true;
+                result.title = pay;
+            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
+                result.flag = true;
+                result.title = alert;
+            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
+                result.flag = false;
             } else if (this.good.status === exchangeType.SUCCESS.key) {
-                return false;
+                result.flag = false;
             }
+            return result;
         },
-        status() {
+        isDoneStatus() {
             if (this.good.status === exchangeType.WAITE4PAY.key) {
                 return [true, false, false, false];
-            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
                 return [true, true, false, false];
-            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
                 return [true, true, true, false];
             } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return [true, true, true, true];
@@ -50,9 +66,9 @@ export default {
         line() {
             if (this.good.status === exchangeType.WAITE4PAY.key) {
                 return [false, false, false];
-            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
                 return [true, false, false];
-            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
                 return [true, true, false];
             } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return [true, true, true];
@@ -61,9 +77,9 @@ export default {
         tips() {
             if (this.good.status === exchangeType.WAITE4PAY.key) {
                 return ['进行中', '', ''];
-            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
                 return ['', '进行中', ''];
-            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
                 return ['', '', '进行中'];
             } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return ['', '', ''];
@@ -72,7 +88,27 @@ export default {
     },
     methods: {
         payit() {
-            this.$router.push({name: 'pay', params: {product: this.good}});
+            if (this.show.title === alert) {
+                let data = {
+                    RecordID: this.recordID,
+                    status: exchangeType.CONFIRM2PAID.key
+                };
+                this.$store.dispatch('alertStatus', data).then(() => {
+                    log.debug('alert result is ' + this.status.alert);
+                    if (this.status.alert) {
+                        this.$vux.alert.show({
+                            title: '付款提醒',
+                            content: '已提醒店家，店家会尽快确认付款信息',
+                            onHide() {
+                                // 变更状态为已付款状态
+                                this.good.status = exchangeType.CONFIRM2PAID.key;
+                            }
+                        });
+                    }
+                });
+            } else if (this.show.title === pay) {
+                this.$router.push({name: 'pay', params: {product: this.good}});
+            }
         }
     },
     components: {

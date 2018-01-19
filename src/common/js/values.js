@@ -12,6 +12,7 @@ export var url = {
     // 商品购买接口
     buyGoods: '/shop/product/show/ui/saveRecordList.do',
     // 更新订单状态的接口
+    // 入参{entityId: 73, status: "ENSURE2PAID"}
     recordStatus: '/shop/product/show/ui/alterStatus.do',
     // 修改会员信息接口
     basicInfo: '/shop/member/show/ui/modifyBasicInfo.do',
@@ -37,15 +38,15 @@ export var session = {
 // 订单状态
 export var exchangeType = {
     WAITE4PAY: {
-        key: 'WAITE4PAY',
+        key: 'WAIT4PAY',
         value: '待付款'
     },
-    WAITE4ENSURE: {
-        key: 'WAITE4ENSURE',
+    WAIT4CONFIRM: {
+        key: 'WAIT4CONFIRM',
         value: '已付款'
     },
-    ENSURE2PAID: {
-        key: 'ENSURE2PAID',
+    CONFIRM2PAID: {
+        key: 'CONFIRM2PAID',
         value: '已确认'
     },
     SUCCESS: {

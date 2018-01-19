@@ -69,9 +69,6 @@ export default {
             if (to.path === '/record') {
                 log.debug('to path is record');
                 // 置灰订单购买,并开启付款确认
-                vm.$store.state.showbutton.confirm = true;
-                vm.$store.state.showbutton.already = false;
-            } else {
                 vm.$store.state.showbutton.confirm = false;
                 vm.$store.state.showbutton.already = true;
             }
@@ -244,6 +241,8 @@ export default {
                                 _this.$store.commit('clearCars');
                                 _this.$store.commit('updateShowButtonConfirmStatus', true);
                                 _this.$store.commit('updateShowButtonAlreadyStatus', false);
+                                // 清空保存的购物id号
+                                _this.$store.commit('updateRecordID', null);
                             }
                         });
                     } else {
@@ -255,8 +254,8 @@ export default {
         alertStatus() {
             let _this = this;
             let data = {
-                RecordID: this.recordID,
-                status: exchangeType.WAITE4ENSURE
+                entityId: this.recordID,
+                status: exchangeType.CONFIRM2PAID.key
             };
             this.$store.dispatch('alertStatus', data).then(() => {
                 if (this.status.alert) {

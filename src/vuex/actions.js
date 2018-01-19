@@ -134,6 +134,7 @@ export default {
                 let result = response.data;
                 log.debug('submitRecord response is ' + JSON.stringify(result));
                 if (result.success) {
+                    log.debug('response recordId is ' + result.entityId);
                     context.commit('updateRecordID', result.entityId);
                     context.commit('updateStatusRecord', true);
                 } else {

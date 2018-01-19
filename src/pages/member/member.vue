@@ -36,8 +36,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { isObjEmpty, getSessionStorage } from '../../common/js/util.js';
-import { session } from '../../common/js/values';
+import { isObjEmpty } from '../../common/js/util.js';
 import logo from '../../components/logo';
 import thumbBar from '../../components/thumbBar';
 import split from '../../components/split';
@@ -47,13 +46,6 @@ import Logger from 'chivy';
 const log = new Logger('pages/member/member');
 export default {
     created() {
-        // 读取sessionStorage中是否有数据,如果有则更新,如果没有则跳转
-        let memberInfo = getSessionStorage(session.memberInfo);
-        if (memberInfo !== null) {
-            // 保存到memberInfo中
-            this.$store.commit('updatememberInfo', memberInfo);
-            log.debug(JSON.stringify(memberInfo));
-        }
         // 当会员信息为空的时候,跳转到登陆页面
         if (isObjEmpty(this.memberInfo)) {
             log.debug('jump to login page');
