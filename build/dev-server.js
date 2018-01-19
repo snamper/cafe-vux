@@ -152,7 +152,8 @@ apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser,function(req,res){
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body
   console.log('getRecordList.do data is ' + JSON.stringify(user))
-  if (user.userId === 101 || user.userId === 103 || user.userId === 105 || user.userId === 107 || user.userId === 109) {
+  if (user.userId === 101 || user.userId === 103 || user.userId === 105 || user.userId === 107 || user.userId === 109 ||
+    user.userId === 102 || user.userId === 104 || user.userId === 106) {
     res.json(recordList)
   } else {
     res.json([])
@@ -163,9 +164,10 @@ apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
 apiRoutes.post('/product/show/ui/saveRecordList.do',jsonParser,function(req,res){
   let user = req.body
   console.log('saveRecordList.do data is ' + JSON.stringify(user))
-  if (user.userId === 100|| user.userId === 102 || user.userId === 104 || user.userId === 106 || user.userId === 108) {
+  if (user.userId === 100|| user.userId === 101 || user.userId === 102 || user.userId === 103 || user.userId === 104 ||
+    user.userId === 105|| user.userId === 106 || user.userId === 107 || user.userId === 108) {
     res.json(saverecord.success)
-  } else if(user.userId === 101|| user.userId === 103 || user.userId === 105) {
+  } else if(user.userId === 109) {
     res.json(saverecord.notexist)
   } else {
     res.json(saverecord.balance)
