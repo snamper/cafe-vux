@@ -59,7 +59,7 @@ export default {
                 } else {
                     // 更新登陆状态
                     context.commit('updateStatusLogin', false);
-                    resolve();
+                    reject(new Error('login failed'));
                 }
             });
         });

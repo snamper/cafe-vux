@@ -79,6 +79,9 @@ export default {
                     } else {
                        this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
                     }
+                }).catch((error) => {
+                    log.debug(error);
+                    this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
                 });
             }
         },

@@ -88,6 +88,7 @@ export default {
     },
     methods: {
         payit() {
+            let _this = this;
             if (this.show.title === alert) {
                 let data = {
                     RecordID: this.recordID,
@@ -101,7 +102,7 @@ export default {
                             content: '已提醒店家，店家会尽快确认付款信息',
                             onHide() {
                                 // 变更状态为已付款状态
-                                this.good.status = exchangeType.CONFIRM2PAID.key;
+                                _this.good.status = exchangeType.CONFIRM2PAID.key;
                             }
                         });
                     }

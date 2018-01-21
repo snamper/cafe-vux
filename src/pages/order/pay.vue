@@ -60,6 +60,8 @@ const CASH = 'CASH';
 export default {
     beforeRouteEnter(from, to, next) {
         next(vm => {
+            log.debug('beforeRouteEnter to path is ' + to.path);
+            vm.to = to.path;
             // 当购物车为空的时候,返回主页面
             // 当页面不是从record来也返回主页面
             log.debug('selectfoods length is ' + vm.$store.getters.selectFoods.length);
@@ -67,7 +69,6 @@ export default {
                 vm.$router.push({name: 'menu'});
             }
             if (to.path === '/record') {
-                log.debug('to path is record');
                 // 置灰订单购买,并开启付款确认
                 vm.$store.state.showbutton.confirm = false;
                 vm.$store.state.showbutton.already = true;
@@ -89,7 +90,9 @@ export default {
                 alipay: true,
                 wechat: false,
                 member: false
-            }
+            },
+            // 记录从那个地方来
+            to: null
         };
     },
     props: {
@@ -216,7 +219,13 @@ export default {
             };
         },
         back() {
-            this.$router.back();
+            if (this.to === '/record') {
+                this.$router.push({name: 'record', param: {record: this.product}});
+                log.debug('back record page');
+            } else {
+                log.debug('back to order page');
+                this.$router.back();
+            }
         },
         payit() {
             let _this = this;
