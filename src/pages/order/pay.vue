@@ -150,13 +150,13 @@ export default {
                         detail = {
                             productId: good.id,
                             amount: good.count * good.memberPrice,
-                            number: good.count
+                            count: good.count
                         };
                     } else {
                         detail = {
                             productId: good.id,
                             amount: good.count * good.price,
-                            number: good.count
+                            count: good.count
                         };
                     }
                     details.push(detail);
