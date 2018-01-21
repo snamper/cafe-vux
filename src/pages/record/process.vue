@@ -26,44 +26,44 @@ export default {
     },
     computed: {
         show() {
-            if (this.good.status === exchangeType.WAITE4PAY.key) {
+            if (this.good.status === exchangeType.WAIT4PAY.key) {
                 return true;
-            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
                 return true;
-            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
                 return false;
             } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return false;
             }
         },
         status() {
-            if (this.good.status === exchangeType.WAITE4PAY.key) {
+            if (this.good.status === exchangeType.WAIT4PAY.key) {
                 return [true, false, false, false];
-            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
                 return [true, true, false, false];
-            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
                 return [true, true, true, false];
             } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return [true, true, true, true];
             }
         },
         line() {
-            if (this.good.status === exchangeType.WAITE4PAY.key) {
+            if (this.good.status === exchangeType.WAIT4PAY.key) {
                 return [false, false, false];
-            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
                 return [true, false, false];
-            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
                 return [true, true, false];
             } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return [true, true, true];
             }
         },
         tips() {
-            if (this.good.status === exchangeType.WAITE4PAY.key) {
+            if (this.good.status === exchangeType.WAIT4PAY.key) {
                 return ['进行中', '', ''];
-            } else if (this.good.status === exchangeType.WAITE4ENSURE.key) {
+            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
                 return ['', '进行中', ''];
-            } else if (this.good.status === exchangeType.ENSURE2PAID.key) {
+            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
                 return ['', '', '进行中'];
             } else if (this.good.status === exchangeType.SUCCESS.key) {
                 return ['', '', ''];
