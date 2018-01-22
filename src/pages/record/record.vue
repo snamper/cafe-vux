@@ -23,12 +23,13 @@ export default {
     beforeRouteEnter(from, to, next) {
         next(vm => {
             log.debug('beforeRouteEnter to.path is ' + to.path);
+            log.debug('beforeRouteEnter from.path is ' + from.path);
             // 当页面不是从pay或者是records跳转而来,就直接跳转到records页面
-            if (from.path === '/records' || from.path === '/pay') {
-                vm.$router.push({name: 'records'});
+            if (to.path === '/records' || to.path === '/pay') {
+                log.debug('from record or pay');
             } else {
-                // log.debug('recordID is ' + vm.record.id);
-                log.debug(vm.record === null);
+                log.debug('jump page to records');
+                vm.$router.push({name: 'records'});
             }
         });
     },
