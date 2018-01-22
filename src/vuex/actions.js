@@ -52,13 +52,9 @@ export default {
                             'createTime': result.createTime
                         };
                         context.commit('updatememberInfo', memberInfo);
-                        // 更新登陆状态
-                        context.commit('updateStatusLogin', true);
                         resolve();
                     }
                 } else {
-                    // 更新登陆状态
-                    context.commit('updateStatusLogin', false);
                     reject(new Error('login failed'));
                 }
             });
@@ -89,12 +85,9 @@ export default {
                     // 存储到sessionStorage中
                     log.info('Save register user to sessionStorage');
                     setSessionStorage(session.memberInfo, memberInfo);
-                    // 更新登陆状态
-                    context.commit('updateStatusLogin', true);
                     resolve();
                 } else {
-                    context.commit('updateStatusLogin', false);
-                    resolve();
+                    reject(new Error('resigter failed'));
                 }
             });
         });
@@ -106,9 +99,11 @@ export default {
             Vue.http.post(url.existUser, payload).then((response) => {
                 let result = response.data;
                 log.debug('duplicate response is ' + JSON.stringify(result));
-                // 检测是否重名
-                context.commit('updateStatusDuplicate', result.status);
-                resolve();
+                if (result.status) {
+                    resolve();
+                } else {
+                    reject(new Error('not duplicate name found'));
+                }
             });
         });
     },
@@ -122,6 +117,8 @@ export default {
                     log.debug('updateStateCategorys');
                     context.commit('updateStateCategorys', result);
                     resolve();
+                } else {
+                    reject(new Error('get Categorys failed'));
                 }
             });
         });
@@ -136,12 +133,10 @@ export default {
                 if (result.success) {
                     log.debug('response recordId is ' + result.entityId);
                     context.commit('updateRecordID', result.entityId);
-                    context.commit('updateStatusRecord', true);
+                    resolve();
                 } else {
-                    log.error('submitRecord failed');
-                    context.commit('updateStatusRecord', false);
+                    reject(new Error('submit record failed'));
                 }
-                resolve();
             });
         });
     },
@@ -153,11 +148,9 @@ export default {
                 let result = response.data;
                 log.debug('alertStatus response is ' + JSON.stringify(result));
                 if (result.success) {
-                    context.commit('updateStatusAlert', true);
                     resolve();
                 } else {
-                    context.commit('updateStatusAlert', false);
-                    resolve();
+                    reject(new Error('alert record status failed'));
                 }
             });
         });
@@ -170,8 +163,10 @@ export default {
                 let result = response.data;
                 log.debug('getRecordList response is ' + JSON.stringify(result));
                 if (result.length !== 0) {
-                    context.commit('updateRecordList', result);
+                    context.commit('updateRecords', result);
                     resolve();
+                } else {
+                    reject(new Error('record list is empty'));
                 }
             });
         });
@@ -179,8 +174,6 @@ export default {
     // 注销用户
     logout(context) {
         return new Promise((resolve, reject) => {
-            // 重置登陆标志位
-            context.commit('updateStatusLogin', false);
             // 清空MemberInfo内容
             context.commit('updatememberInfo', null);
             // 清空Session中的内容
@@ -229,11 +222,9 @@ export default {
                 let result = response.data;
                 log.debug('modifyMemberInfo response is ' + JSON.stringify(result));
                 if (result.success) {
-                    context.commit('updateStatusInfo', true);
                     resolve();
                 } else {
-                    context.commit('updateStatusInfo', false);
-                    resolve();
+                    reject(new Error('modify member info failed'));
                 }
             });
         });
@@ -245,11 +236,9 @@ export default {
                 let result = response.data;
                 log.debug('modifyPwd response is ' + JSON.stringify(result));
                 if (result.success) {
-                    context.commit('updateStatusPwd', true);
                     resolve();
                 } else {
-                    context.commit('updateStatusPwd', false);
-                    resolve();
+                    reject(new Error('modify password failed'));
                 }
             });
         });

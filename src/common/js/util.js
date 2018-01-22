@@ -59,8 +59,8 @@ export var gender = function gender(sex) {
 };
 // 根据返回状态显示内容
 export var covertStatus = function covertStatus(status) {
-    if (status === exchangeType.WAITE4PAY.key) {
-        return exchangeType.WAITE4PAY.value;
+    if (status === exchangeType.WAIT4PAY.key) {
+        return exchangeType.WAIT4PAY.value;
     } else if (status === exchangeType.WAIT4CONFIRM.key) {
         return exchangeType.WAIT4CONFIRM.value;
     } else if (status === exchangeType.CONFIRM2PAID.key) {

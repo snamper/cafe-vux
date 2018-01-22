@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { url, type, session } from '../common/js/values';
+import { type, session } from '../common/js/values';
 import { setSessionStorage } from '../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('vuex/mutations');
@@ -8,28 +8,11 @@ export default {
     updateUUID(state, payload) {
         state.UUID = payload;
     },
-    // 更新登陆状态
-    updateStatusLogin(state, payload) {
-        log.debug('function (updateStatusLogin) ' + 'get param is ' + payload);
-        state.status.login = payload;
-    },
     // 更新会员信息
     updatememberInfo(state, payload) {
         state.memberInfo = payload;
         // memberInfo有改变的时候更新
         setSessionStorage(session.memberInfo, state.memberInfo);
-    },
-    // 更新是否重名状态
-    updateStatusDuplicate(state, payload) {
-        state.status.duplicate = payload;
-    },
-    // 更新原密码是否正确状态
-    updateStatusOld(state, payload) {
-        state.status.old = payload;
-    },
-    // 更新原密码是否正确状态
-    updateStatusPwd(state, payload) {
-        state.status.pwd = payload;
     },
     // 增加购买商品
     addCount(state, payload) {
@@ -59,45 +42,27 @@ export default {
     updateStateCategorys(state, payload) {
         state.categorys = payload;
     },
-    getCategorys(state) {
-        Vue.http.get(url.categorysList).then((response) => {
-            let result = response.data;
-            if (result != null) {
-                log.debug('updateStateCategorys');
-                state.categorys = result;
-            }
-        });
-    },
-    // 更新购买物品返回状态
-    updateStatusRecord(state, payload) {
-        state.status.record = payload;
-    },
-    // 更新提醒卖家返回状态
-    updateStatusAlert(state, payload) {
-        state.status.alert = payload;
-    },
     // 购物订单
     updateRecordID(state, payload) {
         state.recordID = payload;
     },
     // 清空购物车
     clearCars(state) {
-        state.categorys.forEach((category) => {
-            category.list.forEach((food) => {
-                food.count = 0;
+        if (state.categorys !== null) {
+            state.categorys.forEach((category) => {
+                category.list.forEach((food) => {
+                    food.count = 0;
+                });
             });
-        });
+        }
     },
     // 订单列表
-    updateRecordList(state, payload) {
-        state.recordList = payload;
-    },
-    // 更新会员信息修改状态
-    updateStatusInfo(state, payload) {
-        state.status.info = payload;
+    updateRecords(state, payload) {
+        state.records = payload;
     },
     // 更新某一项会员信息
     updateOneMemberInfo(state, payload) {
+        log.debug('modify type is ' + payload.type);
         if (payload.type === type.name) {
             state.memberInfo.name = payload.name;
         } else if (payload.type === type.mobile) {
@@ -122,5 +87,4 @@ export default {
     updateShowButtonAlreadyStatus(state, payload) {
         state.showbutton.already = payload;
     }
-
 };

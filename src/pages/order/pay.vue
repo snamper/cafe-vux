@@ -61,6 +61,7 @@ export default {
     beforeRouteEnter(from, to, next) {
         next(vm => {
             log.debug('beforeRouteEnter to path is ' + to.path);
+            // 保存这个路由是从那个地方来的
             vm.to = to.path;
             // 当购物车为空的时候,返回主页面
             // 当页面不是从record来也返回主页面
@@ -96,7 +97,7 @@ export default {
         };
     },
     props: {
-        product: {
+        record: {
             type: Object
         }
     },
@@ -115,7 +116,6 @@ export default {
         ...mapState([
             'memberInfo',
             'UUID',
-            'status',
             'recordID',
             'payType',
             'showbutton'
@@ -126,8 +126,8 @@ export default {
             // 当有会员登录的情况下,此时计算出来的购物车不为0的时候返回会员价
             // 当没有会员的时候计算出来的购物车不为0的时候返回普通价
             // 当计算出来的购物车价格为0的时候,表示已点击过了支付价格,所以此时价格为之前记录的价格.
-            if (typeof (this.product) !== 'undefined') {
-                return this.product.amount;
+            if (typeof (this.record) !== 'undefined') {
+                return this.record.amount;
             } else if (this.memberInfo !== null && this.totalAttr.member !== 0) {
                 return this.totalAttr.member;
             } else if (this.totalAttr.normal !== 0) {
@@ -136,11 +136,13 @@ export default {
                 return this.recordPrice;
             }
         },
+        // 会员余额
         balance() {
             if (this.memberInfo !== null) {
                 return this.memberInfo.balance;
             }
         },
+        // 计算具体的商品
         details() {
             let details = [];
             if (this.selectFoods.length !== 0) {
@@ -164,7 +166,7 @@ export default {
             }
             return details;
         },
-        record() {
+        order() {
             let result = {
                 amount: this.totalPrice,
                 userId: null,
@@ -175,7 +177,6 @@ export default {
             };
             if (this.memberInfo !== null) {
                 result.userId = this.memberInfo.id;
-                // TODO 是否后期可以考虑干掉这个参数
                 if (this.memberInfo.name !== '') {
                     result.userName = this.memberInfo.name;
                 } else {
@@ -218,9 +219,10 @@ export default {
                 member: true
             };
         },
+        // 返回上一个页面
         back() {
             if (this.to === '/record') {
-                this.$router.push({name: 'record', param: {record: this.product}});
+                this.$router.push({name: 'record', param: {record: this.record}});
                 log.debug('back record page');
             } else {
                 log.debug('back to order page');
@@ -236,27 +238,27 @@ export default {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
             } else {
                 log.debug('是否后期可以考虑干掉这个参数 this.record.userName');
-                this.$store.dispatch('submitRecord', this.record).then(() => {
-                    // 判断是否成功
-                    if (this.status.record) {
-                        this.$vux.alert.show({
-                            title: '支付成功',
-                            content: '点击【我已付款】提醒卖家',
-                            onHide() {
-                                log.debug(_this.totalPrice);
-                                // 保存价格
-                                _this.recordPrice = _this.totalPrice;
-                                // 清空购物车
-                                _this.$store.commit('clearCars');
-                                _this.$store.commit('updateShowButtonConfirmStatus', true);
-                                _this.$store.commit('updateShowButtonAlreadyStatus', false);
-                                // 清空保存的购物id号
-                                _this.$store.commit('updateRecordID', null);
-                            }
-                        });
-                    } else {
-                        this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
-                    }
+                this.$store.dispatch('submitRecord', this.order).then(() => {
+                    // 成功
+                    this.$vux.alert.show({
+                        title: '支付成功',
+                        content: '点击【我已付款】提醒卖家',
+                        onHide() {
+                            log.debug('totalPrice is ' + _this.totalPrice);
+                            // 保存价格
+                            _this.recordPrice = _this.totalPrice;
+                            // 清空购物车
+                            _this.$store.commit('clearCars');
+                            // 更新状态
+                            _this.$store.commit('updateShowButtonConfirmStatus', true);
+                            _this.$store.commit('updateShowButtonAlreadyStatus', false);
+                            // 清空保存的购物id号
+                            _this.$store.commit('updateRecordID', null);
+                        }
+                    });
+                }).catch((error) => {
+                    log.debug(error);
+                    this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
                 });
             }
         },
@@ -267,16 +269,17 @@ export default {
                 status: exchangeType.CONFIRM2PAID.key
             };
             this.$store.dispatch('alertStatus', data).then(() => {
-                if (this.status.alert) {
-                    this.$vux.alert.show({
-                        title: '付款提醒',
-                        content: '已提醒店家，店家会尽快确认付款信息',
-                        onHide() {
-                            log.debug('跳转页面,高亮显示处理');
-                            _this.$router.push({name: 'records'});
-                        }
-                    });
-                }
+                this.$vux.alert.show({
+                    title: '付款提醒',
+                    content: '已提醒店家，店家会尽快确认付款信息',
+                    onHide() {
+                        log.debug('跳转页面,高亮显示处理');
+                        _this.$router.push({name: 'records'});
+                    }
+                });
+            }).catch((error) => {
+                log.debug(error);
+                this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
             });
         }
     },

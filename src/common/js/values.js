@@ -37,7 +37,7 @@ export var session = {
 };
 // 订单状态
 export var exchangeType = {
-    WAITE4PAY: {
+    WAIT4PAY: {
         key: 'WAIT4PAY',
         value: '待付款'
     },

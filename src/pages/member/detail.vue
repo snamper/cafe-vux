@@ -141,12 +141,10 @@ export default {
         // 提交数据到服务端,用vuex方式处理数据
         submitData(data) {
             this.$store.dispatch('modifyMemberInfo', data).then(() => {
-                if (this.status.info) {
-                    this.$vux.toast.text('修改成功', 'center');
-                    this.$store.commit('updateOneMemberInfo', data);
-                    // 重置状态避免问题
-                    this.$store.commit('updateStatusInfo', false);
-                }
+                this.$vux.toast.text('修改成功', 'center');
+                this.$store.commit('updateOneMemberInfo', data);
+            }).catch((error) => {
+                log.error(error);
             });
         }
     },

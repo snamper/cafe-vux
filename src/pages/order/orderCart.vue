@@ -36,7 +36,6 @@ export default {
     },
     methods: {
         pay() {
-            // TODO
             this.$router.push({path: '/pay'});
         }
     },

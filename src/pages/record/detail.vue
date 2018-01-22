@@ -1,12 +1,12 @@
 <template>
-    <div v-if="good">
+    <div v-if="record">
         <div class="detail vux-1px-b">
             <div class="name">名称</div>
             <div class="number">数量</div>
             <div class="total">总价</div>
         </div>
         <div class="listwrapper" ref="listWrapper">
-            <list :goods="good.details" :size="size" :radius="radius" show="show"></list>
+            <list :goods="record.details" :size="size" :radius="radius" show="show"></list>
         </div>
     </div>
 </template>
@@ -25,25 +25,22 @@ export default {
         };
     },
     props: {
-        good: {
+        record: {
             type: Object
         }
     },
     methods: {
         scrollit() {
             log.debug('start scroll');
-            // log.debug(JSON.stringify(this.good));
-            if (this.good.length !== 0) {
-                this.$nextTick(() => {
-                    if (!this.scroll) {
-                        this.scroll = new BScroll(this.$refs.listWrapper, {
-                            click: true
-                        });
-                    } else {
-                        this.scroll.refresh();
-                    }
-                });
-            }
+            this.$nextTick(() => {
+                if (!this.scroll) {
+                    this.scroll = new BScroll(this.$refs.listWrapper, {
+                        click: true
+                    });
+                } else {
+                    this.scroll.refresh();
+                }
+            });
         }
     },
     components: {

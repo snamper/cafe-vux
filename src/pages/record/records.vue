@@ -2,26 +2,22 @@
     <div>
         <div class="list-wrapper">
             <logo></logo>
-            <div class="orderlist-wrapper" v-if="recordList">
+            <div class="orderlist-wrapper" v-if="records">
                 <p class="title">{{titleBar}}</p>
                 <div class="scroll-wrapper" ref="scrollWrapper">
                     <ul>
-                        <li @click="showDetailPage(item)" v-for="(item,index) in recordList" :key="index">                        
-                            <split>{{item.createTime}}</split>
+                        <li @click="showDetailPage(record)" v-for="(record,index) in records" :key="index">                        
+                            <split>{{record.createTime}}</split>
                             <div class="title">
-                                <!-- <span class="orderNo">{{date(item.createTime)}}  {{time(item.createTime)}}</span> -->
-                                <span class="status">{{orderStatus(item.status)}}</span>                                
+                                <span class="status">{{orderStatus(record.status)}}</span>                                
                             </div>
-                            <imagelist :list="item.details"></imagelist>
+                            <imagelist :list="record.details"></imagelist>
                             <div class="detail">
-                                <span>共<span class="No">{{item.details.length}}</span>件商品，实付款: <span class="price">￥{{item.amount}}</span></span>
+                                <span>共<span class="No">{{record.details.length}}</span>件商品，实付款: <span class="price">￥{{record.amount}}</span></span>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
-            <div class="non-order" v-if="!recordList">
-                <p class="title">亲，您还没有购买任何商品</p>
             </div>
         </div>
     </div>
@@ -40,7 +36,6 @@ const log = new Logger('page/record/records');
 export default {
     data() {
         return {
-            loading: false
         };
     },
     beforeRouteEnter (to, from, next) {
@@ -53,7 +48,7 @@ export default {
         ...mapState([
             'memberInfo',
             'UUID',
-            'recordList'
+            'records'
         ]),
         titleBar() {
             if (this.memberInfo === null) {
@@ -77,8 +72,9 @@ export default {
         }
     },
     methods: {
+        // 查询是否有订单,如果没有则跳转到menu页面
+        // 如果有订单,则滚动显示
         init() {
-            this.loading = true;
             let data = {
                 userId: null,
                 needDetail: true
@@ -90,12 +86,13 @@ export default {
             }
             log.debug(JSON.stringify(data));
             this.$store.dispatch('getRecordList', data).then(() => {
-                if (this.recordList !== null) {
-                    this.scrollit();
-                } else {
-                    // TODO
-                    log.debug('返回到菜单页面');
-                }
+                this.scrollit();
+            }).catch((error) => {
+                log.error(error);
+                this.$vux.toast.text('您还没有购买东西,请先购买', 'middle');
+                setTimeout(() => {
+                    this.$router.push({name: 'menu'});
+                }, 1000);
             });
         },
         scrollit() {
@@ -103,7 +100,7 @@ export default {
                 if (!this.scroll) {
                     this.scroll = new BScroll(this.$refs.scrollWrapper, {
                         click: true
-                });
+                    });
                 } else {
                     this.scroll.refresh();
                 }
@@ -112,9 +109,13 @@ export default {
         orderStatus(status) {
             return covertStatus(status);
         },
-        showDetailPage(good) {
+        // 显示订单详情页,路由传递订单的ID
+        showDetailPage(record) {
             log.debug('jump to record');
-            this.$router.push({name: 'record', params: {record: good}});
+            log.debug(record.id);
+            // 传递订单的ID
+            // this.$router.push({name: 'record'});
+            this.$router.push({name: 'record', params: {record: record}});
         }
     },
     components: {

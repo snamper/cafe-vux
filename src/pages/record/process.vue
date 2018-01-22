@@ -18,70 +18,65 @@
 <script type="text/ecmascript-6">
 import { Flow, FlowState, FlowLine, XButton } from 'vux';
 import { exchangeType } from '../../common/js/values';
-import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('page/record/process');
 const pay = '我要付款';
 const alert = '提醒卖家';
 export default {
     props: {
-        good: {
+        record: {
             type: Object
         }
     },
     computed: {
-        ...mapState([
-            'recordID',
-            'status'
-        ]),
         show() {
             let result = {
                 flag: false,
                 title: ''
             };
-            if (this.good.status === exchangeType.WAITE4PAY.key) {
+            if (this.record.status === exchangeType.WAIT4PAY.key) {
                 result.flag = true;
                 result.title = pay;
-            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
+            } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
                 result.flag = true;
                 result.title = alert;
-            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
+            } else if (this.record.status === exchangeType.CONFIRM2PAID.key) {
                 result.flag = false;
-            } else if (this.good.status === exchangeType.SUCCESS.key) {
+            } else if (this.record.status === exchangeType.SUCCESS.key) {
                 result.flag = false;
             }
             return result;
         },
         isDoneStatus() {
-            if (this.good.status === exchangeType.WAITE4PAY.key) {
+            if (this.record.status === exchangeType.WAIT4PAY.key) {
                 return [true, false, false, false];
-            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
+            } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
                 return [true, true, false, false];
-            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
+            } else if (this.record.status === exchangeType.CONFIRM2PAID.key) {
                 return [true, true, true, false];
-            } else if (this.good.status === exchangeType.SUCCESS.key) {
+            } else if (this.record.status === exchangeType.SUCCESS.key) {
                 return [true, true, true, true];
             }
         },
         line() {
-            if (this.good.status === exchangeType.WAITE4PAY.key) {
+            if (this.record.status === exchangeType.WAIT4PAY.key) {
                 return [false, false, false];
-            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
+            } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
                 return [true, false, false];
-            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
+            } else if (this.record.status === exchangeType.CONFIRM2PAID.key) {
                 return [true, true, false];
-            } else if (this.good.status === exchangeType.SUCCESS.key) {
+            } else if (this.record.status === exchangeType.SUCCESS.key) {
                 return [true, true, true];
             }
         },
         tips() {
-            if (this.good.status === exchangeType.WAITE4PAY.key) {
+            if (this.record.status === exchangeType.WAIT4PAY.key) {
                 return ['进行中', '', ''];
-            } else if (this.good.status === exchangeType.WAIT4CONFIRM.key) {
+            } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
                 return ['', '进行中', ''];
-            } else if (this.good.status === exchangeType.CONFIRM2PAID.key) {
+            } else if (this.record.status === exchangeType.CONFIRM2PAID.key) {
                 return ['', '', '进行中'];
-            } else if (this.good.status === exchangeType.SUCCESS.key) {
+            } else if (this.record.status === exchangeType.SUCCESS.key) {
                 return ['', '', ''];
             }
         }
@@ -95,20 +90,19 @@ export default {
                     status: exchangeType.CONFIRM2PAID.key
                 };
                 this.$store.dispatch('alertStatus', data).then(() => {
-                    log.debug('alert result is ' + this.status.alert);
-                    if (this.status.alert) {
-                        this.$vux.alert.show({
-                            title: '付款提醒',
-                            content: '已提醒店家，店家会尽快确认付款信息',
-                            onHide() {
-                                // 变更状态为已付款状态
-                                _this.good.status = exchangeType.CONFIRM2PAID.key;
-                            }
-                        });
-                    }
+                    this.$vux.alert.show({
+                        title: '付款提醒',
+                        content: '已提醒店家，店家会尽快确认付款信息',
+                        onHide() {
+                            // 变更状态为已付款状态
+                            _this.record.status = exchangeType.CONFIRM2PAID.key;
+                        }
+                    });
+                }).catch((error) => {
+                    log.error(error);
                 });
             } else if (this.show.title === pay) {
-                this.$router.push({name: 'pay', params: {product: this.good}});
+                this.$router.push({name: 'pay', params: {record: this.record}});
             }
         }
     },

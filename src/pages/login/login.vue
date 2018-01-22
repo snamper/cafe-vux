@@ -71,16 +71,11 @@ export default {
             } else {
                 /* 注册AJAX请求 */
                 this.$store.dispatch('login', this.ajaxloginUser).then(() => {
-                    log.debug('login status is ' + this.status.login);
-                    if (this.status.login) {
-                       this.$vux.toast.text('登陆成功', 'middle');
-                       // 跳转到member页面
-                       this.$router.push({name: 'member'});
-                    } else {
-                       this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
-                    }
+                    this.$vux.toast.text('登陆成功', 'middle');
+                    // 跳转到member页面
+                    this.$router.push({name: 'member'});
                 }).catch((error) => {
-                    log.debug(error);
+                    log.error(error);
                     this.$vux.toast.text('登陆失败，请重新登陆', 'middle');
                 });
             }
@@ -97,14 +92,13 @@ export default {
                 this.$refs.repassword.reset();
             } else {
                 this.$store.dispatch('resigter', this.ajaxregisterUser).then(() => {
-                    if (this.status.login) {
-                       this.$vux.toast.text('注册成功', 'middle');
-                       setTimeout(() => {
-                           this.$router.push({name: 'member'});
-                       }, 1000);
-                    } else {
-                       this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
-                    }
+                    this.$vux.toast.text('注册成功', 'middle');
+                    setTimeout(() => {
+                        this.$router.push({name: 'member'});
+                    }, 1000);
+                }).catch((error) => {
+                    log.error(error);
+                    this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
                 });
             }
         },
@@ -113,10 +107,10 @@ export default {
             if (this.registerUser.phone !== '') {
                 let phone = { 'name': this.registerUser.phone.replace(/\s/g, '') };
                 this.$store.dispatch('duplicate', phone).then(() => {
-                    if (this.status.duplicate) {
-                        this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
-                        this.$refs.phone.reset();
-                    }
+                    this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
+                    this.$refs.phone.reset();
+                }).catch((error) => {
+                    log.error(error);
                 });
             }
         }

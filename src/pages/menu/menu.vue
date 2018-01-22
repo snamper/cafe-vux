@@ -67,6 +67,8 @@ export default {
         this.$store.dispatch('getCategorys').then((response) => {
             this.goods = this.$store.state.categorys;
             this.init();
+        }).catch((error) => {
+            log.debug(error);
         });
     },
     computed: {
