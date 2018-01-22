@@ -57,31 +57,32 @@ export default {
                 this.$refs.confirm.reset();
             } else {
                 // 提交登陆,看看返回值是否成功确认原密码正确
-                this.$store.dispatch('login', {name: this.$store.state.memberInfo.phone, passWd: md5(this.pwd.old), valid: true}).then(() => {
-                    if (this.status.old) {
-                        let data = {
-                            entityId: this.$store.state.memberInfo.id,
-                            entityName: md5(this.pwd.new)
-                        };
-                        log.debug(JSON.stringify(data));
-                        this.$store.dispatch('modifyPwd', data).then(() => {
-                            log.debug('ajax');
-                            if (this.status.pwd) {
-                                this.$vux.toast.text('密码修改成功', 'middle');
-                                this.$router.back();
-                            } else {
-                                this.$vux.toast.text('密码修改失败, 请稍后再试', 'middle');
-                                // 重置密码框
-                                this.$refs.old.reset();
-                                this.$refs.new.reset();
-                                this.$refs.confirm.reset();
-                            }
-                        });
-                    } else {
-                         this.$vux.toast.text('原密码不正确,请重试', 'middle');
+                let data = {
+                    name: this.$store.state.memberInfo.phone, 
+                    passWd: md5(this.pwd.old), valid: true
+                };
+                this.$store.dispatch('login', data).then(() => {
+                    let data = {
+                        entityId: this.$store.state.memberInfo.id,
+                        entityName: md5(this.pwd.new)
+                    };
+                    log.debug(JSON.stringify(data));
+                    this.$store.dispatch('modifyPwd', data).then(() => {
+                        this.$vux.toast.text('密码修改成功', 'middle');
+                        this.$router.back();
+                    }).catch((error) => {
+                        log.error(error);
+                        this.$vux.toast.text('密码修改失败, 请稍后再试', 'middle');
                         // 重置密码框
                         this.$refs.old.reset();
-                    }
+                        this.$refs.new.reset();
+                        this.$refs.confirm.reset();
+                    });
+                }).catch((error) => {
+                    log.error(error);
+                    this.$vux.toast.text('原密码不正确,请重试', 'middle');
+                    // 重置密码框
+                    this.$refs.old.reset();
                 });
             }
         }
