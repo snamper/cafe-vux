@@ -70,7 +70,13 @@ export default {
                 vm.$router.push({name: 'menu'});
             }
             if (to.path === '/record') {
+                log.debug('page from /record');
                 // 置灰订单购买,并开启付款确认
+                vm.$store.state.showbutton.confirm = true;
+                vm.$store.state.showbutton.already = false;
+            } else {
+                log.debug('page from other');
+                // 置灰付款确认,并开启订单购买
                 vm.$store.state.showbutton.confirm = false;
                 vm.$store.state.showbutton.already = true;
             }
@@ -222,8 +228,9 @@ export default {
         // 返回上一个页面
         back() {
             if (this.to === '/record') {
-                this.$router.push({name: 'record', param: {record: this.record}});
                 log.debug('back record page');
+                log.debug('record is' + JSON.stringify(this.record));
+                this.$router.push({name: 'record', params: {record: this.record}});
             } else {
                 log.debug('back to order page');
                 this.$router.back();
@@ -252,8 +259,6 @@ export default {
                             // 更新状态
                             _this.$store.commit('updateShowButtonConfirmStatus', true);
                             _this.$store.commit('updateShowButtonAlreadyStatus', false);
-                            // 清空保存的购物id号
-                            _this.$store.commit('updateRecordID', null);
                         }
                     });
                 }).catch((error) => {
@@ -265,9 +270,14 @@ export default {
         alertStatus() {
             let _this = this;
             let data = {
+                // 默认认为是从order页面来的,所以提交之前记录的recordID
                 entityId: this.recordID,
                 status: exchangeType.CONFIRM2PAID.key
             };
+            // 如果是从record页面来的,就提交record的id
+            if (this.to === '/record') {
+                data.entityId = this.record.id;
+            }
             this.$store.dispatch('alertStatus', data).then(() => {
                 this.$vux.alert.show({
                     title: '付款提醒',
@@ -275,6 +285,8 @@ export default {
                     onHide() {
                         log.debug('跳转页面,高亮显示处理');
                         _this.$router.push({name: 'records'});
+                        // 清空保存的购物id号
+                        _this.$store.commit('updateRecordID', null);
                     }
                 });
             }).catch((error) => {

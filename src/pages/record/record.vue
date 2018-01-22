@@ -27,7 +27,8 @@ export default {
             if (from.path === '/records' || from.path === '/pay') {
                 vm.$router.push({name: 'records'});
             } else {
-                log.debug('recordID is ' + vm.record.id);
+                // log.debug('recordID is ' + vm.record.id);
+                log.debug(vm.record === null);
             }
         });
     },

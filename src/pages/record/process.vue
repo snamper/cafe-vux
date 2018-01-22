@@ -86,7 +86,7 @@ export default {
             let _this = this;
             if (this.show.title === alert) {
                 let data = {
-                    RecordID: this.recordID,
+                    entityId: this.record.id,
                     status: exchangeType.CONFIRM2PAID.key
                 };
                 this.$store.dispatch('alertStatus', data).then(() => {
