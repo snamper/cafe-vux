@@ -1,5 +1,5 @@
 cd /home/font-end/cafe-vux
-git pull origin router
+git pull origin master
 cnpm run build
 rm -r /home/shop/procs/ppus/web.ppu/framework-web-pmu.pmu/shop-web-container.par/web.ear/web.war/static
 rm -r /home/shop/procs/ppus/web.ppu/framework-web-pmu.pmu/shop-web-container.par/web.ear/web.war/index.html
