@@ -67,7 +67,7 @@ export default {
             Vue.http.post(url.userRegister, payload).then((response) => {
                 let result = response.data;
                 log.debug('resigter response is ' + JSON.stringify(result));
-                if (result.success) {
+                if (result.status) {
                     log.debug('resigter response is ' + result.status);
                     let memberInfo = {
                         'id': result.entityId,
