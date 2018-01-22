@@ -1,24 +1,24 @@
 import Vue from 'vue';
-import config from '../config/config';
+import { type, session } from '../common/js/values';
+import { setSessionStorage } from '../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('vuex/mutations');
-const url = config.basicInfo;
-
 export default {
-    updateLoadingStatus (state, payload) {
-        state.isLoading = payload.isLoading;
+    // 更新UUID
+    updateUUID(state, payload) {
+        state.UUID = payload;
     },
-    // 修改分类列表
-    m_categorys(state, categorys) {
-        // log.info('before modify categorys');
-        state.categorys = categorys;
-        // log.info('after modify categorys');
+    // 更新会员信息
+    updatememberInfo(state, payload) {
+        state.memberInfo = payload;
+        // memberInfo有改变的时候更新
+        setSessionStorage(session.memberInfo, state.memberInfo);
     },
-    add_count_categorys(state, param) {
-        // log.debug('setting count attr in product: ' + JSON.stringify(param));
+    // 增加购买商品
+    addCount(state, payload) {
         state.categorys.forEach((category) => {
             category.list.forEach((product) => {
-                if (param === product) {
+                if (payload === product) {
                     if (!product.count) {
                         Vue.set(product, 'count', 1);
                     } else {
@@ -28,80 +28,63 @@ export default {
             });
         });
     },
-    sub_count_categorys(state, param) {
+    // 减少购买商品
+    subCount(state, payload) {
         state.categorys.forEach((category) => {
             category.list.forEach((product) => {
-                if (param === product) {
+                if (payload === product) {
                     product.count--;
                 }
             });
         });
     },
-    setUUID(state, payload) {
-        log.debug('before uuid change, the uuid is ' + state.uuid);
-        state.uuid = payload;
-        log.debug('after uuid change, the uuid is ' + state.uuid);
+    // 更新商品
+    updateStateCategorys(state, payload) {
+        state.categorys = payload;
     },
-    setMember(state, payload) {
-        state.memberInfo = payload;
+    // 购物订单
+    updateRecordID(state, payload) {
+        state.recordID = payload;
     },
-    setCashorBalance(state, payload) {
-        state.cashOrBalance = payload;
-    },
-    clearCarts(state) {
-        state.categorys.forEach((category) => {
-            category.list.forEach((food) => {
-                food.count = 0;
+    // 清空购物车
+    clearCars(state) {
+        if (state.categorys !== null) {
+            state.categorys.forEach((category) => {
+                category.list.forEach((food) => {
+                    food.count = 0;
+                });
             });
-        });
-    },
-    setrecordList(state, payload) {
-        state.recordList = payload;
-    },
-    setuuid(state, payload) {
-        state.uuid = payload;
-    },
-    setrecordId(state, payload) {
-        state.recordId = payload;
-    },
-    changeSelect(state, payload) {
-        // {'menu': true, 'new': false, 'order': false, 'member': false}
-        for (let key in payload) {
-            if (key === 'menu') {
-                state.selects.menu = payload[key];
-            } else if (key === 'new') {
-                state.selects.new = payload[key];
-            } else if (key === 'order') {
-                state.selects.order = payload[key];
-            } else if (key === 'member') {
-                state.selects.member = payload[key];
-            }
         }
     },
-    modifyMemberInfo(state, payload) {
-        log.debug('payload is ' + JSON.stringify(payload));
-        log.debug('modify url is ' + url);
-        this.$http.post(url, payload).then((response) => {
-            let result = response.data;
-            if (result.success) {
-                // 修改this.memberInfo信息
-                this.$vux.toast.text('修改成功', 'center');
-                if (payload.type === config.type.gender) {
-                    state.memberInfo.gender = payload.gender;
-                } else if (payload.type === config.type.phone) {
-                    state.memberInfo.phone = payload.mobile;
-                } else if (payload.type === config.type.name) {
-                    state.memberInfo.name = payload.name;
-                } else if (payload.type === config.type.email) {
-                    state.memberInfo.email = payload.email;
-                } else if (payload.type === config.type.address) {
-                    state.memberInfo.area = payload.address;
-                } else if (payload.type === config.type.detailAddress) {
-                    state.memberInfo.address = payload.address;
-                }
-            } else {
-                this.$vux.toast.text('修改失败', 'center');
-            }
-        });
+    // 订单列表
+    updateRecords(state, payload) {
+        state.records = payload;
+    },
+    // 更新某一项会员信息
+    updateOneMemberInfo(state, payload) {
+        log.debug('modify type is ' + payload.type);
+        if (payload.type === type.name) {
+            state.memberInfo.name = payload.name;
+        } else if (payload.type === type.mobile) {
+            state.memberInfo.phone = payload.mobile;
+        } else if (payload.type === type.gender) {
+            state.memberInfo.gender = payload.gender;
+        } else if (payload.type === type.email) {
+            state.memberInfo.email = payload.email;
+        } else if (payload.type === type.address) {
+            state.memberInfo.area = payload.address;
+        } else if (payload.type === type.detailAddress) {
+            state.memberInfo.address = payload.detailAddress;
+        }
+        // memberInfo有改变的时候更新
+        setSessionStorage(session.memberInfo, state.memberInfo);
+    },
+    // 更新showbutton中的confirm状态
+    updateShowButtonConfirmStatus(state, payload) {
+        state.showbutton.confirm = payload;
+    },
+    // 更新showbutton中的already状态
+    updateShowButtonAlreadyStatus(state, payload) {
+        state.showbutton.already = payload;
     }
 };

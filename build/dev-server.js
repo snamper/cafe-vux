@@ -33,130 +33,144 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 /* define the data for ajax read */
 const appData = require('../data.json')
+// 商品
 const categorys = appData.categorys
-const categorys1 = appData.categorys1
-const products = appData.products
+// 登陆
 const login = appData.login
-const loginpoor = login.poor
-const loginrich = login.rich
-const loginfail = login.fail
+// 注册
 const register = appData.register
-const registerpoor = register.poor
-const registerrich = register.rich
-const registerother = register.other
-const addValue = appData.addValue
-const cartDetailList = appData.cartDetailList
-const cartList = appData.cartList
-const resnull = appData.buyrecord.null
-const resfail = appData.buyrecord.fail
-const ressuccess = appData.buyrecord.success
+// 购买记录
+const recordList = appData.recordList
+// 提醒卖家
 const alterStatus = appData.alterStatus
+// 修改信息
 const modifyMemberInfo = appData.modifyMemberInfo
+// 修改密码
 const modifyPwd = appData.modifyPwd
-
-const noUser = false
+// 商品购买接口
+const saverecord = appData.saverecord
+// 是否用户名已存在
+const duplicate = appData.duplicate
 
 /* define router  */
 var apiRoutes = express.Router()
 
-
-apiRoutes.post('/member/show/ui/modifyBasicInfo.do', function(req, res){
-  let user = req.body
-  if(user.userId === 107) {
-    res.json(modifyMemberInfo.success)
-  }else{
-    res.json(modifyMemberInfo.fail)
-  }
-})
-
-apiRoutes.post('/member/show/ui/modifyPassword.do', function(req, res){
-  let user = req.body
-  if(user.entityId === 107){
-    res.json(modifyPwd.success)
-  }else{
-    res.json(modifyPwd.fail)
-  }
-})
-
+// 获取分类商品的列表
 apiRoutes.get('/category/show/ui/getCategoriedProducts.do', function (req, res) {
   res.json(categorys)
 })
 
+// 修改会员信息接口
+apiRoutes.post('/member/show/ui/modifyBasicInfo.do', jsonParser, function(req, res){
+  let user = req.body
+  console.log('modifyBasicInfo.do data is ' +JSON.stringify(user));
+  if (user.userId === login.member0.id || user.userId === login.member2.id || user.userId === login.member4.id || user.userId === login.member6.id
+    || user.userId === login.member8.id) {
+      res.json(modifyMemberInfo.success)
+  } else {
+    res.json(modifyMemberInfo.fail)
+  }
+})
+
+// 修改密码接口
+apiRoutes.post('/member/show/ui/modifyPassword.do', jsonParser, function(req, res){
+  let user = req.body
+  console.log('modifyPassword.do data is ' +JSON.stringify(user));
+  if (user.userId === login.member1.id || user.userId === login.member3.id || user.userId === login.member5.id || user.userId === login.member7.id
+    || user.userId === login.member9.id) {
+      res.json(modifyPwd.success)
+  } else {
+    res.json(modifyPwd.fail)
+  }
+})
+
+// 用户登录接口
 apiRoutes.post('/member/show/ui/memberLogin.do', jsonParser, function (req, res) {
   // {"name":"ccc","passWd":"dad"}
   let user = req.body;
   console.log('memberLogin.do data is ' +JSON.stringify(user));
-  if(user.name==='totti'){
-    res.json(loginpoor)
-  } else if(user.name==='david') {
-    res.json(loginrich)
-  }else{
-    res.json(loginfail)
+  if (user.name === login.member0.phone) {
+    res.json(login.member0)
+  } else if (user.name === login.member1.phone) {
+    res.json(login.member1)
+  } else if (user.name === login.member2.phone) {
+    res.json(login.member2)
+  } else if (user.name === login.member3.phone) {
+    res.json(login.member3)
+  } else if (user.name === login.member4.phone) {
+    res.json(login.member4)
+  } else if (user.name === login.member5.phone) {
+    res.json(login.member5)
+  } else if (user.name === login.member6.phone) {
+    res.json(login.member6)
+  } else if (user.name === login.member7.phone) {
+    res.json(login.member7)
+  } else if (user.name === login.member8.phone) {
+    res.json(login.member8)
+  } else if (user.name === login.member9.phone) {
+    res.json(login.member9)
+  } else {
+    res.json(login.fail)
   }
 })
 
+// 用户注册接口
 apiRoutes.post('/member/show/ui/createMember.do', jsonParser, function (req, res) {
   let user = req.body;
   console.log('createMember.do data is ' + JSON.stringify(user));
-  if (user.name === 'totti') {
-    res.json(registerpoor)
-  } else if (user.name === 'david') {
-    res.json(registerrich)
+  if (user.name !== '18982278872') {
+    res.json(register.success)
   } else {
-    res.json(registerother)
+    res.json(register.fail)
   }
 })
 
+// 是否用户名已存在
 apiRoutes.post('/member/show/ui/isExistUserName.do', jsonParser, function (req, res) {
   // {"entityName":"test"}
   let user = req.body;
   console.log('isExistUserName.do data is ' + JSON.stringify(user));
-  if(user.entityName === 'totti' || user.entityName === 'david')
-  {
-    res.json('true')
-  }else{
-    res.json('false')
-  }  
+  if (user.name === login.member0.phone || user.name === login.member1.phone || user.name === login.member2.phone || user.name === login.member3.phone
+    || user.name === login.member4.phone || user.name === login.member5.phone || user.name === login.member6.phone || user.name === login.member7.phone
+    || user.name === login.member8.phone || user.name === login.member9.phone) {
+    res.json(duplicate.yes);
+  } else {
+    res.json(duplicate.no);
+  }
 })
 
-apiRoutes.get('/member/show/ui/rechargeBalance.do',function(req,res){
-  res.json(addValue)
-})
 
+// 更新订单状态的接口
 apiRoutes.post('/product/show/ui/alterStatus.do',jsonParser,function(req,res){
   let user = req.body
   console.log('alterStatus.do data is ' + JSON.stringify(user))
   res.json(alterStatus)
 })
 
+
+// 获取购买商品列表
 apiRoutes.post('/product/show/ui/getRecordList.do',jsonParser,function(req,res){
   let user = req.body
   console.log('getRecordList.do data is ' + JSON.stringify(user))
-  if(!noUser) {
-    if(user.needDetail){
-      res.json(cartDetailList)
-    }else{
-      res.json(cartList)
-    }
+  if (user.userId === 101 || user.userId === 103 || user.userId === 105 || user.userId === 107 || user.userId === 109 ||
+    user.userId === 102 || user.userId === 104 || user.userId === 106) {
+    res.json(recordList)
   } else {
-    let result = []
-    res.json(result)
+    res.json([])
   }
 })
 
-
+// 商品购买接口
 apiRoutes.post('/product/show/ui/saveRecordList.do',jsonParser,function(req,res){
   let user = req.body
   console.log('saveRecordList.do data is ' + JSON.stringify(user))
-  if (user.amount < 100) {
-    console.log('user.amount <100')
-    res.json(resfail)
-  } else if(user.amount > 100 && user.amount <10000) {
-    console.log('user.amount >100 && < 10000')
-    res.json(ressuccess)
+  if (user.userId === 100|| user.userId === 101 || user.userId === 102 || user.userId === 103 || user.userId === 104 ||
+    user.userId === 105|| user.userId === 106 || user.userId === 107 || user.userId === 108) {
+    res.json(saverecord.success)
+  } else if(user.userId === 109) {
+    res.json(saverecord.notexist)
   } else {
-    console.log('other')
-    res.json(resnull)
+    res.json(saverecord.balance)
   }
 })
 
