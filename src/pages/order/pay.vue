@@ -270,14 +270,9 @@ export default {
         alertStatus() {
             let _this = this;
             let data = {
-<<<<<<< HEAD
                 // 默认认为是从order页面来的,所以提交之前记录的recordID
                 entityId: this.recordID,
                 status: exchangeType.CONFIRM2PAID.key
-=======
-                entityId: this.recordID,
-                status: exchangeType.WAIT4CONFIRM.key
->>>>>>> b5ba9fb1461228fab38c9f47d593c7f109fde156
             };
             // 如果是从record页面来的,就提交record的id
             if (this.to === '/record') {
