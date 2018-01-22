@@ -91,14 +91,21 @@ export default {
                 this.$refs.password.reset();
                 this.$refs.repassword.reset();
             } else {
-                this.$store.dispatch('resigter', this.ajaxregisterUser).then(() => {
-                    this.$vux.toast.text('注册成功', 'middle');
-                    setTimeout(() => {
-                        this.$router.push({name: 'member'});
-                    }, 1000);
+                let phone = { 'name': this.registerUser.phone.replace(/\s/g, '') };
+                this.$store.dispatch('duplicate', phone).then(() => {
+                    this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
+                    this.$refs.phone.reset();
                 }).catch((error) => {
                     log.error(error);
-                    this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
+                    this.$store.dispatch('resigter', this.ajaxregisterUser).then(() => {
+                        this.$vux.toast.text('注册成功', 'middle');
+                        setTimeout(() => {
+                            this.$router.push({name: 'member'});
+                        }, 1000);
+                    }).catch((error) => {
+                        log.error(error);
+                        this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
+                    });
                 });
             }
         },
