@@ -110,13 +110,9 @@ export default {
         },
         submitData(data) {
             this.$store.dispatch('modifyMemberInfo', data).then(() => {
-                if (this.status.info) {
-                    this.$vux.toast.text('修改成功', 'center');
-                    this.$store.commit('updateOneMemberInfo', data);
-                    this.$router.back();
-                    // 重置状态避免问题
-                    this.$store.commit('updateStatusInfo', false);
-                }
+                this.$vux.toast.text('修改成功', 'center');
+                this.$store.commit('updateOneMemberInfo', data);
+                this.$router.back();
             });
         }
     },
