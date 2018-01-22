@@ -58,8 +58,8 @@ export default {
             } else {
                 // 提交登陆,看看返回值是否成功确认原密码正确
                 let data = {
-                    name: this.$store.state.memberInfo.phone, 
-                    passWd: md5(this.pwd.old), 
+                    name: this.$store.state.memberInfo.phone,
+                    passWd: md5(this.pwd.old),
                     valid: true
                 };
                 this.$store.dispatch('login', data).then(() => {
