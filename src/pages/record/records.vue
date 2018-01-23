@@ -7,8 +7,9 @@
                 <div class="scroll-wrapper" ref="scrollWrapper">
                     <ul>
                         <li @click="showDetailPage(record)" v-for="(record,index) in records" :key="index">                        
-                            <split>{{record.createTime}}</split>
+                            <split></split>
                             <div class="title">
+                                <span class="time">{{date(record.createTime)}} {{time(record.createTime)}}</span>
                                 <span class="status">{{orderStatus(record.status)}}</span>                                
                             </div>
                             <imagelist :list="record.details"></imagelist>
@@ -58,17 +59,6 @@ export default {
             } else {
                 return this.memberInfo.phone + ', 您的历史订单如下';
             }
-        },
-        date(datetime) {
-            log.debug('datetime is ' + datetime);
-            let format = formatDate(datetime);
-            let result = format.Year + '-' + format.Month + '-' + format.Day;
-            return result;
-        },
-        time(datetime) {
-            let format = formatDate(datetime);
-            let result = format.Hour + ':' + format.Minute;
-            return result;
         }
     },
     methods: {
@@ -109,13 +99,23 @@ export default {
         orderStatus(status) {
             return covertStatus(status);
         },
-        // 显示订单详情页,路由传递订单的ID
+        // 显示订单详情页,路由传递单个订单的信息
         showDetailPage(record) {
             log.debug('jump to record');
             log.debug(record.id);
-            // 传递订单的ID
-            // this.$router.push({name: 'record'});
+            // 传递单个订单的信息
             this.$router.push({name: 'record', params: {record: record}});
+        },
+        date(datetime) {
+            log.debug('datetime is ' + datetime);
+            let format = formatDate(datetime);
+            let result = format.Year + '-' + format.Month + '-' + format.Day;
+            return result;
+        },
+        time(datetime) {
+            let format = formatDate(datetime);
+            let result = format.Hour + ':' + format.Minute;
+            return result;
         }
     },
     components: {

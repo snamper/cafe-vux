@@ -29,6 +29,7 @@ export var formatDate = function formatDate(date) {
         Minute: datetime.getMinutes(),
         Second: datetime.getSeconds()
     };
+    log.debug('before add zero pre ' + JSON.stringify(format));
     if (format.Month <= 9) {
         format.Month = '0' + format.Month;
     }
@@ -44,7 +45,7 @@ export var formatDate = function formatDate(date) {
     if (format.Second <= 9) {
         format.Second = '0' + format.Second;
     }
-    log.debug(JSON.stringify(format));
+    log.debug('after add zero pre' + JSON.stringify(format));
     return format;
 };
 // 根据服务端返回的数据存储男女
