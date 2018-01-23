@@ -1,4 +1,4 @@
-export var url = {
+export const url = {
     // 获取分类商品的列表
     categorysList: '/shop/category/show/ui/getCategoriedProducts.do',
     // 获取购买商品列表
@@ -21,7 +21,7 @@ export var url = {
 };
 
 // 传递类型
-export var type = {
+export const type = {
     mobile: 'mobile',
     name: 'name',
     email: 'email',
@@ -31,12 +31,12 @@ export var type = {
 };
 
 // session的key
-export var session = {
+export const session = {
     uuid: 'uuid',
     memberInfo: 'memberInfo'
 };
 // 订单状态
-export var exchangeType = {
+export const exchangeType = {
     WAIT4PAY: {
         key: 'WAIT4PAY',
         value: '待付款'
@@ -55,7 +55,18 @@ export var exchangeType = {
     }
 };
 // 占位图
-export var placeholder = {
+export const placeholder = {
     size60: 'http://temp.im/50x50',
     size400: 'http://temp.im/400x400'
+};
+// 男女
+export const sex = {
+    man: {
+        key: 'Male',
+        value: '男'
+    },
+    woman: {
+        key: 'Famale',
+        value: '女'
+    }
 };

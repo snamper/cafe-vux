@@ -47,6 +47,7 @@ import spilt from '../../components/split';
 import logo from '../../components/logo';
 import { mapState } from 'vuex';
 import { type } from '../../common/js/values';
+import { gender } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('pages/member/detail');
 export default {
@@ -134,8 +135,9 @@ export default {
             let data = {
                 type: type.gender,
                 userId: this.memberInfo.id,
-                gender: this.sex[0]
+                gender: gender(this.sex[0])
             };
+            log.debug(data.gender);
             this.submitData(data);
         },
         // 提交数据到服务端,用vuex方式处理数据

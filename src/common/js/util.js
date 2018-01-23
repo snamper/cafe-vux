@@ -1,4 +1,4 @@
-import { exchangeType } from './values';
+import { exchangeType, sex } from './values';
 import Logger from 'chivy';
 const log = new Logger('common/js/util');
 
@@ -48,11 +48,15 @@ export var formatDate = function formatDate(date) {
     return format;
 };
 // 根据服务端返回的数据存储男女
-export var gender = function gender(sex) {
-    if (sex === 'Male') {
-        return '男';
-    } else if (sex === 'Famale') {
-        return '女';
+export var gender = function gender(value) {
+    if (value === sex.man.key) {
+        return sex.man.value;
+    } else if (value === sex.woman.key) {
+        return sex.woman.value;
+    } else if (value === sex.man.value) {
+        return sex.man.key;
+    } else if (value === sex.woman.value) {
+        return sex.woman.key;
     } else {
         return undefined;
     }
