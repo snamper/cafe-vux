@@ -19,7 +19,7 @@
                             <ul>
                                 <li class="food-item border-1px" v-for="(food,index) in item.list" :key="index" @click="selectFood(food,$event)">
                                     <div class="icon">
-                                        <img width="60" height="60" :src="food.imageUrl">
+                                        <img width="50" height="50" :src="food.imageUrl!=='' ? food.imageUrl: placeholder.size50">
                                     </div>
                                     <div class="content">
                                         <h2 class="name">{{food.name}}</h2>
@@ -51,6 +51,7 @@ import logo from '../../components/logo';
 import food from './food';
 import shopcart from './shopcart';
 import cartcontrol from './cartcontrol';
+import { placeholder } from '../../common/js/values';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
 export default {
@@ -82,6 +83,9 @@ export default {
                 }
             }
             return 0;
+        },
+        placeholder() {
+            return placeholder;
         }
     },
     methods: {

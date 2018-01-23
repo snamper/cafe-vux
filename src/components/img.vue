@@ -3,7 +3,7 @@
         <div class="image" ref="image">
             <ul class="imageheader" ref="imageHeader">
                 <li class="imagelist" v-for="(product,index) in list" :key="index" ref="imagelist">
-                    <avator :img="product.imageUrl"  :size='size' :radius='radius'></avator>
+                    <avator :img="product.imageUrl !== '' ? product.imageUrl: placeholder.size50 "  :size='size' :radius='radius'></avator>
                 </li>
             </ul>
         </div>
@@ -13,6 +13,7 @@
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
 import avator from './avator';
+import { placeholder } from '../common/js/values';
 export default {
     data() {
         return {
@@ -45,6 +46,11 @@ export default {
                 this.scroll.refresh();
             }
         });
+    },
+    computed: {
+        placeholder() {
+            return placeholder;
+        }
     },
     components: {
         avator

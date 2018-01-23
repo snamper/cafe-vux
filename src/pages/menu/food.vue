@@ -2,7 +2,7 @@
     <transition name="move">
         <div v-show="showFlag" class="food food-content" ref="food">
             <div class="image-header">
-                <img :src="food.imageUrl">
+                <img :src="food.imageUrl!==''?food.imageUrl:placeholder.size400">
                 <div class="back" @click="hide">
                     <i class="iconfont icon-fanhui"></i>
                 </div>
@@ -32,6 +32,7 @@
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
 import Vue from 'vue';
+import { placeholder } from '../../common/js/values';
 import cartcontrol from './cartcontrol';
 import split from '../../components/split';
 export default {
@@ -44,6 +45,11 @@ export default {
         return {
             showFlag: false
         };
+    },
+    computed: {
+        placeholder() {
+            return placeholder;
+        }
     },
     methods: {
         // 显示页面并滚动显示页面内容

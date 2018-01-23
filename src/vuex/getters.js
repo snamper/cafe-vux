@@ -1,3 +1,5 @@
+import { placeholder } from '../common/js/values';
+
 // import Logger from 'chivy';
 // const log = new Logger('vuex/getters');
 export default{
@@ -29,7 +31,7 @@ export default{
         let sliders = [];
         getters.products.forEach((product) => {
             sliders.push({
-                'img': product.imageSliderUrl
+                'img': product.imageSliderUrl !== '' ? product.imageSliderUrl : placeholder.size400
             });
         });
         return sliders;

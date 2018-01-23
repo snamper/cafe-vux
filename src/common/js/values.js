@@ -54,3 +54,8 @@ export var exchangeType = {
         value: '成功'
     }
 };
+// 占位图
+export var placeholder = {
+    size60: 'http://temp.im/50x50',
+    size400: 'http://temp.im/400x400'
+};
