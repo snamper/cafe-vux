@@ -20,10 +20,6 @@ const log = new Logger('pages/member/pwd');
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            log.debug('置空密码状态');
-            // 置空密码状态
-            vm.$store.commit('updateStatusOld', false);
-            vm.$store.commit('updateStatusPwd', false);
             if (from.path !== '/member') {
                 vm.$router.back();
             }
