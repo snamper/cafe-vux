@@ -70,7 +70,7 @@ export default {
                 needDetail: true
             };
             if (this.memberInfo === null) {
-                data.userId = this.UUID;
+                data.userCode = this.UUID;
             } else {
                 data.userId = this.memberInfo.id;
             }
