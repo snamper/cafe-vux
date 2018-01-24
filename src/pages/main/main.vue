@@ -7,19 +7,19 @@
       <router-view v-if="!$route.meta.keepAlive"></router-view>
     </view-box>
     <tabbar>
-        <tabbar-item :link="{path:'/menu'}">
+        <tabbar-item :link="{path:'/menu'}" :selected="$route.path === '/menu' || $route.path === '/order'">
           <span slot="icon" class="iconfont icon-icon"></span>
           <span slot="label">菜单</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/news'}">
+        <tabbar-item :link="{path:'/news'}" :selected="$route.path === '/news'">
           <span slot="icon" class="iconfont icon-xinpin"></span>
           <span slot="label">新品</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/records'}">
+        <tabbar-item :link="{path:'/records'}" :selected="$route.path === '/records'">
           <span slot="icon" class="iconfont icon-dingdan"></span>
           <span slot="label">订单</span>
         </tabbar-item>
-        <tabbar-item :link="{path:'/member'}">
+        <tabbar-item :link="{path:'/member'}" :selected="$route.path === '/member'">
           <span slot="icon" class="iconfont icon-home"></span>
           <span slot="label">我的</span>
         </tabbar-item>
