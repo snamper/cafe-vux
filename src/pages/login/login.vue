@@ -112,7 +112,7 @@ export default {
         // 手机号码重复检测
         duplicateUsername() {
             if (this.registerUser.phone !== '') {
-                let phone = { 'name': this.registerUser.phone.replace(/\s/g, '') };
+                let phone = { 'mobile': this.registerUser.phone.replace(/\s/g, '') };
                 this.$store.dispatch('duplicate', phone).then(() => {
                     this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
                     this.$refs.phone.reset();

@@ -8,16 +8,19 @@
             </div>
             <div class="info">
                 <div class="item-bar vux-1px-b">
-                    <cell title="昵称" :value="memberInfo.name ? memberInfo.name : empty" is-link @click.native="modifyUsername"></cell>
+                    <cell title="昵称" :value="memberInfo.nick ? memberInfo.nick : empty" is-link @click.native="modifyNickname"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
-                    <cell title="手机号码" :value="memberInfo.phone" is-link @click.native="modifyPhoneNumber"></cell>
+                    <cell title="用户名" :value="memberInfo.name ? memberInfo.name : empty" :is-link="linkType.name" @click.native="modifyUsername"></cell>
+                </div>
+                <div class="item-bar vux-1px-b">
+                    <cell title="手机号码" :value="memberInfo.phone"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
                     <popup-picker title="性别" :data="sexType" :placeholder="memberSex ? memberSex : empty" v-model="sex" @on-hide="saveSex"></popup-picker>
                 </div>
                 <div class="item-bar vux-1px-b">
-                    <cell title="邮箱" :value="memberInfo.email ? memberInfo.email:empty" is-link @click.native="modifyEmail"></cell>
+                    <cell title="邮箱" :value="memberInfo.email ? memberInfo.email:empty" :is-link="linkType.email" @click.native="modifyEmail"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
                     <cell title="加入时间" :value="memberInfo.createTime"></cell>
@@ -77,20 +80,47 @@ export default {
         ]),
         memberSex() {
             return this.memberInfo.gender;
+        },
+        linkType() {
+            let result = {
+                email: false,
+                name: false
+            };
+            if (!this.memberInfo.email) {
+                result.email = true;
+            }
+            if (!this.memberInfo.name) {
+                result.name = true;
+            }
+            return result;
         }
     },
     methods: {
         jumppage() {
             this.$router.push({name: 'modify', params: {content: this.content}});
         },
-        modifyUsername() {
+        modifyNickname() {
             log.debug('modifyUsername');
             this.content = {
-                type: type.name,
-                title: '设置名字',
-                input: '名字'
+                type: type.nick,
+                title: '设置昵称',
+                input: '昵称'
             };
             this.jumppage();
+        },
+        modifyUsername() {
+            log.debug('modifyUsername');
+            /**
+             * 当link标签存在的时候才能跳转
+             */
+            if (this.linkType.name) {
+                this.content = {
+                    type: type.name,
+                    title: '设置用户名',
+                    input: '用户名'
+                };
+                this.jumppage();
+            }
         },
         modifyPhoneNumber() {
             log.debug('modifyPhoneNumber');
@@ -112,12 +142,14 @@ export default {
         },
         modifyEmail() {
             log.debug('modifyEmail');
-            this.content = {
-                type: type.email,
-                title: '设置邮箱',
-                input: '邮箱'
-            };
-            this.jumppage();
+            if (this.linkType.email) {
+                this.content = {
+                    type: type.email,
+                    title: '设置邮箱',
+                    input: '邮箱'
+                };
+                this.jumppage();
+            }
         },
         modifyAddress() {
             log.debug('modifyAddress');

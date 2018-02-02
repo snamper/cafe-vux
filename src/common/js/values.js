@@ -23,6 +23,7 @@ export const url = {
 // 传递类型
 export const type = {
     mobile: 'mobile',
+    nick: 'nick',
     name: 'name',
     email: 'email',
     address: 'address',

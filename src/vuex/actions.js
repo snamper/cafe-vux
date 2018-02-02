@@ -41,6 +41,7 @@ export default {
                         log.debug('normal login');
                         let memberInfo = {
                             'id': result.id,
+                            'nick': result.nick,
                             'name': result.name,
                             'point': result.point,
                             'balance': result.balance,
@@ -71,6 +72,7 @@ export default {
                     log.debug('resigter response is ' + result.status);
                     let memberInfo = {
                         'id': result.id,
+                        'nick': '',
                         'name': '',
                         'point': 0,
                         'balance': 0,
@@ -190,6 +192,11 @@ export default {
                 data = {
                     userId: payload.userId,
                     name: payload.name
+                };
+            } else if (payload.type === type.nick) {
+                data = {
+                    userId: payload.userId,
+                    nick: payload.nick
                 };
             } else if (payload.type === type.mobile) {
                 data = {

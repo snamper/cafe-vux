@@ -75,6 +75,8 @@ export default {
             state.memberInfo.area = payload.address;
         } else if (payload.type === type.detailAddress) {
             state.memberInfo.address = payload.detailAddress;
+        } else if (payload.type === type.nick) {
+            state.memberInfo.nick = payload.nick;
         }
         // memberInfo有改变的时候更新
         setSessionStorage(session.memberInfo, state.memberInfo);

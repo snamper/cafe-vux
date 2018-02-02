@@ -58,11 +58,22 @@ export default {
             'images'
         ]),
         username() {
+            /**
+             * 当merberInfo为空的时候返回 表示未登陆
+             * 显示优先顺序为昵称nick=>name=>email=>phone
+             */
             if (!isObjEmpty(this.memberInfo)) {
-                if (isObjEmpty(this.memberInfo.name)) {
-                    return this.memberInfo.phone;
-                } else {
+                if (!isObjEmpty(this.memberInfo.nick)) {
+                    return this.memberInfo.nick;
+                }
+                if (!isObjEmpty(this.memberInfo.name)) {
                     return this.memberInfo.name;
+                }
+                if (!isObjEmpty(this.memberInfo.email)) {
+                    return this.memberInfo.email;
+                }
+                if (!isObjEmpty(this.memberInfo.phone)) {
+                    return this.memberInfo.phone;
                 }
             } else {
                 return '';

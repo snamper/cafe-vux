@@ -28,7 +28,8 @@ export default {
     },
     data() {
         return {
-            value: null
+            value: null,
+            modifyData: null
         };
     },
     props: {
@@ -42,9 +43,7 @@ export default {
             'status'
         ]),
         type() {
-            if (this.content.type === type.mobile) {
-                return 'tel';
-            } else if (this.content.input === '邮箱') {
+            if (this.content.input === '邮箱') {
                 return 'email';
             }
         },
@@ -64,45 +63,77 @@ export default {
             }
         },
         istype() {
-            if (this.content.type === type.mobile) {
-                return 'china-mobile';
-            } else if (this.content.type === type.email) {
+             if (this.content.type === type.email) {
                 return 'email';
             }
         }
     },
     methods: {
-        save() {
-            // 当输入框校验通过且数值不为空的时候,可以提交
-            if (this.$refs.input.valid && !isObjEmpty(this.value)) {
-                log.debug('the value is ' + this.value);
-                let data = {};
-                if (this.content.type === type.phone) {
-                    data = {
-                        type: type.mobile,
-                        userId: this.memberInfo.id,
-                        mobile: this.value
-                    };
-                } else if (this.content.type === type.email) {
-                    data = {
-                        type: type.email,
-                        userId: this.memberInfo.id,
-                        email: this.value
-                    };
+        duplicate() {
+            return new Promise((resolve, reject) => {
+                if (this.content.type === type.email) {
+                    // 保存之前需要检查邮箱是否被注册
+                    let duplicate = {'email': this.value};
+                    this.$store.dispatch('duplicate', duplicate).then(() => {
+                        this.$vux.toast.text('你输入的email已被注册,请更换后重试', 'center');
+                        this.$refs.input.reset();
+                    }).catch((error) => {
+                        log.error(error);
+                        this.modifyData = {
+                            type: type.email,
+                            userId: this.memberInfo.id,
+                            email: this.value
+                        };
+                        resolve();
+                    });
                 } else if (this.content.type === type.name) {
-                    data = {
-                        type: type.name,
+                    // 保存之前需要检查用户名是否被注册
+                    let duplicate = {'name': this.value};
+                    this.$store.dispatch('duplicate', duplicate).then(() => {
+                        this.$vux.toast.text('你输入的用户名已被注册,请更换后重试', 'center');
+                        this.$refs.input.reset();
+                    }).catch((error) => {
+                        log.error(error);
+                        this.modifyData = {
+                            type: type.name,
+                            userId: this.memberInfo.id,
+                            name: this.value
+                        };
+                        resolve();
+                    });
+                } else if (this.content.type === type.nick) {
+                    this.modifyData = {
+                        type: type.nick,
                         userId: this.memberInfo.id,
-                        name: this.value
+                        nick: this.value
                     };
+                    resolve();
                 } else if (this.content.type === type.detailAddress) {
-                    data = {
+                    this.modifyData = {
                         type: type.detailAddress,
                         userId: this.memberInfo.id,
                         detailAddress: this.value
                     };
+                    resolve();
                 }
-                this.submitData(data);
+            });
+        },
+        save() {
+            /**
+             * 当类型为email或者是name的时候,提交检查,如果检查通过了,再提交
+             * 其他类型则直接提交
+             */
+
+            // 当输入框校验通过且数值不为空的时候,可以提交
+            if (this.$refs.input.valid && !isObjEmpty(this.value)) {
+                log.debug('the value is ' + this.value);
+                this.duplicate().then(() => {
+                    if (!isObjEmpty(this.modifyData)) {
+                        this.submitData(this.modifyData);
+                    } else {
+                        this.$refs.input.reset();
+                    }
+                });
             } else {
                 log.debug('input is nok');
                 this.$vux.toast.text('您输入的内容不符合要求,请重试', 'middle');
