@@ -11,7 +11,7 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/tian/',
+    assetsPublicPath: '/',
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -30,7 +30,7 @@ module.exports = {
     port: process.env.PORT || 9124,
     autoOpenBrowser: false,
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/tian/',
+    assetsPublicPath: '/',
     proxyTable: {},
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

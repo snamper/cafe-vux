@@ -132,7 +132,7 @@ export default {
         },
         ajaxregisterUser() {
             let result = {
-                'username': this.registerUser.name,
+                'mobile': this.registerUser.name,
                 'name': this.registerUser.phone.replace(/\s/g, ''), // 去掉空格
                 'passWd': md5(this.registerUser.psd)
             };
