@@ -70,12 +70,12 @@ export default {
                 if (result.status) {
                     log.debug('resigter response is ' + result.status);
                     let memberInfo = {
-                        'id': result.entityId,
+                        'id': result.id,
                         'name': '',
                         'point': 0,
                         'balance': 0,
                         'gender': '',
-                        'phone': result.entityName,
+                        'phone': result.mobile,
                         'email': '',
                         'area': '',
                         'address': '',

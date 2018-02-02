@@ -175,7 +175,7 @@ apiRoutes.post('/product/show/ui/saveRecordList.do',jsonParser,function(req,res)
 })
 
 /* setting router address */
-app.use('/shop', apiRoutes)
+app.use('/shop11111', apiRoutes)
 
 const compiler = webpack(webpackConfig)
 
