@@ -46,7 +46,7 @@ export default {
                             'point': result.point,
                             'balance': result.balance,
                             'gender': gender(result.gender),
-                            'phone': result.phone,
+                            'phone': result.mobile,
                             'email': result.email,
                             'area': result.area,
                             'address': result.address,
