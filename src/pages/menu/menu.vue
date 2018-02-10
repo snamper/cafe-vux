@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loading v-model="isLoading"></loading>
         <div class="main-wrapper">
             <logo></logo>
             <div class="goods">
@@ -52,6 +53,7 @@ import food from './food';
 import shopcart from './shopcart';
 import cartcontrol from './cartcontrol';
 import { placeholder } from '../../common/js/values';
+import { Loading } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
 export default {
@@ -63,13 +65,20 @@ export default {
             selectedFood: {}
         };
     },
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            vm.$store.commit('updateLoadingStatus', {isLoading: true});
+        });
+    },
     created() {
         log.debug('getCategorys');
         this.$store.dispatch('getCategorys').then((response) => {
             this.goods = this.$store.state.categorys;
             this.init();
+            this.$store.commit('updateLoadingStatus', {isLoading: false});
         }).catch((error) => {
             log.debug(error);
+            this.$store.commit('updateLoadingStatus', {isLoading: false});
         });
     },
     computed: {
@@ -148,7 +157,8 @@ export default {
         food,
         shopcart,
         logo,
-        cartcontrol
+        cartcontrol,
+        Loading
     }
 };
 </script>
