@@ -88,5 +88,9 @@ export default {
     // 更新showbutton中的already状态
     updateShowButtonAlreadyStatus(state, payload) {
         state.showbutton.already = payload;
+    },
+    // 更新loading状态
+    updateLoadingStatus(state, payload) {
+        state.isLoading = payload.isLoading;
     }
 };

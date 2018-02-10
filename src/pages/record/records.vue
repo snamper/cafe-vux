@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loading v-model="isLoading"></loading>
         <div class="list-wrapper">
             <logo></logo>
             <div class="orderlist-wrapper" v-if="records">
@@ -31,7 +32,7 @@ import split from '../../components/split';
 import logo from '../../components/logo';
 import imagelist from '../../components/img';
 import { mapState } from 'vuex';
-import { Divider } from 'vux';
+import { Divider, Loading } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('page/record/records');
 export default {
@@ -41,6 +42,7 @@ export default {
     },
     beforeRouteEnter (to, from, next) {
         next(vm => {
+            vm.$store.commit('updateLoadingStatus', {isLoading: true});
             // 获取vux的实例
             vm.init();
         });
@@ -49,7 +51,8 @@ export default {
         ...mapState([
             'memberInfo',
             'UUID',
-            'records'
+            'records',
+            'isLoading'
         ]),
         titleBar() {
             if (this.memberInfo === null) {
@@ -65,6 +68,7 @@ export default {
         // 查询是否有订单,如果没有则跳转到menu页面
         // 如果有订单,则滚动显示
         init() {
+            // let _this = this;
             let data = {
                 userId: null,
                 needDetail: true
@@ -77,12 +81,22 @@ export default {
             log.debug(JSON.stringify(data));
             this.$store.dispatch('getRecordList', data).then(() => {
                 this.scrollit();
+                // 获取到数据后取消等待显示
+                this.$store.commit('updateLoadingStatus', {isLoading: false});
             }).catch((error) => {
+                // 获取到数据后取消等待显示
+                this.$store.commit('updateLoadingStatus', {isLoading: false});
                 log.error(error);
-                this.$vux.toast.text('您还没有购买东西,请先购买', 'middle');
+                this.$vux.toast.show({
+                    text: '您还没有购买东西,请先购买',
+                    position: 'middle',
+                    time: 2000,
+                    type: 'text'
+                });
                 setTimeout(() => {
+                    console.log(this);
                     this.$router.push({name: 'menu'});
-                }, 1000);
+                }, 2300);
             });
         },
         scrollit() {
@@ -122,7 +136,8 @@ export default {
         logo,
         split,
         imagelist,
-        Divider
+        Divider,
+        Loading
     }
 };
 </script>

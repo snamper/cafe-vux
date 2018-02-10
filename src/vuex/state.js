@@ -1,4 +1,6 @@
 export default {
+    // 等待状态
+    isLoading: false,
     // UUID当没有登陆的时候用这个ID作为会员ID
     UUID: null,
     // 会员信息
