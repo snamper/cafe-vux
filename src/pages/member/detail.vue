@@ -27,7 +27,7 @@
                 </div>
                 <spilt></spilt>
                 <div class="item-bar vux-1px-b">
-                    <cell title="会员积分" :value="`${memberInfo.point}分`"></cell>
+                    <cell title="会员积分" :value="`${memberInfo.point ? memberInfo.point : 0}分`"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
                     <cell title="余额" :value="`${memberInfo.balance}元`"></cell>

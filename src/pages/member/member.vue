@@ -9,7 +9,7 @@
                 </div>
                 <div class="info">
                     <div class="item-bar vux-1px-b">
-                        <cell title="昵称" :value="memberInfo.name ? memberInfo.name : ''"></cell>
+                        <cell title="昵称" :value="memberInfo.nick ? memberInfo.nick : empty"></cell>
                     </div>
                     <div class="item-bar vux-1px-b">
                         <cell title="会员积分" :value="`${memberInfo.point ? memberInfo.point : 0}分`" ></cell>
@@ -45,6 +45,11 @@ import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('pages/member/member');
 export default {
+    data() {
+        return {
+            empty: '未填写'
+        };
+    },
     created() {
         // 当会员信息为空的时候,跳转到登陆页面
         if (isObjEmpty(this.memberInfo)) {
