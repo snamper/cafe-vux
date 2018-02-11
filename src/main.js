@@ -15,18 +15,6 @@ Vue.use(AlertPlugin);
 Vue.config.productionTip = false;
 FastClick.attach(document.body);
 
-// 注册一个module来保存状态
-store.registerModule('vux', {
-  state: {
-    isLoading: false
-  },
-  mutations: {
-    updateLoadingStatus(state, payload) {
-      state.isLoading = payload.isLoading;
-    }
-  }
-});
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

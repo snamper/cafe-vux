@@ -1,17 +1,16 @@
 'use strict'
 const path = require('path')
 const utils = require('./utils')
-const projectRoot = path.resolve(__dirname, '../')
-const vuxLoader = require('vux-loader')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
+const vuxLoader = require('vux-loader')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-let webpackConfig  = {
+let webpackConfig = {
+  context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
   },
@@ -26,20 +25,21 @@ let webpackConfig  = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
     }
   },
   module: {
     rules: [
-      {
+      ...(config.dev.useEslint? [{
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
         options: {
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter'),
+          emitWarning: !config.dev.showEslintErrorsInOverlay
         }
-      },
+      }] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -78,7 +78,7 @@ let webpackConfig  = {
   }
 }
 
+
 module.exports = vuxLoader.merge(webpackConfig, {
-  plugins: ['vux-ui', 'progress-bar', 'duplicate-style'],
-  options: { showVuxVersionInfo: false }
+  plugins: ['vux-ui', 'progress-bar', 'duplicate-style']
 })
