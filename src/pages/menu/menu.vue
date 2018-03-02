@@ -1,6 +1,5 @@
 <template>
     <div>
-        <loading v-model="isLoading"></loading>
         <div class="main-wrapper">
             <logo></logo>
             <div class="goods">
