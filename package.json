@@ -7,8 +7,6 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "company": "npm run dev --host 10.100.193.147",
-    "home": "npm run dev --host 192.168.9.11",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
   },
@@ -22,7 +20,10 @@
     "chivy":"^0.1.5",
     "blueimp-md5":"^2.10.0",
     "better-scroll": "^0.1.11",
-    "uuid":"^3.1.0"
+    "uuid":"^3.1.0",
+    "passport": "^0.4.0",
+    "passport-oauth": "^1.0.0",
+    "web-storage-cache": "^1.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
