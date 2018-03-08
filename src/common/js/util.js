@@ -1,21 +1,29 @@
 import { exchangeType, sex } from './values';
 import Logger from 'chivy';
+import WebStorageCache from 'web-storage-cache';
 const log = new Logger('common/js/util');
+const wsCache = new WebStorageCache();
 
 // 设置sessionStorage的键值对
 export var setSessionStorage = function setSessionStorage(key, value) {
     log.info('set key(' + key + ') to sessionStorage');
-    sessionStorage.setItem(key, JSON.stringify(value));
+    // 设置过期时间一个月
+    var nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    wsCache.set(key, JSON.stringify(value), {exp: nextMonth});
+    // sessionStorage.setItem(key, JSON.stringify(value));
 };
 // 根据key获取sessionStorage的值
 export var getSessionStorage = function getSessionStorage(key) {
     log.info('get key(' + key + ') from sessionStorage');
-    return JSON.parse(sessionStorage.getItem(key));
+    return wsCache.get(key);
+    // return JSON.parse(sessionStorage.getItem(key));
 };
 // 移除sessionStorage的key
 export var removeSessionStorage = function removeSessionStorage(key) {
     log.info('remove key(' + key + ') from sessionStorage');
-    sessionStorage.removeItem(key);
+    wsCache.delete(key);
+    // sessionStorage.removeItem(key);
 };
 
 // 根据long时间获取具体的年月日时分秒
