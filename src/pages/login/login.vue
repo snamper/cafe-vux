@@ -11,6 +11,13 @@
                         <div class="forget" @click="forgetPwd">忘记密码</div>
                         <div class="register" @click="showRegister">注册新用户</div>
                     </div>
+                    <divider>第三方登陆</divider>
+                    <div class="third">
+                        <span class="iconfont icon-xinlangweibo" @click="weibo"></span>
+                        <span class="iconfont icon-weixin" @click="wechat"></span>
+                        <span class="iconfont icon-qq-copy" @click="qq"></span>
+                        <span class="iconfont icon-zhifubao" @click="alipay"></span>
+                    </div>
                 </group>
             </div>
             <div class="register-input" v-show="!show">
@@ -30,7 +37,7 @@
 
 <script type="text/ecmascript-6">
 import logo from '../../components/logo';
-import { md5, XInput, Group, XButton, Toast } from 'vux';
+import { md5, XInput, Group, XButton, Toast, Divider } from 'vux';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('page/login/login');
@@ -50,6 +57,31 @@ export default {
         };
     },
     methods: {
+        // 点击微博图标
+        weibo() {
+            window.location.href = 'http://www.baidu.com';
+        },
+        // 点击qq图标
+        qq() {
+            this.$vux.toast.show({
+                text: '暂未开通，敬请期待',
+                time: 1000
+            });
+        },
+        // 点击微信图标
+        wechat() {
+            this.$vux.toast.show({
+                text: '暂未开通，敬请期待',
+                time: 1000
+            });
+        },
+        // 点击支付宝图标
+        alipay() {
+            this.$vux.toast.show({
+                text: '暂未开通，敬请期待',
+                time: 1000
+            });
+        },
         // TODO 忘记密码
         forgetPwd() {
             this.$vux.alert.show({
@@ -146,7 +178,8 @@ export default {
         XInput,
         Group,
         XButton,
-        Toast
+        Toast,
+        Divider
     }
 };
 </script>
@@ -192,6 +225,17 @@ export default {
                 display flex
                 justify-content flex-end
                 padding-right 5px
+        .third
+            display flex
+            align-items center
+            justify-content center
+            .iconfont
+                padding 0 5px
+                width 2em;
+                height 2em;
+                vertical-align -0.15em
+                fill currentColor
+                overflow hidden
     .register-input
         width 90%
         .txt-wrapper
