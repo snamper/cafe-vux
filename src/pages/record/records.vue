@@ -21,6 +21,9 @@
                     </ul>
                 </div>
             </div>
+            <div class="norecord" v-if="recordsStatus">
+                <h1>您还没有购买任何商品</h1>
+            </div>
         </div>
     </div>
 </template>
@@ -38,6 +41,7 @@ const log = new Logger('page/record/records');
 export default {
     data() {
         return {
+            recordsStatus: false
         };
     },
     beforeRouteEnter (to, from, next) {
@@ -87,16 +91,17 @@ export default {
                 // 获取到数据后取消等待显示
                 this.$store.commit('updateLoadingStatus', {isLoading: false});
                 log.error(error);
-                this.$vux.toast.show({
+                this.recordsStatus = true;
+                /* this.$vux.toast.show({
                     text: '您还没有购买东西,请先购买',
                     position: 'middle',
                     time: 2000,
                     type: 'text'
-                });
-                setTimeout(() => {
+                }); */
+                /* setTimeout(() => {
                     console.log(this);
                     this.$router.push({name: 'menu'});
-                }, 2300);
+                }, 2300); */
             });
         },
         scrollit() {
@@ -179,6 +184,12 @@ export default {
                     font-weight 700
                     color black
                     padding 0 5px
+    .norecord
+        display flex
+        justify-content center
+        align-items center 
+        h1
+            border 1px solid fixed
     .non-order
         .title
             line-height 24px
