@@ -59,7 +59,7 @@ export default {
     methods: {
         // 点击微博图标
         weibo() {
-            window.location.href = 'http://www.baidu.com';
+            window.location.href = '/shop/member/show/ui/loginByOauth2.do';
         },
         // 点击qq图标
         qq() {
