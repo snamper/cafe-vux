@@ -10,7 +10,7 @@ const portfinder = require('portfinder')
 const express = require('express')
 const app = express()
 // 跨域访问 false表示不跨域
-const proxyType = false;
+const proxyType = true;
 
 // body-parse define
 const bodyParser = require('body-parser')
