@@ -49,6 +49,11 @@ export default {
         next(vm => {
             log.debug('from ' + from.path);
             log.debug('to ' + to.path);
+            // 当会员信息为空的时候,跳转到登陆页面
+            if (isObjEmpty(vm.memberInfo)) {
+                log.debug('jump to login page');
+                vm.$router.push({name: 'login'});
+            }
             // 当不是从会员页跳转到本页或者不是从信息修改页跳转到本页,就跳转到member页
             /* if (!(from.path === '/member' || from.path === '/modify')) {
                 vm.$router.push({name: 'member'});
