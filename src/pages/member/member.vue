@@ -59,9 +59,11 @@ export default {
                 let account = { 'entityId': id.id };
                 this.$store.dispatch('get3rdInfo', account).then(() => {
                     log.debug('already get account info');
+                    log.debug('print memberInfo ' + JSON.stringify(this.memberInfo));
                 }).catch((error) => {
                     log.error(error);
                     this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
+                    this.$router.push({name: 'login'});
                 });
             } else {
                 log.debug('jump to login page');
