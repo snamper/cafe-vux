@@ -289,6 +289,28 @@
 现金支付时 "cashOrBalance":一定不要传BALANCE  会返回 uccess为 true 并且 "responseStatus":"现金支付"
 
 
+### 第三方登陆信息查询接口
+    const apixxx = '/shop/member/show/ui/getMemberById.do'
+
+**入参**
+	{	
+		"entityId" : 252
+	}	
+
+**回参**
+	{
+		"accountType": "WeiBo",
+		"balance": 0,
+		"createTime": "2018-03-18 20:03:47",
+		"description": "Happy everyday!",
+		"email": "",
+		"id": 252,
+		"mobile": "",
+		"name": "地狱入口处",
+		"nick": "地狱入口处",
+		"status": true
+	}
+
 ### 会员信息修改接口
 
 	const Apixxx = '/shop/member/show/ui/modifyBasicInfo.do';
