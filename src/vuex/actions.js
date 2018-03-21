@@ -249,5 +249,36 @@ export default {
                 }
             });
         });
+    },
+    get3rdInfo(context, payload) {
+        log.debug('get 3rd account info ' + JSON.stringify(payload));
+        return new Promise((resolve, reject) => {
+            Vue.http.post(url.thirdUserInfo, payload).then((response) => {
+                let result = response.data;
+                log.debug('get3rdInfo response is ' + JSON.stringify(result));
+                if (result.status) {
+                    let memberInfo = {
+                        'id': result.id,
+                        'nick': result.nick,
+                        'name': result.name,
+                        'point': result.point,
+                        'balance': result.balance,
+                        'gender': result.gender,
+                        'phone': result.mobile,
+                        'email': result.email,
+                        'area': result.area,
+                        'address': result.address,
+                        'createTime': result.createTime
+                    };
+                    context.commit('updatememberInfo', memberInfo);
+                    // 存储到sessionStorage中
+                    log.info('Save register user to sessionStorage');
+                    setSessionStorage(session.memberInfo, memberInfo);
+                    resolve();
+                } else {
+                    reject(new Error('can not get 3rd account info'));
+                }
+            });
+        });
     }
 };

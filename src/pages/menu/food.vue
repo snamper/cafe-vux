@@ -2,7 +2,7 @@
     <transition name="move">
         <div v-show="showFlag" class="food food-content" ref="food">
             <div class="image-header">
-                <img :src="food.imageUrl!==''?food.imageUrl:placeholder.size400">
+                <img :src="food.imageUrl!==''?food.imageUrl + '_400X400':placeholder.size400">
                 <div class="back" @click="hide">
                     <i class="iconfont icon-fanhui"></i>
                 </div>

@@ -17,7 +17,10 @@ export const url = {
     // 修改会员信息接口
     basicInfo: '/shop/member/show/ui/modifyBasicInfo.do',
     // 修改密码接口
-    modifypwd: '/shop/member/show/ui/modifyPassword.do'
+    modifypwd: '/shop/member/show/ui/modifyPassword.do',
+    // 获取三方登陆的会员信息接口
+    // 入参 {entityId:252}
+    thirdUserInfo: '/shop/member/show/ui/getMemberById.do'
 };
 
 // 传递类型

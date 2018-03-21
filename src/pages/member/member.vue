@@ -36,7 +36,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { isObjEmpty } from '../../common/js/util.js';
+import { isObjEmpty, isCurrentJumpPage } from '../../common/js/util.js';
 import logo from '../../components/logo';
 import thumbBar from '../../components/thumbBar';
 import split from '../../components/split';
@@ -45,34 +45,30 @@ import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('pages/member/member');
 export default {
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            log.debug('from path is ' + window.document.referrer);
-            log.debug('from ' + from.path);
-            log.debug('to ' + to.path);
-            // 当会员信息为空的时候,跳转到登陆页面
-            if (isObjEmpty(vm.memberInfo)) {
-                log.debug('jump to login page');
-                // vm.$router.push({name: 'login'});
-            }
-            // 当不是从会员页跳转到本页或者不是从信息修改页跳转到本页,就跳转到member页
-            /* if (!(from.path === '/member' || from.path === '/modify')) {
-                vm.$router.push({name: 'member'});
-            } */
-        });
-    },
     data() {
         return {
             empty: '未填写'
         };
     },
-    /* created() {
+    created() {
+        var id = isCurrentJumpPage(window.location.href);
         // 当会员信息为空的时候,跳转到登陆页面
         if (isObjEmpty(this.memberInfo)) {
-            log.debug('jump to login page');
-            this.$router.push({name: 'login'});
+            if (id !== null) {
+                // 获取到ID信息
+                let account = { 'entityId': id.id };
+                this.$store.dispatch('get3rdInfo', account).then(() => {
+                    log.debug('already get account info');
+                }).catch((error) => {
+                    log.error(error);
+                    this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
+                });
+            } else {
+                log.debug('jump to login page');
+                this.$router.push({name: 'login'});
+            }
         }
-    }, */
+    },
     computed: {
         ...mapState([
             'memberInfo',

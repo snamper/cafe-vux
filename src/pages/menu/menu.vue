@@ -19,7 +19,7 @@
                             <ul>
                                 <li class="food-item border-1px" v-for="(food,index) in item.list" :key="index" @click="selectFood(food,$event)">
                                     <div class="icon">
-                                        <img width="50" height="50" :src="food.imageUrl!=='' ? food.imageUrl: placeholder.size50">
+                                        <img width="50" height="50" :src="food.imageUrl!=='' ? food.imageUrl + '_50X50': placeholder.size50">
                                     </div>
                                     <div class="content">
                                         <h2 class="name">{{food.name}}</h2>

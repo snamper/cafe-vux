@@ -1,6 +1,7 @@
 import { exchangeType, sex } from './values';
 import Logger from 'chivy';
 import WebStorageCache from 'web-storage-cache';
+import { querystring } from 'vux';
 const log = new Logger('common/js/util');
 const wsCache = new WebStorageCache();
 
@@ -88,5 +89,16 @@ export var isObjEmpty = function isObjEmpty(obj) {
         return true;
     } else {
         return false;
+    }
+};
+// 判断当前页面是否包含相关信息
+export var isCurrentJumpPage = function isCurrentJumpPage(url) {
+    // 判断是否是从正确的跳转页过来的
+    var urlArray = url.split('?');
+    if (urlArray.length === 2) {
+        var idStr = urlArray[1];
+        return querystring.parse(idStr);
+    } else {
+        return null;
     }
 };
