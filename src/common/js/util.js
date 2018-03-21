@@ -102,3 +102,14 @@ export var isCurrentJumpPage = function isCurrentJumpPage(url) {
         return null;
     }
 };
+// 根据图片大小获取图片地址
+export var renameImagePath = function renameImagePath(url, size) {
+    if (!isObjEmpty(url)) {
+        // log.debug('param url is ' + url);
+        var urlArray = url.split('.');
+        // log.debug('split array is ' + JSON.stringify(urlArray));
+        var current = urlArray[0] + '_' + size + 'X' + size + '.' + urlArray[1];
+        return current;
+    }
+    return null;
+};

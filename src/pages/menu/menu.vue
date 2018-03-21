@@ -19,14 +19,14 @@
                             <ul>
                                 <li class="food-item border-1px" v-for="(food,index) in item.list" :key="index" @click="selectFood(food,$event)">
                                     <div class="icon">
-                                        <img width="50" height="50" :src="food.imageUrl!=='' ? food.imageUrl + '_50X50': placeholder.size50">
+                                        <img width="50" height="50" :src="food.imageUrl!=='' ? currentPath(food.imageUrl, 50): placeholder.size50">
                                     </div>
                                     <div class="content">
                                         <h2 class="name">{{food.name}}</h2>
                                         <div class="price"  v-if="food.memberPrice!==0">
                                             <span class="desc">会员价格</span><span class="now">￥{{food.memberPrice}}</span>
                                         </div>
-                                        <div class="price">
+                                        <div class="price" v-if="false">
                                             <span class="desc">非会员价</span><span class="old">￥{{food.price}}</span>
                                         </div>
                                         <div class="cartcontrol-wrapper">
@@ -51,6 +51,7 @@ import logo from '../../components/logo';
 import food from './food';
 import shopcart from './shopcart';
 import cartcontrol from './cartcontrol';
+import { renameImagePath } from '../../common/js/util';
 import { placeholder } from '../../common/js/values';
 import { Loading } from 'vux';
 import Logger from 'chivy';
@@ -150,6 +151,9 @@ export default {
             let menuList = this.$refs.menuList;
             let el = menuList[index];
             this.meunScroll.scrollToElement(el, 300, 0, -100);
+        },
+        currentPath(url, size) {
+            return renameImagePath(url, size);
         }
     },
     components: {
