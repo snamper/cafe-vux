@@ -63,19 +63,11 @@ export default {
         },
         // 点击qq图标
         qq() {
-            // window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=qq';
-            this.$vux.toast.show({
-                text: '暂未开通，敬请期待',
-                time: 1000
-            });
+            window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=qq';
         },
         // 点击微信图标
         wechat() {
             window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=wechat';
-            /* this.$vux.toast.show({
-                text: '暂未开通，敬请期待',
-                time: 1000
-            }); */
         },
         // 点击支付宝图标
         alipay() {
