@@ -71,11 +71,7 @@ export default {
         },
         // 点击支付宝图标
         alipay() {
-            // window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=alipay';
-            this.$vux.toast.show({
-                text: '暂未开通，敬请期待',
-                time: 1000
-            });
+            window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=alipay';
         },
         // TODO 忘记密码
         forgetPwd() {
