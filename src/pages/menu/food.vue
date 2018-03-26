@@ -9,7 +9,7 @@
             </div>
             <div class="content">
                 <div class="price">
-                    <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span><span>非会员价</span></span><span class="old" v-show="food.price">￥{{food.price}}</span>
+                    <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span><span v-if="false">非会员价</span></span><span class="old" v-if="false" v-show="food.price">￥{{food.price}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
                     <cartcontrol @add="addFood" :food="food"></cartcontrol>
