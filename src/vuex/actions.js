@@ -40,6 +40,7 @@ export default {
                     } else {
                         log.debug('normal login');
                         let memberInfo = {
+                            'third': false,
                             'id': result.id,
                             'nick': result.nick,
                             'name': result.name,
@@ -71,6 +72,7 @@ export default {
                 if (result.status) {
                     log.debug('resigter response is ' + result.status);
                     let memberInfo = {
+                        'third': false,
                         'id': result.id,
                         'nick': '',
                         'name': '',
@@ -236,6 +238,7 @@ export default {
             });
         });
     },
+    // 修改密码
     modifyPwd(context, payload) {
         log.debug('modifyPwd post data is ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
@@ -250,6 +253,7 @@ export default {
             });
         });
     },
+    // 获取三方登陆信息
     get3rdInfo(context, payload) {
         log.debug('get 3rd account info ' + JSON.stringify(payload));
         return new Promise((resolve, reject) => {
@@ -258,6 +262,7 @@ export default {
                 log.debug('get3rdInfo response is ' + JSON.stringify(result));
                 if (result.status) {
                     let memberInfo = {
+                        'third': true,
                         'id': result.id,
                         'nick': result.nick,
                         'name': result.name,

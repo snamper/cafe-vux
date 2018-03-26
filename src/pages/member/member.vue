@@ -22,7 +22,7 @@
                 <div class="bar vux-1px-tb">
                     <cell title="安全设置"></cell>
                 </div>
-                <div class="info">
+                <div class="info" v-if="!memberInfo.third">
                     <div class="item-bar vux-1px-b">
                         <cell title="修改密码" is-link @click.native="modifyPwd"></cell>
                     </div>
