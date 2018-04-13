@@ -71,7 +71,9 @@ export default {
         },
         // 点击支付宝图标
         alipay() {
-            window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=alipay';
+            // 测试微信支付
+            window.location.href = '/shop/member/pay/ui/order.do';
+            // window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=alipay';
         },
         // TODO 忘记密码
         forgetPwd() {
