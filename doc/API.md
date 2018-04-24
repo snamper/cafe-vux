@@ -217,6 +217,7 @@
 			"userId": 723,
 			"userName": "bbb",  ???为什么要传递username, 这个地方的作用是什么? 目前代码是找不到username的话,就传递的phone,是否可以不传
 			"cashOrBalance": "BALANCE",
+			"paymentTypeStr":"self",   //self,WeChat,alipay
 			"details": [{
 				"productId": 2,
 				"amount": 12,
