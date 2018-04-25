@@ -1,12 +1,14 @@
 import { exchangeType, sex } from './values';
 import Logger from 'chivy';
 import WebStorageCache from 'web-storage-cache';
-import { querystring } from 'vux';
+import { AjaxPlugin, querystring } from 'vux';
+import Vue from 'vue';
+Vue.use(AjaxPlugin);
 const log = new Logger('common/js/util');
 const wsCache = new WebStorageCache();
 
 // 设置sessionStorage的键值对
-export var setSessionStorage = function setSessionStorage(key, value) {
+export function setSessionStorage(key, value) {
     log.info('set key(' + key + ') to sessionStorage');
     // 设置过期时间一个月
     var nextMonth = new Date();
@@ -15,20 +17,20 @@ export var setSessionStorage = function setSessionStorage(key, value) {
     // sessionStorage.setItem(key, JSON.stringify(value));
 };
 // 根据key获取sessionStorage的值
-export var getSessionStorage = function getSessionStorage(key) {
+export function getSessionStorage(key) {
     log.info('get key(' + key + ') from sessionStorage');
     return wsCache.get(key);
     // return JSON.parse(sessionStorage.getItem(key));
 };
 // 移除sessionStorage的key
-export var removeSessionStorage = function removeSessionStorage(key) {
+export function removeSessionStorage(key) {
     log.info('remove key(' + key + ') from sessionStorage');
     wsCache.delete(key);
     // sessionStorage.removeItem(key);
 };
 
 // 根据long时间获取具体的年月日时分秒
-export var formatDate = function formatDate(date) {
+export function formatDate(date) {
     var datetime = new Date(date);
     var format = {
         Year: 1900 + datetime.getYear(),
@@ -58,7 +60,7 @@ export var formatDate = function formatDate(date) {
     return format;
 };
 // 根据服务端返回的数据存储男女
-export var gender = function gender(value) {
+export function gender(value) {
     if (value === sex.man.key) {
         return sex.man.value;
     } else if (value === sex.woman.key) {
@@ -72,7 +74,7 @@ export var gender = function gender(value) {
     }
 };
 // 根据返回状态显示内容
-export var covertStatus = function covertStatus(status) {
+export function covertStatus(status) {
     if (status === exchangeType.WAIT4PAY.key) {
         return exchangeType.WAIT4PAY.value;
     } else if (status === exchangeType.WAIT4CONFIRM.key) {
@@ -84,7 +86,7 @@ export var covertStatus = function covertStatus(status) {
     }
 };
 // 对象是否为空
-export var isObjEmpty = function isObjEmpty(obj) {
+export function isObjEmpty(obj) {
     if (obj === null || obj === '' || typeof (obj) === 'undefined') {
         return true;
     } else {
@@ -92,7 +94,7 @@ export var isObjEmpty = function isObjEmpty(obj) {
     }
 };
 // 判断当前页面是否包含相关信息
-export var isCurrentJumpPage = function isCurrentJumpPage(url) {
+export function isCurrentJumpPage(url) {
     // 判断是否是从正确的跳转页过来的
     var urlArray = url.split('?');
     if (urlArray.length === 2) {
@@ -103,7 +105,7 @@ export var isCurrentJumpPage = function isCurrentJumpPage(url) {
     }
 };
 // 根据图片大小获取图片地址
-export var renameImagePath = function renameImagePath(url, size) {
+export function renameImagePath(url, size) {
     if (!isObjEmpty(url)) {
         // log.debug('param url is ' + url);
         var urlArray = url.split('.');
