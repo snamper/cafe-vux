@@ -1,11 +1,49 @@
-import { exchangeType, sex } from './values';
+import axios from 'axios';
 import Logger from 'chivy';
+import { consts } from './consts';
 import WebStorageCache from 'web-storage-cache';
-import { AjaxPlugin, querystring } from 'vux';
-import Vue from 'vue';
-Vue.use(AjaxPlugin);
 const log = new Logger('common/js/util');
 const wsCache = new WebStorageCache();
+
+/**
+ * ajax请求函数，promise的返回
+ * @param {*} url
+ * @param {*} param
+ * @param {*} flag
+ */
+export function ajaxPost(url, param) {
+    return new Promise((resolve, reject) => {
+        log.debug('get (' + url + ') post data is ' + JSON.stringify(param));
+        axios.http.post(url, param).then((response) => {
+            let result = response.data;
+            log.debug('get (' + url + ') response data is ' + JSON.stringify(result));
+            if (result === null) {
+                reject(new Error('get url(' + url + ') is failed by '));
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+
+/**
+ * ajax请求函数，promise的返回
+ * @param {*} url
+ * @param {*} flag
+ */
+export function ajaxGet(url) {
+    return new Promise((resolve, reject) => {
+        axios.get(url).then((response) => {
+            let result = response.data;
+            log.debug('get (' + url + ') response data is ' + JSON.stringify(result));
+            if (result === null) {
+                reject(new Error('get url(' + url + ') is failed by '));
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
 
 // 设置sessionStorage的键值对
 export function setSessionStorage(key, value) {
@@ -22,6 +60,7 @@ export function getSessionStorage(key) {
     return wsCache.get(key);
     // return JSON.parse(sessionStorage.getItem(key));
 };
+
 // 移除sessionStorage的key
 export function removeSessionStorage(key) {
     log.info('remove key(' + key + ') from sessionStorage');
@@ -29,89 +68,75 @@ export function removeSessionStorage(key) {
     // sessionStorage.removeItem(key);
 };
 
-// 根据long时间获取具体的年月日时分秒
-export function formatDate(date) {
-    var datetime = new Date(date);
-    var format = {
-        Year: 1900 + datetime.getYear(),
-        Month: (datetime.getMonth() + 1),
-        Day: datetime.getDate(),
-        Hour: datetime.getHours(),
-        Minute: datetime.getMinutes(),
-        Second: datetime.getSeconds()
-    };
-    log.debug('before add zero pre ' + JSON.stringify(format));
-    if (format.Month <= 9) {
-        format.Month = '0' + format.Month;
-    }
-    if (format.Day <= 9) {
-        format.Day = '0' + format.Day;
-    }
-    if (format.Hour <= 9) {
-        format.Hour = '0' + format.Hour;
-    }
-    if (format.Minute <= 9) {
-        format.Minute = '0' + format.Minute;
-    }
-    if (format.Second <= 9) {
-        format.Second = '0' + format.Second;
-    }
-    log.debug('after add zero pre' + JSON.stringify(format));
-    return format;
-};
-// 根据服务端返回的数据存储男女
 export function gender(value) {
-    if (value === sex.man.key) {
-        return sex.man.value;
-    } else if (value === sex.woman.key) {
-        return sex.woman.value;
-    } else if (value === sex.man.value) {
-        return sex.man.key;
-    } else if (value === sex.woman.value) {
-        return sex.woman.key;
+    if (value === consts.sex.man.key) {
+        return consts.sex.man.value;
+    } else if (value === consts.sex.woman.key) {
+        return consts.sex.woman.value;
+    } else if (value === consts.sex.man.value) {
+        return consts.sex.man.key;
+    } else if (value === consts.sex.woman.value) {
+        return consts.sex.woman.key;
     } else {
         return undefined;
     }
 };
-// 根据返回状态显示内容
-export function covertStatus(status) {
-    if (status === exchangeType.WAIT4PAY.key) {
-        return exchangeType.WAIT4PAY.value;
-    } else if (status === exchangeType.WAIT4CONFIRM.key) {
-        return exchangeType.WAIT4CONFIRM.value;
-    } else if (status === exchangeType.CONFIRM2PAID.key) {
-        return exchangeType.CONFIRM2PAID.value;
-    } else if (status === exchangeType.SUCCESS.key) {
-        return exchangeType.SUCCESS.value;
-    }
+
+export function setMemberInfo(data, thd) {
+    let memberInfo = {
+        'third': thd,
+        'id': data.id,
+        'nick': data.nick,
+        'name': data.name,
+        'point': data.point,
+        'balance': data.balance,
+        'gender': gender(data.gender),
+        'phone': data.mobile,
+        'email': data.email,
+        'area': data.area,
+        'address': data.address,
+        'createTime': data.createTime
+    };
+    return memberInfo;
 };
-// 对象是否为空
-export function isObjEmpty(obj) {
-    if (obj === null || obj === '' || typeof (obj) === 'undefined') {
-        return true;
-    } else {
-        return false;
+
+export function setModifyMemberData(param) {
+    let data = null;
+    if (param.type === consts.expressType.name) {
+        data = {
+            userId: param.userId,
+            name: param.name
+        };
+    } else if (param.type === consts.expressType.nick) {
+        data = {
+            userId: param.userId,
+            nick: param.nick
+        };
+    } else if (param.type === consts.expressType.mobile) {
+        data = {
+            userId: param.userId,
+            mobile: param.mobile
+        };
+    } else if (param.type === consts.expressType.gender) {
+        data = {
+            userId: param.userId,
+            gender: param.gender
+        };
+    } else if (param.type === consts.expressType.email) {
+        data = {
+            userId: param.userId,
+            email: param.email
+        };
+    } else if (param.type === consts.expressType.address) {
+        data = {
+            userId: param.userId,
+            address: param.address
+        };
+    } else if (param.type === consts.expressType.detailAddress) {
+        data = {
+            userId: param.userId,
+            detailAddress: param.detailAddress
+        };
     }
-};
-// 判断当前页面是否包含相关信息
-export function isCurrentJumpPage(url) {
-    // 判断是否是从正确的跳转页过来的
-    var urlArray = url.split('?');
-    if (urlArray.length === 2) {
-        var idStr = urlArray[1];
-        return querystring.parse(idStr);
-    } else {
-        return null;
-    }
-};
-// 根据图片大小获取图片地址
-export function renameImagePath(url, size) {
-    if (!isObjEmpty(url)) {
-        // log.debug('param url is ' + url);
-        var urlArray = url.split('.');
-        // log.debug('split array is ' + JSON.stringify(urlArray));
-        var current = urlArray[0] + '_' + size + 'X' + size + '.' + urlArray[1];
-        return current;
-    }
-    return null;
+    return data;
 };

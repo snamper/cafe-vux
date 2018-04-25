@@ -1,27 +1,27 @@
 export default {
     url: {
         // 获取分类商品的列表
-        categorysList: '/shop/category/show/ui/getCategoriedProducts.do',
+        getCategoriedProducts: '/shop/category/show/ui/getCategoriedProducts.do',
         // 获取购买商品列表
-        recordList: '/shop/product/show/ui/getRecordList.do',
+        getRecordList: '/shop/product/show/ui/getRecordList.do',
         // 是否用户名已存在
-        existUser: '/shop/member/show/ui/isExistUserName.do',
+        isExistUserName: '/shop/member/show/ui/isExistUserName.do',
         // 用户登录接口
-        userLogin: '/shop/member/show/ui/memberLogin.do',
+        memberLogin: '/shop/member/show/ui/memberLogin.do',
         // 用户注册接口
-        userRegister: '/shop/member/show/ui/createMember.do',
+        createMember: '/shop/member/show/ui/createMember.do',
         // 商品购买接口
-        buyGoods: '/shop/product/show/ui/saveRecordList.do',
+        saveRecordList: '/shop/product/show/ui/saveRecordList.do',
         // 更新订单状态的接口
         // 入参{entityId: 73, status: "ENSURE2PAID"}
-        recordStatus: '/shop/product/show/ui/alterStatus.do',
+        alterStatus: '/shop/product/show/ui/alterStatus.do',
         // 修改会员信息接口
-        basicInfo: '/shop/member/show/ui/modifyBasicInfo.do',
+        modifyBasicInfo: '/shop/member/show/ui/modifyBasicInfo.do',
         // 修改密码接口
-        modifypwd: '/shop/member/show/ui/modifyPassword.do',
+        modifyPassword: '/shop/member/show/ui/modifyPassword.do',
         // 获取三方登陆的会员信息接口
         // 入参 {entityId:252}
-        thirdUserInfo: '/shop/member/show/ui/getMemberById.do'
+        getMemberById: '/shop/member/show/ui/getMemberById.do'
     },
     expressType: {
         mobile: 'mobile',
@@ -67,5 +67,9 @@ export default {
             key: 'Famale',
             value: '女'
         }
+    },
+    images: {
+        background: '../../static/img/background.jpg',
+        avator: '../../static/img/avator.jpg'
     }
 };

@@ -1,9 +1,4 @@
-import { placeholder } from '../common/js/values';
-import { renameImagePath } from '../common/js/util';
-
-// import Logger from 'chivy';
-// const log = new Logger('vuex/getters');
-export default{
+export default {
     // 被选择的商品
     selectFoods(state, getters) {
         let foods = [];
@@ -32,7 +27,7 @@ export default{
         let sliders = [];
         getters.products.forEach((product) => {
             sliders.push({
-                'img': product.imageSliderUrl !== '' ? renameImagePath(product.imageSliderUrl, 400) : placeholder.size400
+                'img': product.imageSliderUrl
             });
         });
         return sliders;
@@ -52,7 +47,6 @@ export default{
             'member': member,
             'count': count
         };
-        // log.debug('totalAttr is ' + JSON.stringify(total));
         return total;
     }
 };

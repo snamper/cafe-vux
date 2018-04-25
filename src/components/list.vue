@@ -5,7 +5,7 @@
                 <flexbox align="center" :gutter="2" wrap="nowrap" justify="center">
                     <flexbox-item :span="2">
                         <div class="thumb">
-                            <avator :img="food.imageUrl!==''?food.imageUrl:placeholder.size50" :size="size" :radius="radius"></avator>
+                            <avator :img="food.imageUrl" :size="size" :radius="radius"></avator>
                         </div>
                     </flexbox-item>                    
                     <flexbox-item :span="6">
@@ -40,7 +40,6 @@
 <script type="text/ecmascript-6">
 import avator from './avator';
 import { Flexbox, FlexboxItem } from 'vux';
-import { placeholder } from '../common/js/values';
 import Logger from 'chivy';
 const log = new Logger('components/list');
 export default {
@@ -83,9 +82,6 @@ export default {
                 }
             });
             return totalPrice;
-        },
-        placeholder() {
-            return placeholder;
         }
     },
     components: {

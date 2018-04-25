@@ -2,7 +2,7 @@
     <transition name="move">
         <div v-show="showFlag" class="food food-content" ref="food">
             <div class="image-header">
-                <img :src="food.imageUrl!==''?currentPath(food.imageUrl, 400):placeholder.size400">
+                <img :src="food.imageUrl">
                 <div class="back" @click="hide">
                     <i class="iconfont icon-fanhui"></i>
                 </div>
@@ -32,8 +32,6 @@
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
 import Vue from 'vue';
-import { placeholder } from '../../common/js/values';
-import { renameImagePath } from '../../common/js/util';
 import cartcontrol from './cartcontrol';
 import split from '../../components/split';
 export default {
@@ -79,9 +77,6 @@ export default {
         },
         addFood(target) {
             this.$emit('add', target);
-        },
-        currentPath(url, size) {
-            return renameImagePath(url, size);
         }
     },
     components: {

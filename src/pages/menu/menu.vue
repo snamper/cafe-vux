@@ -19,7 +19,7 @@
                             <ul>
                                 <li class="food-item border-1px" v-for="(food,index) in item.list" :key="index" @click="selectFood(food,$event)">
                                     <div class="icon">
-                                        <img width="50" height="50" :src="food.imageUrl!=='' ? currentPath(food.imageUrl, 50): placeholder.size50">
+                                        <img width="50" height="50" :src="food.imageUrl">
                                     </div>
                                     <div class="content">
                                         <h2 class="name">{{food.name}}</h2>
@@ -51,8 +51,6 @@ import logo from '../../components/logo';
 import food from './food';
 import shopcart from './shopcart';
 import cartcontrol from './cartcontrol';
-import { renameImagePath } from '../../common/js/util';
-import { placeholder } from '../../common/js/values';
 import { Loading } from 'vux';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
@@ -151,9 +149,6 @@ export default {
             let menuList = this.$refs.menuList;
             let el = menuList[index];
             this.meunScroll.scrollToElement(el, 300, 0, -100);
-        },
-        currentPath(url, size) {
-            return renameImagePath(url, size);
         }
     },
     components: {

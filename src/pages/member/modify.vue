@@ -13,7 +13,7 @@
 import { isObjEmpty } from '../../common/js/util';
 import { XHeader, XInput, Group } from 'vux';
 import { mapState } from 'vuex';
-import { type } from '../../common/js/values';
+import { consts } from '../../common/js/consts';
 import Logger from 'chivy';
 const log = new Logger('page/member/modify');
 export default {
@@ -48,22 +48,22 @@ export default {
             }
         },
         mask() {
-            if (this.content.type === type.mobile) {
+            if (this.content.type === consts.expressType.mobile) {
                 return '999 9999 9999';
             }
         },
         min() {
-            if (this.content.type === type.name) {
+            if (this.content.type === consts.expressType.name) {
                 return 2;
             }
         },
         max() {
-            if (this.content.type === type.name) {
+            if (this.content.type === consts.expressType.name) {
                 return 20;
             }
         },
         istype() {
-             if (this.content.type === type.email) {
+             if (this.content.type === consts.expressType.email) {
                 return 'email';
             }
         }
@@ -71,7 +71,7 @@ export default {
     methods: {
         duplicate() {
             return new Promise((resolve, reject) => {
-                if (this.content.type === type.email) {
+                if (this.content.type === consts.expressType.email) {
                     // 保存之前需要检查邮箱是否被注册
                     let duplicate = {'email': this.value};
                     this.$store.dispatch('duplicate', duplicate).then(() => {
@@ -80,13 +80,13 @@ export default {
                     }).catch((error) => {
                         log.error(error);
                         this.modifyData = {
-                            type: type.email,
+                            type: consts.expressType.email,
                             userId: this.memberInfo.id,
                             email: this.value
                         };
                         resolve();
                     });
-                } else if (this.content.type === type.name) {
+                } else if (this.content.type === consts.expressType.name) {
                     // 保存之前需要检查用户名是否被注册
                     let duplicate = {'name': this.value};
                     this.$store.dispatch('duplicate', duplicate).then(() => {
@@ -95,22 +95,22 @@ export default {
                     }).catch((error) => {
                         log.error(error);
                         this.modifyData = {
-                            type: type.name,
+                            type: consts.expressType.name,
                             userId: this.memberInfo.id,
                             name: this.value
                         };
                         resolve();
                     });
-                } else if (this.content.type === type.nick) {
+                } else if (this.content.type === consts.expressType.nick) {
                     this.modifyData = {
-                        type: type.nick,
+                        type: consts.expressType.nick,
                         userId: this.memberInfo.id,
                         nick: this.value
                     };
                     resolve();
-                } else if (this.content.type === type.detailAddress) {
+                } else if (this.content.type === consts.expressType.detailAddress) {
                     this.modifyData = {
-                        type: type.detailAddress,
+                        type: consts.expressType.detailAddress,
                         userId: this.memberInfo.id,
                         detailAddress: this.value
                     };

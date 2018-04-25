@@ -49,7 +49,7 @@ import { XHeader, Cell, XAddress, Group, PopupPicker, ChinaAddressV4Data, Value2
 import spilt from '../../components/split';
 import logo from '../../components/logo';
 import { mapState } from 'vuex';
-import { type } from '../../common/js/values';
+import { consts } from '../../common/js/consts';
 import { gender } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('pages/member/detail');
@@ -102,7 +102,7 @@ export default {
         modifyNickname() {
             log.debug('modifyUsername');
             this.content = {
-                type: type.nick,
+                type: consts.expressType.nick,
                 title: '设置昵称',
                 input: '昵称'
             };
@@ -115,7 +115,7 @@ export default {
              */
             if (this.linkType.name) {
                 this.content = {
-                    type: type.name,
+                    type: consts.expressType.name,
                     title: '设置用户名',
                     input: '用户名'
                 };
@@ -125,7 +125,7 @@ export default {
         modifyPhoneNumber() {
             log.debug('modifyPhoneNumber');
             this.content = {
-                type: type.phone,
+                type: consts.expressType.phone,
                 title: '设置手机号',
                 input: '手机号'
             };
@@ -134,7 +134,7 @@ export default {
         modifyDetailAddress() {
             log.debug('modifyDetailAddress');
             this.content = {
-                type: type.detailAddress,
+                type: consts.expressType.detailAddress,
                 title: '设置地址',
                 input: '详细地址'
             };
@@ -144,7 +144,7 @@ export default {
             log.debug('modifyEmail');
             if (this.linkType.email) {
                 this.content = {
-                    type: type.email,
+                    type: consts.expressType.email,
                     title: '设置邮箱',
                     input: '邮箱'
                 };
