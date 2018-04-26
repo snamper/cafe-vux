@@ -3,15 +3,15 @@
         <loading v-model="isLoading"></loading>
         <div class="list-wrapper">
             <logo></logo>
-            <div class="orderlist-wrapper" v-if="records">
+            <div class="orderlist-wrapper" v-if="recordInfo.records">
                 <p class="title">{{titleBar}}</p>
                 <div class="scroll-wrapper" ref="scrollWrapper">
                     <ul>
-                        <li @click="showDetailPage(record)" v-for="(record,index) in records" :key="index">                        
+                        <li @click="showDetailPage(record)" v-for="(record,index) in recordInfo.records" :key="index">                        
                             <split></split>
                             <div class="title">
                                 <span class="time">{{date(record.createTime)}} {{time(record.createTime)}}</span>
-                                <span class="status">{{orderStatus(record.status)}}</span>                                
+                                <span class="status">TODO<!-- {{orderStatus(record.status)}} --></span>                                
                             </div>
                             <imagelist :list="record.details"></imagelist>
                             <div class="detail">
@@ -29,7 +29,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { formatDate, covertStatus } from '../../common/js/util';
+import { formatDate } from '../../common/js/util';
 import BScroll from 'better-scroll';
 import split from '../../components/split';
 import logo from '../../components/logo';
@@ -53,18 +53,17 @@ export default {
     },
     computed: {
         ...mapState([
-            'memberInfo',
-            'UUID',
-            'records',
+            'currentUser',
+            'recordInfo',
             'isLoading'
         ]),
         titleBar() {
-            if (this.memberInfo === null) {
+            if (this.currentUser.memberInfo === null) {
                 return '游客，您的最近订单如下';
-            } else if (this.memberInfo.name !== '') {
-                return this.memberInfo.name + ', 您的历史订单如下';
+            } else if (this.currentUser.memberInfo.name !== '') {
+                return this.currentUser.memberInfo.name + ', 您的历史订单如下';
             } else {
-                return this.memberInfo.phone + ', 您的历史订单如下';
+                return this.currentUser.memberInfo.phone + ', 您的历史订单如下';
             }
         }
     },
@@ -72,15 +71,14 @@ export default {
         // 查询是否有订单,如果没有则跳转到menu页面
         // 如果有订单,则滚动显示
         init() {
-            // let _this = this;
             let data = {
                 userId: null,
                 needDetail: true
             };
-            if (this.memberInfo === null) {
-                data.userCode = this.UUID;
+            if (this.currentUser.memberInfo === null) {
+                data.userCode = this.currentUser.UUID;
             } else {
-                data.userId = this.memberInfo.id;
+                data.userId = this.currentUser.memberInfo.id;
             }
             log.debug(JSON.stringify(data));
             this.$store.dispatch('getRecordList', data).then(() => {
@@ -92,16 +90,6 @@ export default {
                 this.$store.commit('updateLoadingStatus', {isLoading: false});
                 log.error(error);
                 this.recordsStatus = true;
-                /* this.$vux.toast.show({
-                    text: '您还没有购买东西,请先购买',
-                    position: 'middle',
-                    time: 2000,
-                    type: 'text'
-                }); */
-                /* setTimeout(() => {
-                    console.log(this);
-                    this.$router.push({name: 'menu'});
-                }, 2300); */
             });
         },
         scrollit() {
@@ -116,7 +104,7 @@ export default {
             });
         },
         orderStatus(status) {
-            return covertStatus(status);
+            // return covertStatus(status);
         },
         // 显示订单详情页,路由传递单个订单的信息
         showDetailPage(record) {

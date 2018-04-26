@@ -45,11 +45,6 @@ export default {
             showFlag: false
         };
     },
-    computed: {
-        placeholder() {
-            return placeholder;
-        }
-    },
     methods: {
         // 显示页面并滚动显示页面内容
         show() {

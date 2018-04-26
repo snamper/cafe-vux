@@ -24,7 +24,7 @@
                     <check-icon :value.sync="show.wechat"></check-icon>
                 </div>
             </div>
-            <div class="balance" v-show="memberInfo!==null">
+            <div class="balance" v-show="currentUser.memberInfo!==null">
                 <div class="img">
                     <avator :img='payType.member.icon' :size="size" :radius='radius'></avator>
                 </div>
@@ -36,13 +36,7 @@
         </div>
         <split></split>
         <div class="confirm">
-             <x-button :disabled="showbutton.confirm" type="primary" @click.native="payit">确认支付￥{{totalPrice}}元</x-button>
-        </div>
-        <div class="qrcode" v-show="show.alipay||show.wechat">
-            <img :src="value">
-        </div>
-        <div class="already">
-             <x-button mini plain :disabled="showbutton.already"  @click.native="alertStatus">我已付款</x-button>
+            <x-button  type="primary" @click.native="payit">确认支付￥{{totalPrice}}元</x-button>
         </div>
     </div>
 </template>
@@ -50,7 +44,6 @@
 <script type="text/ecmascript-6">
 import { mapGetters, mapState } from 'vuex';
 import { CheckIcon, XButton, XHeader, Qrcode } from 'vux';
-import { exchangeType } from '../../common/js/values';
 import split from '../../components/split';
 import avator from '../../components/avator';
 import Logger from 'chivy';
@@ -72,13 +65,9 @@ export default {
             if (to.path === '/record') {
                 log.debug('page from /record');
                 // 置灰订单购买,并开启付款确认
-                vm.$store.state.showbutton.confirm = true;
-                vm.$store.state.showbutton.already = false;
             } else {
                 log.debug('page from other');
                 // 置灰付款确认,并开启订单购买
-                vm.$store.state.showbutton.confirm = false;
-                vm.$store.state.showbutton.already = true;
             }
         });
     },
@@ -120,11 +109,10 @@ export default {
             'totalAttr'
         ]),
         ...mapState([
-            'memberInfo',
-            'UUID',
+            'currentUser',
             'recordID',
             'payType',
-            'showbutton'
+            'recordInfo'
         ]),
         // 购物总价
         totalPrice() {
@@ -133,10 +121,13 @@ export default {
             // 当没有会员的时候计算出来的购物车不为0的时候返回普通价
             // 当计算出来的购物车价格为0的时候,表示已点击过了支付价格,所以此时价格为之前记录的价格.
             if (typeof (this.record) !== 'undefined') {
+                // 从订单页面跳转过来的则显示订单的总价
                 return this.record.amount;
-            } else if (this.memberInfo !== null && this.totalAttr.member !== 0) {
+            } else if (this.currentUser.memberInfo !== null && this.totalAttr.member !== 0) {
+                // 显示会员价
                 return this.totalAttr.member;
             } else if (this.totalAttr.normal !== 0) {
+                // 显示非会员价
                 return this.totalAttr.normal;
             } else {
                 return this.recordPrice;
@@ -144,8 +135,8 @@ export default {
         },
         // 会员余额
         balance() {
-            if (this.memberInfo !== null) {
-                return this.memberInfo.balance;
+            if (this.currentUser.memberInfo !== null) {
+                return this.currentUser.memberInfo.balance;
             }
         },
         // 计算具体的商品
@@ -181,12 +172,12 @@ export default {
                 cashOrBalance: null,
                 details: null
             };
-            if (this.memberInfo !== null) {
-                result.userId = this.memberInfo.id;
-                if (this.memberInfo.name !== '') {
-                    result.userName = this.memberInfo.name;
+            if (this.currentUser.memberInfo !== null) {
+                result.userId = this.currentUser.memberInfo.id;
+                if (this.currentUser.memberInfo.name !== '') {
+                    result.userName = this.currentUser.memberInfo.name;
                 } else {
-                     result.userName = this.memberInfo.phone;
+                     result.userName = this.currentUser.memberInfo.phone;
                 }
             } else {
                 result.userCode = this.UUID;
@@ -241,7 +232,7 @@ export default {
             // 提交付款 url.buyGoods
             // 付款成功后提示
             // 清空购物车
-            if (this.show.member && this.memberInfo.balance < this.totalPrice) {
+            if (this.show.member && this.currentUser.memberInfo.balance < this.totalPrice) {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
             } else {
                 log.debug('是否后期可以考虑干掉这个参数 this.record.userName');
@@ -266,8 +257,8 @@ export default {
                     this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
                 });
             }
-        },
-        alertStatus() {
+        }
+        /* alertStatus() {
             let _this = this;
             let data = {
                 // 默认认为是从order页面来的,所以提交之前记录的recordID
@@ -293,7 +284,7 @@ export default {
                 log.debug(error);
                 this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
             });
-        }
+        } */
     },
     components: {
         split,

@@ -5,9 +5,9 @@
             <flow-line :tip="tips[0]" :is-done="line[0]"></flow-line>
             <flow-state state="2" title="已付款" :is-done="isDoneStatus[1]"></flow-state>
             <flow-line :tip="tips[1]" :is-done="line[1]"></flow-line>
-            <flow-state state="3" title="已确认" :is-done="isDoneStatus[2]"></flow-state>
-            <flow-line :tip="tips[2]" :is-done="line[2]"></flow-line>
-            <flow-state state="4" title="成功" :is-done="isDoneStatus[3]"></flow-state>
+            <!-- <flow-state state="3" title="已确认" :is-done="isDoneStatus[2]"></flow-state>
+            <flow-line :tip="tips[2]" :is-done="line[2]"></flow-line> -->
+            <flow-state state="3" title="成功" :is-done="isDoneStatus[3]"></flow-state>
         </flow>
         <div class="confirm" v-if="show.flag">
              <x-button type="primary" @click.native="payit">{{show.title}}</x-button>
@@ -17,11 +17,10 @@
 
 <script type="text/ecmascript-6">
 import { Flow, FlowState, FlowLine, XButton } from 'vux';
-import { exchangeType } from '../../common/js/values';
-import Logger from 'chivy';
-const log = new Logger('page/record/process');
-const pay = '我要付款';
-const alert = '提醒卖家';
+/* import Logger from 'chivy';
+const log = new Logger('page/record/process'); */
+/* const pay = '我要付款';
+const alert = '提醒卖家'; */
 export default {
     props: {
         record: {
@@ -30,7 +29,7 @@ export default {
     },
     computed: {
         show() {
-            let result = {
+            /* let result = {
                 flag: false,
                 title: ''
             };
@@ -45,10 +44,10 @@ export default {
             } else if (this.record.status === exchangeType.SUCCESS.key) {
                 result.flag = false;
             }
-            return result;
+            return result; */
         },
         isDoneStatus() {
-            if (this.record.status === exchangeType.WAIT4PAY.key) {
+            /* if (this.record.status === exchangeType.WAIT4PAY.key) {
                 return [true, false, false, false];
             } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
                 return [true, true, false, false];
@@ -56,10 +55,10 @@ export default {
                 return [true, true, true, false];
             } else if (this.record.status === exchangeType.SUCCESS.key) {
                 return [true, true, true, true];
-            }
+            } */
         },
         line() {
-            if (this.record.status === exchangeType.WAIT4PAY.key) {
+            /* if (this.record.status === exchangeType.WAIT4PAY.key) {
                 return [false, false, false];
             } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
                 return [true, false, false];
@@ -67,10 +66,10 @@ export default {
                 return [true, true, false];
             } else if (this.record.status === exchangeType.SUCCESS.key) {
                 return [true, true, true];
-            }
+            } */
         },
         tips() {
-            if (this.record.status === exchangeType.WAIT4PAY.key) {
+           /*  if (this.record.status === exchangeType.WAIT4PAY.key) {
                 return ['进行中', '', ''];
             } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
                 return ['', '进行中', ''];
@@ -78,12 +77,12 @@ export default {
                 return ['', '', '进行中'];
             } else if (this.record.status === exchangeType.SUCCESS.key) {
                 return ['', '', ''];
-            }
+            } */
         }
     },
     methods: {
         payit() {
-            let _this = this;
+            /* let _this = this;
             if (this.show.title === alert) {
                 let data = {
                     entityId: this.record.id,
@@ -103,7 +102,7 @@ export default {
                 });
             } else if (this.show.title === pay) {
                 this.$router.push({name: 'pay', params: {record: this.record}});
-            }
+            } */
         }
     },
     components: {

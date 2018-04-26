@@ -49,7 +49,7 @@ import { XHeader, Cell, XAddress, Group, PopupPicker, ChinaAddressV4Data, Value2
 import spilt from '../../components/split';
 import logo from '../../components/logo';
 import { mapState } from 'vuex';
-import { consts } from '../../common/js/consts';
+import { expressType } from '../../common/js/consts';
 import { gender } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('pages/member/detail');
@@ -102,7 +102,7 @@ export default {
         modifyNickname() {
             log.debug('modifyUsername');
             this.content = {
-                type: consts.expressType.nick,
+                type: expressType.nick,
                 title: '设置昵称',
                 input: '昵称'
             };
@@ -115,7 +115,7 @@ export default {
              */
             if (this.linkType.name) {
                 this.content = {
-                    type: consts.expressType.name,
+                    type: expressType.name,
                     title: '设置用户名',
                     input: '用户名'
                 };
@@ -125,7 +125,7 @@ export default {
         modifyPhoneNumber() {
             log.debug('modifyPhoneNumber');
             this.content = {
-                type: consts.expressType.phone,
+                type: expressType.phone,
                 title: '设置手机号',
                 input: '手机号'
             };
@@ -134,7 +134,7 @@ export default {
         modifyDetailAddress() {
             log.debug('modifyDetailAddress');
             this.content = {
-                type: consts.expressType.detailAddress,
+                type: expressType.detailAddress,
                 title: '设置地址',
                 input: '详细地址'
             };
@@ -144,7 +144,7 @@ export default {
             log.debug('modifyEmail');
             if (this.linkType.email) {
                 this.content = {
-                    type: consts.expressType.email,
+                    type: expressType.email,
                     title: '设置邮箱',
                     input: '邮箱'
                 };
@@ -156,7 +156,7 @@ export default {
             let result = value2name(this.address, ChinaAddressV4Data);
             log.debug('adress is modified to ' + result);
             let data = {
-                type: type.address,
+                type: expressType.address,
                 userId: this.memberInfo.id,
                 address: result
             };
@@ -165,7 +165,7 @@ export default {
         saveSex() {
             log.debug('save sex ' + this.sex);
             let data = {
-                type: type.gender,
+                type: expressType.gender,
                 userId: this.memberInfo.id,
                 gender: gender(this.sex[0])
             };

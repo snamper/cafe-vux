@@ -5,12 +5,11 @@
 </template>
 
 <script type='text/ecmascript-6'>
-import { getSessionStorage } from './common/js/util';
-import { session } from './common/js/values';
 import Logger from 'chivy';
 const log = new Logger('App');
 export default {
   created() {
+    log.info('start mutations initUUID');
     this.$store.commit('initUUID');
   }
 };

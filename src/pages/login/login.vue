@@ -63,17 +63,15 @@ export default {
         },
         // 点击qq图标
         qq() {
-            window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=qq';
+            // 暂未开通
         },
         // 点击微信图标
         wechat() {
-            window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=wechat';
+            // 暂未开通
         },
         // 点击支付宝图标
         alipay() {
-            // 测试微信支付
-            window.location.href = '/shop/member/pay/ui/order.do';
-            // window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=alipay';
+            // 暂未开通
         },
         // TODO 忘记密码
         forgetPwd() {
@@ -95,7 +93,7 @@ export default {
                 this.$vux.toast.text('用户名或者密码不能为空', 'middle');
             } else {
                 /* 注册AJAX请求 */
-                this.$store.dispatch('login', this.ajaxloginUser).then(() => {
+                this.$store.dispatch('login', this.ajaxloginUser).then((data) => {
                     this.$vux.toast.text('登陆成功', 'middle');
                     // 跳转到member页面
                     this.$router.push({name: 'member'});
@@ -117,20 +115,24 @@ export default {
                 this.$refs.repassword.reset();
             } else {
                 let phone = { 'name': this.registerUser.phone.replace(/\s/g, '') };
-                this.$store.dispatch('duplicate', phone).then(() => {
-                    this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
-                    this.$refs.phone.reset();
+                this.$store.dispatch('duplicate', phone).then((resp) => {
+                    if (resp) {
+                        this.$vux.toast.text('用户名已存在，请重新输入', 'middle');
+                        this.$refs.phone.reset();
+                    } else {
+                        this.$store.dispatch('resigter', this.ajaxregisterUser).then(() => {
+                            this.$vux.toast.text('注册成功', 'middle');
+                            setTimeout(() => {
+                                this.$router.push({name: 'member'});
+                            }, 1000);
+                        }).catch((error) => {
+                            log.error(error);
+                            this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
+                        });
+                    }
                 }).catch((error) => {
                     log.error(error);
-                    this.$store.dispatch('resigter', this.ajaxregisterUser).then(() => {
-                        this.$vux.toast.text('注册成功', 'middle');
-                        setTimeout(() => {
-                            this.$router.push({name: 'member'});
-                        }, 1000);
-                    }).catch((error) => {
-                        log.error(error);
-                        this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
-                    });
+                    this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
                 });
             }
         },
@@ -143,6 +145,7 @@ export default {
                     this.$refs.phone.reset();
                 }).catch((error) => {
                     log.error(error);
+                    this.$vux.toast.text('服务器故障，请稍候再试', 'middle');
                 });
             }
         }

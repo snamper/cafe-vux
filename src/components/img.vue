@@ -46,11 +46,6 @@ export default {
             }
         });
     },
-    computed: {
-        placeholder() {
-            return placeholder;
-        }
-    },
     components: {
         avator
     }

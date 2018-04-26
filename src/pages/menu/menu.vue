@@ -69,7 +69,7 @@ export default {
         });
     },
     created() {
-        log.debug('getCategorys');
+        log.info('Now, getCategorys from Server');
         this.$store.dispatch('getCategorys').then((response) => {
             this.goods = this.$store.state.categorys;
             this.init();
@@ -90,9 +90,6 @@ export default {
                 }
             }
             return 0;
-        },
-        placeholder() {
-            return placeholder;
         }
     },
     methods: {
