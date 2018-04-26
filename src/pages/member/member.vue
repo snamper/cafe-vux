@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="wrapper" v-if="memberInfo!==null">
+        <div class="wrapper" v-if="currentUser.memberInfo!==null">
             <logo></logo>
             <thumbBar :username="username" :background="images.background" :thumb="images.avator"></thumbBar>
             <div class="info-wrapper">
@@ -9,20 +9,20 @@
                 </div>
                 <div class="info">
                     <div class="item-bar vux-1px-b">
-                        <cell title="昵称" :value="memberInfo.nick ? memberInfo.nick : empty"></cell>
+                        <cell title="昵称" :value="currentUser.memberInfo.nick ? currentUser.memberInfo.nick : empty"></cell>
                     </div>
                     <div class="item-bar vux-1px-b">
-                        <cell title="会员积分" :value="`${memberInfo.point ? memberInfo.point : 0}分`" ></cell>
+                        <cell title="会员积分" :value="`${currentUser.memberInfo.point ? currentUser.memberInfo.point : 0}分`" ></cell>
                     </div>
                     <div class="item-bar vux-1px-b">
-                        <cell title="余额" :value="`${memberInfo.balance}元`" ></cell>
+                        <cell title="余额" :value="`${currentUser.memberInfo.balance}元`" ></cell>
                     </div>
                 </div>
                 <split></split>
                 <div class="bar vux-1px-tb">
                     <cell title="安全设置"></cell>
                 </div>
-                <div class="info" v-if="!memberInfo.third">
+                <div class="info" v-if="!currentUser.memberInfo.third">
                     <div class="item-bar vux-1px-b">
                         <cell title="修改密码" is-link @click.native="modifyPwd"></cell>
                     </div>
@@ -105,11 +105,9 @@ export default {
     methods: {
         // 注销
         loginout() {
-            this.$store.dispatch('logout').then(() => {
-                log.debug('already logout');
-                // 跳转到登陆页面
-                this.$router.push({name: 'login'});
-            });
+            this.$store.commit('logout');
+            this.$router.push({name: 'login'});
+            this.$store.commit('initUUID');
         },
         modifyPwd() {
             log.debug('show modify page');

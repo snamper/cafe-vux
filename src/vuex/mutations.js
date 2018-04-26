@@ -1,5 +1,5 @@
 import { getSessionStorage, setSessionStorage, removeSessionStorage } from '../common/js/util';
-import { session } from '../common/js/consts';
+import { session, expressType } from '../common/js/consts';
 import Logger from 'chivy';
 import Vue from 'vue';
 const log = new Logger('vuex/mutations');
@@ -14,6 +14,7 @@ export default {
         let memberInfo = getSessionStorage(session.memberInfo);
         if (memberInfo !== null) {
             log.debug('memberInfo is ' + memberInfo);
+            log.debug(typeof (memberInfo));
             // 保存到state中
             state.currentUser.memberInfo = memberInfo;
         } else {
@@ -27,6 +28,10 @@ export default {
             // 保存到uuid到state中
             state.currentUser.UUID = uuid;
         }
+    },
+    clearUUID(state) {
+        state.currentUser.UUID = '';
+        removeSessionStorage(session.uuid);
     },
     // 注销用户
     logout(state) {
@@ -70,5 +75,31 @@ export default {
         state.currentUser.memberInfo = payload;
         // memberInfo有改变的时候更新
         setSessionStorage(session.memberInfo, state.currentUser.memberInfo);
+    },
+    // 更新某一项会员信息
+    updateOneMemberInfo(state, payload) {
+        log.debug('develier param is ' + JSON.stringify(payload));
+        log.debug('modify type is ' + payload.type);
+        if (payload.type === expressType.name) {
+            state.currentUser.memberInfo.name = payload.name;
+        } else if (payload.type === expressType.mobile) {
+            state.currentUser.memberInfo.phone = payload.mobile;
+        } else if (payload.type === expressType.gender) {
+            state.currentUser.memberInfo.gender = payload.gender;
+        } else if (payload.type === expressType.email) {
+            state.currentUser.memberInfo.email = payload.email;
+        } else if (payload.type === expressType.address) {
+            state.currentUser.memberInfo.area = payload.address;
+        } else if (payload.type === expressType.detailAddress) {
+            state.currentUser.memberInfo.address = payload.detailAddress;
+        } else if (payload.type === expressType.nick) {
+            state.currentUser.memberInfo.nick = payload.nick;
+        }
+        // memberInfo有改变的时候更新
+        setSessionStorage(session.memberInfo, state.memberInfo);
+    },
+    // 订单列表
+    updateRecords(state, payload) {
+        state.recordInfo.records = payload;
     }
 };

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Logger from 'chivy';
-import { sex, expressType } from './consts';
+import { sex, expressType, payStatus } from './consts';
 import { querystring } from 'vux';
 import WebStorageCache from 'web-storage-cache';
 const log = new Logger('common/js/util');
@@ -52,7 +52,7 @@ function setSessionStorage(key, value) {
     // 设置过期时间一个月
     var nextMonth = new Date();
     nextMonth.setMonth(nextMonth.getMonth() + 1);
-    wsCache.set(key, JSON.stringify(value), {exp: nextMonth});
+    wsCache.set(key, value, {exp: nextMonth});
     // sessionStorage.setItem(key, JSON.stringify(value));
 };
 // 根据key获取sessionStorage的值
@@ -83,20 +83,24 @@ function gender(value) {
     }
 };
 
+function setNotNull(data) {
+    return isObjEmpty(data) ? '' : data;
+}
+
 function setMemberInfo(data, thd) {
     let memberInfo = {
-        'third': thd,
-        'id': data.id,
-        'nick': data.nick,
-        'name': data.name,
-        'point': data.point,
-        'balance': data.balance,
-        'gender': gender(data.gender),
-        'phone': data.mobile,
-        'email': data.email,
-        'area': data.area,
-        'address': data.address,
-        'createTime': data.createTime
+        third: thd,
+        id: setNotNull(data.id),
+        nick: setNotNull(data.nick),
+        name: setNotNull(data.name),
+        point: setNotNull(data.point),
+        balance: setNotNull(data.balance),
+        gender: setNotNull(gender(data.gender)),
+        phone: setNotNull(data.mobile),
+        email: setNotNull(data.email),
+        area: setNotNull(data.area),
+        address: setNotNull(data.address),
+        createTime: setNotNull(data.createTime)
     };
     return memberInfo;
 };
@@ -193,7 +197,22 @@ function isObjEmpty(obj) {
     }
 };
 
+// 根据返回状态显示内容
+function covertStatus(status) {
+    if (status === payStatus.NOTPAY.key) {
+        return payStatus.NOTPAY.value;
+    } else if (status === payStatus.SUCCESS.key) {
+        return payStatus.SUCCESS.value;
+    } else if (status === payStatus.REFUND.key) {
+        return payStatus.REFUND.value;
+    } else if (status === payStatus.CLOSED.key) {
+        return payStatus.CLOSED.value;
+    } else if (status === payStatus.PAYERROR.key) {
+        return payStatus.PAYERROR.value;
+    }
+};
+
 export {ajaxPost, ajaxGet};
 export {setSessionStorage, getSessionStorage, removeSessionStorage};
 export {setMemberInfo, gender, setModifyMemberData};
-export {formatDate, isCurrentJumpPage, isObjEmpty};
+export {formatDate, isCurrentJumpPage, isObjEmpty, covertStatus};

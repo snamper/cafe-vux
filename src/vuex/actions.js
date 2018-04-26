@@ -23,7 +23,10 @@ export default {
                         log.debug('just check pwd for');
                     } else {
                         log.debug('login success and return memberinfo');
-                        context.submit('updatememberInfo', setMemberInfo(data, false));
+                        context.commit('clearUUID');
+                        let memberinfo = setMemberInfo(data, false);
+                        log.debug('memberinfo type is ' + typeof (memberinfo));
+                        context.commit('updatememberInfo', memberinfo);
                     }
                     resolve();
                 } else {
@@ -38,7 +41,8 @@ export default {
             ajaxPost(url.createMember, payload).then((data) => {
                 if (data.status) {
                     log.debug('resigter success and return memberinfo');
-                    context.submit('updatememberInfo', setMemberInfo(data, false));
+                    let memberinfo = setMemberInfo(data, false);
+                    context.commit('updatememberInfo', memberinfo);
                     resolve();
                 } else {
                     reject(new Error('resigter failed'));
@@ -71,7 +75,8 @@ export default {
         return new Promise((resolve, reject) => {
             ajaxPost(url.getRecordList, payload).then((data) => {
                 if (data.length !== 0) {
-                    resolve(data);
+                    context.commit('updateRecords', data);
+                    resolve();
                 } else {
                     reject(new Error('record list is empty'));
                 }

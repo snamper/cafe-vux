@@ -5,9 +5,9 @@
             <flow-line :tip="tips[0]" :is-done="line[0]"></flow-line>
             <flow-state state="2" title="已付款" :is-done="isDoneStatus[1]"></flow-state>
             <flow-line :tip="tips[1]" :is-done="line[1]"></flow-line>
-            <!-- <flow-state state="3" title="已确认" :is-done="isDoneStatus[2]"></flow-state>
-            <flow-line :tip="tips[2]" :is-done="line[2]"></flow-line> -->
-            <flow-state state="3" title="成功" :is-done="isDoneStatus[3]"></flow-state>
+            <flow-state state="3" title="已确认" :is-done="isDoneStatus[2]"></flow-state>
+            <flow-line :tip="tips[2]" :is-done="line[2]"></flow-line>
+            <flow-state state="4" title="成功" :is-done="isDoneStatus[3]"></flow-state>
         </flow>
         <div class="confirm" v-if="show.flag">
              <x-button type="primary" @click.native="payit">{{show.title}}</x-button>
@@ -17,10 +17,11 @@
 
 <script type="text/ecmascript-6">
 import { Flow, FlowState, FlowLine, XButton } from 'vux';
-/* import Logger from 'chivy';
-const log = new Logger('page/record/process'); */
-/* const pay = '我要付款';
-const alert = '提醒卖家'; */
+import { payStatus } from '../../common/js/consts';
+import Logger from 'chivy';
+const log = new Logger('page/record/process');
+const pay = '我要付款';
+const alert = '提醒卖家';
 export default {
     props: {
         record: {
@@ -29,64 +30,64 @@ export default {
     },
     computed: {
         show() {
-            /* let result = {
+            let result = {
                 flag: false,
                 title: ''
             };
-            if (this.record.status === exchangeType.WAIT4PAY.key) {
+            if (this.record.status === payStatus.NOTPAY.key) {
                 result.flag = true;
                 result.title = pay;
-            } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
+            } else if (this.record.status === payStatus.WAIT4CONFIRM.key) {
                 result.flag = true;
                 result.title = alert;
-            } else if (this.record.status === exchangeType.CONFIRM2PAID.key) {
+            } else if (this.record.status === payStatus.CONFIRM2PAID.key) {
                 result.flag = false;
-            } else if (this.record.status === exchangeType.SUCCESS.key) {
+            } else if (this.record.status === payStatus.SUCCESS.key) {
                 result.flag = false;
             }
-            return result; */
+            return result;
         },
         isDoneStatus() {
-            /* if (this.record.status === exchangeType.WAIT4PAY.key) {
+            if (this.record.status === payStatus.WAIT4PAY.key) {
                 return [true, false, false, false];
-            } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
+            } else if (this.record.status === payStatus.WAIT4CONFIRM.key) {
                 return [true, true, false, false];
-            } else if (this.record.status === exchangeType.CONFIRM2PAID.key) {
+            } else if (this.record.status === payStatus.CONFIRM2PAID.key) {
                 return [true, true, true, false];
-            } else if (this.record.status === exchangeType.SUCCESS.key) {
+            } else if (this.record.status === payStatus.SUCCESS.key) {
                 return [true, true, true, true];
-            } */
+            }
         },
         line() {
-            /* if (this.record.status === exchangeType.WAIT4PAY.key) {
+            if (this.record.status === payStatus.WAIT4PAY.key) {
                 return [false, false, false];
-            } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
+            } else if (this.record.status === payStatus.WAIT4CONFIRM.key) {
                 return [true, false, false];
-            } else if (this.record.status === exchangeType.CONFIRM2PAID.key) {
+            } else if (this.record.status === payStatus.CONFIRM2PAID.key) {
                 return [true, true, false];
-            } else if (this.record.status === exchangeType.SUCCESS.key) {
+            } else if (this.record.status === payStatus.SUCCESS.key) {
                 return [true, true, true];
-            } */
+            }
         },
         tips() {
-           /*  if (this.record.status === exchangeType.WAIT4PAY.key) {
+            if (this.record.status === payStatus.WAIT4PAY.key) {
                 return ['进行中', '', ''];
-            } else if (this.record.status === exchangeType.WAIT4CONFIRM.key) {
+            } else if (this.record.status === payStatus.WAIT4CONFIRM.key) {
                 return ['', '进行中', ''];
-            } else if (this.record.status === exchangeType.CONFIRM2PAID.key) {
+            } else if (this.record.status === payStatus.CONFIRM2PAID.key) {
                 return ['', '', '进行中'];
-            } else if (this.record.status === exchangeType.SUCCESS.key) {
+            } else if (this.record.status === payStatus.SUCCESS.key) {
                 return ['', '', ''];
-            } */
+            }
         }
     },
     methods: {
         payit() {
-            /* let _this = this;
+            let _this = this;
             if (this.show.title === alert) {
                 let data = {
                     entityId: this.record.id,
-                    status: exchangeType.CONFIRM2PAID.key
+                    status: payStatus.CONFIRM2PAID.key
                 };
                 this.$store.dispatch('alertStatus', data).then(() => {
                     this.$vux.alert.show({
@@ -94,7 +95,7 @@ export default {
                         content: '已提醒店家，店家会尽快确认付款信息',
                         onHide() {
                             // 变更状态为已付款状态
-                            _this.record.status = exchangeType.CONFIRM2PAID.key;
+                            _this.record.status = payStatus.CONFIRM2PAID.key;
                         }
                     });
                 }).catch((error) => {
@@ -102,7 +103,7 @@ export default {
                 });
             } else if (this.show.title === pay) {
                 this.$router.push({name: 'pay', params: {record: this.record}});
-            } */
+            }
         }
     },
     components: {

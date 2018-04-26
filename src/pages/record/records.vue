@@ -11,7 +11,7 @@
                             <split></split>
                             <div class="title">
                                 <span class="time">{{date(record.createTime)}} {{time(record.createTime)}}</span>
-                                <span class="status">TODO<!-- {{orderStatus(record.status)}} --></span>                                
+                                <span class="status">{{orderStatus(record.status)}}</span>                                
                             </div>
                             <imagelist :list="record.details"></imagelist>
                             <div class="detail">
@@ -29,7 +29,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { formatDate } from '../../common/js/util';
+import { formatDate, covertStatus } from '../../common/js/util';
 import BScroll from 'better-scroll';
 import split from '../../components/split';
 import logo from '../../components/logo';
@@ -104,7 +104,7 @@ export default {
             });
         },
         orderStatus(status) {
-            // return covertStatus(status);
+            return covertStatus(status);
         },
         // 显示订单详情页,路由传递单个订单的信息
         showDetailPage(record) {
