@@ -4,10 +4,6 @@
             <flow-state state="1" title="待付款" :is-done="isDoneStatus[0]"></flow-state>
             <flow-line :tip="tips[0]" :is-done="line[0]"></flow-line>
             <flow-state state="2" title="已付款" :is-done="isDoneStatus[1]"></flow-state>
-            <flow-line :tip="tips[1]" :is-done="line[1]"></flow-line>
-            <flow-state state="3" title="已确认" :is-done="isDoneStatus[2]"></flow-state>
-            <flow-line :tip="tips[2]" :is-done="line[2]"></flow-line>
-            <flow-state state="4" title="成功" :is-done="isDoneStatus[3]"></flow-state>
         </flow>
         <div class="confirm" v-if="show.flag">
              <x-button type="primary" @click.native="payit">{{show.title}}</x-button>
@@ -37,47 +33,30 @@ export default {
             if (this.record.status === payStatus.NOTPAY.key) {
                 result.flag = true;
                 result.title = pay;
-            } else if (this.record.status === payStatus.WAIT4CONFIRM.key) {
-                result.flag = true;
-                result.title = alert;
-            } else if (this.record.status === payStatus.CONFIRM2PAID.key) {
-                result.flag = false;
             } else if (this.record.status === payStatus.SUCCESS.key) {
                 result.flag = false;
             }
             return result;
         },
         isDoneStatus() {
-            if (this.record.status === payStatus.WAIT4PAY.key) {
-                return [true, false, false, false];
-            } else if (this.record.status === payStatus.WAIT4CONFIRM.key) {
-                return [true, true, false, false];
-            } else if (this.record.status === payStatus.CONFIRM2PAID.key) {
-                return [true, true, true, false];
+            if (this.record.status === payStatus.NOTPAY.key) {
+                return [true, false];
             } else if (this.record.status === payStatus.SUCCESS.key) {
-                return [true, true, true, true];
+                return [true, true];
             }
         },
         line() {
-            if (this.record.status === payStatus.WAIT4PAY.key) {
-                return [false, false, false];
-            } else if (this.record.status === payStatus.WAIT4CONFIRM.key) {
-                return [true, false, false];
-            } else if (this.record.status === payStatus.CONFIRM2PAID.key) {
-                return [true, true, false];
+            if (this.record.status === payStatus.NOTPAY.key) {
+                return [false, false];
             } else if (this.record.status === payStatus.SUCCESS.key) {
-                return [true, true, true];
+                return [true, true];
             }
         },
         tips() {
-            if (this.record.status === payStatus.WAIT4PAY.key) {
-                return ['进行中', '', ''];
-            } else if (this.record.status === payStatus.WAIT4CONFIRM.key) {
-                return ['', '进行中', ''];
-            } else if (this.record.status === payStatus.CONFIRM2PAID.key) {
-                return ['', '', '进行中'];
+            if (this.record.status === payStatus.NOTPAY.key) {
+                return ['进行中', ''];
             } else if (this.record.status === payStatus.SUCCESS.key) {
-                return ['', '', ''];
+                return ['', ''];
             }
         }
     },
@@ -87,7 +66,7 @@ export default {
             if (this.show.title === alert) {
                 let data = {
                     entityId: this.record.id,
-                    status: payStatus.CONFIRM2PAID.key
+                    status: payStatus.NOTPAY.key
                 };
                 this.$store.dispatch('alertStatus', data).then(() => {
                     this.$vux.alert.show({
@@ -95,7 +74,7 @@ export default {
                         content: '已提醒店家，店家会尽快确认付款信息',
                         onHide() {
                             // 变更状态为已付款状态
-                            _this.record.status = payStatus.CONFIRM2PAID.key;
+                            _this.record.status = payStatus.NOTPAY.key;
                         }
                     });
                 }).catch((error) => {

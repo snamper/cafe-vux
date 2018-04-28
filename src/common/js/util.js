@@ -156,7 +156,7 @@ function formatDate(date) {
         Minute: datetime.getMinutes(),
         Second: datetime.getSeconds()
     };
-    log.debug('before add zero pre ' + JSON.stringify(format));
+    // log.debug('before add zero pre ' + JSON.stringify(format));
     if (format.Month <= 9) {
         format.Month = '0' + format.Month;
     }
@@ -172,7 +172,7 @@ function formatDate(date) {
     if (format.Second <= 9) {
         format.Second = '0' + format.Second;
     }
-    log.debug('after add zero pre' + JSON.stringify(format));
+    // log.debug('after add zero pre' + JSON.stringify(format));
     return format;
 };
 

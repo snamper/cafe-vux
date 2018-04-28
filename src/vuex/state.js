@@ -34,5 +34,10 @@ export default {
             icon: '../../static/img/avator.jpg',
             name: '余额支付'
         }
+    },
+    // 支付页面显示的内容
+    showbutton: {
+        confirm: false,
+        already: true
     }
 };

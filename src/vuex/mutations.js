@@ -101,5 +101,27 @@ export default {
     // 订单列表
     updateRecords(state, payload) {
         state.recordInfo.records = payload;
+    },
+    // 购物订单
+    updateRecordID(state, payload) {
+        state.recordInfo.recordID = payload;
+    },
+    // 清空购物车
+    clearCars(state) {
+        if (state.categorys !== null) {
+            state.categorys.forEach((category) => {
+                category.list.forEach((food) => {
+                    food.count = 0;
+                });
+            });
+        }
+    },
+    // 更新showbutton中的confirm状态
+    updateShowButtonConfirmStatus(state, payload) {
+        state.showbutton.confirm = payload;
+    },
+    // 更新showbutton中的already状态
+    updateShowButtonAlreadyStatus(state, payload) {
+        state.showbutton.already = payload;
     }
 };
