@@ -63,13 +63,6 @@ export default {
             if (vm.$store.getters.selectFoods.length === 0 && to.path !== '/record') {
                 vm.$router.push({name: 'menu'});
             }
-            /* if (to.path === '/record') {
-                log.debug('page from /record');
-                // 置灰订单购买,并开启付款确认
-            } else {
-                log.debug('page from other');
-                // 置灰付款确认,并开启订单购买
-            } */
         });
     },
     beforeRouteLeave (from, to, next) {

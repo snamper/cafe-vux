@@ -1,21 +1,12 @@
 <template>
     <div v-if="record">
         <x-header title="订单详情" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back()"></x-header>
-        <!-- <tab>
-            <tab-item selected @on-item-click="showProcess()">订单状态</tab-item>
-            <tab-item @on-item-click="showDetail()">订单详情</tab-item>
-        </tab> -->
         <detail :record="record" ref="recordDetail"></detail>
-        <!-- <div class="show">
-            <process v-show="show" :record="record"></process>
-            <detail v-show="!show" :record="record" ref="recordDetail"></detail>
-        </div> -->
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 import { XHeader, Tab, TabItem } from 'vux';
-import process from './process';
 import detail from './detail';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
@@ -67,7 +58,7 @@ export default {
         },
         back() {
             log.debug('back');
-            this.$router.push({name: 'records'});
+            this.$router.push({name: 'record', params: {record: this.record}});
         }
     },
     components: {
