@@ -63,8 +63,8 @@ export default {
 .listwrapper
     position absolute
     width 100%
-    top 125px
-    bottom 20px
+    top 82px
+    bottom 5px
     overflow hidden
     .detail
         width 100%

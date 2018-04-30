@@ -46,6 +46,7 @@ import { mapGetters, mapState } from 'vuex';
 import { CheckIcon, XButton, XHeader, Qrcode } from 'vux';
 import split from '../../components/split';
 import avator from '../../components/avator';
+import { payurl } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('page/menu/pay');
 const BALANCE = 'BALANCE';
@@ -62,13 +63,13 @@ export default {
             if (vm.$store.getters.selectFoods.length === 0 && to.path !== '/record') {
                 vm.$router.push({name: 'menu'});
             }
-            if (to.path === '/record') {
+            /* if (to.path === '/record') {
                 log.debug('page from /record');
                 // 置灰订单购买,并开启付款确认
             } else {
                 log.debug('page from other');
                 // 置灰付款确认,并开启订单购买
-            }
+            } */
         });
     },
     beforeRouteLeave (from, to, next) {
@@ -97,13 +98,13 @@ export default {
         }
     },
     computed: {
-        value() {
+        /* value() {
             if (this.show.alipay) {
                 return this.payType.alipay.QR;
             } else if (this.show.wechat) {
                 return this.payType.wechat.QR;
             }
-        },
+        }, */
         ...mapGetters([
             'selectFoods',
             'totalAttr'
@@ -228,63 +229,23 @@ export default {
             }
         },
         payit() {
-            let _this = this;
+            // let _this = this;
             // 提交付款 url.buyGoods
             // 付款成功后提示
             // 清空购物车
             if (this.show.member && this.currentUser.memberInfo.balance < this.totalPrice) {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
-            } else {
-                log.debug('是否后期可以考虑干掉这个参数 this.record.userName');
-                this.$store.dispatch('submitRecord', this.order).then(() => {
-                    // 成功
-                    this.$vux.alert.show({
-                        title: '支付成功',
-                        content: '点击【我已付款】提醒卖家',
-                        onHide() {
-                            log.debug('totalPrice is ' + _this.totalPrice);
-                            // 保存价格
-                            _this.recordPrice = _this.totalPrice;
-                            // 清空购物车
-                            _this.$store.commit('clearCars');
-                            // 更新状态
-                            _this.$store.commit('updateShowButtonConfirmStatus', true);
-                            _this.$store.commit('updateShowButtonAlreadyStatus', false);
-                        }
-                    });
-                }).catch((error) => {
-                    log.debug(error);
-                    this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
+            } else if (this.show.alipay) {
+                // 支付宝支付
+                log.info('alipay pay');
+            } else if (this.show.wechat) {
+                // 微信支付
+                log.info('wechat pay');
+                this.$store.dispatch('submitRecord', this.order).then(resp => {
+                    window.location.href = payurl('wechat', this.totalPrice, resp);
                 });
             }
         }
-        /* alertStatus() {
-            let _this = this;
-            let data = {
-                // 默认认为是从order页面来的,所以提交之前记录的recordID
-                entityId: this.recordID,
-                status: exchangeType.CONFIRM2PAID.key
-            };
-            // 如果是从record页面来的,就提交record的id
-            if (this.to === '/record') {
-                data.entityId = this.record.id;
-            }
-            this.$store.dispatch('alertStatus', data).then(() => {
-                this.$vux.alert.show({
-                    title: '付款提醒',
-                    content: '已提醒店家，店家会尽快确认付款信息',
-                    onHide() {
-                        log.debug('跳转页面,高亮显示处理');
-                        _this.$router.push({name: 'records'});
-                        // 清空保存的购物id号
-                        _this.$store.commit('updateRecordID', null);
-                    }
-                });
-            }).catch((error) => {
-                log.debug(error);
-                this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
-            });
-        } */
     },
     components: {
         split,

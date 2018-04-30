@@ -1,14 +1,15 @@
 <template>
     <div v-if="record">
         <x-header title="订单详情" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back()"></x-header>
-        <tab>
+        <!-- <tab>
             <tab-item selected @on-item-click="showProcess()">订单状态</tab-item>
             <tab-item @on-item-click="showDetail()">订单详情</tab-item>
-        </tab>
-        <div class="show">
+        </tab> -->
+        <detail :record="record" ref="recordDetail"></detail>
+        <!-- <div class="show">
             <process v-show="show" :record="record"></process>
             <detail v-show="!show" :record="record" ref="recordDetail"></detail>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -27,6 +28,7 @@ export default {
             // 当页面不是从pay或者是records跳转而来,就直接跳转到records页面
             if (to.path === '/records' || to.path === '/pay') {
                 log.debug('from record or pay');
+                vm.showDetail();
             } else {
                 log.debug('jump page to records');
                 vm.$router.push({name: 'records'});

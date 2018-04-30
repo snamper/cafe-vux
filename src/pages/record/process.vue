@@ -1,9 +1,21 @@
 <template>
     <div>
-        <flow orientation="vertical" style="height:250px;">
-            <flow-state state="1" title="待付款" :is-done="isDoneStatus[0]"></flow-state>
-            <flow-line :tip="tips[0]" :is-done="line[0]"></flow-line>
+        <flow orientation="vertical" style="height:250px;" v-if="condition.pay">
+            <flow-state state="1" title="待付款" is-done=true></flow-state>
+            <flow-line :tip="tips" :is-done="false"></flow-line>
             <flow-state state="2" title="已付款" :is-done="isDoneStatus[1]"></flow-state>
+        </flow>
+        <flow orientation="vertical" style="height:250px;" v-if="condition.close">
+            <flow-state state="1" title="待付款" is-done=true></flow-state>
+            <flow-line :tip="tips" :is-done="false"></flow-line>
+            <flow-state state="2" title="已关闭" :is-done="isDoneStatus[1]"></flow-state>
+        </flow>
+        <flow orientation="vertical" style="height:250px;" v-if="condition.refund">
+            <flow-state state="1" title="待付款" is-done=true></flow-state>
+            <flow-line :tip="tips" :is-done="false"></flow-line>
+            <flow-state state="2" title="已付款" :is-done="isDoneStatus[1]"></flow-state>
+            <flow-line :tip="tips[0]" :is-done="line[0]"></flow-line>
+            <flow-state state="2" title="已退款" :is-done="isDoneStatus[1]"></flow-state>
         </flow>
         <div class="confirm" v-if="show.flag">
              <x-button type="primary" @click.native="payit">{{show.title}}</x-button>
@@ -17,8 +29,24 @@ import { payStatus } from '../../common/js/consts';
 import Logger from 'chivy';
 const log = new Logger('page/record/process');
 const pay = '我要付款';
-const alert = '提醒卖家';
 export default {
+    data() {
+        return {
+            tips: '进行中',
+            condition: {
+                pay: true,
+                close: false,
+                refund: false
+            },
+            show: {
+                pay: {
+                    isdone: true,
+                    tips: '进行中',
+                    line: false
+                }
+            }
+        };
+    },
     props: {
         record: {
             type: Object

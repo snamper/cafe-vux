@@ -212,7 +212,17 @@ function covertStatus(status) {
     }
 };
 
+function payurl(type, value, order) {
+    let url = '/shop/member/pay/ui/order.do';
+    if (type === 'wechat') {
+        url = url + '?payMoney =' + value + '&tradeNo=' + order;
+    } else if (type === 'alipay') {
+        url = '';
+    }
+    return url;
+}
+
 export {ajaxPost, ajaxGet};
 export {setSessionStorage, getSessionStorage, removeSessionStorage};
 export {setMemberInfo, gender, setModifyMemberData};
-export {formatDate, isCurrentJumpPage, isObjEmpty, covertStatus};
+export {formatDate, isCurrentJumpPage, isObjEmpty, covertStatus, payurl};

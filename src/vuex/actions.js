@@ -63,7 +63,7 @@ export default {
         return new Promise((resolve, reject) => {
             ajaxPost(url.saveRecordList, payload).then((data) => {
                 if (data.success) {
-                    resolve(data.entityId);
+                    resolve(data.entityName);
                 } else {
                     reject(new Error('submit record failed'));
                 }
