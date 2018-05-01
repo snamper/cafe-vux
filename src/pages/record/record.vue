@@ -1,7 +1,7 @@
 <template>
     <div v-if="record">
         <x-header title="订单详情" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back()"></x-header>
-        <detail :record="record" ref="recordDetail"></detail>
+        <detail :record="record" ref="detail"></detail>
     </div>
 </template>
 
@@ -54,11 +54,12 @@ export default {
         showDetail() {
             log.debug('showDetail');
             this.show = false;
-            this.$refs.recordDetail.scrollit();
+            log.debug(this.$refs.detail);
+            this.$refs.detail.scrollit();
         },
         back() {
             log.debug('back');
-            this.$router.push({name: 'record', params: {record: this.record}});
+            this.$router.push({name: 'records'});
         }
     },
     components: {

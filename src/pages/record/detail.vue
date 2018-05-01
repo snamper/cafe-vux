@@ -52,7 +52,7 @@ export default {
             });
         },
         payit() {
-            this.$router.push({name: 'pay'});
+            this.$router.push({name: 'pay', params: {record: this.record}});
         }
     },
     computed: {

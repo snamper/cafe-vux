@@ -91,13 +91,6 @@ export default {
         }
     },
     computed: {
-        /* value() {
-            if (this.show.alipay) {
-                return this.payType.alipay.QR;
-            } else if (this.show.wechat) {
-                return this.payType.wechat.QR;
-            }
-        }, */
         ...mapGetters([
             'selectFoods',
             'totalAttr'
@@ -231,11 +224,20 @@ export default {
             } else if (this.show.alipay) {
                 // 支付宝支付
                 log.info('alipay pay');
+                this.$vux.toast.text('暂不支持该功能', 'middle');
             } else if (this.show.wechat) {
                 // 微信支付
                 log.info('wechat pay');
                 this.$store.dispatch('submitRecord', this.order).then(resp => {
                     window.location.href = payurl('wechat', this.totalPrice, resp);
+                });
+            } else if (this.show.member) {
+                log.info('member pay');
+                this.$store.dispatch('submitRecord', this.order).then(resp => {
+                    if (resp !== null) {
+                        this.$vux.toast.text('支付成功', 'middle');
+                        this.$router.push({name: 'records'});
+                    }
                 });
             }
         }

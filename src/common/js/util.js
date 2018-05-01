@@ -222,7 +222,18 @@ function payurl(type, value, order) {
     return url;
 }
 
+function getImageUrl(url, size) {
+    if (!isObjEmpty(url)) {
+        // log.debug('param url is ' + url);
+        var urlArray = url.split('.');
+        // log.debug('split array is ' + JSON.stringify(urlArray));
+        var current = urlArray[0] + '_' + size + 'X' + size + '.' + urlArray[1];
+        return current;
+    }
+    return url;
+}
+
 export {ajaxPost, ajaxGet};
 export {setSessionStorage, getSessionStorage, removeSessionStorage};
-export {setMemberInfo, gender, setModifyMemberData};
+export {setMemberInfo, gender, setModifyMemberData, getImageUrl};
 export {formatDate, isCurrentJumpPage, isObjEmpty, covertStatus, payurl};
