@@ -26,9 +26,11 @@ export default {
     sliders(state, getters) {
         let sliders = [];
         getters.products.forEach((product) => {
-            sliders.push({
-                'img': product.imageSliderUrl
-            });
+            if (product.imageSliderUrl !== '') {
+                sliders.push({
+                    'img': product.imageSliderUrl
+                });
+            }
         });
         return sliders;
     },
