@@ -908,7 +908,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAIT4PAY",
+      "status": "NOTPAY",
       "userId": 84,
       "userName": "test3"
     },
@@ -983,7 +983,7 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAIT4CONFIRM",
+      "status": "CLOSED",
       "userId": 84,
       "userName": "test3"
     },
@@ -1058,7 +1058,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "CONFIRM2PAID",
+      "status": "PAYERROR",
       "userId": 84,
       "userName": "test3"
     },
@@ -1133,7 +1133,7 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAIT4CONFIRM",
+      "status": "SUCCESS",
       "userId": 84,
       "userName": "test3"
     },
@@ -1208,7 +1208,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "SUCCESS",
+      "status": "REFUND",
       "userId": 84,
       "userName": "test3"
     },
@@ -1358,7 +1358,7 @@
       ],
       "id": 99,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "WAIT4PAY",
+      "status": "NOTPAY",
       "userId": 84,
       "userName": "test3"
     },
@@ -1433,7 +1433,7 @@
       ],
       "id": 102,
       "objClass": "com.xdt.ums.shop.common.entity.RecordImpl",
-      "status": "CONFIRM2PAID",
+      "status": "SUCCESS",
       "userId": 84,
       "userName": "test3"
     }

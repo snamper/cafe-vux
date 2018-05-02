@@ -1,11 +1,9 @@
 <template>
     <transition name="move">
         <div v-show="showFlag" class="food food-content" ref="food">
+            <x-header title="商品图片" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="hide()"></x-header>
             <div class="image-header">
-                <img :src="food.imageUrl">
-                <div class="back" @click="hide">
-                    <i class="iconfont icon-fanhui"></i>
-                </div>
+                <img :src="getImageUrl(food.imageUrl)">
             </div>
             <div class="content">
                 <div class="price">
@@ -33,6 +31,8 @@
 import BScroll from 'better-scroll';
 import Vue from 'vue';
 import cartcontrol from './cartcontrol';
+import { XHeader } from 'vux';
+import { getImageUrl } from '../../common/js/util';
 import split from '../../components/split';
 export default {
     props: {
@@ -45,12 +45,10 @@ export default {
             showFlag: false
         };
     },
-    computed: {
-        placeholder() {
-            return placeholder;
-        }
-    },
     methods: {
+        getImageUrl(url) {
+            return getImageUrl(url, 400);
+        },
         // 显示页面并滚动显示页面内容
         show() {
             this.showFlag = true;
@@ -81,7 +79,8 @@ export default {
     },
     components: {
         cartcontrol,
-        split
+        split,
+        XHeader
     }
 };
 </script>

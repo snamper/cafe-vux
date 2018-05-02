@@ -24,7 +24,7 @@
                     <check-icon :value.sync="show.wechat"></check-icon>
                 </div>
             </div>
-            <div class="balance" v-show="memberInfo!==null">
+            <div class="balance" v-show="currentUser.memberInfo!==null">
                 <div class="img">
                     <avator :img='payType.member.icon' :size="size" :radius='radius'></avator>
                 </div>
@@ -36,13 +36,7 @@
         </div>
         <split></split>
         <div class="confirm">
-             <x-button :disabled="showbutton.confirm" type="primary" @click.native="payit">确认支付￥{{totalPrice}}元</x-button>
-        </div>
-        <div class="qrcode" v-show="show.alipay||show.wechat">
-            <img :src="value">
-        </div>
-        <div class="already">
-             <x-button mini plain :disabled="showbutton.already"  @click.native="alertStatus">我已付款</x-button>
+            <x-button  type="primary" @click.native="payit">确认支付￥{{totalPrice}}元</x-button>
         </div>
     </div>
 </template>
@@ -50,9 +44,9 @@
 <script type="text/ecmascript-6">
 import { mapGetters, mapState } from 'vuex';
 import { CheckIcon, XButton, XHeader, Qrcode } from 'vux';
-import { exchangeType } from '../../common/js/values';
 import split from '../../components/split';
 import avator from '../../components/avator';
+import { payurl } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('page/menu/pay');
 const BALANCE = 'BALANCE';
@@ -68,17 +62,6 @@ export default {
             log.debug('selectfoods length is ' + vm.$store.getters.selectFoods.length);
             if (vm.$store.getters.selectFoods.length === 0 && to.path !== '/record') {
                 vm.$router.push({name: 'menu'});
-            }
-            if (to.path === '/record') {
-                log.debug('page from /record');
-                // 置灰订单购买,并开启付款确认
-                vm.$store.state.showbutton.confirm = true;
-                vm.$store.state.showbutton.already = false;
-            } else {
-                log.debug('page from other');
-                // 置灰付款确认,并开启订单购买
-                vm.$store.state.showbutton.confirm = false;
-                vm.$store.state.showbutton.already = true;
             }
         });
     },
@@ -108,23 +91,15 @@ export default {
         }
     },
     computed: {
-        value() {
-            if (this.show.alipay) {
-                return this.payType.alipay.QR;
-            } else if (this.show.wechat) {
-                return this.payType.wechat.QR;
-            }
-        },
         ...mapGetters([
             'selectFoods',
             'totalAttr'
         ]),
         ...mapState([
-            'memberInfo',
-            'UUID',
+            'currentUser',
             'recordID',
             'payType',
-            'showbutton'
+            'recordInfo'
         ]),
         // 购物总价
         totalPrice() {
@@ -133,10 +108,13 @@ export default {
             // 当没有会员的时候计算出来的购物车不为0的时候返回普通价
             // 当计算出来的购物车价格为0的时候,表示已点击过了支付价格,所以此时价格为之前记录的价格.
             if (typeof (this.record) !== 'undefined') {
+                // 从订单页面跳转过来的则显示订单的总价
                 return this.record.amount;
-            } else if (this.memberInfo !== null && this.totalAttr.member !== 0) {
+            } else if (this.currentUser.memberInfo !== null && this.totalAttr.member !== 0) {
+                // 显示会员价
                 return this.totalAttr.member;
             } else if (this.totalAttr.normal !== 0) {
+                // 显示非会员价
                 return this.totalAttr.normal;
             } else {
                 return this.recordPrice;
@@ -144,8 +122,8 @@ export default {
         },
         // 会员余额
         balance() {
-            if (this.memberInfo !== null) {
-                return this.memberInfo.balance;
+            if (this.currentUser.memberInfo !== null) {
+                return this.currentUser.memberInfo.balance;
             }
         },
         // 计算具体的商品
@@ -181,12 +159,12 @@ export default {
                 cashOrBalance: null,
                 details: null
             };
-            if (this.memberInfo !== null) {
-                result.userId = this.memberInfo.id;
-                if (this.memberInfo.name !== '') {
-                    result.userName = this.memberInfo.name;
+            if (this.currentUser.memberInfo !== null) {
+                result.userId = this.currentUser.memberInfo.id;
+                if (this.currentUser.memberInfo.name !== '') {
+                    result.userName = this.currentUser.memberInfo.name;
                 } else {
-                     result.userName = this.memberInfo.phone;
+                     result.userName = this.currentUser.memberInfo.phone;
                 }
             } else {
                 result.userCode = this.UUID;
@@ -237,62 +215,31 @@ export default {
             }
         },
         payit() {
-            let _this = this;
+            // let _this = this;
             // 提交付款 url.buyGoods
             // 付款成功后提示
             // 清空购物车
-            if (this.show.member && this.memberInfo.balance < this.totalPrice) {
+            if (this.show.member && this.currentUser.memberInfo.balance < this.totalPrice) {
                 this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
-            } else {
-                log.debug('是否后期可以考虑干掉这个参数 this.record.userName');
-                this.$store.dispatch('submitRecord', this.order).then(() => {
-                    // 成功
-                    this.$vux.alert.show({
-                        title: '支付成功',
-                        content: '点击【我已付款】提醒卖家',
-                        onHide() {
-                            log.debug('totalPrice is ' + _this.totalPrice);
-                            // 保存价格
-                            _this.recordPrice = _this.totalPrice;
-                            // 清空购物车
-                            _this.$store.commit('clearCars');
-                            // 更新状态
-                            _this.$store.commit('updateShowButtonConfirmStatus', true);
-                            _this.$store.commit('updateShowButtonAlreadyStatus', false);
-                        }
-                    });
-                }).catch((error) => {
-                    log.debug(error);
-                    this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
+            } else if (this.show.alipay) {
+                // 支付宝支付
+                log.info('alipay pay');
+                this.$vux.toast.text('暂不支持该功能', 'middle');
+            } else if (this.show.wechat) {
+                // 微信支付
+                log.info('wechat pay');
+                this.$store.dispatch('submitRecord', this.order).then(resp => {
+                    window.location.href = payurl('wechat', this.totalPrice, resp);
                 });
-            }
-        },
-        alertStatus() {
-            let _this = this;
-            let data = {
-                // 默认认为是从order页面来的,所以提交之前记录的recordID
-                entityId: this.recordID,
-                status: exchangeType.CONFIRM2PAID.key
-            };
-            // 如果是从record页面来的,就提交record的id
-            if (this.to === '/record') {
-                data.entityId = this.record.id;
-            }
-            this.$store.dispatch('alertStatus', data).then(() => {
-                this.$vux.alert.show({
-                    title: '付款提醒',
-                    content: '已提醒店家，店家会尽快确认付款信息',
-                    onHide() {
-                        log.debug('跳转页面,高亮显示处理');
-                        _this.$router.push({name: 'records'});
-                        // 清空保存的购物id号
-                        _this.$store.commit('updateRecordID', null);
+            } else if (this.show.member) {
+                log.info('member pay');
+                this.$store.dispatch('submitRecord', this.order).then(resp => {
+                    if (resp !== null) {
+                        this.$vux.toast.text('支付成功', 'middle');
+                        this.$router.push({name: 'records'});
                     }
                 });
-            }).catch((error) => {
-                log.debug(error);
-                this.$vux.toast.text('服务器故障,请稍后再试', 'middle');
-            });
+            }
         }
     },
     components: {

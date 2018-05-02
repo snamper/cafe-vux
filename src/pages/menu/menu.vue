@@ -19,7 +19,7 @@
                             <ul>
                                 <li class="food-item border-1px" v-for="(food,index) in item.list" :key="index" @click="selectFood(food,$event)">
                                     <div class="icon">
-                                        <img width="50" height="50" :src="food.imageUrl">
+                                        <img width="50" height="50" :src="getImageUrl(food.imageUrl)">
                                     </div>
                                     <div class="content">
                                         <h2 class="name">{{food.name}}</h2>
@@ -52,6 +52,7 @@ import food from './food';
 import shopcart from './shopcart';
 import cartcontrol from './cartcontrol';
 import { Loading } from 'vux';
+import { getImageUrl } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
 export default {
@@ -69,7 +70,7 @@ export default {
         });
     },
     created() {
-        log.debug('getCategorys');
+        log.info('Now, getCategorys from Server');
         this.$store.dispatch('getCategorys').then((response) => {
             this.goods = this.$store.state.categorys;
             this.init();
@@ -90,12 +91,12 @@ export default {
                 }
             }
             return 0;
-        },
-        placeholder() {
-            return placeholder;
         }
     },
     methods: {
+        getImageUrl(url) {
+            return getImageUrl(url, 50);
+        },
         init() {
             this.$nextTick(() => {
                 this._initScroll();

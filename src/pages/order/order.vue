@@ -19,6 +19,7 @@ import { Divider, XHeader, Group, XSwitch } from 'vux';
 import ordercart from './orderCart';
 import list from './../../components/list';
 import { mapGetters, mapState } from 'vuex';
+import { images } from '../../common/js/consts';
 import Logger from 'chivy';
 const log = new Logger('page/order/order');
 export default {
@@ -35,17 +36,19 @@ export default {
             'selectFoods'
         ]),
         ...mapState([
-            'memberInfo',
-            'images'
+            'currentUser'
         ]),
+        images() {
+            return images;
+        },
         // 显示游客或者显示昵称或者显示电话号码(唯一标识符)
         username() {
-            if (this.memberInfo === null) {
+            if (this.currentUser.memberInfo === null) {
                 return '游客';
-            } else if (this.memberInfo.name !== '' || this.memberInfo.name !== null) {
-                return this.memberInfo.name;
+            } else if (this.currentUser.memberInfo.name !== '' || this.currentUser.memberInfo.name !== null) {
+                return this.currentUser.memberInfo.name;
             } else {
-                return this.memberInfo.phone;
+                return this.currentUser.memberInfo.phone;
             }
         }
     },

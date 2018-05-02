@@ -1,20 +1,12 @@
 <template>
     <div v-if="record">
         <x-header title="订单详情" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back()"></x-header>
-        <tab>
-            <tab-item selected @on-item-click="showProcess()">订单状态</tab-item>
-            <tab-item @on-item-click="showDetail()">订单详情</tab-item>
-        </tab>
-        <div class="show">
-            <process v-show="show" :record="record"></process>
-            <detail v-show="!show" :record="record" ref="recordDetail"></detail>
-        </div>
+        <detail :record="record" ref="detail"></detail>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 import { XHeader, Tab, TabItem } from 'vux';
-import process from './process';
 import detail from './detail';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
@@ -27,6 +19,7 @@ export default {
             // 当页面不是从pay或者是records跳转而来,就直接跳转到records页面
             if (to.path === '/records' || to.path === '/pay') {
                 log.debug('from record or pay');
+                vm.showDetail();
             } else {
                 log.debug('jump page to records');
                 vm.$router.push({name: 'records'});
@@ -61,7 +54,8 @@ export default {
         showDetail() {
             log.debug('showDetail');
             this.show = false;
-            this.$refs.recordDetail.scrollit();
+            log.debug(this.$refs.detail);
+            this.$refs.detail.scrollit();
         },
         back() {
             log.debug('back');

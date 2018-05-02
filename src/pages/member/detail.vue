@@ -8,36 +8,36 @@
             </div>
             <div class="info">
                 <div class="item-bar vux-1px-b">
-                    <cell title="昵称" :value="memberInfo.nick ? memberInfo.nick : empty" is-link @click.native="modifyNickname"></cell>
+                    <cell title="昵称" :value="currentUser.memberInfo.nick ? currentUser.memberInfo.nick : empty" is-link @click.native="modifyNickname"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
-                    <cell title="用户名" :value="memberInfo.name ? memberInfo.name : empty" :is-link="linkType.name" @click.native="modifyUsername"></cell>
+                    <cell title="用户名" :value="currentUser.memberInfo.name ? currentUser.memberInfo.name : empty" :is-link="linkType.name" @click.native="modifyUsername"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
-                    <cell title="手机号码" :value="memberInfo.phone"></cell>
+                    <cell title="手机号码" :value="currentUser.memberInfo.phone"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
                     <popup-picker title="性别" :data="sexType" :placeholder="memberSex ? memberSex : empty" v-model="sex" @on-hide="saveSex"></popup-picker>
                 </div>
                 <div class="item-bar vux-1px-b">
-                    <cell title="邮箱" :value="memberInfo.email ? memberInfo.email:empty" :is-link="linkType.email" @click.native="modifyEmail"></cell>
+                    <cell title="邮箱" :value="currentUser.memberInfo.email ? currentUser.memberInfo.email:empty" :is-link="linkType.email" @click.native="modifyEmail"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
-                    <cell title="加入时间" :value="memberInfo.createTime"></cell>
-                </div>
-                <spilt></spilt>
-                <div class="item-bar vux-1px-b">
-                    <cell title="会员积分" :value="`${memberInfo.point ? memberInfo.point : 0}分`"></cell>
-                </div>
-                <div class="item-bar vux-1px-b">
-                    <cell title="余额" :value="`${memberInfo.balance}元`"></cell>
+                    <cell title="加入时间" :value="currentUser.memberInfo.createTime"></cell>
                 </div>
                 <spilt></spilt>
                 <div class="item-bar vux-1px-b">
-                    <x-address title="所在地区" :list="addressData" v-model="address" @on-hide="modifyAddress" :placeholder="memberInfo.area ? memberInfo.area : empty"></x-address>
+                    <cell title="会员积分" :value="`${currentUser.memberInfo.point ? currentUser.memberInfo.point : 0}分`"></cell>
                 </div>
                 <div class="item-bar vux-1px-b">
-                    <cell title="详细地址"  :value="memberInfo.address ? memberInfo.address:empty" is-link @click.native="modifyDetailAddress"></cell>
+                    <cell title="余额" :value="`${currentUser.memberInfo.balance}元`"></cell>
+                </div>
+                <spilt></spilt>
+                <div class="item-bar vux-1px-b">
+                    <x-address title="所在地区" :list="addressData" v-model="address" @on-hide="modifyAddress" :placeholder="currentUser.memberInfo.area ? currentUser.memberInfo.area : empty"></x-address>
+                </div>
+                <div class="item-bar vux-1px-b">
+                    <cell title="详细地址"  :value="currentUser.memberInfo.address ? currentUser.memberInfo.address:empty" is-link @click.native="modifyDetailAddress"></cell>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@ import { XHeader, Cell, XAddress, Group, PopupPicker, ChinaAddressV4Data, Value2
 import spilt from '../../components/split';
 import logo from '../../components/logo';
 import { mapState } from 'vuex';
-import { consts } from '../../common/js/consts';
+import { expressType } from '../../common/js/consts';
 import { gender } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('pages/member/detail');
@@ -75,21 +75,21 @@ export default {
     },
     computed: {
         ...mapState([
-            'memberInfo',
+            'currentUser',
             'status'
         ]),
         memberSex() {
-            return this.memberInfo.gender;
+            return this.currentUser.memberInfo.gender;
         },
         linkType() {
             let result = {
                 email: false,
                 name: false
             };
-            if (!this.memberInfo.email) {
+            if (!this.currentUser.memberInfo.email) {
                 result.email = true;
             }
-            if (!this.memberInfo.name) {
+            if (!this.currentUser.memberInfo.name) {
                 result.name = true;
             }
             return result;
@@ -97,12 +97,13 @@ export default {
     },
     methods: {
         jumppage() {
+            log.debug('delivery the data is ' + JSON.stringify(this.content));
             this.$router.push({name: 'modify', params: {content: this.content}});
         },
         modifyNickname() {
             log.debug('modifyUsername');
             this.content = {
-                type: consts.expressType.nick,
+                type: expressType.nick,
                 title: '设置昵称',
                 input: '昵称'
             };
@@ -115,7 +116,7 @@ export default {
              */
             if (this.linkType.name) {
                 this.content = {
-                    type: consts.expressType.name,
+                    type: expressType.name,
                     title: '设置用户名',
                     input: '用户名'
                 };
@@ -125,7 +126,7 @@ export default {
         modifyPhoneNumber() {
             log.debug('modifyPhoneNumber');
             this.content = {
-                type: consts.expressType.phone,
+                type: expressType.phone,
                 title: '设置手机号',
                 input: '手机号'
             };
@@ -134,7 +135,7 @@ export default {
         modifyDetailAddress() {
             log.debug('modifyDetailAddress');
             this.content = {
-                type: consts.expressType.detailAddress,
+                type: expressType.detailAddress,
                 title: '设置地址',
                 input: '详细地址'
             };
@@ -144,7 +145,7 @@ export default {
             log.debug('modifyEmail');
             if (this.linkType.email) {
                 this.content = {
-                    type: consts.expressType.email,
+                    type: expressType.email,
                     title: '设置邮箱',
                     input: '邮箱'
                 };
@@ -156,8 +157,8 @@ export default {
             let result = value2name(this.address, ChinaAddressV4Data);
             log.debug('adress is modified to ' + result);
             let data = {
-                type: type.address,
-                userId: this.memberInfo.id,
+                type: expressType.address,
+                userId: this.currentUser.memberInfo.id,
                 address: result
             };
             this.submitData(data);
@@ -165,8 +166,8 @@ export default {
         saveSex() {
             log.debug('save sex ' + this.sex);
             let data = {
-                type: type.gender,
-                userId: this.memberInfo.id,
+                type: expressType.gender,
+                userId: this.currentUser.memberInfo.id,
                 gender: gender(this.sex[0])
             };
             log.debug(data.gender);
