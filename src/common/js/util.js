@@ -213,7 +213,7 @@ function covertStatus(status) {
 };
 
 function payurl(type, value, order) {
-    let url = '/shop/member/pay/ui/order.do';
+    let url = '/shop/member/pay/wechat/ui/order.do';
     if (type === 'wechat') {
         url = url + '?payMoney =' + value + '&tradeNo=' + order;
     } else if (type === 'alipay') {
