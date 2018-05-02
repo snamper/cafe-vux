@@ -20,12 +20,14 @@ export default new Router({
       {
       path: '/',
       // component: Main,
-      component: resolve => require(['../pages/main/main.vue'], resolve),
+      // component: resolve => require(['../pages/main/main.vue'], resolve),
+      component: () => import('../pages/main/main.vue').then(m => m.default),
       redirect: '/menu',
       children: [{
         name: 'menu',
         path: 'menu',
-        component: resolve => require(['../pages/menu/menu.vue'], resolve),
+        component: () => import('../pages/menu/menu.vue').then(m => m.default),
+        // component: resolve => require(['../pages/menu/menu.vue'], resolve),
         // component: Menu,
         meta: {
           keepAlive: true
@@ -36,13 +38,15 @@ export default new Router({
         name: 'news',
         path: 'news',
         // component: News
-        component: resolve => require(['../pages/news/news.vue'], resolve)
+        // component: resolve => require(['../pages/news/news.vue'], resolve)
+        component: () => import('../pages/news/news.vue').then(m => m.default)
       },
       {
         // 登陆页面
         name: 'login',
         path: 'login',
-        component: resolve => require(['../pages/login/login.vue'], resolve)
+        component: () => import('../pages/login/login.vue').then(m => m.default)
+        // component: resolve => require(['../pages/login/login.vue'], resolve)
         // component: Login
       },
       {
@@ -50,20 +54,23 @@ export default new Router({
         name: 'order',
         path: 'order',
         // component: Order
-        component: resolve => require(['../pages/order/order.vue'], resolve)
+        component: () => import('../pages/order/order.vue').then(m => m.default)
+        // component: resolve => require(['../pages/order/order.vue'], resolve)
       },
       {
         // 订单详情
         name: 'records',
         path: 'records',
         // component: Records
-        component: resolve => require(['../pages/record/records.vue'], resolve)
+        component: () => import('../pages/record/record.vue').then(m => m.default)
+        // component: resolve => require(['../pages/record/records.vue'], resolve)
       },
       {
         // 会员信息页
         name: 'member',
         path: 'member',
-        component: resolve => require(['../pages/member/member.vue'], resolve)
+        component: () => import('../pages/member/member.vue').then(m => m.default)
+        // component: resolve => require(['../pages/member/member.vue'], resolve)
         // component: Member
       },
       {
@@ -71,21 +78,24 @@ export default new Router({
         name: 'memberinfo',
         path: 'memberinfo',
         // component: MemberInfo
-        component: resolve => require(['../pages/member/detail.vue'], resolve)
+        component: () => import('../pages/member/detail.vue').then(m => m.default)
+        // component: resolve => require(['../pages/member/detail.vue'], resolve)
       },
       {
         // 密码修改页
         name: 'pwd',
         path: 'pwd',
         // component: PWD
-        component: resolve => require(['../pages/member/pwd.vue'], resolve)
+        component: () => import('../pages/member/pwd.vue').then(m => m.default)
+        // component: resolve => require(['../pages/member/pwd.vue'], resolve)
       },
       {
         // 会员信息修改页
         name: 'modify',
         path: 'modify',
         // component: Modify,
-        component: resolve => require(['../pages/member/modify.vue'], resolve),
+        component: () => import('../pages/member/modify.vue').then(m => m.default),
+        // component: resolve => require(['../pages/member/modify.vue'], resolve),
         props: true
       }]
     },
@@ -94,14 +104,16 @@ export default new Router({
       name: 'pay',
       path: '/pay',
       // component: Pay,
-      component: resolve => require(['../pages/order/pay.vue'], resolve),
+      component: () => import('../pages/order/pay.vue').then(m => m.default),
+      // component: resolve => require(['../pages/order/pay.vue'], resolve),
       props: true
     },
     {
       name: 'record',
       path: '/record',
       // component: Record,
-      component: resolve => require(['../pages/record/records.vue'], resolve),
+      component: () => import('../pages/record/records.vue').then(m => m.default),
+      // component: resolve => require(['../pages/record/records.vue'], resolve),
       props: true
     }
   ]
