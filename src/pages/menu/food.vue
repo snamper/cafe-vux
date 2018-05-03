@@ -3,7 +3,8 @@
         <div v-show="showFlag" class="food food-content" ref="food">
             <x-header title="商品图片" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="hide()"></x-header>
             <div class="image-header">
-                <img :src="getImageUrl(food.imageUrl)">
+                <swiper class="swiper" :list="sliders(food.imageUrl)" auto loop style="width:100%;height:auto;" dots-class="custom-bottom" dots-position="center"></swiper>
+                <!-- <img :src="getImageUrl(food.imageUrl)"> -->
             </div>
             <div class="content">
                 <div class="price">
@@ -31,9 +32,11 @@
 import BScroll from 'better-scroll';
 import Vue from 'vue';
 import cartcontrol from './cartcontrol';
-import { XHeader } from 'vux';
+import { XHeader, Swiper } from 'vux';
 import { getImageUrl } from '../../common/js/util';
 import split from '../../components/split';
+import Logger from 'chivy';
+const log = new Logger('page/menu/food');
 export default {
     props: {
         food: {
@@ -46,8 +49,15 @@ export default {
         };
     },
     methods: {
-        getImageUrl(url) {
-            return getImageUrl(url, 400);
+        sliders(images) {
+            var imageList = images.split(';');
+            var result = [];
+            imageList.forEach((image) => {
+                log.debug('image is ' + image);
+                result.push({img: getImageUrl(image, 400)});
+            });
+            log.debug('result is ' + JSON.stringify(result));
+            return result;
         },
         // 显示页面并滚动显示页面内容
         show() {
@@ -80,7 +90,8 @@ export default {
     components: {
         cartcontrol,
         split,
-        XHeader
+        XHeader,
+        Swiper
     }
 };
 </script>
@@ -103,9 +114,8 @@ export default {
     .image-header
         position: relative
         width: 100%
-        height: 0
-        padding-top: 100%
-        img
+        height: 200px
+        .swiper
             position: absolute
             top: 0
             left: 0

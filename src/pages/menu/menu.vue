@@ -95,7 +95,8 @@ export default {
     },
     methods: {
         getImageUrl(url) {
-            return getImageUrl(url, 50);
+            const images = url.split(';');
+            return getImageUrl(images[0], 50);
         },
         init() {
             this.$nextTick(() => {

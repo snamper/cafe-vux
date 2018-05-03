@@ -12,14 +12,16 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/shop": {
-        target: "http://www.tianbakery.store",
+        // target: "http://www.tianbakery.store",
+        target: "http://localhost:21080",
         changeOrigin: true,
         pathReWrite: {
           "^/shop": ""
         }
       },
       "/upload": {
-        target: "http://www.tianbakery.store",
+        target: "http://localhost:21080",
+        // target: "http://www.tianbakery.store",
         changeOrigin: true,
         pathReWrite: {
           "^/upload": ""
