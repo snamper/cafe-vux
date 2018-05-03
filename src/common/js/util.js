@@ -213,11 +213,11 @@ function covertStatus(status) {
 };
 
 function payurl(type, value, order) {
-    let url = '/shop/member/pay/wechat/ui/order.do';
+    let url = '';
     if (type === 'wechat') {
-        url = url + '?payMoney =' + value + '&tradeNo=' + order;
+        url = '/shop/member/pay/wechat/ui/order.do' + '?payMoney =' + value + '&tradeNo=' + order;
     } else if (type === 'alipay') {
-        url = '';
+        url = '/shop/member/pay/alipay/ui/order.do' + '?payMoney =' + value + '&tradeNo=' + order;
     }
     return url;
 }
