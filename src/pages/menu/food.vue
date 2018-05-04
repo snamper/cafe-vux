@@ -2,10 +2,10 @@
     <transition name="move">
         <div v-show="showFlag" class="food food-content" ref="food">
             <x-header title="商品图片" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="hide()"></x-header>
-            <div class="image-header">
-                <swiper class="swiper" :list="sliders(food.imageUrl)" auto loop style="width:100%;height:auto;" dots-class="custom-bottom" dots-position="center"></swiper>
-                <!-- <img :src="getImageUrl(food.imageUrl)"> -->
-            </div>
+            <swiper class="swiper" :list="sliders(food.imageUrl)" auto loop :aspect-ratio="400/400" height="400px" dots-class="custom-bottom" dots-position="center"></swiper>
+            <!-- <div class="image-header">
+                <img :src="getImageUrl(food.imageUrl)">
+            </div> -->
             <div class="content">
                 <div class="price">
                     <span v-if="food.memberPrice!==0"><span>会员价</span><span class="now">￥{{food.memberPrice}}</span><span v-if="false">非会员价</span></span><span class="old" v-if="false" v-show="food.price">￥{{food.price}}</span>
@@ -119,8 +119,6 @@ export default {
             position: absolute
             top: 0
             left: 0
-            width: 100%
-            height: 100%
         .back
             position: absolute
             top: 10px
