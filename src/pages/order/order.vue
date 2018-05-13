@@ -1,20 +1,22 @@
 <template>
     <div>
         <div class="order">
-            <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
+            <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back">确认订单</x-header>
+            <!--
             <thumbBar :background="images.background" :thumb="images.avator" :username="username"></thumbBar>
-            <divider>确认订单</divider>
-            <div class="listwrapper" ref="listwrapper">
-                <div class="" style="padding-left:40px;height:30px;">
-                    <p style="float:left;padding-right:20px;">收货人:</p><p style="float:left;">{{ receiver }}</p><p style="float:right;padding-right:40px;">{{deliveryMobile}}</p>
+            
+            <divider>确认订单</divider>-->
+            <div class="listwrapper" ref="listwrapper" style="margin-top:15px;">
+                <div class="" style="margin-left:40px;height:30px;">
+                    <p style="float:left;margin-right:20px;">收货人:</p><p style="float:left;">{{ receiver }}</p><p style="float:right;padding-right:40px;">{{deliveryMobile}}</p>
                 </div>
-                <div class="" style="padding-left:40px;">
-                    <p style="float:left;padding-right:20px;font-size:14px;">收货地址:</p><p style="float:left;">{{ deliveryLocation }}</p>
+                <div class="" style="margin-left:40px;">
+                    <p style="float:left;margin-right:20px;font-size:14px;">收货地址: {{ deliveryLocation }}</p>
                 </div>
                 <div style="clear:both"/>
             </div>
             
-            <div style="width:100%;height: 10px;margin-top:15px; background:transparent url(http://img.alicdn.com/tfs/TB1OVRCRpXXXXaMXFXXXXXXXXXX-237-106.png) repeat-x scroll -15px -100px;">
+            <div style="width:100%;height: 10px;margin-top:15px;margin-bottom:15px; background:transparent url(http://img.alicdn.com/tfs/TB1OVRCRpXXXXaMXFXXXXXXXXXX-237-106.png) repeat-x scroll -15px -100px;">
             </div>
             <div class="listwrapper" ref="listwrapper">
                 <list :goods="selectFoods" :size="list.size" :radius="list.radius"></list>
@@ -68,6 +70,9 @@ export default {
         },
         deliveryMobile() {
             return '18011237645';
+        },
+        deliveryLocation() {
+            return '北京市老城区第三胡同987号人民小区4-2-13-4';
         }
     },
     beforeRouteEnter(to, from, next) {
