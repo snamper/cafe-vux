@@ -3,7 +3,19 @@
         <div class="order">
             <x-header title="" :left-options="{showBack: true, preventGoBack: true}" @on-click-back="back"></x-header>
             <thumbBar :background="images.background" :thumb="images.avator" :username="username"></thumbBar>
-            <divider>您的订单</divider>
+            <divider>确认订单</divider>
+            <div class="listwrapper" ref="listwrapper">
+                <div class="" style="padding-left:40px;height:30px;">
+                    <p style="float:left;padding-right:20px;">收货人:</p><p style="float:left;">{{ receiver }}</p><p style="float:right;padding-right:40px;">{{deliveryMobile}}</p>
+                </div>
+                <div class="" style="padding-left:40px;">
+                    <p style="float:left;padding-right:20px;font-size:14px;">收货地址:</p><p style="float:left;">{{ deliveryLocation }}</p>
+                </div>
+                <div style="clear:both"/>
+            </div>
+            
+            <div style="width:100%;height: 10px;margin-top:15px; background:transparent url(http://img.alicdn.com/tfs/TB1OVRCRpXXXXaMXFXXXXXXXXXX-237-106.png) repeat-x scroll -15px -100px;">
+            </div>
             <div class="listwrapper" ref="listwrapper">
                 <list :goods="selectFoods" :size="list.size" :radius="list.radius"></list>
             </div>
@@ -50,6 +62,12 @@ export default {
             } else {
                 return this.currentUser.memberInfo.phone;
             }
+        },
+        receiver() {
+            return '游客';
+        },
+        deliveryMobile() {
+            return '18011237645';
         }
     },
     beforeRouteEnter(to, from, next) {

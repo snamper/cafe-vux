@@ -215,9 +215,9 @@ function covertStatus(status) {
 function payurl(type, value, order) {
     let url = '';
     if (type === 'wechat') {
-        url = '/shop/member/pay/wechat/ui/order.do' + '?payMoney =' + value + '&tradeNo=' + order;
+        url = '/shop/member/pay/wechat/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + order;
     } else if (type === 'alipay') {
-        url = '/shop/member/pay/alipay/ui/order.do' + '?payMoney =' + value + '&tradeNo=' + order;
+        url = '/shop/member/pay/alipay/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + order;
     }
     return url;
 }

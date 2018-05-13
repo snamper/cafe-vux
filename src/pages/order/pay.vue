@@ -224,12 +224,15 @@ export default {
             } else if (this.show.alipay) {
                 // 支付宝支付
                 log.info('alipay pay');
-                this.$vux.toast.text('暂不支持该功能', 'middle');
+                // this.$vux.toast.text('暂不支持该功能', 'middle');
+                this.$store.dispatch('submitRecord', this.order).then(resp => {
+                    window.location.href = payurl('alipay', 0.01, resp);
+                });
             } else if (this.show.wechat) {
                 // 微信支付
                 log.info('wechat pay');
                 this.$store.dispatch('submitRecord', this.order).then(resp => {
-                    window.location.href = payurl('wechat', this.totalPrice, resp);
+                    window.location.href = payurl('wechat', 0.01, resp);
                 });
             } else if (this.show.member) {
                 log.info('member pay');
