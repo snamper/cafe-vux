@@ -12,7 +12,10 @@ export default new Router({
         {
           name: 'menu',
           path: 'menu',
-          component: () => import('../pages/menu/menu.vue').then(m => m.default)
+          component: () => import('../pages/menu/menu.vue').then(m => m.default),
+          meta: {
+            keepAlive: true
+          }
         },
         {
           name: 'cart',
@@ -34,7 +37,7 @@ export default new Router({
     {
       name: 'good',
       path: '/good',
-      component: () => import('../pages/menu/detail.vue').then(m => m.default),
+      component: () => import('../pages/menu/good.vue').then(m => m.default),
       props: true
     }
   ]

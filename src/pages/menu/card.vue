@@ -4,14 +4,14 @@
       <img :src="url(product.imageUrl)" class="img">
     </div>
     <div class="content">
-      <div class="title" v-if="title">{{product.name}}</div>
-      <div class="desc van-ellipsis" v-if="desc">{{product.description}}</div>
+      <div class="title" v-if="product.name">{{product.name}}</div>
+      <div class="desc van-ellipsis" v-if="product.description">{{product.description}}</div>
       <div class="footer">
         <span class="price">
           <span class="normal">￥{{product.price}}</span>
           <span class="member" v-if="product.price !== product.memberPrice">￥{{product.memberPrice}}</span>
         </span>
-        <van-button class="button" type="default" size="mini" @click="buy">{{operation}}</van-button>
+        <van-button class="button" type="default" size="mini" @click="buy">购买</van-button>
       </div>
     </div>
   </div>

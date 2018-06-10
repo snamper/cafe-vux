@@ -5,13 +5,17 @@
       title="商品列表"
       subtitle="蛋糕手工打造">
     </tipsbar>
-    <products :products="sliders" @buy="buy" @click="showdetail"></products>
+    <div class="products" v-if="products">
+      <div class="product" v-for="(product, index) in sliders" :key="index">
+        <product :product="product" @buy="buy"  @click.native="showdetail(product)"></product>
+      </div>
+    </div>
     <tipsbar
       title="所有商品">
     </tipsbar>
     <div class="cards" v-for="(product, index) in products" :key="index">
       <card
-        @click="showdetail"
+        @click.native="showdetail(product)"
         @buy="buy"
         :product="product">
       </card>
@@ -24,7 +28,7 @@ import { Button } from 'vant';
 import { mapGetters } from 'vuex';
 import logo from '../../components/logo';
 import tipsbar from '../../components/tipsbar';
-import products from './products';
+import product from './product';
 import card from './card';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
@@ -37,7 +41,7 @@ export default {
     [Button.name]: Button,
     logo,
     tipsbar,
-    products,
+    product,
     card
   },
   beforeRouteEnter(to, from, next) {
@@ -54,6 +58,10 @@ export default {
   methods: {
     buy(paylod) {
       log.debug(paylod);
+    },
+    showdetail(product) {
+      log.info('page will change to good');
+      this.$router.push({name: 'good', params: {good: product}});
     }
   }
 };
@@ -63,6 +71,11 @@ export default {
 .menu
   background-color rgb(244, 244, 244)
   margin-bottom 50px
+  .products
+    display flex
+    flex-wrap wrap
+  .product
+    width 50%
   .cards
     .van-card__price
       color #f44
