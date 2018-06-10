@@ -18,9 +18,10 @@
     <van-goods-action>
       <van-goods-action-mini-btn icon="wap-home" text="首页" :to="{name: 'menu'}"></van-goods-action-mini-btn>
       <van-goods-action-mini-btn icon="cart" text="购物车" ></van-goods-action-mini-btn>
-      <van-goods-action-big-btn text="加入购物车" ></van-goods-action-big-btn>
+      <van-goods-action-big-btn text="加入购物车" @click="add2cart"></van-goods-action-big-btn>
       <van-goods-action-big-btn text="立即购买" primary ></van-goods-action-big-btn>
     </van-goods-action>
+    <sku ref="sku" :good="good"></sku>
   </div>
 </template>
 
@@ -29,6 +30,7 @@ import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Swipe, SwipeItem, N
 import { getImageUrl, isObjEmpty } from '../../common/js/util.js';
 import split from '../../components/split';
 import block from '../../components/block';
+import sku from '../../components/sku';
 import banner from './banner';
 import Logger from 'chivy';
 const log = new Logger('page/menu/good');
@@ -65,7 +67,8 @@ export default {
     [NavBar.name]: NavBar,
     banner,
     split,
-    block
+    block,
+    sku
   },
   props: {
     good1: {
@@ -91,6 +94,9 @@ export default {
     },
     back() {
       this.$router.push({name: 'menu'});
+    },
+    add2cart() {
+      this.$refs.sku.show(true);
     }
   }
 };
