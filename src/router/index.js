@@ -30,6 +30,12 @@ export default new Router({
           component: () => import('../pages/member/member.vue').then(m => m.default)
         }
       ]
+    },
+    {
+      name: 'good',
+      path: '/good',
+      component: () => import('../pages/menu/detail.vue').then(m => m.default),
+      props: true
     }
   ]
 });

@@ -5,7 +5,7 @@
     <div class="price">
       <span class="normal">${{product.price}}</span>
       <span class="member" v-if="product.price !== product.memberPrice">${{product.memberPrice}}</span>
-      <van-button class="button" size="mini" type="primary" @click="buy">购买</van-button>
+      <van-button class="button" size="mini" type="default" @click="buy">购买</van-button>
     </div>
   </div>
 </template>
@@ -40,29 +40,31 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../../common/stylus/mixin.styl'
 .card
-  margin 5px 0
+  background-color rgb(255, 255, 255)
   width 100%
+  :not(:first-child)
+    margin 5px
   img
     padding 5px
     width 95%
     height auto
   .title
     padding 0 0 0 10px
+    font-size 16px
   .price
     display flex
     margin-top 5px
-    padding 0 0 0 10px
+    padding 5px 0 5px 10px
+    .member, .normal,.button
+      price-color()
+      font-size 16px
+    .member, .normal
+      line-height 32px
     .member
       padding-left 3px
-      font-size 18px
-      line-height 18px
-    .normal
-      color red
-      font-size 18px
-      line-height 18px
     .button
-      font-size 18px
       margin-left auto
       margin-right 10px
 </style>
