@@ -3,11 +3,19 @@
     <van-cell-swipe :right-width="65">
       <van-cell-group>
         <van-cell>
-          <template class="title" slot="title">
-            <van-checkbox v-model="checked"></van-checkbox>
-            <img :src="good.imageUrl" style="height:50px;width: 50px">
+          <template slot="title">
+            <div class="title">
+              <van-checkbox class="checkbox" v-model="checked"></van-checkbox>
+              <img :src="good.imageUrl" style="height:90px;width: 90px">
+              <div class="product">
+                <div class="name">{{good.name}}</div>
+                <div class="price-number">
+                  <span class="price">￥{{good.price}}</span>
+                  <span class="number">x{{good.count}}</span>
+                </div>
+              </div>
+            </div>
           </template>
-          <van-icon slot="right-icon" name="search" class="van-cell__right-icon" />
         </van-cell>
       </van-cell-group>
       <span slot="right">删除</span>
@@ -39,7 +47,8 @@ export default {
         name: '动物饼干',
         objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
         price: 88,
-        slider: true
+        slider: true,
+        count: 1
       }
     };
   },
@@ -61,15 +70,41 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.van-cell-swipe
-  .van-cell-swipe__right,.van-cell-swipe__left
-    span
-      color: #FFFFFF;
-      font-size: 15px;
-      width: 65px;
-      height: 44px;
-      display: inline-block;
-      text-align: center;
-      line-height: 44px;
-      background-color: #F44;
+.order
+  margin 5px 0
+  .van-cell-swipe
+    .van-cell-swipe__right
+      span
+        color: #FFFFFF;
+        font-size: 15px;
+        width: 65px;
+        height: 100px;
+        display: inline-block;
+        text-align: center;
+        line-height: 100px;
+        background-color: #F44;
+    .title
+      display flex
+      height 100px
+      align-items center
+      .checkbox
+        padding 10px
+      .product
+        flex-grow 1
+        height 100px
+        display flex
+        flex-direction column
+        .name
+          font-size 18px
+          font-weight 900
+          margin-left 10px
+          margin-top 5px
+        .price-number
+          margin-left 10px
+          margin-bottom 5px
+          margin-top auto
+          display flex
+          .number
+            margin-left auto
+            margin-right 10px
 </style>
