@@ -1,5 +1,5 @@
 <template>
-  <div class="block">
+  <div class="block" :style="{height: height + 'px'}">
     {{title}}
   </div>
 </template>
@@ -9,6 +9,10 @@ export default {
   props: {
     title: {
       type: String
+    },
+    height: {
+      type: Number,
+      default: 40
     }
   }
 };
@@ -17,7 +21,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .block
   background-color rgb(243, 245, 247)
-  height 40px
   width 100%
   font-size 20px
   padding 10px
