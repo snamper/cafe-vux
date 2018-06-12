@@ -39,6 +39,18 @@ export default new Router({
       path: '/good',
       component: () => import('../pages/menu/good.vue').then(m => m.default),
       props: true
+    },
+    {
+      name: 'card',
+      path: '/card',
+      component: () => import('../pages/member/card.vue').then(m => m.default),
+      props: true
+    },
+    {
+      name: 'info',
+      path: '/info',
+      component: () => import('../pages/member/info.vue').then(m => m.default),
+      props: true
     }
   ]
 });

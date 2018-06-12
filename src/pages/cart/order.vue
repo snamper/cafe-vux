@@ -24,11 +24,10 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { RadioGroup, Radio, Checkbox, Icon, Cell, CellGroup, CellSwipe } from 'vant';
+import { Checkbox, Icon, Cell, CellGroup, CellSwipe } from 'vant';
 export default {
   data() {
     return {
-      radio: 1,
       checked: false,
       good: {
         canBook: true,
@@ -62,9 +61,7 @@ export default {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
     [CellSwipe.name]: CellSwipe,
-    [Checkbox.name]: Checkbox,
-    [RadioGroup.name]: RadioGroup,
-    [Radio.name]: Radio
+    [Checkbox.name]: Checkbox
   }
 };
 </script>
@@ -72,6 +69,8 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .order
   margin 5px 0
+  .van-cell
+    padding 5px
   .van-cell-swipe
     .van-cell-swipe__right
       span
@@ -88,7 +87,7 @@ export default {
       height 100px
       align-items center
       .checkbox
-        padding 10px
+        padding 20px
       .product
         flex-grow 1
         height 100px

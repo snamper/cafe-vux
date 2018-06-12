@@ -11,7 +11,7 @@
       <van-submit-bar
         button-text="删除"
         @submit="onSubmit">
-        <van-checkbox v-model="checked">全选</van-checkbox>
+        <van-checkbox class="checkbox" v-model="checked">全选</van-checkbox>
       </van-submit-bar>
     </div>
   </div>
@@ -43,16 +43,20 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .banner
   background-color rgb(244, 244, 244)
-  padding 10px
+  height 40px
   display flex
   .title
-    display inline
+    display inline-flex
+    align-items center
+    padding 10px 10px 10px 25px
   span
     font-size 16px
-    line-height 20px
+    line-height 40px
     margin-left auto
-    mragin-right 5px
+    margin-right 10px
 .submit
   .van-submit-bar
     bottom 50px
+  .checkbox
+    padding 15px 15px 15px 25px
 </style>
