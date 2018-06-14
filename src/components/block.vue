@@ -22,8 +22,9 @@ export default {
 .block
   background-color rgb(243, 245, 247)
   width 100%
-  font-size 20px
+  font-size 14px
   padding 10px
   display flex
   align-items center
+  justify-content center
 </style>

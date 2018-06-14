@@ -15,12 +15,11 @@
         <order></order>
       </div>
       <van-cell-group>
-        <van-cell title="配送方式" value="自提" is-link @click="select"/>
+        <van-cell title="配送方式" :value="delivertype" is-link @click="select"/>
         <van-field
-          v-model="birthday"
+          v-model="comment"
           label="留言"
-          placeholder="点击给商家留言"
-          @focus="selectbirthday">
+          placeholder="点击给商家留言">
         </van-field>
         <van-cell title="合计" value="￥420.00"/>
       </van-cell-group>
@@ -32,22 +31,34 @@
         @submit="onSubmit">
       </van-submit-bar>
     </div>
+    <van-actionsheet v-model="action">
+      <van-picker
+        show-toolbar
+        :columns="columns"
+        @confirm="confirm"
+        @cancel="cancel">
+      </van-picker>
+    </van-actionsheet>
   </div>
 </template>
 
 <script type="text/ecmascript=6">
-import { ContactCard, ContactList, ContactEdit, NavBar, Cell, CellGroup, Field, SubmitBar } from 'vant';
+import { ContactCard, ContactList, ContactEdit, NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
 import order from './order';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/pay');
 export default {
   data() {
     return {
+      delivertype: '自提',
+      action: false,
+      comment: '',
       currentContact: {
         name: '张三',
         tel: '13000000000',
       },
-      cardType: 'add'
+      cardType: 'add',
+      columns: ['自提','快递']
     };
   },
   components: {
@@ -59,14 +70,28 @@ export default {
     [CellGroup.name]: CellGroup,
     [Field.name]: Field,
     [SubmitBar.name]: SubmitBar,
+    [Actionsheet.name]: Actionsheet,
+    [Picker.name]: Picker,
     order
   },
   methods: {
     back() {
 
     },
+    onSubmit() {
+
+    },
     select() {
+      this.action = true;
       log.debug('select type 自提和快递');
+    },
+    confirm(value) {
+      log.debug(JSON.stringify(value));
+      this.delivertype = value;
+      this.action = false;
+    },
+    cancel() {
+      this.action = false;
     }
   }
 };
