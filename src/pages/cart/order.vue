@@ -1,11 +1,11 @@
 <template>
   <div class="order">
-    <van-cell-swipe :right-width="65">
+    <van-cell-swipe :right-width="rightwidth">
       <van-cell-group>
         <van-cell>
           <template slot="title">
             <div class="title">
-              <van-checkbox class="checkbox" v-model="checked"></van-checkbox>
+              <van-checkbox class="checkbox" v-model="checked" v-if="type"></van-checkbox>
               <img :src="good.imageUrl" style="height:90px;width: 90px">
               <div class="product">
                 <div class="name">{{good.name}}</div>
@@ -48,7 +48,8 @@ export default {
         price: 88,
         slider: true,
         count: 1
-      }
+      },
+      type: false
     };
   },
   props: {
@@ -62,6 +63,15 @@ export default {
     [CellGroup.name]: CellGroup,
     [CellSwipe.name]: CellSwipe,
     [Checkbox.name]: Checkbox
+  },
+  computed: {
+    rightwidth() {
+      if (this.type) {
+        return 65;
+      } else {
+        return 0;
+      }
+    }
   }
 };
 </script>

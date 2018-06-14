@@ -51,6 +51,24 @@ export default new Router({
       path: '/info',
       component: () => import('../pages/member/info.vue').then(m => m.default),
       props: true
+    },
+    {
+      name: 'pay',
+      path: '/pay',
+      component: () => import('../pages/cart/pay.vue').then(m => m.default),
+      props: true
+    },
+    {
+      name: 'address',
+      path: '/address',
+      component: () => import('../pages/member/address.vue').then(m => m.default),
+      props: true
+    },
+    {
+      name: 'addressedit',
+      path: '/addressedit',
+      component: () => import('../pages/member/addressedit.vue').then(m => m.default),
+      props: true
     }
   ]
 });
