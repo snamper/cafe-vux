@@ -69,6 +69,12 @@ export default new Router({
       path: '/addressedit',
       component: () => import('../pages/member/addressedit.vue').then(m => m.default),
       props: true
+    },
+    {
+      name: 'order',
+      path: '/order',
+      component: () => import('../pages/order/order.vue').then(m => m.default),
+      props: true
     }
   ]
 });

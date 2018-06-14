@@ -7,7 +7,7 @@
       </div>
     </div>
     <van-cell-group>
-      <van-cell title="我的订单" is-link value="查看全部订单"></van-cell>
+      <van-cell title="我的订单" is-link value="查看全部订单" :to="{name: 'order'}"></van-cell>
     </van-cell-group>
     <van-row gutter="20">
       <van-col span="6">
