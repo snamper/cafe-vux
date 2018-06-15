@@ -34,26 +34,29 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import '../common/stylus/mixin.styl'
 .desc
+  width 95%
   .title,.info
+    display flex
     width 100%
+    justify-content space-between
   .title
-    font-size 20px
-    padding-left 10px
-    margin 10px 0
+    font-size 16px
+    padding 5px
   .info
     display flex
     justify-content space-between
-    padding 5px
-    margin 5px 0
     .price
-      padding-left 10px
+      padding-left 5px
+      line-height 32px
       .normal,.member
         price-color()
-        font-size 18px
+        font-size 14px
       .member
-        margin-left 5px 
-        font-size 18px
+        padding-left 5px
+        font-size 12px
     .operation
       margin-left auto
-      margin-right 20px
+      margin-right 5px
+      display flex
+      align-items center
 </style>
