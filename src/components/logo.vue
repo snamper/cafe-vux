@@ -12,7 +12,7 @@ const log = new Logger('components/logo');
 export default {
   data() {
     return {
-      ratio: '',
+      ratio: 2,
       image1x: '../../static/img/logo@1X.jpg',
       image2x: '../../static/img/logo@2X.jpg',
       image3x: '../../static/img/logo@3X.jpg'

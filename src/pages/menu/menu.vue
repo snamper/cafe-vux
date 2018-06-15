@@ -1,18 +1,21 @@
 <template>
   <div class="menu">
     <logo></logo>
-    <tipsbar
+    <description name="test" :price="10" :memberPrice="8">
+      <span>test</span>
+    </description>
+    <banner
       title="商品列表"
       subtitle="蛋糕手工打造">
-    </tipsbar>
+    </banner>
     <div class="products" v-if="products">
       <div class="product" v-for="(product, index) in sliders" :key="index">
         <product :product="product" @buy="buy"  @click.native="showdetail(product)"></product>
       </div>
     </div>
-    <tipsbar
+    <banner
       title="所有商品">
-    </tipsbar>
+    </banner>
     <div class="cards" v-for="(product, index) in products" :key="index">
       <card
         @click.native="showdetail(product)"
@@ -27,9 +30,10 @@
 import { Button } from 'vant';
 import { mapGetters } from 'vuex';
 import logo from '../../components/logo';
-import tipsbar from '../../components/tipsbar';
+import banner from '../../components/banner';
 import product from './product';
 import card from './card';
+import description from './description';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
 export default {
@@ -40,9 +44,10 @@ export default {
   components: {
     [Button.name]: Button,
     logo,
-    tipsbar,
+    banner,
     product,
-    card
+    card,
+    description
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {

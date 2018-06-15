@@ -8,7 +8,6 @@
       <span class="wrapper">
         会员价:<span class="member">￥{{banner.memberPrice}}</span>
       </span>
-
     </div>
   </div>
 </template>

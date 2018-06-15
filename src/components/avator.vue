@@ -3,18 +3,22 @@
     <img
       :src="url"
       :style="{
-        width: width + 'px',
-        height: height + 'px',
+        width: wide,
+        height: high,
         borderRadius: radius + '%'
       }">
   </div>
 </template>
 
 <script type="text/ecmascript=6">
+import { isObjEmpty } from '../common/js/util';
 export default {
   props: {
     url: {
       type: String
+    },
+    size: {
+      type: Number
     },
     width: {
       type: Number,
@@ -27,6 +31,22 @@ export default {
     radius: {
       type: Number,
       default: 0
+    }
+  },
+  computed: {
+    wide() {
+      if(isObjEmpty(this.size)) {
+        return this.size + 'px';
+      } else {
+        return this.width + 'px';
+      }
+    },
+    high() {
+      if(isObjEmpty(this.size)) {
+        return this.size + 'px';
+      } else {
+        return this.height + 'px';
+      }
     }
   }
 };

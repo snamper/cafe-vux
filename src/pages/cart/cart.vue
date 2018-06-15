@@ -1,9 +1,9 @@
 <template>
   <div>
-    <!-- <div class="banner">
+    <div class="banner">
       <van-checkbox class="title" v-model="checked">树影啡香</van-checkbox>
       <span @click="showdelete">{{editTitle}}</span>
-    </div> -->
+    </div>
     <div class="order" v-for="(product, index) in 10" :key="index">
       <order></order>
     </div>
