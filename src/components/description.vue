@@ -6,7 +6,7 @@
         <span class="normal">￥{{price}}</span>
         <span class="member" v-if="memberPrice !== price">会员价:￥{{memberPrice}}</span>
       </span>
-      <span class="opera">
+      <span class="operation">
         <slot></slot>
       </span>
     </div>
@@ -32,7 +32,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import '../../common/stylus/mixin.styl'
+@import '../common/stylus/mixin.styl'
 .desc
   .title,.info
     width 100%
@@ -53,7 +53,7 @@
       .member
         margin-left 5px 
         font-size 18px
-    .opera
+    .operation
       margin-left auto
       margin-right 20px
 </style>

@@ -1,9 +1,6 @@
 <template>
   <div class="menu">
     <logo></logo>
-    <description name="test" :price="10" :memberPrice="8">
-      <span>test</span>
-    </description>
     <banner
       title="商品列表"
       subtitle="蛋糕手工打造">
@@ -33,7 +30,7 @@ import logo from '../../components/logo';
 import banner from '../../components/banner';
 import product from './product';
 import card from './card';
-import description from './description';
+import description from '../../components/description';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
 export default {

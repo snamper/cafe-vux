@@ -12,7 +12,7 @@
         </van-swipe-item>
       </van-swipe>
       <banner :banner="good"></banner>
-      <block title="商品详情"></block>
+      <banner title="商品详情"></banner>
       <div class="desc">{{good.description}}</div>
     </div>
     <van-goods-action>
@@ -29,7 +29,6 @@
 import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Swipe, SwipeItem, NavBar } from 'vant';
 import { getImageUrl, isObjEmpty } from '../../common/js/util.js';
 import split from '../../components/split';
-import block from '../../components/block';
 import sku from '../../components/sku';
 import banner from './banner';
 import Logger from 'chivy';
@@ -67,7 +66,6 @@ export default {
     [NavBar.name]: NavBar,
     banner,
     split,
-    block,
     sku
   },
   props: {
