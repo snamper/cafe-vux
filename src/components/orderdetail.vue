@@ -7,11 +7,6 @@
       :memberPrice="product.memberPrice">
       <van-button class="button" size="mini" type="default" @click="buy">购买</van-button>
     </nameprice>
-    <!-- <div class="price">
-      <span class="normal">${{product.price}}</span>
-      <span class="member" v-if="product.price !== product.memberPrice">${{product.memberPrice}}</span>
-      <van-button class="button" size="mini" type="default" @click="buy">购买</van-button>
-    </div> -->
   </div>
 </template>
 

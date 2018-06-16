@@ -5,13 +5,17 @@
         <van-cell>
           <template slot="title">
             <div class="title">
-              <van-checkbox class="checkbox" v-model="checked" v-if="show"></van-checkbox>
-              <img :src="good.imageUrl" style="height:90px;width: 90px">
+              <van-checkbox class="checkbox" v-model="checked" v-if="showcheckbox"></van-checkbox>
+              <img :src="good.imageUrl" style="height:100px;width: 100px">
               <div class="product">
                 <div class="name">{{good.name}}</div>
                 <div class="price-number">
                   <span class="price">￥{{good.price}}</span>
-                  <span class="number">x{{good.count}}</span>
+                  <span class="slot">
+                    <slot name="right-bottom">
+                      <span class="number">x{{good.count}}</span>
+                    </slot>
+                  </span>
                 </div>
               </div>
             </div>
@@ -48,9 +52,14 @@ export default {
         price: 88,
         slider: true,
         count: 1
-      },
-      show: false
+      }
     };
+  },
+  props: {
+    showcheckbox: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     [Icon.name]: Icon,
@@ -58,13 +67,28 @@ export default {
     [CellGroup.name]: CellGroup,
     [CellSwipe.name]: CellSwipe,
     [Checkbox.name]: Checkbox
+  },
+  computed: {
+    rightwidth() {
+      if (this.showcheckbox) {
+        return 65;
+      } else {
+        return 0;
+      }
+    }
+  },
+  methods: {
+    Onchecked() {
+      this.checked = !this.checked;
+    }
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../common/stylus/mixin.styl'
 .product-banner
-  margin 5px 0
+  margin 10px
   .van-cell
     padding 5px
   .van-cell-swipe
@@ -73,7 +97,7 @@ export default {
         color: #FFFFFF;
         font-size: 15px;
         width: 65px;
-        height: 100px;
+        height: 120px;
         display: inline-block;
         text-align: center;
         line-height: 100px;
@@ -83,7 +107,7 @@ export default {
       height 100px
       align-items center
       .checkbox
-        padding 20px
+        padding 40px 10px
       .product
         flex-grow 1
         height 100px
@@ -92,14 +116,13 @@ export default {
         .name
           font-size 18px
           font-weight 900
-          margin-left 10px
-          margin-top 5px
+          padding 10px
         .price-number
-          margin-left 10px
-          margin-bottom 5px
-          margin-top auto
+          margin auto 0px 5px 10px
           display flex
-          .number
+          font-size 18px
+          price-color()
+          .slot
             margin-left auto
             margin-right 10px
 </style>

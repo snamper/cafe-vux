@@ -47,6 +47,7 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .active
+  background-color rgb(244, 244, 244)
   .products
     display flex
     flex-wrap wrap

@@ -11,8 +11,7 @@
           <img :src="image.url" />
         </van-swipe-item>
       </van-swipe>
-      <banner :banner="good"></banner>
-      <banner title="商品详情"></banner>
+      <nameprice class="nameprice" :name="good.name" :price="good.price" :memberPrice="good.memberPrice"></nameprice>
       <div class="desc">{{good.description}}</div>
     </div>
     <van-goods-action>
@@ -28,9 +27,8 @@
 <script type="text/ecmascript=6">
 import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Swipe, SwipeItem, NavBar } from 'vant';
 import { getImageUrl, isObjEmpty } from '../../common/js/util.js';
-import split from '../../components/split';
+import nameprice from '../../components/nameprice';
 import sku from '../../components/sku';
-import banner from './banner';
 import Logger from 'chivy';
 const log = new Logger('page/menu/good');
 export default {
@@ -49,7 +47,7 @@ export default {
         id: 268,
         imageSliderUrl: '/upload/dongwubinggan-1521645338239.jpg',
         imageUrl: '/upload/dongwubinggan-1521645338239.jpg',
-        memberPrice: 88,
+        memberPrice: 87,
         name: '动物饼干',
         objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
         price: 88,
@@ -64,9 +62,8 @@ export default {
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem,
     [NavBar.name]: NavBar,
-    banner,
-    split,
-    sku
+    sku,
+    nameprice
   },
   props: {
     good1: {

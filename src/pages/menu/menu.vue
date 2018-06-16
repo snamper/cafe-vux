@@ -5,12 +5,11 @@
       title="所有商品">
     </banner>
     <div class="cards" v-for="(product, index) in products" :key="index">
-      <!-- <card
-        @click.native="showdetail(product)"
-        @buy="buy"
-        :product="product">
-      </card> -->
-      <product></product>
+      <product :showcheckbox="false">
+        <template slot="right-bottom">
+          <van-button class="button" type="default" size="mini" @click="buy">购买</van-button>
+        </template>
+      </product>
     </div>
   </div>
 </template>
@@ -21,7 +20,6 @@ import { mapGetters } from 'vuex';
 import logo from '../../components/logo';
 import banner from '../../components/banner';
 import product from '../../components/productbanner';
-import card from './card';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
 export default {
@@ -34,8 +32,7 @@ export default {
     [List.name]: List,
     logo,
     banner,
-    product,
-    card
+    product
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -61,15 +58,12 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../../common/stylus/mixin.styl'
 .menu
   background-color rgb(244, 244, 244)
   margin-bottom 50px
-  .products
-    display flex
-    flex-wrap wrap
-  .product
-    width 50%
   .cards
-    .van-card__price
-      color #f44
+    .button
+      font-size 18px
+      price-color()
 </style>
