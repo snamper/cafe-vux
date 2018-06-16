@@ -1,19 +1,26 @@
 <template>
   <div class="order">
+    <van-nav-bar
+      title="订单列表"
+      left-arrow
+      @click-left="back">
+    </van-nav-bar>
     <van-tabs v-model="active" :swipe-threshold="0" >
       <van-tab
         v-for="(title, index) in tabtitle"
         :key="index"
         :title="title">
-        <detail></detail>
+        <div class="test" v-for="(o, i) in 10" :key="i">
+          <order></order>
+        </div>
       </van-tab>
     </van-tabs>
   </div>
 </template>
 
 <script type="text/ecmascript=6">
-import { Tab, Tabs } from 'vant';
-import detail from  './detail';
+import { Tab, Tabs, NavBar } from 'vant';
+import order from  './oneorder';
 export default {
   data() {
     return {
@@ -24,13 +31,17 @@ export default {
   components: {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    detail
+    [NavBar.name]: NavBar,
+    order
+  },
+  methods: {
+    back() {
+
+    }
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.order
-  .van-tabs__wrap--scrollable,.van-tab
-    flex 0 0 20%
+
 </style>

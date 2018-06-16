@@ -5,11 +5,13 @@
       title="所有商品">
     </banner>
     <div class="cards" v-for="(product, index) in products" :key="index">
-      <product :showcheckbox="false">
-        <template slot="right-bottom">
-          <van-button class="button" type="default" size="mini" @click="buy">购买</van-button>
-        </template>
-      </product>
+      <div class="product">
+        <product :showcheckbox="false">
+          <template slot="right-bottom">
+            <van-button class="button" type="default" size="mini" @click="buy">购买</van-button>
+          </template>
+        </product>
+      </div>
     </div>
   </div>
 </template>
@@ -63,7 +65,9 @@ export default {
   background-color rgb(244, 244, 244)
   margin-bottom 50px
   .cards
-    .button
-      font-size 18px
-      price-color()
+    .product
+      margin 5px
+      .button
+        font-size 18px
+        price-color()
 </style>

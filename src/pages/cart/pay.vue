@@ -12,7 +12,7 @@
         :tel="currentContact.tel">
       </van-contact-card>
       <div class="orderlist" v-for="(o,i) in 3" :key="i">
-        <order></order>
+        <product showcheckbox></product>
       </div>
       <van-cell-group>
         <van-cell title="配送方式" :value="delivertype" is-link @click="select"/>
@@ -44,7 +44,7 @@
 
 <script type="text/ecmascript=6">
 import { ContactCard, ContactList, ContactEdit, NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
-import order from './order';
+import product from '../../components/productbanner';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/pay');
 export default {
@@ -72,7 +72,7 @@ export default {
     [SubmitBar.name]: SubmitBar,
     [Actionsheet.name]: Actionsheet,
     [Picker.name]: Picker,
-    order
+    product
   },
   methods: {
     back() {

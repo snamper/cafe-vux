@@ -73,7 +73,13 @@ export default new Router({
     {
       name: 'order',
       path: '/order',
-      component: () => import('../pages/order/order.vue').then(m => m.default),
+      component: () => import('../pages/order/orderlist.vue').then(m => m.default),
+      props: true
+    },
+    {
+      name: 'orderdetail',
+      path: '/orderdetail',
+      component: () => import('../pages/order/orderdetail.vue').then(m => m.default),
       props: true
     }
   ]

@@ -5,7 +5,7 @@
       <span @click="showdelete">{{editTitle}}</span>
     </div>
     <div class="order" v-for="(product, index) in 10" :key="index">
-      <order></order>
+      <product showcheckbox></product>
     </div>
     <div class="submit">
       <van-submit-bar
@@ -20,7 +20,7 @@
 
 <script type="text/ecmascript=6">
 import { Checkbox, CheckboxGroup, SubmitBar } from 'vant';
-import order from './order';
+import product from '../../components/productbanner';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/cart');
 export default {
@@ -34,7 +34,7 @@ export default {
     [Checkbox.name]: Checkbox,
     [CheckboxGroup.name]: CheckboxGroup,
     [SubmitBar.name]: SubmitBar,
-    order
+    product
   },
   computed: {
     submittitle() {

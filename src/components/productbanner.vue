@@ -88,7 +88,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import '../common/stylus/mixin.styl'
 .product-banner
-  margin 10px
+  padding 0px
   .van-cell
     padding 5px
   .van-cell-swipe
