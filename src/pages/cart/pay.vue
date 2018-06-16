@@ -6,11 +6,7 @@
       @click-left="back">
     </van-nav-bar>
     <div class="content">
-      <van-contact-card
-        :type="cardType"
-        :name="currentContact.name"
-        :tel="currentContact.tel">
-      </van-contact-card>
+      <addr :show="false" @addaddress="addaddress"></addr>
       <div class="orderlist" v-for="(o,i) in 3" :key="i">
         <product showcheckbox></product>
       </div>
@@ -43,8 +39,9 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { ContactCard, ContactList, ContactEdit, NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
+import { NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
 import product from '../../components/productbanner';
+import addr from '../../components/orderaddress';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/pay');
 export default {
@@ -62,9 +59,6 @@ export default {
     };
   },
   components: {
-    [ContactCard.name]: ContactCard,
-    [ContactList.name]: ContactList,
-    [ContactEdit.name]: ContactEdit,
     [NavBar.name]: NavBar,
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
@@ -72,11 +66,18 @@ export default {
     [SubmitBar.name]: SubmitBar,
     [Actionsheet.name]: Actionsheet,
     [Picker.name]: Picker,
-    product
+    product,
+    addr
   },
   methods: {
     back() {
 
+    },
+    addaddress() {
+      this.$router.push({name: 'address'});
+    },
+    addcontact() {
+      log.debug('add');
     },
     onSubmit() {
 

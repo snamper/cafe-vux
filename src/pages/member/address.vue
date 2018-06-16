@@ -49,6 +49,9 @@ export default {
     },
     onEdit() {
       this.$router.push({name: 'addressedit'});
+    },
+    back() {
+
     }
   }
 };

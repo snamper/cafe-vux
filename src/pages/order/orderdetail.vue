@@ -57,7 +57,7 @@
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, NavBar, Icon, ContactCard, Field } from 'vant';
 import product from '../../components/productbanner';
-import addr from './address';
+import addr from '../../components/orderaddress';
 export default {
   data() {
     return {
