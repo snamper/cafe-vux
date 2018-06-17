@@ -16,7 +16,7 @@
     </div>
     <van-goods-action>
       <van-goods-action-mini-btn icon="wap-home" text="首页" :to="{name: 'menu'}"></van-goods-action-mini-btn>
-      <van-goods-action-mini-btn icon="cart" text="购物车" ></van-goods-action-mini-btn>
+      <van-goods-action-mini-btn icon="cart" text="购物车" :to="{name: 'cart'}"></van-goods-action-mini-btn>
       <van-goods-action-big-btn text="加入购物车" @click="add2cart"></van-goods-action-big-btn>
       <van-goods-action-big-btn text="立即购买" primary @click="buyit" ></van-goods-action-big-btn>
     </van-goods-action>
@@ -34,25 +34,6 @@ const log = new Logger('page/menu/good');
 export default {
   data() {
     return {
-      good: {
-        canBook: true,
-        classifyId: 69,
-        code: 'd519d09e-3bbd-4e5e-b044-715b02e75805',
-        creatPeriod: '',
-        createTime: 1521645341000,
-        createTimeAsString: '2018-03-21 23:15:41',
-        creatorId: -1,
-        defaultEntity: false,
-        description: '是肯定分离焦虑斯柯达据了解是开机地方了撒娇的就sad拉开就打算冷风机老大说封口胶辽阔的书法家辽阔的设计费辽阔的设计费鲁大师就发流口水当减肥离开的时间流口水当减肥李松快当减肥流口水当减肥离开的时间发连接的斯洛伐克就电视了开发借了时代峻峰了开机但是飞',
-        id: 268,
-        imageSliderUrl: '/upload/dongwubinggan-1521645338239.jpg',
-        imageUrl: '/upload/dongwubinggan-1521645338239.jpg',
-        memberPrice: 87,
-        name: '动物饼干',
-        objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
-        price: 88,
-        slider: true
-      }
     }
   },
   components: {
@@ -66,7 +47,7 @@ export default {
     nameprice
   },
   props: {
-    good1: {
+    good: {
       type: Object
     }
   },
@@ -88,13 +69,13 @@ export default {
       return result;
     },
     back() {
-      this.$router.push({name: 'menu'});
+      // this.$router.push({name: 'menu'});
     },
     add2cart() {
-      this.$refs.sku.showit(true, this.good);
+      this.$refs.sku.showit(this.good);
     },
     buyit() {
-      this.$refs.sku.shownext(true, this.good);
+      this.$refs.sku.shownext(this.good);
     }
   }
 };

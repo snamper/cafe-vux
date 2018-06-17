@@ -1,19 +1,21 @@
 <template>
   <div>
-    <div class="banner">
-      <van-checkbox class="title" v-model="checked">树影啡香</van-checkbox>
-      <span @click="showdelete">{{editTitle}}</span>
-    </div>
-    <div class="order" v-for="(product, index) in 10" :key="index">
-      <product showcheckbox></product>
-    </div>
-    <div class="submit">
-      <van-submit-bar
-        :button-text="submittitle"
-        :price="3050"
-        @submit="onSubmit">
-        <van-checkbox class="checkbox" v-model="checked">全选</van-checkbox>
-      </van-submit-bar>
+    <div v-if="show">
+      <div class="banner">
+        <van-checkbox class="title" v-model="checked">树影啡香</van-checkbox>
+        <span @click="showdelete">{{editTitle}}</span>
+      </div>
+      <div class="order" v-for="(product, index) in 10" :key="index">
+        <product showcheckbox></product>
+      </div>
+      <div class="submit">
+        <van-submit-bar
+          :button-text="submittitle"
+          :price="3050"
+          @submit="onSubmit">
+          <van-checkbox class="checkbox" v-model="checked">全选</van-checkbox>
+        </van-submit-bar>
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +28,7 @@ const log = new Logger('pages/cart/cart');
 export default {
   data() {
     return {
+      show: false,
       edit: false,
       checked: 1
     }

@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       checked: false,
-      good: {
+      good1: {
         canBook: true,
         classifyId: 69,
         code: 'd519d09e-3bbd-4e5e-b044-715b02e75805',
@@ -59,6 +59,9 @@ export default {
     showcheckbox: {
       type: Boolean,
       default: false
+    },
+    good: {
+      type: Object
     }
   },
   components: {

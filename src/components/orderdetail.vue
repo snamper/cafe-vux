@@ -23,29 +23,10 @@ export default {
   },
   data() {
     return {
-      product: {
-        canBook: true,
-        classifyId: 69,
-        code: 'd519d09e-3bbd-4e5e-b044-715b02e75805',
-        creatPeriod: '',
-        createTime: 1521645341000,
-        createTimeAsString: '2018-03-21 23:15:41',
-        creatorId: -1,
-        defaultEntity: false,
-        description: '是肯定分离焦虑斯柯达据了解是开机地方了撒娇的就sad拉开就打算冷风机老大说封口胶辽阔的书法家辽阔的设计费辽阔的设计费鲁大师就发流口水当减肥离开的时间流口水当减肥李松快当减肥流口水当减肥离开的时间发连接的斯洛伐克就电视了开发借了时代峻峰了开机但是飞',
-        id: 268,
-        imageSliderUrl: '/upload/dongwubinggan-1521645338239.jpg',
-        imageUrl: '/upload/dongwubinggan-1521645338239.jpg',
-        memberPrice: 88,
-        name: '动物饼干',
-        objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
-        price: 88,
-        slider: true
-      }
     }
   },
   props: {
-    product1: {
+    product: {
       type: Object
     }
   },
