@@ -11,12 +11,17 @@
       :close-on-click-overlay="true"
       @buy-clicked="onBuyClicked"
       @add-cart="onAddCartClicked">
+      <template v-if="next" slot="sku-actions" slot-scope="props">
+        <div class="van-sku-actions">
+          <van-button bottom-action @click="nextstep">下一步</van-button>
+        </div>
+      </template>
     </van-sku>
   </div>
 </template>
 
 <script type="text/ecmascript=6">
-import { Sku, Button } from 'vant';
+import { Sku, Button, Toast } from 'vant';
 import { getImageUrl } from '../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('components/sku');
@@ -24,6 +29,7 @@ export default {
   data() {
     return {
       show: false,
+      next: false,
       sku: {
         tree: [
           {
@@ -68,7 +74,8 @@ export default {
   },
   components: {
     [Sku.name]: Sku,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [Toast.name]: Toast
   },
 /*   props: {
     good: {
@@ -84,9 +91,12 @@ export default {
   methods: {
     onBuyClicked(data) {
       log.debug('onBuyClicked' + JSON.stringify(data));
+      this.$router.push({name: 'pay'});
     },
     onAddCartClicked(data) {
       log.debug('onAddCartClicked' + JSON.stringify(data));
+      this.show = false;
+      Toast('添加购物车成功~');
     },
     onPointClicked() {
       log.debug('积分兑换');
@@ -95,7 +105,16 @@ export default {
       log.debug('show sku is ' + flag);
       this.good = good;
       this.show = flag;
-
+    },
+    shownext(flag, good) {
+      log.debug('show next is ' + flag);
+      this.good = good;
+      this.show = flag;
+      this.next = true;
+    },
+    nextstep() {
+      log.debug('next');
+      this.$router.push({name: 'pay'});
     },
     __sku(good) {
       log.debug('__sku good is ' + JSON.stringify(good));

@@ -36,7 +36,7 @@
       </van-col>
     </van-row>
     <van-cell-group>
-      <van-cell title="购物车" value="4"></van-cell>
+      <van-cell title="购物车" value="4" :to="{name: 'cart'}"></van-cell>
     </van-cell-group>
     <van-cell-group>
       <van-cell title="我的会员卡" is-link :to="{name: 'card'}"></van-cell>

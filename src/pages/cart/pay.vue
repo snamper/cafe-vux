@@ -19,6 +19,17 @@
         </van-field>
         <van-cell title="合计" value="￥420.00"/>
       </van-cell-group>
+      <split></split>
+      <van-cell-group>
+        <van-cell>
+          <template slot="title">
+            <div>商品金额</div>
+            <div>运费</div>
+          </template>
+          <div>￥420.00</div>
+          <div>+ ￥25.00</div>
+        </van-cell>
+      </van-cell-group>
     </div>
     <div class="submit">
       <van-submit-bar
@@ -42,6 +53,7 @@
 import { NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
 import product from '../../components/productbanner';
 import addr from '../../components/orderaddress';
+import split from '../../components/split';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/pay');
 export default {
@@ -67,7 +79,8 @@ export default {
     [Actionsheet.name]: Actionsheet,
     [Picker.name]: Picker,
     product,
-    addr
+    addr,
+    split
   },
   methods: {
     back() {
