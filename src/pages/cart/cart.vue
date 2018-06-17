@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="show">
+  <div class="cart">
+    <div class="cart" v-if="show">
       <div class="banner">
         <van-checkbox class="title" v-model="checked">树影啡香</van-checkbox>
         <span @click="showdelete">{{editTitle}}</span>
@@ -17,11 +17,20 @@
         </van-submit-bar>
       </div>
     </div>
+    <div v-else class="nocart">
+      <div class="text">
+        <div class="title">购物车快饿瘪了~~</div>
+        <div class="subtitle">请购买商品</div>
+        <div class="search">
+          <van-button type="default" size="small" @click="showmain">去逛逛</van-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript=6">
-import { Checkbox, CheckboxGroup, SubmitBar } from 'vant';
+import { Checkbox, CheckboxGroup, SubmitBar, Button } from 'vant';
 import product from '../../components/productbanner';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/cart');
@@ -37,6 +46,7 @@ export default {
     [Checkbox.name]: Checkbox,
     [CheckboxGroup.name]: CheckboxGroup,
     [SubmitBar.name]: SubmitBar,
+    [Button.name]: Button,
     product
   },
   computed: {
@@ -67,28 +77,58 @@ export default {
         log.info('pay');
         this.$router.push({name: 'pay'});
       }
+    },
+    showmain() {
+      this.$router.push({name: 'menu'});
     }
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.banner
-  background-color rgb(244, 244, 244)
-  height 40px
-  display flex
-  .title
-    display inline-flex
-    align-items center
-    padding 10px 10px 10px 25px
-  span
-    font-size 16px
-    line-height 40px
-    margin-left auto
-    margin-right 10px
-.submit
-  .van-submit-bar
-    bottom 50px
-  .checkbox
-    padding 15px 15px 15px 25px
+@import '../../common/stylus/mixin.styl';
+.cart
+  height 100%
+  width 100%
+  .cart
+    .banner
+      background-color rgb(244, 244, 244)
+      height 40px
+      display flex
+      .title
+        display inline-flex
+        align-items center
+        padding 10px 10px 10px 25px
+      span
+        font-size 16px
+        line-height 40px
+        margin-left auto
+        margin-right 10px
+    .submit
+      .van-submit-bar
+        bottom 50px
+      .checkbox
+        padding 15px 15px 15px 25px
+  .nocart
+    .text
+      width 100%
+      height 100%
+      padding 50% 0px
+      .title
+        font-size 20px
+        text-align center
+        padding 10px 0px
+      .subtitle
+        font-size 16px
+        text-align center
+        padding 5px 0px
+        gray-color()
+      .search
+        margin 15px 0px
+        display flex
+        justify-content center
+        align-items center
+        .van-button
+          border 1px solid rgb(255, 97, 25)
+          price-color()
 </style>
