@@ -1,10 +1,11 @@
 <template>
   <div>
     <van-sku v-if="sku"
-      v-model="showBase"
+      v-model="show"
       :sku="sku"
       :goods="sku.goods"
       :goods-id="sku.goods_id"
+      :hide-stock="sku.hide_stock"
       reset-stepper-on-hide
       reset-selected-sku-on-hide
       :close-on-click-overlay="true"
@@ -22,7 +23,7 @@ const log = new Logger('components/sku');
 export default {
   data() {
     return {
-      showBase: false,
+      show: false,
       sku: {
         tree: [
           {
@@ -43,7 +44,7 @@ export default {
             price: 100, // 价格（单位分）
             code: '',
             s1: '946755',  // 规格类目 k_s 为 s1 的对应规格值 id
-            stock_num: 10, // 当前 sku 组合对应的库存
+            stock_num: 100, // 当前 sku 组合对应的库存
             goods_id: 946755
           }
         ],
@@ -58,20 +59,22 @@ export default {
         collection_id: 946755,
         goods_id: 946755,
         price: '1.00', // 默认价格（单位元）
-        stock_num: 227, // 商品总库存
-        none_sku: false // 是否无规格商品
-      }
+        stock_num: 1000, // 商品总库存
+        none_sku: false, // 是否无规格商品,
+        hide_stock: true // 是否隐藏剩余库存
+      },
+      good: null
     };
   },
   components: {
     [Sku.name]: Sku,
     [Button.name]: Button
   },
-  props: {
+/*   props: {
     good: {
       type: Object
     }
-  },
+  }, */
   computed: {
     sku1() {
       log.debug('sku');
@@ -82,17 +85,17 @@ export default {
     onBuyClicked(data) {
       log.debug('onBuyClicked' + JSON.stringify(data));
     },
-
     onAddCartClicked(data) {
       log.debug('onAddCartClicked' + JSON.stringify(data));
     },
-
     onPointClicked() {
       log.debug('积分兑换');
     },
-    show(flag) {
+    showit(flag, good) {
       log.debug('show sku is ' + flag);
-      this.showBase = flag;
+      this.good = good;
+      this.show = flag;
+
     },
     __sku(good) {
       log.debug('__sku good is ' + JSON.stringify(good));

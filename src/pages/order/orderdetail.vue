@@ -6,18 +6,16 @@
       @click-left="back">
     </van-nav-bar>
     <div class="content">
-      <van-cell-group class="van-hairline--bottom">
-        <van-cell>
-          <template slot="title">
-            <span class="status">交易完成</span>
-          </template>
-          <template slot="icon">
-            <div class="icon">
-              <van-icon name="completed" />
-            </div>
-          </template>
-        </van-cell>
-      </van-cell-group>
+      <van-steps
+        :active="active"
+        icon="logistics"
+        title="交易关闭"
+        description="买家取消">
+        <van-step>买家下单</van-step>
+        <van-step>商家接单</van-step>
+        <van-step>买家提货</van-step>
+        <van-step>交易完成</van-step>
+      </van-steps>
       <addr></addr>
       <div class="products" v-for="(product, index) in 2" :key="index">
         <product></product>
@@ -55,12 +53,13 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { Cell, CellGroup, NavBar, Icon, ContactCard, Field } from 'vant';
+import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps } from 'vant';
 import product from '../../components/productbanner';
 import addr from '../../components/orderaddress';
 export default {
   data() {
     return {
+      active: 2,
       delivertype: '自提'
     };
   },
@@ -71,6 +70,8 @@ export default {
     [Icon.name]: Icon,
     [ContactCard.name]: ContactCard,
     [Field.name]: Field,
+    [Step.name]: Step,
+    [Steps.name]: Steps,
     addr,
     product
   },

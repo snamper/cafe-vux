@@ -20,7 +20,7 @@
       <van-goods-action-big-btn text="加入购物车" @click="add2cart"></van-goods-action-big-btn>
       <van-goods-action-big-btn text="立即购买" primary ></van-goods-action-big-btn>
     </van-goods-action>
-    <sku ref="sku" :good="good"></sku>
+    <sku ref="sku"></sku>
   </div>
 </template>
 
@@ -91,7 +91,7 @@ export default {
       this.$router.push({name: 'menu'});
     },
     add2cart() {
-      this.$refs.sku.show(true);
+      this.$refs.sku.showit(true, this.good);
     }
   }
 };

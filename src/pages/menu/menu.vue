@@ -5,15 +5,15 @@
       title="所有商品">
     </banner>
     <div class="cards" v-for="(product, index) in 10" :key="index">
-      <div class="product">
+      <div class="product" @click="showdetail(product)">
         <product :showcheckbox="false">
           <template slot="right-bottom">
-            <van-button class="button" type="default" size="mini" @click="buy">购买</van-button>
+            <van-button class="button" type="default" size="mini" @click="buy(product)">购买</van-button>
           </template>
         </product>
       </div>
     </div>
-    <sku ref="sku" :good="good"></sku>
+    <sku ref="sku"></sku>
   </div>
 </template>
 
@@ -70,9 +70,9 @@ export default {
     ])
   },
   methods: {
-    buy() {
+    buy(product) {
       log.debug('buy');
-      this.$refs.sku.show(true);
+      this.$refs.sku.showit(true, product);
     },
     showdetail(product) {
       log.info('page will change to good');
