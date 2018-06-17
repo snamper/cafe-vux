@@ -4,7 +4,7 @@
     <banner
       title="所有商品">
     </banner>
-    <div class="cards" v-for="(product, index) in products" :key="index">
+    <div class="cards" v-for="(product, index) in 10" :key="index">
       <div class="product">
         <product :showcheckbox="false">
           <template slot="right-bottom">
@@ -13,12 +13,14 @@
         </product>
       </div>
     </div>
+    <sku ref="sku" :good="good"></sku>
   </div>
 </template>
 
 <script type="text/ecmascript=6">
 import { Button, List } from 'vant';
 import { mapGetters } from 'vuex';
+import sku from '../../components/sku';
 import logo from '../../components/logo';
 import banner from '../../components/banner';
 import product from '../../components/productbanner';
@@ -27,6 +29,25 @@ const log = new Logger('page/menu/menu');
 export default {
   data() {
     return {
+      good: {
+        canBook: true,
+        classifyId: 69,
+        code: 'd519d09e-3bbd-4e5e-b044-715b02e75805',
+        creatPeriod: '',
+        createTime: 1521645341000,
+        createTimeAsString: '2018-03-21 23:15:41',
+        creatorId: -1,
+        defaultEntity: false,
+        description: '是肯定分离焦虑斯柯达据了解是开机地方了撒娇的就sad拉开就打算冷风机老大说封口胶辽阔的书法家辽阔的设计费辽阔的设计费鲁大师就发流口水当减肥离开的时间流口水当减肥李松快当减肥流口水当减肥离开的时间发连接的斯洛伐克就电视了开发借了时代峻峰了开机但是飞',
+        id: 268,
+        imageSliderUrl: '/upload/dongwubinggan-1521645338239.jpg',
+        imageUrl: '/upload/dongwubinggan-1521645338239.jpg',
+        memberPrice: 87,
+        name: '动物饼干',
+        objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
+        price: 88,
+        slider: true
+      }
     };
   },
   components: {
@@ -34,11 +55,12 @@ export default {
     [List.name]: List,
     logo,
     banner,
-    product
+    product,
+    sku
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.$store.dispatch('getGoods');
+      // vm.$store.dispatch('getGoods');
     });
   },
   computed: {
@@ -48,8 +70,9 @@ export default {
     ])
   },
   methods: {
-    buy(paylod) {
-      log.debug(paylod);
+    buy() {
+      log.debug('buy');
+      this.$refs.sku.show(true);
     },
     showdetail(product) {
       log.info('page will change to good');
