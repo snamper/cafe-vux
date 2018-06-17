@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     buy(product) {
-      log.debug('buy');
+      // log.debug('buy');
       this.$refs.sku.showit(product);
     },
     showdetail(product) {

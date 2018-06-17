@@ -79,5 +79,11 @@ export default {
         resolve();
       });
     });
+  },
+  add2cart(context, payload) {
+    return new Promise(resolve => {
+      context.commit('update', {type: 'carts', value: payload});
+      resolve(true);
+    });
   }
 };

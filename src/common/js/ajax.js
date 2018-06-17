@@ -28,7 +28,7 @@ function ajaxGet(url, flag) {
     log.debug('The ajax get url is (' + url + ').');
     axios.get(url).then((response) => {
       const result = response.data;
-      log.debug('The response data is ' + JSON.stringify(result));
+      // log.debug('The response data is ' + JSON.stringify(result));
       if (result === null) {
           reject(new Error('The get url(' + url + ') response is failed'));
       } else if (result !== null && flag !== null && result.flag) {

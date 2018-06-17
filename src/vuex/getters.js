@@ -81,5 +81,12 @@ export default {
       }
     });
     return result;
+  },
+  cartProducts(state) {
+    const result = [];
+    state.carts.forEach(product => {
+    });
+    return result;
+    /* state.forEach() */
   }
 };

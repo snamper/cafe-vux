@@ -1,12 +1,12 @@
 <template>
   <div class="cart">
-    <div class="cart" v-if="show">
+    <div class="cart" v-if="carts.length !== 0">
       <div class="banner">
         <van-checkbox class="title" v-model="checked">树影啡香</van-checkbox>
         <span @click="showdelete">{{editTitle}}</span>
       </div>
-      <div class="order" v-for="(product, index) in 10" :key="index">
-        <product showcheckbox></product>
+      <div class="order" v-for="(product, index) in carts" :key="index">
+        <product showcheckbox :good="product"></product>
       </div>
       <div class="submit">
         <van-submit-bar
@@ -31,6 +31,7 @@
 
 <script type="text/ecmascript=6">
 import { Checkbox, CheckboxGroup, SubmitBar, Button } from 'vant';
+import { mapState } from 'vuex';
 import product from '../../components/productbanner';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/cart');
@@ -39,7 +40,7 @@ export default {
     return {
       show: false,
       edit: false,
-      checked: 1
+      checked: 0
     }
   },
   components: {
@@ -50,6 +51,9 @@ export default {
     product
   },
   computed: {
+    ...mapState([
+      'carts'
+    ]),
     submittitle() {
       if (this.edit) {
         return '删除';

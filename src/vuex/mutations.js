@@ -39,6 +39,25 @@ export default {
       clearmember(state);
     } else if (payload.type === 'records') {
       state.records = payload.value;
+    } else if (payload.type === 'carts') {
+      const good = payload.value;
+      state.carts.push(good);
+      /* const good = payload.value;
+      if (state.carts.length === 0) {
+        state.carts.push(good);
+      } else {
+        let flag = false;
+        state.carts.forEach(product => {
+          if (product.id === good.id) {
+            product.count += good.count;
+          } else {
+            flag = true;
+          }
+        });
+        if (flag) {
+          state.carts.push(good);
+        }
+      } */
     }
   },
   clear(state) {
@@ -49,5 +68,8 @@ export default {
         }
       });
     });
+  },
+  test(state) {
+    log.debug('测试数据 ' + JSON.stringify(state.carts));
   }
 };

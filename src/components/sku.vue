@@ -23,6 +23,8 @@
 <script type="text/ecmascript=6">
 import { Sku, Button, Toast } from 'vant';
 import { getImageUrl } from '../common/js/util';
+import { mapState } from 'vuex';
+import Vue from 'vue';
 import Logger from 'chivy';
 const log = new Logger('components/sku');
 export default {
@@ -39,8 +41,11 @@ export default {
     [Toast.name]: Toast
   },
   computed: {
+    ...mapState([
+      'carts'
+    ]),
     sku() {
-      log.debug('sku');
+      // log.debug('sku');
       return this.__sku(this.good);
     }
   },
@@ -50,22 +55,35 @@ export default {
       this.$router.push({name: 'pay'});
     },
     onAddCartClicked(data) {
-      log.debug('onAddCartClicked' + JSON.stringify(data));
-      this.show = false;
-      Toast('添加购物车成功~');
+      debugger
+      if (this.carts.length === 0) {
+        this.__submit(data);
+      } else {
+        let flag = false;
+        this.carts.forEach(product => {
+          if (product.id === data.selectedSkuComb.good.id) {
+            prouct.count += data.selectedNum;
+          } else {
+            flag = true;
+          }
+        });
+        if (flag) {
+          this.__submit(data);
+        } else {
+          this.show = false;
+        }
+      }
     },
     onPointClicked() {
       log.debug('积分兑换');
     },
     showit(good) {
-      log.debug('show sku');
+      // log.debug('show sku');
       this.good = good;
-      log.debug('good is have data');
       this.show = true;
-      log.debug('show is true');
     },
     shownext(good) {
-      log.debug('show next');
+      // log.debug('show next');
       this.good = good;
       this.show = true;
       this.next = true;
@@ -74,8 +92,21 @@ export default {
       log.debug('next');
       this.$router.push({name: 'pay'});
     },
+    __data(data) {
+      let product = data.selectedSkuComb.good;
+      product.count = data.selectedNum;
+      return product
+    },
+    __submit(data) {
+      this.$store.dispatch('add2cart', this.__data(data)).then(result => {
+        if (result) {
+          this.show = false;
+          Toast('添加购物车成功~');
+        }
+      });
+    },
     __sku(good) {
-      log.debug('__sku good is ' + JSON.stringify(good));
+      // log.debug('__sku good is ' + JSON.stringify(good));
       const suk = {
         tree: [
           {
@@ -93,6 +124,7 @@ export default {
         ],
         list: [ // 需要传递出去的数据
           {
+            good: this.good,
             id: good.id,
             price: good.price * 100,
             name: good.name,
