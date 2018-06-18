@@ -55,24 +55,11 @@ export default {
       this.$router.push({name: 'pay'});
     },
     onAddCartClicked(data) {
-      debugger
-      if (this.carts.length === 0) {
-        this.__submit(data);
-      } else {
-        let flag = false;
-        this.carts.forEach(product => {
-          if (product.id === data.selectedSkuComb.good.id) {
-            prouct.count += data.selectedNum;
-          } else {
-            flag = true;
-          }
-        });
-        if (flag) {
-          this.__submit(data);
-        } else {
-          this.show = false;
-        }
-      }
+      const good = data.selectedSkuComb.good;
+      const count = data.selectedNum;
+      this.$store.commit('addCount', {good, count});
+      this.show = false;
+      Toast('添加购物车成功~');
     },
     onPointClicked() {
       log.debug('积分兑换');
@@ -95,7 +82,7 @@ export default {
     __data(data) {
       let product = data.selectedSkuComb.good;
       product.count = data.selectedNum;
-      return product
+      return product;
     },
     __submit(data) {
       this.$store.dispatch('add2cart', this.__data(data)).then(result => {
