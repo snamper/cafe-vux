@@ -83,7 +83,9 @@ export default {
       } else {
         // 结算
         log.info('pay');
-        this.$router.push({name: 'pay'});
+        log.debug(JSON.stringify(this.selectFoods));
+        log.debug(JSON.stringify(this.totalAttr));
+        this.$router.push({name: 'pay', params: {selectFoods: this.selectFoods, totalAttr: this.totalAttr}});
       }
     },
     showmain() {

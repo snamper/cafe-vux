@@ -7,8 +7,8 @@
     </van-nav-bar>
     <div class="content">
       <addr :show="false" @addaddress="addaddress"></addr>
-      <div class="orderlist" v-for="(o,i) in 3" :key="i">
-        <product showcheckbox></product>
+      <div class="orderlist" v-for="(good, index) in selectFoods" :key="index">
+        <product :good="good"></product>
       </div>
       <van-cell-group>
         <van-cell title="配送方式" :value="delivertype" is-link @click="select"/>
@@ -17,24 +17,24 @@
           label="留言"
           placeholder="点击给商家留言">
         </van-field>
-        <van-cell title="合计" value="￥420.00"/>
+        <van-cell title="合计" :value="value"/>
       </van-cell-group>
       <split></split>
       <van-cell-group>
         <van-cell>
           <template slot="title">
-            <div>商品金额</div>
-            <div>运费</div>
+            <div>商品总价</div>
+            <div>会员优惠</div>
           </template>
-          <div>￥420.00</div>
-          <div>+ ￥25.00</div>
+          <div>￥{{totalAttr.normal}}</div>
+          <div>￥{{totalAttr.normal - totalAttr.member}}</div>
         </van-cell>
       </van-cell-group>
     </div>
     <div class="submit">
       <van-submit-bar
         button-text="提交订单"
-        :price="3050"
+        :price="totalAttr.normal * 100"
         @submit="onSubmit">
       </van-submit-bar>
     </div>
@@ -49,11 +49,12 @@
   </div>
 </template>
 
-<script type="text/ecmascript=6">
+<script type='text/ecmascript=6'>
 import { NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
 import product from '../../components/productbanner';
 import addr from '../../components/orderaddress';
 import split from '../../components/split';
+import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/pay');
 export default {
@@ -70,6 +71,105 @@ export default {
       columns: ['自提','快递']
     };
   },
+  props: {
+    selectFoods: {
+      type: Array,
+      default() {
+        return [{
+            canBook: true,
+            classifyId: 69,
+            code: 'd519d09e-3bbd-4e5e-b044-715b02e75805',
+            creatPeriod: '',
+            createTime: 1521645341000,
+            createTimeAsString: '2018-03-21 23:15:41',
+            creatorId: -1,
+            defaultEntity: false,
+            description: '',
+            id: 268,
+            imageSliderUrl: '/upload/dongwubinggan-1521645338239.jpg',
+            imageUrl: '/upload/dongwubinggan-1521645338239.jpg',
+            memberPrice: 88,
+            name: '动物饼干',
+            objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
+            price: 88,
+            slider: true,
+            count: 1
+          },
+          {
+            canBook: true,
+            classifyId: 69,
+            code: '117cefbc-bfea-4eef-aa77-38f22af708be',
+            creatPeriod: '',
+            createTime: 1521645361000,
+            createTimeAsString: '2018-03-21 23:16:01',
+            creatorId: -1,
+            defaultEntity: false,
+            description: '',
+            id: 269,
+            imageSliderUrl: '',
+            imageUrl: '/upload/tangshuangbinggan-1521645358754.jpg',
+            memberPrice: 168,
+            name: '翻糖饼干',
+            objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
+            price: 168,
+            slider: false,
+            count: 1
+          },
+          {
+            canBook: true,
+            classifyId: 2,
+            code: '0dead79d-f18a-4f64-8234-e98fe17a782e',
+            creatPeriod: '',
+            createTime: 1521643698000,
+            createTimeAsString: '2018-03-21 22:48:18',
+            creatorId: -1,
+            defaultEntity: false,
+            description: '',
+            id: 256,
+            imageSliderUrl: '',
+            imageUrl: '/upload/shaonvxin-1521643682172.jpg',
+            memberPrice: 218,
+            name: '少女心蛋白糖蛋糕',
+            objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
+            price: 218,
+            slider: false,
+            count: 1
+          },
+          ,
+          {
+            canBook: true,
+            classifyId: 2,
+            code: '0dead79d-f18a-4f64-8234-e98fe17a782e',
+            creatPeriod: '',
+            createTime: 1521643698000,
+            createTimeAsString: '2018-03-21 22:48:18',
+            creatorId: -1,
+            defaultEntity: false,
+            description: '',
+            id: 256,
+            imageSliderUrl: '',
+            imageUrl: '/upload/shaonvxin-1521643682172.jpg',
+            memberPrice: 218,
+            name: '少女心蛋白糖蛋糕',
+            objClass: 'com.xdt.ums.shop.common.entity.ProductImpl',
+            price: 218,
+            slider: false,
+            count: 1
+          }
+        ]
+      }
+    },
+    totalAttr: {
+      type: Object,
+      default() {
+        return {
+          normal: 474,
+          member: 474,
+          count: 3
+        }
+      }
+    }
+  },
   components: {
     [NavBar.name]: NavBar,
     [Cell.name]: Cell,
@@ -82,12 +182,20 @@ export default {
     addr,
     split
   },
+  computed: {
+    ...mapGetters([
+      ''
+    ]),
+    value() {
+      return '￥' + this.totalAttr.normal;
+    }
+  },
   methods: {
     back() {
 
     },
     addaddress() {
-      this.$router.push({name: 'address'});
+      this.$router.push({name: 'address', params: {selectFoods: this.selectFoods, totalAttr: this.totalAttr}});
     },
     addcontact() {
       log.debug('add');
@@ -111,7 +219,7 @@ export default {
 };
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang=stylus' rel=stylesheet/stylus' scoped>
 .content
   margin-bottom 50px
 </style>
