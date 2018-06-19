@@ -2,18 +2,18 @@
   <div class="cart">
     <div class="cart" v-if="selectFoods.length !== 0">
       <div class="banner">
-        <van-checkbox class="title" v-model="checked">树影啡香</van-checkbox>
+        <van-checkbox class="title" v-model="checked" @change="selectall">树影啡香</van-checkbox>
         <span @click="showdelete">{{editTitle}}</span>
       </div>
       <div class="order" v-for="(product, index) in selectFoods" :key="index">
-        <product showcheckbox :good="product"></product>
+        <product :checked="checked" showcheckbox :good="product" @select="select"></product>
       </div>
       <div class="submit">
         <van-submit-bar
           :button-text="submittitle"
-          :price="3050"
+          :price="totalAttr.normal*100"
           @submit="onSubmit">
-          <van-checkbox class="checkbox" v-model="checked">全选</van-checkbox>
+          <van-checkbox class="checkbox" v-model="checked" @change="selectall">全选</van-checkbox>
         </van-submit-bar>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default {
     return {
       show: false,
       edit: false,
-      checked: 0
+      checked: false
     }
   },
   components: {
@@ -52,7 +52,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'selectFoods'
+      'selectFoods',
+      'totalAttr',
     ]),
     submittitle() {
       if (this.edit) {
@@ -76,6 +77,9 @@ export default {
     onSubmit() {
       if (this.edit) {
         // 删除
+        this.selectFoods.forEach(product => {
+          product.count = 0;
+        });
       } else {
         // 结算
         log.info('pay');
@@ -84,6 +88,14 @@ export default {
     },
     showmain() {
       this.$router.push({name: 'menu'});
+    },
+    selectall() {
+      log.debug('select all');
+      this.select();
+    },
+    select(data) {
+      log.debug('data is ' + data);
+      this.data = this.checked;
     }
   }
 };

@@ -20,7 +20,10 @@ export default new Router({
         {
           name: 'cart',
           path: 'cart',
-          component: () => import('../pages/cart/cart.vue').then(m => m.default)
+          component: () => import('../pages/cart/cart.vue').then(m => m.default),
+          meta: {
+            keepAlive: true
+          }
         },
         {
           name: 'active',

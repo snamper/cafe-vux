@@ -1,6 +1,6 @@
 <template>
   <div class="product-banner">
-    <van-cell-swipe :right-width="rightwidth">
+    <van-cell-swipe :right-width="rightwidth" :on-close="onClose">
       <van-cell-group>
         <van-cell>
           <template slot="title">
@@ -29,10 +29,11 @@
 
 <script type="text/ecmascript=6">
 import { Checkbox, Icon, Cell, CellGroup, CellSwipe } from 'vant';
+import Logger from 'chivy';
+const log = new Logger('page/menu/productbanner');
 export default {
   data() {
     return {
-      checked: false
     };
   },
   props: {
@@ -42,6 +43,10 @@ export default {
     },
     good: {
       type: Object
+    },
+    checked: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -61,8 +66,15 @@ export default {
     }
   },
   methods: {
-    Onchecked() {
-      this.checked = !this.checked;
+    onClose(clickPosition, instance) {
+      log.debug('onclose');
+      switch (clickPosition) {
+        case 'right':
+          log.debug('right click');
+          this.good.count = 0
+          this.$store.commit('subCount', this.good);
+          break;
+      }
     }
   }
 };

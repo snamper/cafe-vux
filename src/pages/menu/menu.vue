@@ -42,11 +42,6 @@ export default {
   created() {
     this.$store.dispatch('getGoods');
   },
-  /* beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$store.dispatch('getGoods');
-    });
-  }, */
   computed: {
     ...mapGetters([
       'products'

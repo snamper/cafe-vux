@@ -5,14 +5,10 @@
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
     <van-tabbar v-model="active" @change="change">
-      <!-- <van-tabbar-item icon="home" :to="{name: 'menu'}">主页</van-tabbar-item>
+      <van-tabbar-item icon="home" :to="{name: 'menu'}">主页</van-tabbar-item>
       <van-tabbar-item icon="like-o" :to="{name: 'active'}">今日活动</van-tabbar-item>
       <van-tabbar-item icon="cart" :to="{name: 'cart'}">购物车</van-tabbar-item>
-      <van-tabbar-item icon="contact" :to="{name: 'member'}">我的</van-tabbar-item> -->
-      <van-tabbar-item icon="home">主页</van-tabbar-item>
-      <van-tabbar-item icon="like-o" >今日活动</van-tabbar-item>
-      <van-tabbar-item icon="cart" >购物车</van-tabbar-item>
-      <van-tabbar-item icon="contact" >我的</van-tabbar-item>
+      <van-tabbar-item icon="contact" :to="{name: 'member'}">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -38,15 +34,6 @@ export default {
   methods: {
     change(active) {
       log.debug('active is ' + active);
-      if(active === 0) {
-        this.$router.push({name: 'menu'});
-      } else if(active === 1) {
-        this.$router.push({name: 'active'});
-      } else if(active === 2) {
-        this.$router.push({name: 'cart'});
-      } else if(active === 3) {
-        this.$router.push({name: 'member'});
-      }
     },
   }
 };

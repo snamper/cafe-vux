@@ -36,9 +36,25 @@ export default {
           if (!good.count) {
             Vue.set(good, 'count', payload.count);
           } else {
-            log.debug('before good.count is ' + good.count);
+            log.info('before good.count is ' + good.count);
             good.count += payload.count;
-            log.debug('after good.count is ' + good.count);
+            log.info('after good.count is ' + good.count);
+          }
+        }
+      });
+    });
+  },
+  subCount(state, payload) {
+    log.debug('payload is ' + JSON.stringify(payload));
+    state.goods.forEach((category) => {
+      category.list.forEach((good) => {
+        if (payload.good === good) {
+          if (payload.good.count === 0) {
+            good.count = 0;
+          } else if (good.count - payload.good.count >= 0) {
+            good.count = good.count - payload.good.count;
+          } else {
+            good.count = 0;
           }
         }
       });
