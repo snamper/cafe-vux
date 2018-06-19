@@ -36,9 +36,10 @@ export default {
           if (!good.count) {
             Vue.set(good, 'count', payload.count);
           } else {
+            log.debug('before good.count is ' + good.count);
             good.count += payload.count;
+            log.debug('after good.count is ' + good.count);
           }
-          log.debug('count is ' + payload.good.count);
         }
       });
     });
