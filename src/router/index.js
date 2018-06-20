@@ -37,6 +37,11 @@ export default new Router({
           name: 'member',
           path: 'member',
           component: () => import('../pages/member/member.vue').then(m => m.default)
+        },
+        {
+          name: 'login',
+          path: 'login',
+          component: () => import('../pages/member/login.vue').then(m => m.default)
         }
       ]
     },

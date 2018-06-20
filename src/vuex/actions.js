@@ -1,4 +1,4 @@
-import { getCategoriedProducts, memberLogin, isExistUserName, createMember, modifyBasicInfo, saveRecordList, getRecordList } from '../common/js/ajax';
+import { getCategoriedProducts, memberLogin, isExistUserName, createMember, modifyBasicInfo, saveRecordList, getRecordList, saveAddresses } from '../common/js/ajax';
 import { getMemberInfo, setModifyMemberData } from '../common/js/util';
 import logger from '../common/js/logger';
 import Logger from 'chivy';
@@ -78,6 +78,13 @@ export default {
     return new Promise(resolve => {
       getRecordList(payload).then(data => {
         context.commit('update', {type: 'records', value: data});
+        resolve();
+      });
+    });
+  },
+  saveAddress(context, payload) {
+    return new Promise((resolve, reject) => {
+      saveAddresses(payload).then(data => {
         resolve();
       });
     });

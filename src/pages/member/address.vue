@@ -11,7 +11,7 @@
       :list="list"
       @add="onAdd"
       @edit="onEdit"
-    />
+    ></van-address-list>
   </div>
 </template>
 
@@ -37,6 +37,11 @@ export default {
         } */
       ]
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+
+    });
   },
   components: {
     [NavBar.name]: NavBar,

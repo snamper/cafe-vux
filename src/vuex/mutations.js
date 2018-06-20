@@ -18,6 +18,8 @@ export default {
       state.records = payload.value;
     } else if (payload.type === 'carts') {
       state.carts = payload.value;
+    } else if (payload.type === 'address') {
+      state.address = payload.value;
     }
   },
   clear(state) {
