@@ -5,7 +5,7 @@ import Logger from 'chivy';
 const log = new Logger('vuex/actions');
 export default {
   getGoods(context) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       getCategoriedProducts().then((data) => {
         context.commit('update', {type: 'goods', value: data});
         resolve();
@@ -27,7 +27,7 @@ export default {
     });
   },
   duplicate(context, payload) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       isExistUserName(payload).then(data => {
           resolve(data.status);
       });
@@ -40,6 +40,8 @@ export default {
           const memberinfo = getMemberInfo(data);
           context.commit('update', {type: 'memberinfo', value: memberinfo});
           resolve();
+        } else {
+          reject(new Error('resigter failed'));
         }
       });
     });
@@ -48,15 +50,15 @@ export default {
     log.debug('modifyInfo payload is ' + JSON.stringify(payload));
     const param = setModifyMemberData(payload);
     log.debug('modifyInfo param is ' + JSON.stringify(param));
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       modifyBasicInfo(param).then((data) => {
         resolve(data.success);
       });
     });
   },
   // 清除member
-  loginout(context, paylod) {
-    return new Promise((resolve, reject) => {
+  loginout(context) {
+    return new Promise(resolve => {
       context.commit('update', {type: 'loginout'});
       resolve(true);
     });
@@ -73,7 +75,7 @@ export default {
     });
   },
   getRecords(context, payload) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       getRecordList(payload).then(data => {
         context.commit('update', {type: 'records', value: data});
         resolve();

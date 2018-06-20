@@ -43,45 +43,57 @@ function ajaxGet(url, flag) {
   });
 }
 
-function getCategoriedProducts(flag) {
+function getCategoriedProducts() {
   return ajaxGet(url.getCategoriedProducts, arguments[0] ? arguments[0] : null);
 }
 
-function getRecordList(param, flag) {
+function getRecordList(param) {
   return ajaxPost(url.getRecordList, param, arguments[1] ? arguments[1] : null);
 }
 
-function isExistUserName(param, flag) {
+function isExistUserName(param) {
   return ajaxPost(url.isExistUserName, param, arguments[1] ? arguments[1] : null);
 }
 
-function memberLogin(param, flag) {
+function memberLogin(param) {
   return ajaxPost(url.memberLogin, param, arguments[1] ? arguments[1] : null);
 }
 
-function createMember(param, flag) {
+function createMember(param) {
   return ajaxPost(url.createMember, param, arguments[1] ? arguments[1] : null);
 }
 
-function saveRecordList(param, flag) {
+function saveRecordList(param) {
   return ajaxPost(url.saveRecordList, param, arguments[1] ? arguments[1] : null);
 }
 
-function alterStatus(param, flag) {
+function alterStatus(param) {
   return ajaxPost(url.alterStatus, param, arguments[1] ? arguments[1] : null);
 }
 
-function modifyBasicInfo(param, flag) {
+function modifyBasicInfo(param) {
   return ajaxPost(url.modifyBasicInfo, param, arguments[1] ? arguments[1] : null);
 }
 
-function modifyPassword(param, flag) {
+function modifyPassword(param) {
   return ajaxPost(url.modifyPassword, param, arguments[1] ? arguments[1] : null);
 }
 
-function getMemberById(param, flag) {
+function getMemberById(param) {
   return ajaxPost(url.getMemberById, param, arguments[1] ? arguments[1] : null);
 }
 
-export { getCategoriedProducts, getRecordList, isExistUserName, memberLogin };
+function getAddresses(param) {
+  return ajaxPost(url.getAddresses, param, arguments[1] ? arguments[1] : null);
+}
+
+function saveAddresses(param) {
+  return ajaxPost(url.saveAddresses, param, arguments[1] ? arguments[1] : null);
+}
+
+function deleteAddresses(param) {
+  return ajaxPost(url.deleteAddresses, param, arguments[1] ? arguments[1] : null);
+}
+
+export { getCategoriedProducts, getRecordList, isExistUserName, memberLogin, getAddresses, saveAddresses, deleteAddresses };
 export { createMember, saveRecordList, alterStatus, modifyBasicInfo, modifyPassword, getMemberById };

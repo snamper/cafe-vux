@@ -18,7 +18,13 @@ const url = {
   // 修改密码接口
   modifyPassword: '/shop/member/show/ui/modifyPassword.do',
   // 获取三方登陆的会员信息接口
-  getMemberById: '/shop/member/show/ui/getMemberById.do'
+  getMemberById: '/shop/member/show/ui/getMemberById.do',
+  // 获取配送地址列表
+  getAddresses: '/shop/product/show/ui/getAddresses.do',
+  // 保存配送地址
+  saveAddresses: '/shop/product/show/ui/saveAddresses.do',
+  // 删除配送地址
+  deleteAddresses: '/shop/product/show/ui/deleteAddresses.do'
 };
 
 const consts = {
