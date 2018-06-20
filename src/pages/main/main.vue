@@ -8,7 +8,7 @@
       <van-tabbar-item icon="home" :to="{name: 'menu'}">主页</van-tabbar-item>
       <van-tabbar-item icon="like-o" :to="{name: 'active'}">今日活动</van-tabbar-item>
       <van-tabbar-item icon="cart" :to="{name: 'cart'}">购物车</van-tabbar-item>
-      <van-tabbar-item icon="contact" :to="{name: 'member'}">我的</van-tabbar-item>
+      <van-tabbar-item icon="contact" :to="{name: 'login'}">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

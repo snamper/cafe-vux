@@ -73,8 +73,7 @@ export default {
       const good = data.selectedSkuComb.good;
       const count = data.selectedNum;
       this.$store.commit('addCount', {good, count});
-      this.show = false;
-      Toast('添加购物车成功~');
+      this.__showAndToast();
     },
     onPointClicked() {
       log.debug('积分兑换');
@@ -102,9 +101,16 @@ export default {
     __submit(data) {
       this.$store.dispatch('add2cart', this.__data(data)).then(result => {
         if (result) {
-          this.show = false;
-          Toast('添加购物车成功~');
+          this.__showAndToast();
         }
+      });
+    },
+    __showAndToast() {
+      this.show = false;
+      Toast({
+        message: '添加购物车成功~',
+        forbidClick: true,
+        duration: 1000
       });
     },
     __sku(good) {

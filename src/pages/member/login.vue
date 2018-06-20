@@ -82,14 +82,16 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { Button, Field, CellGroup } from 'vant';
+import { Button, Field, CellGroup, Toast } from 'vant';
 import avator from '../../components/avator';
+import md5 from 'blueimp-md5';
+import { regexmatch } from '../../common/js/util.js';
 import Logger from 'chivy';
 const log = new Logger('page/member/login');
 export default {
   data() {
     return {
-      showlogin: false,
+      showlogin: true,
       img: {
         url: '../../../static/img/tian.jpg',
         width: 100,
@@ -174,6 +176,12 @@ export default {
         });
       }
     },
+    __checkavaliable(content, regex, type) {
+      let result = true;
+      if (!regexmatch(content, regex)) {
+        result = false;
+      }
+    },
     __fail(status) {
       // 密码清空
       this.showlogin = status;
@@ -184,25 +192,13 @@ export default {
       this.repwd = '';
     },
     __toast(content) {
-      this.$vux.toast.text(content, 'middle');
+      Toast({
+        message: content,
+        forbidClick: true,
+        duration: 1000
+      });
     },
     __jump() {
-      /*
-       * 1. 当页面从pay页面跳转过来的时候，需要记录过来的页面，并在登录完成后跳转回到pay页面
-       * 2. 当前页面刷新（保持原页面)
-       * 3. 当页面不是从pay跳转过来的，当登录成功后，则需要跳转到member也页面
-       *
-      */
-     log.debug('from path is ' + this.from);
-      if (this.from === '/balance') {
-        if (this.type.type === 'address') {
-          this.$router.push({name: 'balance'});
-        } else if(this.type.type === 'pay') {
-          this.$router.push({name: 'pay'});
-        }
-      } else {
-        this.$router.push({name: 'member'});
-      }
     }
   }
 };
