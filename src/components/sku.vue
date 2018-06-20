@@ -16,6 +16,11 @@
           <van-button bottom-action @click="nextstep">下一步</van-button>
         </div>
       </template>
+      <template v-if="confirm" slot="sku-actions" slot-scope="props">
+        <div class="van-sku-actions">
+          <van-button bottom-action @click="props.skuEventBus.$emit('sku:addCart')">确定</van-button>
+        </div>
+      </template>
     </van-sku>
   </div>
 </template>
@@ -31,9 +36,18 @@ export default {
   data() {
     return {
       show: false,
-      next: false,
       good: null
     };
+  },
+  props: {
+    confirm: {
+      type: Boolean,
+      default: false
+    },
+    confirm: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     [Sku.name]: Sku,
@@ -55,6 +69,7 @@ export default {
       this.$router.push({name: 'pay'});
     },
     onAddCartClicked(data) {
+      log.debug('add carts');
       const good = data.selectedSkuComb.good;
       const count = data.selectedNum;
       this.$store.commit('addCount', {good, count});

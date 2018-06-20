@@ -16,6 +16,8 @@ export default {
       clearmember(state);
     } else if (payload.type === 'records') {
       state.records = payload.value;
+    } else if (payload.type === 'carts') {
+      state.carts = payload.value;
     }
   },
   clear(state) {

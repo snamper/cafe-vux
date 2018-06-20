@@ -20,7 +20,7 @@
       <van-goods-action-big-btn text="加入购物车" @click="add2cart"></van-goods-action-big-btn>
       <van-goods-action-big-btn text="立即购买" primary @click="buyit" ></van-goods-action-big-btn>
     </van-goods-action>
-    <sku ref="sku"></sku>
+    <sku ref="sku" confirm></sku>
   </div>
 </template>
 

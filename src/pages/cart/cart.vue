@@ -40,7 +40,7 @@ export default {
     return {
       show: false,
       edit: false,
-      checked: false
+      checked: true
     }
   },
   components: {
@@ -85,7 +85,7 @@ export default {
         log.info('pay');
         log.debug(JSON.stringify(this.selectFoods));
         log.debug(JSON.stringify(this.totalAttr));
-        this.$router.push({name: 'pay', params: {selectFoods: this.selectFoods, totalAttr: this.totalAttr}});
+        this.$store.commit('update', {type: 'carts', value: {selectFoods: this.selectFoods, totalAttr: this.totalAttr}});
       }
     },
     showmain() {

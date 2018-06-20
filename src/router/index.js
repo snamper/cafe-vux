@@ -28,7 +28,10 @@ export default new Router({
         {
           name: 'active',
           path: 'active',
-          component: () => import('../pages/active/active.vue').then(m => m.default)
+          component: () => import('../pages/active/active.vue').then(m => m.default),
+          meta: {
+            keepAlive: true
+          }
         },
         {
           name: 'member',
@@ -41,7 +44,10 @@ export default new Router({
       name: 'good',
       path: '/good',
       component: () => import('../pages/menu/good.vue').then(m => m.default),
-      props: true
+      props: true,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       name: 'card',
