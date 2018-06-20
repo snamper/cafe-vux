@@ -7,7 +7,7 @@
     </van-nav-bar>
     <div class="content">
       <addr :show="false" @addaddress="addaddress"></addr>
-      <div class="orderlist" v-for="(good, index) in carts.selectFoods" :key="index">
+      <div class="orderlist" v-for="(good, index) in selectFoods" :key="index">
         <product :good="good"></product>
       </div>
       <van-cell-group>
@@ -26,15 +26,15 @@
             <div>商品总价</div>
             <div>会员优惠</div>
           </template>
-          <div>￥{{carts.totalAttr.normal}}</div>
-          <div>￥{{carts.totalAttr.normal - carts.totalAttr.member}}</div>
+          <div>￥{{totalAttr.normal}}</div>
+          <div>￥{{totalAttr.normal - totalAttr.member}}</div>
         </van-cell>
       </van-cell-group>
     </div>
     <div class="submit">
       <van-submit-bar
         button-text="提交订单"
-        :price="carts.totalAttr.normal * 100"
+        :price="totalAttr.normal * 100"
         @submit="onSubmit">
       </van-submit-bar>
     </div>
@@ -54,7 +54,7 @@ import { NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from '
 import product from '../../components/productbanner';
 import addr from '../../components/orderaddress';
 import split from '../../components/split';
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/pay');
 export default {
@@ -84,8 +84,9 @@ export default {
     split
   },
   computed: {
-    ...mapState([
-      'carts'
+    ...mapGetters([
+      'selectFoods',
+      'totalAttr',
     ]),
     value() {
       return '￥' + this.totalAttr.normal;

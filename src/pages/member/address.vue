@@ -16,13 +16,14 @@
 </template>
 
 <script type="text/ecmascript=6">
+// 判断是否是会员，不是会员则只能添加一个地址，且无法保存地址，如果是会员则可以保存多个地址
 import { NavBar, Cell, CellGroup, AddressList } from 'vant';
 export default {
   data() {
     return {
       chosenAddressId: '1',
       list: [
-        {
+        /* {
           id: '1',
           name: '张三',
           tel: '13000000000',
@@ -33,7 +34,7 @@ export default {
           name: '李四',
           tel: '1310000000',
           address: '浙江省杭州市拱墅区莫干山路 50 号'
-        }
+        } */
       ]
     };
   },
@@ -51,7 +52,7 @@ export default {
       this.$router.push({name: 'addressedit'});
     },
     back() {
-
+      this.$router.go(-1);
     }
   }
 };

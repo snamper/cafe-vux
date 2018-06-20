@@ -65,19 +65,28 @@ export default new Router({
       name: 'pay',
       path: '/pay',
       component: () => import('../pages/cart/pay.vue').then(m => m.default),
-      props: true
+      props: true,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       name: 'address',
       path: '/address',
       component: () => import('../pages/member/address.vue').then(m => m.default),
-      props: true
+      props: true,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       name: 'addressedit',
       path: '/addressedit',
       component: () => import('../pages/member/addressedit.vue').then(m => m.default),
-      props: true
+      props: true,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       name: 'order',

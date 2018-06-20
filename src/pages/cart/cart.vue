@@ -83,9 +83,7 @@ export default {
       } else {
         // 结算
         log.info('pay');
-        log.debug(JSON.stringify(this.selectFoods));
-        log.debug(JSON.stringify(this.totalAttr));
-        this.$store.commit('update', {type: 'carts', value: {selectFoods: this.selectFoods, totalAttr: this.totalAttr}});
+        this.$router.push({name: 'pay'});
       }
     },
     showmain() {
