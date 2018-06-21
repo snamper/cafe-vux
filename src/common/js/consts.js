@@ -69,7 +69,9 @@ const regex = {
   account: '^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$',
   mobile: '^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$',
   /* eslint-disable no-useless-escape */
-  email: '^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$'
+  email: '^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$',
+  // 中文名
+  chineseName: '[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*'
 };
 
 const expressType = {

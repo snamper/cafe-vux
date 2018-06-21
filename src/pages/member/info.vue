@@ -26,7 +26,6 @@
         v-model="sex"
         label="性别"
         placeholder="请选择"
-        required
         @focus="selectsex">
       </van-field>
       <van-field
@@ -117,7 +116,7 @@ export default {
       this.show.sex = false;
     },
     back() {
-
+      this.$router.push({name: 'card'});
     },
     selectarea() {
       this.show.area = true;
