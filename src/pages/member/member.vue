@@ -38,7 +38,7 @@
     <van-cell-group>
       <van-cell title="购物车" value="4" :to="{name: 'cart'}"></van-cell>
     </van-cell-group>
-    <van-cell-group>
+    <van-cell-group v-if="User.member">
       <van-cell title="我的会员卡" is-link :to="{name: 'card'}"></van-cell>
       <van-cell title="我的积分" is-link ></van-cell>
       <van-cell title="我的信息" is-link ></van-cell>
@@ -48,8 +48,10 @@
 
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, Row, Col, Icon } from 'vant';
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import avator from '../../components/avator';
+import Logger from 'chivy';
+const log = new Logger('vuex/member');
 export default {
   data() {
     return {
@@ -68,21 +70,9 @@ export default {
     ...mapState([
       'User'
     ]),
-    username() {
-      if (this.User.uuid !== null) {
-        return '游客';
-      } else {
-        if (this.User.member.nick !== ''){
-          return this.User.member.nick;
-        } else if (this.User.member.name !== '') {
-          return this.User.member.name;
-        } else if (this.User.member.phone !== '') {
-          return this.User.member.phone;
-        } else if (this.User.member.email !== '') {
-          return this.User.member.email;
-        }
-      }
-    }
+    ...mapGetters([
+      'username'
+    ])
   }
 };
 </script>

@@ -14,9 +14,7 @@ function isObjEmpty(obj) {
 
 function getImageUrl(url, size) {
   if (!isObjEmpty(url)) {
-      // log.debug('param url is ' + url);
       var urlArray = url.split('.');
-      // log.debug('split array is ' + JSON.stringify(urlArray));
       var current = urlArray[0] + '_' + size + 'X' + size + '.' + urlArray[1];
       return current;
   }
@@ -122,4 +120,35 @@ const coverStatus = type => {
   }
 };
 
-export { getImageUrl, setparam, logger, regexmatch, getMemberInfo, isObjEmpty, getGender, setModifyMemberData, coverStatus };
+// 根据long时间获取具体的年月日时分秒
+function formatDate(date) {
+  var datetime = new Date(date);
+  var format = {
+      Year: 1900 + datetime.getYear(),
+      Month: (datetime.getMonth() + 1),
+      Day: datetime.getDate(),
+      Hour: datetime.getHours(),
+      Minute: datetime.getMinutes(),
+      Second: datetime.getSeconds()
+  };
+  // log.debug('before add zero pre ' + JSON.stringify(format));
+  if (format.Month <= 9) {
+      format.Month = '0' + format.Month;
+  }
+  if (format.Day <= 9) {
+      format.Day = '0' + format.Day;
+  }
+  if (format.Hour <= 9) {
+      format.Hour = '0' + format.Hour;
+  }
+  if (format.Minute <= 9) {
+      format.Minute = '0' + format.Minute;
+  }
+  if (format.Second <= 9) {
+      format.Second = '0' + format.Second;
+  }
+  // log.debug('after add zero pre' + JSON.stringify(format));
+  return format;
+};
+
+export { getImageUrl, setparam, logger, regexmatch, getMemberInfo, isObjEmpty, getGender, setModifyMemberData, coverStatus, formatDate };

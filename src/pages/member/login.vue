@@ -229,7 +229,7 @@ export default {
       data.error = error;
       if (data.content === '') {
         error = true;
-      } 
+      }
       switch(data.key) {
         case this.username.key:
           error = !this.__checkAccount(data.content);
@@ -328,7 +328,7 @@ export default {
   .divider
     font-size 18px
     padding 10px
-    margin-bottom 10px
+    margin 10px 0px
     display flex
     justify-content center
   .icon

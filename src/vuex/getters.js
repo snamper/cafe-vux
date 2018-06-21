@@ -1,4 +1,6 @@
 import { status } from '../common/js/consts';
+import Logger from 'chivy';
+const log = new Logger('vuex/getters');
 export default {
   // 被选择的商品
   selectFoods(state, getters) {
@@ -81,5 +83,23 @@ export default {
       }
     });
     return result;
+  },
+  username(state) {
+    if (state.User.uuid !== null) {
+      return '游客';
+    } else if (state.User.member === null) {
+      return '游客';
+    } else {
+      log.debug('Member is' + JSON.stringify(state.User));
+      if (state.User.member.nick !== '') {
+        return state.User.member.nick;
+      } else if (state.User.member.name !== '') {
+        return state.User.member.name;
+      } else if (state.User.member.phone !== '') {
+        return state.User.member.phone;
+      } else if (state.User.member.email !== '') {
+        return state.User.member.email;
+      }
+    }
   }
 };
