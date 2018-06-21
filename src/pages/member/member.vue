@@ -3,7 +3,7 @@
     <div class="avator">
       <div class="info">
         <avator :url="avatorurl" :radius="50" :width="100" :height="100"></avator>
-        <div class="name">游客</div>
+        <div class="name">{{username}}</div>
       </div>
     </div>
     <van-cell-group>
@@ -48,6 +48,7 @@
 
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, Row, Col, Icon } from 'vant';
+import { mapState } from 'vuex';
 import avator from '../../components/avator';
 export default {
   data() {
@@ -62,6 +63,26 @@ export default {
     [Col.name]: Col,
     [Icon.name]: Icon,
     avator
+  },
+  computed: {
+    ...mapState([
+      'User'
+    ]),
+    username() {
+      if (this.User.uuid !== null) {
+        return '游客';
+      } else {
+        if (this.User.member.nick !== ''){
+          return this.User.member.nick;
+        } else if (this.User.member.name !== '') {
+          return this.User.member.name;
+        } else if (this.User.member.phone !== '') {
+          return this.User.member.phone;
+        } else if (this.User.member.email !== '') {
+          return this.User.member.email;
+        }
+      }
+    }
   }
 };
 </script>

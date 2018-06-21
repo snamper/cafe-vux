@@ -35,14 +35,14 @@ export default {
   },
   computed: {
     wide() {
-      if(isObjEmpty(this.size)) {
+      if(!isObjEmpty(this.size)) {
         return this.size + 'px';
       } else {
         return this.width + 'px';
       }
     },
     high() {
-      if(isObjEmpty(this.size)) {
+      if(!isObjEmpty(this.size)) {
         return this.size + 'px';
       } else {
         return this.height + 'px';

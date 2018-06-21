@@ -9,7 +9,7 @@
       <van-cell is-link :to="{name: 'info'}">
       <template slot="title">
         <div class="title">
-          <avator :url="avatorurl" :width="50" :height="50" :radius="50"></avator>
+          <avator :url="avatorurl" :size="50" :radius="50"></avator>
           <span class="name">游客</span>
         </div>
       </template>
@@ -19,8 +19,8 @@
       </template>
     </van-cell>
     </van-cell-group>
-    <div>
-      暂无会员卡
+    <div class="card-wrapper">
+      <span>暂无会员卡</span>
     </div>
   </div>
 </template>
@@ -70,4 +70,8 @@ export default {
     height 50px
     display flex
     align-items center
+  .card-wrapper
+    display flex
+    justify-content center
+    padding 40% 0px
 </style>

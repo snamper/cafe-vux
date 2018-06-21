@@ -10,18 +10,23 @@
     <div class="input" v-if="showlogin">
       <van-cell-group>
         <van-field
-          v-model="username"
+          v-model="username.content"
           label="用户名"
           icon="clear"
           placeholder="请输入用户名"
           required
-          @click-icon="username = ''"
+          :error="username.error"
+          @blur="check(username)"
+          @click-icon="clean(username)"
         />
         <van-field
-          v-model="password"
+          v-model="password.content"
           type="password"
           label="密码"
           placeholder="请输入密码"
+          @blur="check(password)"
+          :error="password.error"
+          @click-icon="clean(password)"
           required
         />
       </van-cell-group>
@@ -29,25 +34,33 @@
     <div class="input" v-else>
       <van-cell-group>
         <van-field
-          v-model="account"
+          v-model="account.content"
           label="用户名"
           icon="clear"
-          placeholder="手机号码/邮箱名/用户名"
+          placeholder="手机号码/邮箱名"
           required
-          @click-icon="username = ''"
+          :error="account.error"
+          @blur="checkduplicate(account)"
+          @click-icon="clean(account)"
         />
         <van-field
-          v-model="pwd"
+          v-model="pwd.content"
           type="password"
           label="输入密码"
           placeholder="请输入密码"
+          :error="pwd.error"
+          @blur="check(pwd)"
+          @click-icon="clean(pwd)"
           required
         />
         <van-field
-          v-model="repwd"
+          v-model="repwd.content"
           type="password"
           label="确认密码"
           placeholder="请确认密码"
+          :error="repwd.error"
+          @blur="check(repwd)"
+          @click-icon="clean(repwd)"
           required
         />
       </van-cell-group>
@@ -84,7 +97,9 @@
 <script type="text/ecmascript=6">
 import { Button, Field, CellGroup, Toast } from 'vant';
 import avator from '../../components/avator';
+import { mapState } from 'vuex';
 import md5 from 'blueimp-md5';
+import { regex } from '../../common/js/consts.js';
 import { regexmatch } from '../../common/js/util.js';
 import Logger from 'chivy';
 const log = new Logger('page/member/login');
@@ -103,11 +118,31 @@ export default {
           radius: 50
         }
       },
-      username: '',
-      password: '',
-      account: '',
-      pwd: '',
-      repwd: ''
+      username: {
+        key: 'username',
+        content: '',
+        error: false
+      },
+      password: {
+        key: 'password',
+        content: '',
+        error: false
+      },
+      account: {
+        key: 'account',
+        content: '',
+        error: false
+      },
+      pwd: {
+        key: 'pwd',
+        content: '',
+        error: false
+      },
+      repwd: {
+        key: 'repwd',
+        content: '',
+        error: false
+      }
     }
   },
   components: {
@@ -116,36 +151,44 @@ export default {
     [CellGroup.name]: CellGroup,
     avator
   },
+  computed: {
+    ...mapState([
+      'User'
+    ])
+  },
+  beforeRouteEnter(to, from, next) {
+    log.info('beforeRouteEnter');
+    next(vm => {
+      log.debug('uuid is ' + vm.User.uuid);
+      if (vm.User.uuid === null) {
+        vm.$router.push({name: 'member'});
+      }
+    })
+  },
   methods: {
     show() {
       this.showlogin = !this.showlogin;
     },
     login() {
-      if (this.username === '' || this.password === '') {
-        this.__toast('用户名和密码不能为空');
-      } else {
+      const valid = !this.username.error && !this.password.error;
+      if (valid) {
         // 用户登录
         const param = {
-          name: this.username,
-          passWd: md5(this.password)
+          name: this.username.content,
+          passWd: md5(this.password.content)
         };
         this.$store.dispatch('login', param).then(() => {
           this.__jump();
         }).catch((error) => {
           this.__fail(true);
         });
+      } else {
+        this.__toast('请填写正确的内容');
       }
     },
     register() {
-      if (this.$refs.account.invalid) {
-        this.__toast('请填写手机号码/邮箱/用户名');
-      } else if (this.$refs.pwd.invalid) {
-        this.__toast('请输入正确的密码');
-      } else if (this.pwd !== this.repwd) {
-        this.__toast('两次输入的密码不一致，请重新输入');
-        this.$refs.pwd.reset();
-        this.$refs.repwd.reset();
-      } else {
+      const valid = !this.account.error && !this.pwd.error && !this.repwd.error;
+      if(valid) {
         // 注册用户
         const param ={
           mobile: this.account,
@@ -156,30 +199,73 @@ export default {
         }).catch((error) => {
           this.__fail(true);
         });
+      } else {
+        this.__toast('请填写正确的信息');
+      }
+    },
+    checkduplicate(data) {
+      // debugger
+      let avalid = true;
+      avalid = avalid && (data.content !== '' ? true : false);
+      avalid = avalid && this.__checkAccount(data.content);
+      if (avalid) {
+        this.$store.dispatch('duplicate', {name: data.content}).then(resp => {
+          log.debug(data.content + ' is duplicate in server? ' + resp);
+          if (resp) {
+            this.__toast('用户名重复，请重新输入用户名');
+            this.account.content = '';
+            data.error = true;
+          }
+        });
+      } else {
+        data.error = true;
       }
     },
     forgetPwd() {
       log.info('forget password');
     },
-    checkduplicate() {
-      if (this.account !== '') {
-        // 校验账户是否重复
-        const param = {name: account};
-        // 服务端校验
-        this.$store.dispatch('duplicate', param).then((resp) => {
-          if (resp) {
-            this.__toast('用户名已被占用，请重新输入');
-            this.$ref.account.reset();
+    check(data) {
+      let error = false;
+      data.error = error;
+      if (data.content === '') {
+        error = true;
+      } 
+      switch(data.key) {
+        case this.username.key:
+          error = !this.__checkAccount(data.content);
+          if(error) {
+            this.__toast('账户可以是邮箱或者手机号码');
           }
-        }).catch((error) => {
-          this.__fail(false);
-        });
+          break;
+        case this.pwd.key:
+          error = !regexmatch(data.content, regex.password);
+          if(error) {
+            this.__toast('密码由6-21字母和数字组成');
+          }
+          break;
+        case this.repwd.key:
+          error = this.repwd.content !== this.pwd.content ? true: false;
+          if(error) {
+            this.__toast('两次输入的密码不一致');
+          }
+          break;
       }
+      log.debug(data.key + ' check result is ' + error);
+      data.error = error;
     },
-    __checkavaliable(content, regex, type) {
-      let result = true;
-      if (!regexmatch(content, regex)) {
-        result = false;
+    clean(data) {
+      log.debug('clean data is ' + JSON.stringify(data));
+      data.content = '';
+    },
+    __checkAccount(account) {
+      if (regexmatch(account, regex.mobile)) {
+        return true;
+      } else if(regexmatch(account, regex.email)) {
+        return true;
+      } else if(regexmatch(account, regex.account)) {
+        return true;
+      } else {
+        return false;
       }
     },
     __fail(status) {
@@ -199,6 +285,7 @@ export default {
       });
     },
     __jump() {
+      this.$router.push({name: 'member'});
     }
   }
 };
