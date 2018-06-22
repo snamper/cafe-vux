@@ -15,7 +15,7 @@
         :error="name.error"
         @blur="check(name)"
         @focus="close"
-        @click-icon="name = ''">
+        @click-icon="name.content = ''">
       </van-field>
       <van-field
         v-model="birthday.content"
@@ -41,7 +41,18 @@
         :error="mobile.error"
         @blur="check(mobile)"
         @focus="close"
-        @click-icon="name = ''">
+        @click-icon="mobile.content = ''">
+      </van-field>
+      <van-field
+        v-model="email.content"
+        label="电子邮箱"
+        icon="clear"
+        placeholder="请输入邮箱地址"
+        required
+        :error="email.error"
+        @blur="check(email)"
+        @focus="close"
+        @click-icon="email.content = ''">
       </van-field>
       <van-field
         v-model="area.content"
@@ -57,7 +68,7 @@
       </van-field>
     </van-cell-group>
     <div class="save">
-      <van-button style="width:95%" type="primary" @click="save">保存</van-button>
+      <van-button style="width:95%" type="primary" @click.native="save">保存</van-button>
     </div>
     <van-actionsheet v-model="show.action">
       <van-datetime-picker
@@ -88,7 +99,8 @@
 <script type="text/ecmascript=6">
 import { Field, NavBar, CellGroup, DatetimePicker, Picker, Area, Actionsheet, Button, Toast } from 'vant';
 import AreaList from '../../common/js/area.js';
-import { regexmatch, formatDate } from '../../common/js/util.js';
+import { mapState } from 'vuex';
+import { regexmatch, formatDate, isObjEmpty } from '../../common/js/util.js';
 import { regex } from '../../common/js/consts.js';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/info');
@@ -134,8 +146,22 @@ export default {
         key: 'area',
         content: '',
         error: false
+      },
+      email: {
+        key: 'email',
+        content: '',
+        error: false
       }
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    log.debug('to path is ' + to.path);
+    log.debug('from path is ' + from.path);
+    next(vm => {
+      if (from.path !== '/card' || isObjEmpty(vm.User.member)) {
+        vm.$router.push({name: 'member'});
+      }
+    });
   },
   components: {
     [Field.name]: Field,
@@ -146,6 +172,11 @@ export default {
     [Area.name]: Area,
     [Actionsheet.name]: Actionsheet,
     [Button.name]: Button
+  },
+  computed: {
+    ...mapState([
+      'User'
+    ])
   },
   methods: {
     close() {
@@ -201,29 +232,73 @@ export default {
       this.close();
     },
     save() {
-
+      const error = this.name.error || this.birthday.error || this.mobile.error || isObjEmpty(this.name.content) || isObjEmpty(this.birthday.content) || isObjEmpty (this.mobile.content);
+      if (error) {
+        this.__toast('请检查填写内容');
+      } else {
+        // 查重
+        this.$store.dispatch('duplicate', {name: this.mobile.content}).then(resp => {
+          if (resp) {
+            this.__toast('手机已被注册，请冲洗输入手机号码');
+            this.mobile.content = '';
+          } else {
+            const param = {
+              userId: this.User.member.id,
+              name: this.name.content,
+              mobile: this.mobile.content,
+              gender: isObjEmpty(this.sex.content) ? this.sex.content : null,
+              email: isObjEmpty(this.email.content) ? this.email.content : null,
+              address: isObjEmpty(this.area.content) ? this.area.content : null,
+              detailAddress : isObjEmpty(this.address.content) ? this.address.content : null
+            }
+            this.$store.dispatch('modifyInfo', param).then(resp => {
+              if (resp) {
+                this.__toast('个人信息修改成功', 'success');
+                //TODO 需要更新state中的内容
+              } else {
+                this.__toast('个人信息修改失败', 'fail');
+              }
+            });
+          }
+        });
+      }
     },
     check(data) {
       let error = false;
-      switch(data.key){
+      // debugger
+      switch(data.key) {
         case this.name.key:
-          error = data.content !== '' ? true : false;
-          error = !regexmatch(data.content, regex.chineseName);
+          error = isObjEmpty(this.name.content) || !regexmatch(data.content, regex.chineseName) ;
           if (error) {
             this.__toast('请输入中文姓名');
           }
           break;
-        case this.birthday: {
-
-        }
-
+        case this.birthday.key:
+          error = isObjEmpty(this.birthday.content);
+          if(error) {
+            this.__toast('请选择生日');
+          } 
+          break;
+        case this.mobile.key:
+          error = isObjEmpty(this.mobile.content) || !regexmatch(data.content, regex.mobile);
+          if(error) {
+            this.__toast('请输入正确的电话号码');
+          }
+          break;
+        case this.email.key:
+          error = isObjEmpty(this.email.content) || !regexmatch(data.content, regex.email);
+          if(error) {
+            this.__toast('请输入正确的邮件地址');
+          }
       }
+      data.error = error;
     },
-    __toast(content) {
+    __toast() {
       Toast({
-        message: content,
+        message: arguments[0],
         forbidClick: true,
-        duration: 1000
+        duration: 1000,
+        type: arguments[1] ? arguments[1] : 'text'
       });
     },
   }

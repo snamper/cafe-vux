@@ -47,6 +47,15 @@ export default {
       avatorurl: '../../../static/img/avator.jpg'
     };
   },
+  beforeRouteEnter(to, from, next) {
+    log.debug('to path is ' + to.path);
+    log.debug('from path is ' + from.path);
+    next(vm => {
+      if (from.path !== '/member' || isObjEmpty(vm.User.member)) {
+        vm.$router.push({name: 'member'});
+      }
+    });
+  },
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
