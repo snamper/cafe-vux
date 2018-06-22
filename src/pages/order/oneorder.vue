@@ -10,11 +10,11 @@
       <van-panel title="title" :desc="orderId" :status="status"></van-panel>
     </div>
     <div class="product-wrapper">
-      <product ></product>
+      <product :good="order.details[0]" ></product>
     </div>
-    <div class="showmore" @click="showmore">查看全部{{count}}件商品</div>
+    <div v-if="order.details.length > 0" class="showmore" @click="showmore">查看全部{{order.details.length}}件商品</div>
     <div class="total van-hairline--top-bottom">
-      合计:<span>￥{{totalprice}}</span>
+      合计:<span>￥{{order.amount}}</span>
     </div>
   </div>
 </template>
@@ -23,14 +23,19 @@
 import { Cell, CellGroup, Panel, Row, Col } from 'vant';
 import product from '../../components/productbanner';
 import banner from '../../components/banner';
+import Logger from 'chivy';
+const log = new Logger('vuex/member/oneorder');
 export default {
   data() {
     return {
-      totalprice: '127.00',
       status: '交易关闭',
-      orderId: 'E12932908409823098340',
-      count: 5
+      orderId: 'E12932908409823098340'
     };
+  },
+  props: {
+    order: {
+      type: Object
+    }
   },
   components: {
     [Cell.name]: Cell,
@@ -43,7 +48,7 @@ export default {
   },
   methods: {
     showmore() {
-      this.$router.push({name: 'orderdetail'});
+      this.$router.push({name: 'orderdetail', params: {detail: this.order}});
     }
   }
 };

@@ -10,8 +10,8 @@
         v-for="(title, index) in tabtitle"
         :key="index"
         :title="title">
-        <div class="test" v-for="(record, i) in records.length" :key="i">
-          <order v-if="false"></order>
+        <div class="test" v-for="(record, index) in records" :key="index">
+          <order :order="record"></order>
         </div>
       </van-tab>
     </van-tabs>
@@ -22,8 +22,8 @@
 import { Tab, Tabs, NavBar } from 'vant';
 import { mapState } from 'vuex';
 import order from  './oneorder';
-import Logger from 'chivy';
 import { isObjEmpty } from '../../common/js/util';
+import Logger from 'chivy';
 const log = new Logger('vuex/member/orderlist');
 export default {
   data() {
@@ -36,10 +36,10 @@ export default {
     log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
-      if (from.path !== '/member') {
-        vm.$router.push({name: 'member'});
-      } else {
+      if (from.path === '/member' || from.path === '/orderdetail') {
         vm.__getRecord();
+      } else {
+        vm.$router.push({name: 'member'});
       }
     });
   },

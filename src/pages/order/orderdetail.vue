@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="detail">
     <van-nav-bar
       title="交易完成的订单"
       left-arrow
@@ -17,8 +17,10 @@
         <van-step>交易完成</van-step>
       </van-steps>
       <addr></addr>
-      <div class="products" v-for="(product, index) in 2" :key="index">
-        <product></product>
+      <div>
+        <div class="products" v-for="(product, index) in detail.details" :key="index">
+          <product :good="product"></product>
+        </div>
       </div>
       <van-cell-group>
         <van-cell title="配送方式" :value="delivertype"/>
@@ -27,7 +29,7 @@
           placeholder="无"
           disabled>
         </van-field>
-        <van-cell title="合计" value="￥420.00"/>
+        <van-cell title="合计" :value="`￥` + detail.amount"/>
       </van-cell-group>
       <van-cell-group>
         <van-cell>
@@ -35,16 +37,16 @@
             <div>商品金额</div>
             <div>运费</div>
           </template>
-          <div>￥420.00</div>
-          <div>+ ￥25.00</div>
+          <div>￥{{detail.amount}}</div>
+          <div> ￥25.00</div>
         </van-cell>
-        <van-cell title="应付金额" value="￥420.00"/>
+        <van-cell title="应付金额" :value="`￥` + detail.amount"/>
       </van-cell-group>
       <van-cell-group>
         <van-cell>
           <template slot="title">
             <div class="order">订单编号: E12932908409823098340</div>
-            <div class="order">创建时间: 2018-06-18 13:24:25</div>
+            <div class="order">创建时间: {{detail.createTimeAsString}}</div>
           </template>
         </van-cell>
       </van-cell-group>
@@ -56,12 +58,23 @@
 import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps } from 'vant';
 import product from '../../components/productbanner';
 import addr from '../../components/orderaddress';
+import Logger from 'chivy';
+const log = new Logger('vuex/member/orderdetail');
 export default {
   data() {
     return {
       active: 2,
       delivertype: '自提'
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    log.debug('to path is ' + to.path);
+    log.debug('from path is ' + from.path);
+    next(vm => {
+      if (from.path !== '/order') {
+        vm.$router.push({name: 'member'});
+      }
+    });
   },
   components: {
     [Cell.name]: Cell,
@@ -75,9 +88,14 @@ export default {
     addr,
     product
   },
+  props: {
+    detail: {
+      type: Object
+    }
+  },
   methods: {
     back() {
-
+      this.$router.push({name: 'order', params: {order: this.order}});
     }
   }
 };
