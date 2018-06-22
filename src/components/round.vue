@@ -18,10 +18,11 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .round-wrapper
   span
-    width 30px
-    height 30px
+    padding 5px 15px
+    width 10px
+    height 10px
     background-color gray;
-    color black
+    color white
     text-align center
-    border-radius 15px
+    border-radius 50%
 </style>
