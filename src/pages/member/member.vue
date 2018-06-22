@@ -1,5 +1,5 @@
 <template>
-  <div class="membeer">
+  <div class="member-wrapper">
     <div class="avator">
       <div class="info">
         <avator :url="avatorurl" :radius="50" :width="100" :height="100"></avator>
@@ -35,13 +35,16 @@
         </div>
       </van-col>
     </van-row>
-    <van-cell-group>
-      <van-cell title="购物车" value="4" :to="{name: 'cart'}"></van-cell>
+    <van-cell-group class="cart">
+      <van-cell title="购物车" :to="{name: 'cart'}">
+        <round></round>
+        <!-- <span style="width:10px;height:10px;background-color:white">{{selectFoods.length}}</span> -->
+      </van-cell>
     </van-cell-group>
     <van-cell-group v-if="User.member">
       <van-cell title="我的会员卡" is-link :to="{name: 'card'}"></van-cell>
-      <van-cell title="我的积分" is-link ></van-cell>
-      <van-cell title="我的信息" is-link ></van-cell>
+      <!-- <van-cell title="我的积分" is-link ></van-cell>
+      <van-cell title="我的信息" is-link ></van-cell> -->
     </van-cell-group>
   </div>
 </template>
@@ -49,9 +52,10 @@
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, Row, Col, Icon } from 'vant';
 import { mapState, mapGetters } from 'vuex';
+import round from '../../components/round';
 import avator from '../../components/avator';
 import Logger from 'chivy';
-const log = new Logger('vuex/member');
+const log = new Logger('vuex/member/member');
 export default {
   data() {
     return {
@@ -64,13 +68,15 @@ export default {
     [Row.name]: Row,
     [Col.name]: Col,
     [Icon.name]: Icon,
-    avator
+    avator,
+    round
   },
   computed: {
     ...mapState([
       'User'
     ]),
     ...mapGetters([
+      'selectFoods',
       'username'
     ])
   }
@@ -78,7 +84,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.membeer
+.member-wrapper
   .avator
     width 100%
     height 200px
@@ -102,5 +108,5 @@ export default {
         .van-icon
           font-size 30px
         .name
-          font-size 16px
+          font-size 16px 
 </style>
