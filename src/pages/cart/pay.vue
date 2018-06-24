@@ -25,9 +25,11 @@
           <template slot="title">
             <div>商品总价</div>
             <div>会员优惠</div>
+            <div v-if="true">快递费用</div>
           </template>
           <div>￥{{totalAttr.normal}}</div>
           <div>￥{{totalAttr.normal - totalAttr.member}}</div>
+          <div>￥25</div>
         </van-cell>
       </van-cell-group>
     </div>
@@ -63,10 +65,6 @@ export default {
       delivertype: '自提',
       action: false,
       comment: '',
-      currentContact: {
-        name: '张三',
-        tel: '13000000000',
-      },
       cardType: 'add',
       columns: ['自提','快递']
     };
@@ -82,6 +80,15 @@ export default {
     product,
     addr,
     split
+  },
+  beforeRouteEnter(from, to, next){
+    log.debug('to path is ' + to.path);
+    log.debug('from path is ' + from.path);
+    next(vm => {
+      if (to.path !== '/cart') {
+        vm.$router.push({name: 'cart'});
+      }
+    });
   },
   computed: {
     ...mapGetters([
