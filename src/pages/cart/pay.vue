@@ -85,7 +85,8 @@ export default {
     log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
-      if (to.path !== '/cart') {
+      log.debug('selectfoods length is ' + vm.selectFoods.length);
+      if (vm.selectFoods.length === 0) {
         vm.$router.push({name: 'cart'});
       }
     });

@@ -66,14 +66,15 @@ export default {
   methods: {
     onBuyClicked(data) {
       log.debug('onBuyClicked' + JSON.stringify(data));
-      this.$router.push({name: 'pay'});
+      this.__add2cart(data).then(() => {
+        this.$router.push({name: 'pay'});
+      });
     },
     onAddCartClicked(data) {
       log.debug('add carts');
-      const good = data.selectedSkuComb.good;
-      const count = data.selectedNum;
-      this.$store.commit('addCount', {good, count});
-      this.__showAndToast();
+      this.__add2cart(data).then(() => {
+        this.__showAndToast();
+      });
     },
     onPointClicked() {
       log.debug('积分兑换');
@@ -92,6 +93,14 @@ export default {
     nextstep() {
       log.debug('next');
       this.$router.push({name: 'pay'});
+    },
+    __add2cart(data) {
+      return new Promise((resolve, reject) => {
+        const good = data.selectedSkuComb.good;
+        const count = data.selectedNum;
+        this.$store.commit('addCount', {good, count});
+        resolve();
+      });
     },
     __data(data) {
       let product = data.selectedSkuComb.good;
