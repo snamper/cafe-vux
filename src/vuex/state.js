@@ -11,5 +11,6 @@ export default {
     carts: null,
     // 配送地址
     address: null,
+    // 填写的地址
     addresses: []
 };

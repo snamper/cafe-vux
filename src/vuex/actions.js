@@ -1,4 +1,4 @@
-import { getCategoriedProducts, memberLogin, isExistUserName, createMember, modifyBasicInfo, saveRecordList, getRecordList, saveAddresses } from '../common/js/ajax';
+import * as AJAX from '../common/js/ajax';
 import { getMemberInfo, setModifyMemberData } from '../common/js/util';
 import logger from '../common/js/logger';
 import Logger from 'chivy';
@@ -6,15 +6,16 @@ const log = new Logger('vuex/actions');
 export default {
   getGoods(context) {
     return new Promise(resolve => {
-      getCategoriedProducts().then((data) => {
+      AJAX.getCategoriedProducts().then((data) => {
         context.commit('update', {type: 'goods', value: data});
+        log.warn('getGoods');
         resolve();
       });
     });
   },
   login(context, payload) {
     return new Promise((resolve, reject) => {
-      memberLogin(payload).then(data => {
+      AJAX.memberLogin(payload).then(data => {
         if (data.status) {
           const memberinfo = getMemberInfo(data);
           log.debug('reorganization data is ' + logger(memberinfo));
@@ -28,14 +29,14 @@ export default {
   },
   duplicate(context, payload) {
     return new Promise(resolve => {
-      isExistUserName(payload).then(data => {
+      AJAX.isExistUserName(payload).then(data => {
         resolve(data.status);
       });
     });
   },
   resigter(context, payload) {
     return new Promise((resolve, reject) => {
-      createMember(payload).then((data) => {
+      AJAX.createMember(payload).then((data) => {
         if (data.status) {
           const memberinfo = getMemberInfo(data);
           context.commit('update', {type: 'memberinfo', value: memberinfo});
@@ -51,7 +52,7 @@ export default {
     const param = setModifyMemberData(payload);
     log.debug('modifyInfo param is ' + JSON.stringify(param));
     return new Promise(resolve => {
-      modifyBasicInfo(param).then((data) => {
+      AJAX.modifyBasicInfo(param).then((data) => {
         resolve(data.success);
       });
     });
@@ -65,7 +66,7 @@ export default {
   },
   submitRecord(context, payload) {
     return new Promise((resolve, reject) => {
-      saveRecordList(payload).then(data => {
+      AJAX.saveRecordList(payload).then(data => {
         if (data.success) {
           resolve(data.entityCode);
         } else {
@@ -76,7 +77,7 @@ export default {
   },
   getRecords(context, payload) {
     return new Promise(resolve => {
-      getRecordList(payload).then(data => {
+      AJAX.getRecordList(payload).then(data => {
         context.commit('update', {type: 'records', value: data});
         resolve(true);
       });
@@ -84,7 +85,16 @@ export default {
   },
   saveAddress(context, payload) {
     return new Promise((resolve, reject) => {
-      saveAddresses(payload).then(data => {
+      AJAX.saveAddresses(payload).then(data => {
+        resolve();
+      });
+    });
+  },
+  getAddress(context, payload) {
+    return new Promise((resolve, reject) => {
+      AJAX.getAddresses(payload).then(data => {
+        context.commit('update', {type: 'addresses', value: data});
+        log.warn('done getaddress');
         resolve();
       });
     });

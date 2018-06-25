@@ -8,7 +8,7 @@
     </van-nav-bar>
     <van-address-list
       v-model="chosenAddressId"
-      :list="list"
+      :list="addressList"
       @add="onAdd"
       @edit="onEdit"
     ></van-address-list>
@@ -18,37 +18,56 @@
 <script type="text/ecmascript=6">
 // 判断是否是会员，不是会员则只能添加一个地址，且无法保存地址，如果是会员则可以保存多个地址
 import { NavBar, Cell, CellGroup, AddressList, Toast } from 'vant';
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import { isObjEmpty } from '../../common/js/util';
+import Logger from 'chivy';
+const log = new Logger('pages/member/address');
 export default {
   data() {
     return {
-      chosenAddressId: '1',
-      list: [
-        /* {
-          id: '1',
-          name: '张三',
-          tel: '13000000000',
-          address: '浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室'
-        },
-        {
-          id: '2',
-          name: '李四',
-          tel: '1310000000',
-          address: '浙江省杭州市拱墅区莫干山路 50 号'
-        } */
-      ]
+      chosenAddressId: ''
     };
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-
-    });
+      if (isObjEmpty(vm.$store.state.User.uuid) && isObjEmpty(vm.$store.state.User.member)) {
+        //vm.$router.push({name: 'cart'});
+        vm.$store.commit('init');
+      }
+      if(!isObjEmpty(vm.User.member)){
+        vm.__getaddresslist();
+      }
+    })
   },
   computed: {
     ...mapState([
+      'User',
       'address',
-    ])
+      'addresses'
+    ]),
+    ...mapGetters([
+      'addressList'
+    ]),
+    list() {
+      if (!isObjEmpty(this.address)) {
+        const list = [];
+        list.push(this.__covert(this.address));
+        return list;
+      } else if(!isObjEmpty(this.User.member)) {
+        return this.AddressList;
+      }
+    },
+    chooseId() {
+      if (!isObjEmpty(this.address)) {
+        this.chosenAddressId = this.address.memberId;
+      } else {
+        this.addresses.forEach(address => {
+          if (address.defaultEntity) {
+            this.chosenAddressId = address.id;
+          }
+        });
+      }
+    }
   },
   components: {
     [NavBar.name]: NavBar,
@@ -64,13 +83,28 @@ export default {
         return;
       }
       Toast.fail('游客只能添加一个地址');
-
     },
     onEdit() {
       this.$router.push({name: 'addressedit'});
     },
     back() {
-      this.$router.go(-1);
+      this.$router.push({name: 'pay'});
+    },
+    __covert(address) {
+      return {
+        id: address.memberId,
+        name: address.name,
+        tel: address.mobile,
+        address: address.province + address.city + address.county + address.address
+      };
+    },
+    __getaddresslist() {
+      const param = {
+        entityId: this.User.member.id
+      }
+      this.$store.dispatch('getAddress', param).then(() => {
+        log.debug('done __getaddresslist');
+      });
     }
   }
 };

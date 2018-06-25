@@ -22,8 +22,8 @@
 import { AddressEdit, NavBar } from 'vant';
 import areaList from '../../common/js/area.js';
 import { mapState } from 'vuex';
-import Logger from 'chivy';
 import { isObjEmpty } from '../../common/js/util.js';
+import Logger from 'chivy';
 const log = new Logger('pages/member/addressedit');
 export default {
   data() {
@@ -34,8 +34,8 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (isObjEmpty(vm.User.uuid) && isObjEmpty(vm.User.member)) {
-        vm.$router.push({name: 'member'});
+      if (isObjEmpty(vm.$store.state.User.uuid) && isObjEmpty(vm.$store.state.User.member)) {
+        vm.$router.push({name: 'cart'});
       }
     })
   },
@@ -67,10 +67,18 @@ export default {
         mobile: content.tel,
         isdefault: content.is_default
       };
-      if (this.User.uuid) {
+      if (!isObjEmpty(this.User.uuid)) {
         this.$store.commit('update', {type: 'address', value: address});
+        this.$router.push({name: 'address'});
       } else {
         this.$store.dispatch('saveAddress', address);
+      }
+    },
+    __check(address) {
+      for (let key in address) {
+        if (isObjEmpty(address[key])) {
+          return false;
+        }
       }
     }
   }

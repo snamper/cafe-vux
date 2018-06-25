@@ -79,19 +79,13 @@ export default new Router({
       name: 'address',
       path: '/address',
       component: () => import('../pages/member/address.vue').then(m => m.default),
-      props: true,
-      meta: {
-        keepAlive: true
-      }
+      props: true
     },
     {
       name: 'addressedit',
       path: '/addressedit',
       component: () => import('../pages/member/addressedit.vue').then(m => m.default),
-      props: true,
-      meta: {
-        keepAlive: true
-      }
+      props: true
     },
     {
       name: 'order',

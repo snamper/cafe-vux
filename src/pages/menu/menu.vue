@@ -40,7 +40,9 @@ export default {
     sku
   },
   created() {
-    this.$store.dispatch('getGoods');
+    this.$store.dispatch('getGoods').then(() => {
+      log.warn('done goods gets');
+    });
   },
   computed: {
     ...mapGetters([
@@ -49,7 +51,6 @@ export default {
   },
   methods: {
     buy(product) {
-      // log.debug('buy');
       this.$refs.sku.showit(product);
     },
     showdetail(product) {

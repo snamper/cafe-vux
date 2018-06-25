@@ -102,10 +102,12 @@ export default {
   },
   methods: {
     back() {
-
+      this.$router.push({name: 'cart'});
     },
     addaddress() {
-      this.$router.push({name: 'address', params: {selectFoods: this.selectFoods, totalAttr: this.totalAttr}});
+      log.debug('jump page to address');
+      /* this.$router.push({name: 'address', params: {selectFoods: this.selectFoods, totalAttr: this.totalAttr}}); */
+      this.$router.push({name: 'address'});
     },
     addcontact() {
       log.debug('add');

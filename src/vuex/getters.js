@@ -85,12 +85,12 @@ export default {
     return result;
   },
   username(state) {
+    log.debug('reserve');
     if (state.User.uuid !== null) {
       return '游客';
     } else if (state.User.member === null) {
       return '游客';
     } else {
-      log.debug('Member is' + JSON.stringify(state.User));
       if (state.User.member.nick !== '') {
         return state.User.member.nick;
       } else if (state.User.member.name !== '') {
@@ -101,5 +101,17 @@ export default {
         return state.User.member.email;
       }
     }
+  },
+  addressList(state) {
+    const result = [];
+    state.addresses.forEach(address => {
+      result.push({
+        id: address.id,
+        name: address.name,
+        tel: address.mobile,
+        address: address.province + address.city + address.county + address.address
+      });
+    });
+    return result;
   }
 };
