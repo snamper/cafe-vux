@@ -17,7 +17,9 @@
 
 <script type="text/ecmascript=6">
 // 判断是否是会员，不是会员则只能添加一个地址，且无法保存地址，如果是会员则可以保存多个地址
-import { NavBar, Cell, CellGroup, AddressList } from 'vant';
+import { NavBar, Cell, CellGroup, AddressList, Toast } from 'vant';
+import { mapState } from 'vuex';
+import { isObjEmpty } from '../../common/js/util';
 export default {
   data() {
     return {
@@ -43,6 +45,11 @@ export default {
 
     });
   },
+  computed: {
+    ...mapState([
+      'address',
+    ])
+  },
   components: {
     [NavBar.name]: NavBar,
     [Cell.name]: Cell,
@@ -51,7 +58,13 @@ export default {
   },
   methods: {
     onAdd() {
-      this.$router.push({name: 'addressedit'});
+      // 新增收货地址，当address已经存在的情况下，就提示用户不能再次添加地址了
+      if (isObjEmpty(this.address)) {
+        this.$router.push({name: 'addressedit'});
+        return;
+      }
+      Toast.fail('游客只能添加一个地址');
+
     },
     onEdit() {
       this.$router.push({name: 'addressedit'});

@@ -35,10 +35,9 @@
         </div>
       </van-col>
     </van-row>
-    <van-cell-group class="cart">
+    <van-cell-group>
       <van-cell title="购物车" :to="{name: 'cart'}">
         <round></round>
-        <!-- <span style="width:10px;height:10px;background-color:white">{{selectFoods.length}}</span> -->
       </van-cell>
     </van-cell-group>
     <van-cell-group v-if="User.member">
@@ -46,11 +45,18 @@
       <!-- <van-cell title="我的积分" is-link ></van-cell>
       <van-cell title="我的信息" is-link ></van-cell> -->
     </van-cell-group>
+    <van-cell-group class="loginout" v-if="User.member">
+      <van-button type="danger" @click.native="logout">注销</van-button>
+    </van-cell-group>
+    <van-cell-group class="loginout" v-else>
+      <van-button type="primary" @click.native="login">我要登录</van-button>
+    </van-cell-group>
+
   </div>
 </template>
 
 <script type="text/ecmascript=6">
-import { Cell, CellGroup, Row, Col, Icon } from 'vant';
+import { Cell, CellGroup, Row, Col, Icon, Button  } from 'vant';
 import { mapState, mapGetters } from 'vuex';
 import round from '../../components/round';
 import avator from '../../components/avator';
@@ -68,6 +74,7 @@ export default {
     [Row.name]: Row,
     [Col.name]: Col,
     [Icon.name]: Icon,
+    [Button.name]: Button,
     avator,
     round
   },
@@ -79,6 +86,14 @@ export default {
       'selectFoods',
       'username'
     ])
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('loginout');
+    },
+    login() {
+      this.$router.push({name: 'login'});
+    }
   }
 };
 </script>
@@ -108,5 +123,10 @@ export default {
         .van-icon
           font-size 30px
         .name
-          font-size 16px 
+          font-size 16px
+  .loginout
+    display flex
+    justify-content center
+    .van-button
+      width 97%
 </style>

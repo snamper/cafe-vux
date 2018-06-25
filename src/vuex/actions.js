@@ -19,7 +19,7 @@ export default {
           const memberinfo = getMemberInfo(data);
           log.debug('reorganization data is ' + logger(memberinfo));
           context.commit('update', {type: 'memberinfo', value: memberinfo});
-          resolve(data.status);
+          data.status ? resolve() : reject(new Error('login failed'));
         } else {
           reject(new Error('login failed'));
         }
@@ -29,7 +29,7 @@ export default {
   duplicate(context, payload) {
     return new Promise(resolve => {
       isExistUserName(payload).then(data => {
-          resolve(data.status);
+        resolve(data.status);
       });
     });
   },

@@ -70,8 +70,11 @@
         <van-button style="width:97%" type="primary" @click="login">登录</van-button>
       </div>
       <div class="ops">
-        <span class="forget" @click="forgetPwd">忘记密码</span>
-        <span class="register" @click="show">注册</span>
+        <van-row type="flex">
+          <van-col class="forget" span="8" @click.native="forget">忘记密码</van-col>
+          <van-col class="vistor" span="8" @click.native="vistor">游客访问</van-col>
+          <van-col class="register" span="8" @click.native="show">注册</van-col>
+        </van-row>
       </div>
     </div>
     <div class="submit" v-else>
@@ -95,7 +98,7 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { Button, Field, CellGroup, Toast } from 'vant';
+import { Button, Field, CellGroup, Toast, Row, Col } from 'vant';
 import avator from '../../components/avator';
 import { mapState } from 'vuex';
 import md5 from 'blueimp-md5';
@@ -149,6 +152,8 @@ export default {
     [Button.name]: Button,
     [Field.name]: Field,
     [CellGroup.name]: CellGroup,
+    [Row.name]: Row,
+    [Col.name]: Col,
     avator
   },
   computed: {
@@ -166,6 +171,9 @@ export default {
     })
   },
   methods: {
+    vistor() {
+      this.$router.push({name: 'member'});
+    },
     show() {
       this.showlogin = !this.showlogin;
     },
@@ -178,9 +186,13 @@ export default {
           passWd: md5(this.password.content)
         };
         this.$store.dispatch('login', param).then(() => {
-          this.__jump();
+          this.__toast('登录成功').then(() => {
+            this.__jump();
+          });
         }).catch((error) => {
-          this.__fail(true);
+          this.__toast('登录失败').then(() => {
+            this.__fail(true);
+          });
         });
       } else {
         this.__toast('请填写正确的内容');
@@ -195,9 +207,13 @@ export default {
           passWd: md5(this.pwd)
         };
         this.$store.dispatch('resigter', param).then(() => {
-          this.__jump();
+          this.__toast('注册成功').then(() => {
+            this.__jump();
+          });
         }).catch((error) => {
-          this.__fail(true);
+          this.__toast('注册失败').then(() => {
+            this.__fail(true);
+          })
         });
       } else {
         this.__toast('请填写正确的信息');
@@ -271,17 +287,20 @@ export default {
     __fail(status) {
       // 密码清空
       this.showlogin = status;
-      this.username = '';
-      this.password = '';
-      this.account = '';
-      this.pwd = '';
-      this.repwd = '';
+      this.username.content = '';
+      this.password.content = '';
+      this.account.content = '';
+      this.pwd.content = '';
+      this.repwd.content = '';
     },
     __toast(content) {
-      Toast({
-        message: content,
-        forbidClick: true,
-        duration: 1000
+      return new Promise((resolve, reject) => {
+        Toast({
+          message: content,
+          forbidClick: true,
+          duration: 1000
+        });
+        resolve();
       });
     },
     __jump() {
@@ -308,12 +327,19 @@ export default {
     justify-content center
     margin 10px 0px
   .ops
-    display flex
-    .forget, .register
-      font-size 16px
-      padding 10px
-    .register
-      margin-left auto
+    .van-row
+      .van-col
+        font-size 18px
+        padding 10px 0
+        display flex
+      .register
+        justify-content flex-end
+        padding-right 10px
+      .vistor
+        justify-content center
+      .forget
+        justify-content flex-start
+        padding-left 10px
   .submit-wrapper
     display flex
     justify-content space-between
