@@ -40,9 +40,7 @@ export default {
     sku
   },
   created() {
-    this.$store.dispatch('getGoods').then(() => {
-      log.warn('done goods gets');
-    });
+    this.$store.dispatch('getGoods');
   },
   computed: {
     ...mapGetters([

@@ -6,7 +6,7 @@
       @click-left="back">
     </van-nav-bar>
     <div class="content">
-      <addr :show="false" @addaddress="addaddress"></addr>
+      <addr :show="show" :address="address" @addaddress="addaddress"></addr>
       <div class="orderlist" v-for="(good, index) in selectFoods" :key="index">
         <product :good="good"></product>
       </div>
@@ -58,6 +58,7 @@ import addr from '../../components/orderaddress';
 import split from '../../components/split';
 import { mapGetters } from 'vuex';
 import Logger from 'chivy';
+import { isObjEmpty } from '../../common/js/util';
 const log = new Logger('pages/cart/pay');
 export default {
   data() {
@@ -68,6 +69,12 @@ export default {
       cardType: 'add',
       columns: ['自提','快递']
     };
+  },
+  props: {
+    address: {
+      type: Object,
+      default: null
+    }
   },
   components: {
     [NavBar.name]: NavBar,
@@ -87,7 +94,7 @@ export default {
     next(vm => {
       log.debug('selectfoods length is ' + vm.selectFoods.length);
       if (vm.selectFoods.length === 0) {
-        vm.$router.push({name: 'cart'});
+        // vm.$router.push({name: 'cart'});
       }
     });
   },
@@ -98,6 +105,9 @@ export default {
     ]),
     value() {
       return '￥' + this.totalAttr.normal;
+    },
+    show() {
+      isObjEmpty(this.address) ? false : true;
     }
   },
   methods: {
@@ -106,14 +116,13 @@ export default {
     },
     addaddress() {
       log.debug('jump page to address');
-      /* this.$router.push({name: 'address', params: {selectFoods: this.selectFoods, totalAttr: this.totalAttr}}); */
       this.$router.push({name: 'address'});
     },
     addcontact() {
       log.debug('add');
     },
     onSubmit() {
-
+      
     },
     select() {
       this.action = true;

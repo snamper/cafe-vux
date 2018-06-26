@@ -1,14 +1,14 @@
 <template>
   <div class="address van-hairline--bottom">
-    <div v-if="show">
+    <div v-if="show && address !== null">
       <div class="contact">
         <span class="left">
           <van-icon name="location"/>
-          <span class="name">收货人: {{name}}</span>
+          <span class="name">收货人: {{address.name}}</span>
         </span>
-        <span class="right">{{mobile}}</span>
+        <span class="right">{{address.mobile}}</span>
       </div>
-      <div class="location">收货地址: {{location}}</div>
+      <div class="location">收货地址: {{address.province}}{{address.city}}{{address.county}}{{address.address}}</div>
     </div>
     <div class="add" v-else>
       <van-row>
@@ -28,19 +28,20 @@
 <script type="text/ecmascript=6">
 import { Icon, Row, Col } from 'vant';
 import Logger from 'chivy';
+import { isObjEmpty } from '../common/js/util';
 const log = new Logger('components/orderaddress');
 export default {
   data() {
     return {
-      name: '普京',
-      mobile: '13333333338',
-      location:'四川省成都市成华区洪山北路99号xx小区xx楼xx号'
     };
   },
   props: {
     show: {
       type: Boolean,
       default: true
+    },
+    address: {
+      type: Object
     }
   },
   components: {

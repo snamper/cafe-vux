@@ -8,7 +8,6 @@ export default {
     return new Promise(resolve => {
       AJAX.getCategoriedProducts().then((data) => {
         context.commit('update', {type: 'goods', value: data});
-        log.warn('getGoods');
         resolve();
       });
     });
@@ -94,7 +93,6 @@ export default {
     return new Promise((resolve, reject) => {
       AJAX.getAddresses(payload).then(data => {
         context.commit('update', {type: 'addresses', value: data});
-        log.warn('done getaddress');
         resolve();
       });
     });

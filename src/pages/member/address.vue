@@ -4,6 +4,7 @@
       title="我的地址"
       left-arrow
       right-text="完成"
+      @click-right="finish"
       @click-left="back">
     </van-nav-bar>
     <van-address-list
@@ -87,6 +88,15 @@ export default {
     onEdit() {
       this.$router.push({name: 'addressedit'});
     },
+    finish() {
+      let param = null;
+      this.addresses.forEach(address => {
+        if (this.chosenAddressId === address.id) {
+          param = address; 
+        }
+      });
+      this.$router.push({name: 'pay', params: {address: param}});
+    },
     back() {
       this.$router.push({name: 'pay'});
     },
@@ -102,9 +112,7 @@ export default {
       const param = {
         entityId: this.User.member.id
       }
-      this.$store.dispatch('getAddress', param).then(() => {
-        log.debug('done __getaddresslist');
-      });
+      this.$store.dispatch('getAddress', param);
     }
   }
 };
