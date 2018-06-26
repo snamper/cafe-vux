@@ -6,7 +6,7 @@
       @click-left="back">
     </van-nav-bar>
     <div class="content">
-      <addr :show="show" :address="address" @addaddress="addaddress"></addr>
+      <addr :address="address" @addaddress="addaddress"></addr>
       <div class="orderlist" v-for="(good, index) in selectFoods" :key="index">
         <product :good="good"></product>
       </div>
@@ -54,7 +54,7 @@
 <script type='text/ecmascript=6'>
 import { NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
 import product from '../../components/productbanner';
-import addr from '../../components/orderaddress';
+import addr from '../../components/addresscard';
 import split from '../../components/split';
 import { mapGetters } from 'vuex';
 import Logger from 'chivy';
@@ -106,8 +106,8 @@ export default {
     value() {
       return '￥' + this.totalAttr.normal;
     },
-    show() {
-      isObjEmpty(this.address) ? false : true;
+    type() {
+      isObjEmpty(this.address) ? 'add' : 'edit';
     }
   },
   methods: {
@@ -122,7 +122,7 @@ export default {
       log.debug('add');
     },
     onSubmit() {
-      
+
     },
     select() {
       this.action = true;

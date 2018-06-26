@@ -57,7 +57,7 @@
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps } from 'vant';
 import product from '../../components/productbanner';
-import addr from '../../components/orderaddress';
+import addr from '../../components/addresscard';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/orderdetail');
 export default {
