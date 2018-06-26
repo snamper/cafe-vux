@@ -62,16 +62,21 @@ export default {
 .address
   background-color rgb(255, 255, 255)
   padding 10px 0px
-  .contact
-    padding 10px
-    display flex
-    .left, .right
-      font-size 16px
-    .right
-      margin-left auto
-  .location
-    padding-left 30px
-    padding-right 5px
+  .contact-wrapper
+    width 90%
+    .contact
+      padding 10px
+      display flex
+      .left, .right
+        font-size 16px
+      .right
+        margin-left auto
+    .location
+      padding-left 30px
+      padding-right 5px
+  .arrow-wrapper
+    width 10%
+    border 1px solid red
   .add
     display flex
     height 50px
