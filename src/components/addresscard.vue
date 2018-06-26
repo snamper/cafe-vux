@@ -6,7 +6,7 @@
         <div class="van-contact-card__text">{{addText}}</div>
       </template>
       <template v-else-if="type === 'edit'">
-        <icon class="van-contact-card__icon" name="contact" />
+        <van-icon class="van-contact-card__icon" name="contact" />
         <div class="van-contact-card__text">
           <div>收货人：{{address.name}}</div>
           <div>联系电话：{{address.mobile}}</div>

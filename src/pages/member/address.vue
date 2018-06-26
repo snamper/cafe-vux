@@ -85,14 +85,17 @@ export default {
       }
       Toast.fail('游客只能添加一个地址');
     },
-    onEdit() {
-      this.$router.push({name: 'addressedit'});
+    onEdit(item, index) {
+      //TODO 区分游客还是会员，游客同样可以修改地址
+      log.debug('index is ' + index);
+      log.debug('this.address is ' + JSON.stringify(this.addresses[index]));
+      this.$router.push({name: 'addressedit', params: {address: this.addresses[index]}});
     },
     finish() {
       let param = null;
       this.addresses.forEach(address => {
         if (this.chosenAddressId === address.id) {
-          param = address; 
+          param = address;
         }
       });
       this.$router.push({name: 'pay', params: {address: param}});

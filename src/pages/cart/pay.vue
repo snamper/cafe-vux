@@ -25,18 +25,19 @@
           <template slot="title">
             <div>商品总价</div>
             <div>会员优惠</div>
-            <div v-if="true">快递费用</div>
+            <div v-if="delivertype === '快递'">快递费用</div>
           </template>
           <div>￥{{totalAttr.normal}}</div>
           <div>￥{{totalAttr.normal - totalAttr.member}}</div>
-          <div>￥25</div>
+          <div v-if="delivertype === '快递'">￥25</div>
         </van-cell>
       </van-cell-group>
     </div>
     <div class="submit">
       <van-submit-bar
         button-text="提交订单"
-        :price="totalAttr.normal * 100"
+        :price="price"
+        :disabled="address === null ? true : false"
         @submit="onSubmit">
       </van-submit-bar>
     </div>
@@ -94,7 +95,7 @@ export default {
     next(vm => {
       log.debug('selectfoods length is ' + vm.selectFoods.length);
       if (vm.selectFoods.length === 0) {
-        // vm.$router.push({name: 'cart'});
+        vm.$router.push({name: 'cart'});
       }
     });
   },
@@ -108,6 +109,9 @@ export default {
     },
     type() {
       isObjEmpty(this.address) ? 'add' : 'edit';
+    },
+    price() {
+      return this.delivertype === '自提' ? this.totalAttr.normal * 100 : (this.totalAttr.normal + 25) * 100;
     }
   },
   methods: {

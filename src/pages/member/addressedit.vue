@@ -1,15 +1,15 @@
 <template>
   <div>
     <van-nav-bar
-      title="添加地址"
+      :title="title"
       left-arrow
       right-text="完成"
       @click-left="back"
       @click-right="onSave">
     </van-nav-bar>
     <van-address-edit
+      :address-info="addressinfo"
       :area-list="areaList"
-      show-postal
       :show-set-default="showsetdefault"
       show-search-result
       :search-result="searchResult"
@@ -39,6 +39,12 @@ export default {
       }
     })
   },
+  props: {
+    address: {
+      type: Object,
+      default: null
+    }
+  },
   components: {
     [AddressEdit.name]: AddressEdit,
     [NavBar.name]: NavBar
@@ -49,6 +55,21 @@ export default {
     ]),
     showsetdefault() {
       return isObjEmpty(this.User.uuid) ? true: false;
+    },
+    title() {
+      return isObjEmpty(this.address) ? '添加地址' : '修改地址';
+    },
+    addressinfo() {
+      return {
+        id: this.address.id,
+        name: this.address.name,
+        tel: this.address.mobile,
+        province: this.address.province,
+        city: this.address.city,
+        county: this.address.county,
+        address_detail: this.address.address,
+        is_default: this.defaultEntity
+      };
     }
   },
   methods: {
