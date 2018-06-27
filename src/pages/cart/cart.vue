@@ -6,7 +6,9 @@
         <span @click="showdelete">{{editTitle}}</span>
       </div>
       <div class="order" v-for="(product, index) in selectFoods" :key="index">
-        <product :checked="checked" showcheckbox :good="product" @select="select"></product>
+        <van-checkbox-group v-model="result">
+          <product :checked="checked" showcheckbox :good="product" @select="select"></product>
+        </van-checkbox-group>
       </div>
       <div class="submit">
         <van-submit-bar
@@ -40,7 +42,8 @@ export default {
     return {
       show: false,
       edit: false,
-      checked: true
+      checked: true,
+      result: []
     }
   },
   components: {
