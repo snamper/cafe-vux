@@ -35,7 +35,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (isObjEmpty(vm.$store.state.User.uuid) && isObjEmpty(vm.$store.state.User.member)) {
-        // vm.$router.push({name: 'cart'});
+        vm.$router.push({name: 'cart'});
       }
     })
   },

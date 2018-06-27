@@ -6,7 +6,7 @@
           <template slot="title">
             <div class="title">
               <van-checkbox class="checkbox" v-model="checked" v-if="showcheckbox"></van-checkbox>
-              <img :src="good.imageUrl" style="height:100px;width: 100px">
+              <img :src="getImageUrl(good.imageUrl, 400)" style="height:100px;width: 100px">
               <div class="product">
                 <div class="name">{{good.name}}</div>
                 <div class="price-number">
@@ -29,6 +29,7 @@
 
 <script type="text/ecmascript=6">
 import { Checkbox, Icon, Cell, CellGroup, CellSwipe } from 'vant';
+import { getImageUrl } from '../common/js/util.js';
 import Logger from 'chivy';
 const log = new Logger('page/menu/productbanner');
 export default {
@@ -75,6 +76,9 @@ export default {
           this.$store.commit('subCount', this.good);
           break;
       }
+    },
+    getImageUrl(url, size) {
+      return getImageUrl(url, size);
     }
   }
 };

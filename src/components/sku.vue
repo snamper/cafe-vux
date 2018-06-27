@@ -11,16 +11,16 @@
       :close-on-click-overlay="true"
       @buy-clicked="onBuyClicked"
       @add-cart="onAddCartClicked">
-      <template v-if="next" slot="sku-actions" slot-scope="props">
+      <template slot="sku-actions" slot-scope="props">
         <div class="van-sku-actions">
-          <van-button bottom-action @click="nextstep">下一步</van-button>
+          <van-button bottom-action @click="nextstep">{{btnname}}</van-button>
         </div>
       </template>
-      <template v-if="confirm" slot="sku-actions" slot-scope="props">
+      <!-- <template v-if="confirm" slot="sku-actions" slot-scope="props">
         <div class="van-sku-actions">
           <van-button bottom-action @click="props.skuEventBus.$emit('sku:addCart')">确定</van-button>
         </div>
-      </template>
+      </template> -->
     </van-sku>
   </div>
 </template>
@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       show: false,
+      next: true,
       good: null
     };
   },
@@ -61,6 +62,9 @@ export default {
     sku() {
       // log.debug('sku');
       return this.__sku(this.good);
+    },
+    btnname() {
+      return this.next ? '下一步' : '确定';
     }
   },
   methods: {
@@ -79,20 +83,18 @@ export default {
     onPointClicked() {
       log.debug('积分兑换');
     },
-    showit(good) {
-      // log.debug('show sku');
+    showit(good, flag) {
+      log.debug('show next');
       this.good = good;
       this.show = true;
-    },
-    shownext(good) {
-      // log.debug('show next');
-      this.good = good;
-      this.show = true;
-      this.next = true;
+      this.next = flag;
     },
     nextstep() {
-      log.debug('next');
-      this.$router.push({name: 'pay'});
+      if(this.next) {
+        this.$router.push({name: 'pay'});
+      } else {
+        props.skuEventBus.$emit('sku:addCart')
+      }
     },
     __add2cart(data) {
       return new Promise((resolve, reject) => {

@@ -72,10 +72,10 @@ export default {
       // this.$router.push({name: 'menu'});
     },
     add2cart() {
-      this.$refs.sku.showit(this.good);
+      this.$refs.sku.showit(this.good, false);
     },
     buyit() {
-      this.$refs.sku.shownext(this.good);
+      this.$refs.sku.showit(this.good, true);
     }
   }
 };

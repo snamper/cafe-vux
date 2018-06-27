@@ -76,6 +76,15 @@ export default new Router({
       }
     },
     {
+      name: 'payment',
+      path: '/payment',
+      component: () => import('../pages/cart/payment.vue').then(m => m.default),
+      props: true,
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
       name: 'address',
       path: '/address',
       component: () => import('../pages/member/address.vue').then(m => m.default),

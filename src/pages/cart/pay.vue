@@ -29,7 +29,7 @@
           </template>
           <div>￥{{totalAttr.normal}}</div>
           <div>￥{{totalAttr.normal - totalAttr.member}}</div>
-          <div v-if="delivertype === '快递'">￥25</div>
+          <div v-if="delivertype === '快递'">￥{{deliverPrice}}</div>
         </van-cell>
       </van-cell-group>
     </div>
@@ -60,10 +60,12 @@ import split from '../../components/split';
 import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 import { isObjEmpty } from '../../common/js/util';
+import { deliverPrice } from '../../common/js/consts';
 const log = new Logger('pages/cart/pay');
 export default {
   data() {
     return {
+      deliverPrice,
       delivertype: '自提',
       action: false,
       comment: '',
@@ -95,7 +97,7 @@ export default {
     next(vm => {
       log.debug('selectfoods length is ' + vm.selectFoods.length);
       if (vm.selectFoods.length === 0) {
-        // vm.$router.push({name: 'cart'});
+        vm.$router.push({name: 'cart'});
       }
     });
   },
@@ -111,7 +113,7 @@ export default {
       isObjEmpty(this.address) ? 'add' : 'edit';
     },
     price() {
-      return this.delivertype === '自提' ? this.totalAttr.normal * 100 : (this.totalAttr.normal + 25) * 100;
+      return this.delivertype === '自提' ? this.totalAttr.normal * 100 : (this.totalAttr.normal + this.deliverPrice) * 100;
     }
   },
   methods: {
@@ -124,6 +126,7 @@ export default {
     },
     onSubmit() {
       log.debug('onsubmit');
+      this.$router.push({name: 'payment', params: {deliverType: this.delivertype}});
     },
     select() {
       this.action = true;

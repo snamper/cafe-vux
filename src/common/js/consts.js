@@ -107,4 +107,6 @@ const status = {
   }
 };
 
-export { url, consts, mainswiper, regex, gender, expressType, status };
+const deliverPrice = 25;
+
+export { url, consts, mainswiper, regex, gender, expressType, status, deliverPrice };
