@@ -65,5 +65,12 @@ export default {
         }
       });
     });
+  },
+  clearCarts(state, payload) {
+    state.goods.forEach(category => {
+      category.list.forEach(good => {
+        good.count = 0;
+      });
+    });
   }
 };

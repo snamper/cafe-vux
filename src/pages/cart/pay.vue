@@ -114,6 +114,9 @@ export default {
     },
     price() {
       return this.delivertype === '自提' ? this.totalAttr.normal * 100 : (this.totalAttr.normal + this.deliverPrice) * 100;
+    },
+    deliverType() {
+      return this.delivertype === '自提' ? false : true;
     }
   },
   methods: {
@@ -126,7 +129,7 @@ export default {
     },
     onSubmit() {
       log.debug('onsubmit');
-      this.$router.push({name: 'payment', params: {deliverType: this.delivertype}});
+      this.$router.push({name: 'payment', params: {deliverType: this.deliverType}});
     },
     select() {
       this.action = true;

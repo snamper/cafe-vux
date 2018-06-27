@@ -77,9 +77,7 @@ export default {
     onSubmit() {
       if (this.edit) {
         // 删除
-        this.selectFoods.forEach(product => {
-          product.count = 0;
-        });
+        this.$store.commit('clearCarts');
       } else {
         // 结算
         log.info('pay');

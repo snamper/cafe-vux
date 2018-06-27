@@ -11,16 +11,14 @@
       :close-on-click-overlay="true"
       @buy-clicked="onBuyClicked"
       @add-cart="onAddCartClicked">
-      <template slot="sku-actions" slot-scope="props">
-        <div class="van-sku-actions">
-          <van-button bottom-action @click="nextstep">{{btnname}}</van-button>
+      <template v-if="showSelf" slot="sku-actions" slot-scope="props">
+        <div class="van-sku-actions" v-if="next">
+          <van-button bottom-action @click="props.skuEventBus.$emit('sku:buy')">下一步</van-button>
         </div>
-      </template>
-      <!-- <template v-if="confirm" slot="sku-actions" slot-scope="props">
-        <div class="van-sku-actions">
+        <div class="van-sku-actions" v-if="!next">
           <van-button bottom-action @click="props.skuEventBus.$emit('sku:addCart')">确定</van-button>
         </div>
-      </template> -->
+      </template>
     </van-sku>
   </div>
 </template>
@@ -37,7 +35,8 @@ export default {
     return {
       show: false,
       next: true,
-      good: null
+      good: null,
+      showSelf: false
     };
   },
   props: {
@@ -62,9 +61,6 @@ export default {
     sku() {
       // log.debug('sku');
       return this.__sku(this.good);
-    },
-    btnname() {
-      return this.next ? '下一步' : '确定';
     }
   },
   methods: {
@@ -83,18 +79,22 @@ export default {
     onPointClicked() {
       log.debug('积分兑换');
     },
-    showit(good, flag) {
-      log.debug('show next');
+    showit(good) {
+      log.debug('showit');
       this.good = good;
       this.show = true;
+      this.showSelf = false;
+    },
+    shownext(good, flag) {
+      log.debug('shownext');
+      this.good = good;
+      this.show = true;
+      this.showSelf = true;
       this.next = flag;
     },
-    nextstep() {
-      if(this.next) {
-        this.$router.push({name: 'pay'});
-      } else {
-        props.skuEventBus.$emit('sku:addCart')
-      }
+    nextstep(data) {
+      log.debug('data is' + JSON.stringify(data));
+      this.$router.push({name: 'pay'});
     },
     __add2cart(data) {
       return new Promise((resolve, reject) => {

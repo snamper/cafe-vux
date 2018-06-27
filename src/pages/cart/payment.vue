@@ -5,9 +5,6 @@
       left-arrow
       @click-left="back">
     </van-nav-bar>
-    <div class="pay-wrapper">
-      <p class="desc">请选择支付方式</p>
-    </div>
     <van-radio-group v-model="radio">
       <van-cell-group>
         <van-cell clickable @click="choose(alipay)">
@@ -257,14 +254,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .payment
   overflow hidden
-  .pay-wrapper
-    width 100%       
-    .desc
-      margin 0.3rem 0
-      padding 0 0.3rem
-      line-height 1.5rem
-      height 1.5rem 
-      font-size 1.2rem
   .title-wrapper
     display flex
     align-items center
