@@ -95,7 +95,7 @@ export default {
     next(vm => {
       log.debug('selectfoods length is ' + vm.selectFoods.length);
       if (vm.selectFoods.length === 0) {
-        vm.$router.push({name: 'cart'});
+        // vm.$router.push({name: 'cart'});
       }
     });
   },
@@ -122,11 +122,8 @@ export default {
       log.debug('jump page to address');
       this.$router.push({name: 'address'});
     },
-    addcontact() {
-      log.debug('add');
-    },
     onSubmit() {
-
+      log.debug('onsubmit');
     },
     select() {
       this.action = true;

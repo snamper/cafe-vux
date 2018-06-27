@@ -22,7 +22,7 @@
 import { AddressEdit, NavBar } from 'vant';
 import areaList from '../../common/js/area.js';
 import { mapState } from 'vuex';
-import { isObjEmpty } from '../../common/js/util.js';
+import { isObjEmpty, findCode } from '../../common/js/util.js';
 import Logger from 'chivy';
 const log = new Logger('pages/member/addressedit');
 export default {
@@ -35,7 +35,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (isObjEmpty(vm.$store.state.User.uuid) && isObjEmpty(vm.$store.state.User.member)) {
-        vm.$router.push({name: 'cart'});
+        // vm.$router.push({name: 'cart'});
       }
     })
   },
@@ -60,7 +60,8 @@ export default {
       return isObjEmpty(this.address) ? '添加地址' : '修改地址';
     },
     addressinfo() {
-      return {
+      log.debug('findcode is ' + findCode(this.address.county));
+      return isObjEmpty(this.address) ? {}: {
         id: this.address.id,
         name: this.address.name,
         tel: this.address.mobile,
@@ -68,6 +69,7 @@ export default {
         city: this.address.city,
         county: this.address.county,
         address_detail: this.address.address,
+        area_code: findCode(this.address.county),
         is_default: this.defaultEntity
       };
     }

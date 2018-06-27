@@ -151,4 +151,20 @@ function formatDate(date) {
   return format;
 };
 
-export { getImageUrl, setparam, logger, regexmatch, getMemberInfo, isObjEmpty, getGender, setModifyMemberData, coverStatus, formatDate };
+function findCode(name) {
+    /* eslint-disable */
+    // debugger
+    const area = require('./area');
+    log.debug('name is ' + name);
+    let code = '';
+    // log.debug('county_list is ' + JSON.stringify(area.default.county_list));
+    Object.keys(area.default.county_list).forEach(key => {
+      if (area.default.county_list[key] === name) {
+        code = key;
+        return;
+      }
+    })
+    return code;
+};
+
+export { getImageUrl, setparam, logger, regexmatch, getMemberInfo, isObjEmpty, getGender, setModifyMemberData, coverStatus, formatDate, findCode };
