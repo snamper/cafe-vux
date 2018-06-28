@@ -118,7 +118,7 @@ export default new Router({
     {
       name: '404',
       path: '/404',
-      component: () => import('../pages/main/pagenotfound.vue').then(m => m.default)
+      component: () => import('../pages/other/pagenotfound.vue').then(m => m.default)
     },
     {
       path: '*',
