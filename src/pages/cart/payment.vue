@@ -164,7 +164,7 @@ export default {
       const result = {
         amount: this.totalPrice,
         userId: !isObjEmpty(this.User.member) ? this.User.member.id : '',
-        userCode: !isObjEmpty(this.User.uuid) ? this.User.uuid: '',
+        userCode: !isObjEmpty(this.User.uuid) ? this.User.uuid : '',
         cashOrBalance: !isObjEmpty(this.User.member) && this.totalPrice <= this.User.member.balance && this.radio === this.member.value ? 'BALANCE' : 'CASH',
         details: this.details
       };
