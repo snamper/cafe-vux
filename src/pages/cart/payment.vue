@@ -33,7 +33,7 @@
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="member.img"></avator>
-              <span class="title">{{member.value}}</span>
+              <span class="title">{{member.value}}(￥{{User.member.balance}})</span>
             </div>
           </template>
           <div class="radio-wrapper">
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { Button, NavBar, RadioGroup, Radio, CellGroup, Cell } from 'vant';
+import { Button, NavBar, RadioGroup, Radio, CellGroup, Cell, Toast } from 'vant';
 import { mapState, mapGetters } from 'vuex';
 import avator from '../../components/avator';
 import { deliverPrice } from '../../common/js/consts';
@@ -108,15 +108,16 @@ export default {
     [Radio.name]: Radio,
     [CellGroup.name]: CellGroup,
     [Cell.name]: Cell,
+    [Toast.name]: Toast,
     avator
   },
   computed: {
     ...mapState([
-      'User'
+      'User',
+      'records'
     ]),
     ...mapGetters([
-      'selectFoods',
-      'totalAttr'
+      'totalRecords'
     ]),
     // 购物总价
     totalPrice() {
@@ -127,12 +128,12 @@ export default {
       if (typeof (this.record) !== 'undefined') {
         // 从订单页面跳转过来的则显示订单的总价
         return this.record.amount;
-      } else if (this.User.member !== null && this.totalAttr.member !== 0) {
+      } else if (this.User.member !== null && this.totalRecords.member !== 0) {
         // 显示会员价
-        return this.totalAttr.member;
-      } else if (this.totalAttr.normal !== 0) {
+        return this.totalRecords.member;
+      } else if (this.totalRecords.normal !== 0) {
         // 显示非会员价
-        return this.totalAttr.normal;
+        return this.totalRecords.normal;
       } else {
         return this.recordPrice;
       }
@@ -146,8 +147,8 @@ export default {
     // 计算具体的商品
     details() {
       const details = [];
-      if (this.selectFoods.length !== 0) {
-        this.selectFoods.forEach((good) => {
+      if (this.records.length !== 0) {
+        this.records.forEach((good) => {
           let detail = '';
           if (this.show.member) {
             detail = {
@@ -209,6 +210,13 @@ export default {
           return '/shop/member/pay/alipay/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + order;
       }
     },
+    __toast(context) {
+      Toast({
+        message: context,
+        forbidClick: true,
+        duration: 1000
+      });
+    },
     back() {
       this.$router.push({name: 'pay'});
     },
@@ -218,7 +226,7 @@ export default {
       // 付款成功后提示
       // 清空购物车
       if (this.radio === this.member.value && this.User.member.balance < this.totalPrice) {
-        this.$vux.toast.text('余额不足，请重新选择支付方式', 'middle');
+        this.__toast('余额不足，请重新选择支付方式');
         return;
       }
       switch (this.radio) {
@@ -240,7 +248,7 @@ export default {
           log.info('member pay');
           this.$store.dispatch('submitRecord', this.order).then(resp => {
             if (resp !== null) {
-              // this.$vux.toast.text('支付成功', 'middle');
+              this.__toast('支付成功');
               this.$router.push({name: 'records'});
             }
           });

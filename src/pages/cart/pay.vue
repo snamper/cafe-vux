@@ -7,7 +7,7 @@
     </van-nav-bar>
     <div class="content">
       <addr :address="address" @addaddress="addaddress"></addr>
-      <div class="orderlist" v-for="(good, index) in goods" :key="index">
+      <div class="orderlist" v-for="(good, index) in records" :key="index">
         <product :good="good"></product>
       </div>
       <van-cell-group>
@@ -27,8 +27,8 @@
             <div>会员优惠</div>
             <div v-if="delivertype === '快递'">快递费用</div>
           </template>
-          <div>￥{{totalAttr.normal}}</div>
-          <div>￥{{totalAttr.normal - totalAttr.member}}</div>
+          <div>￥{{totalRecords.normal}}</div>
+          <div>￥{{totalRecords.normal - totalRecords.member}}</div>
           <div v-if="delivertype === '快递'">￥{{deliverPrice}}</div>
         </van-cell>
       </van-cell-group>
@@ -54,10 +54,10 @@
 
 <script type='text/ecmascript=6'>
 import { NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
+import { mapState, mapGetters } from 'vuex';
 import product from '../../components/productbanner';
 import addr from '../../components/addresscard';
 import split from '../../components/split';
-import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 import { isObjEmpty } from '../../common/js/util';
 import { deliverPrice } from '../../common/js/consts';
@@ -73,14 +73,19 @@ export default {
       columns: ['自提','快递']
     };
   },
+  beforeRouteEnter(from, to, next){
+    log.debug('to path is ' + to.path);
+    log.debug('from path is ' + from.path);
+    next(vm => {
+      if (vm.records.length === 0) {
+        vm.$router.push({name: 'cart'});
+      }
+    });
+  },
   props: {
     address: {
       type: Object,
       default: null
-    },
-    goods: {
-      type: Array,
-      default: []
     }
   },
   components: {
@@ -95,40 +100,24 @@ export default {
     addr,
     split
   },
-  beforeRouteEnter(from, to, next){
-    log.debug('to path is ' + to.path);
-    log.debug('from path is ' + from.path);
-    next(vm => {
-      if (vm.goods.length === 0) {
-        vm.$router.push({name: 'cart'});
-      }
-    });
-  },
   computed: {
+    ...mapState([
+      'records'
+    ]),
+    ...mapGetters([
+      'totalRecords'
+    ]),
     value() {
-      return '￥' + this.totalAttr.normal;
+      return '￥' + this.totalRecords.normal;
     },
     type() {
       isObjEmpty(this.address) ? 'add' : 'edit';
     },
     price() {
-      return this.delivertype === '自提' ? this.totalAttr.normal * 100 : (this.totalAttr.normal + this.deliverPrice) * 100;
+      return this.delivertype === '自提' ? this.totalRecords.normal * 100 : (this.totalRecords.normal + this.deliverPrice) * 100;
     },
     deliverType() {
       return this.delivertype === '自提' ? false : true;
-    },
-    totalAttr() {
-      const total = {
-        normal: 0,
-        member: 0,
-        count: 0
-      };
-      this.goods.forEach((food) => {
-        total.normal += food.price * food.count;
-        total.member += food.memberPrice * food.count;
-        total.count += food.count;
-      });
-      return total;
     }
   },
   methods: {

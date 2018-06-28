@@ -109,7 +109,9 @@ export default {
         // 结算
         // 计算选中的商品
         const goods = this.__selectCartGoods();
-        this.$router.push({name: 'pay', params: {goods: goods}});
+        this.$store.dispatch('setcartsgoods', goods).then(() => {
+          this.$router.push({name: 'pay'});
+        });
       }
     },
     showmain() {

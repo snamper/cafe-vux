@@ -96,5 +96,11 @@ export default {
         resolve();
       });
     });
+  },
+  setcartsgoods(context, payload) {
+    return new Promise((resolve, reject) => {
+      context.commit('update', {type: 'records', value: payload});
+      resolve();
+    });
   }
 };

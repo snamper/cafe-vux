@@ -26,6 +26,19 @@ export default {
     });
     return total;
   },
+  totalRecords(state) {
+    const total = {
+      normal: 0,
+      member: 0,
+      count: 0
+    };
+    state.records.forEach(food => {
+      total.normal += food.price * food.count;
+      total.member += food.memberPrice * food.count;
+      total.count += food.count;
+    });
+    return total;
+  },
   // 所有的商品
   products(state) {
     const products = [];
