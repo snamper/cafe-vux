@@ -7,7 +7,7 @@
     </van-nav-bar>
     <div class="content">
       <addr :address="address" @addaddress="addaddress"></addr>
-      <div class="orderlist" v-for="(good, index) in selectFoods" :key="index">
+      <div class="orderlist" v-for="(good, index) in goods" :key="index">
         <product :good="good"></product>
       </div>
       <van-cell-group>
@@ -77,6 +77,10 @@ export default {
     address: {
       type: Object,
       default: null
+    },
+    goods: {
+      type: Array,
+      default: []
     }
   },
   components: {
@@ -95,17 +99,12 @@ export default {
     log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
-      log.debug('selectfoods length is ' + vm.selectFoods.length);
-      if (vm.selectFoods.length === 0) {
+      if (vm.goods.length === 0) {
         vm.$router.push({name: 'cart'});
       }
     });
   },
   computed: {
-    ...mapGetters([
-      'selectFoods',
-      'totalAttr',
-    ]),
     value() {
       return '￥' + this.totalAttr.normal;
     },
@@ -117,6 +116,19 @@ export default {
     },
     deliverType() {
       return this.delivertype === '自提' ? false : true;
+    },
+    totalAttr() {
+      const total = {
+        normal: 0,
+        member: 0,
+        count: 0
+      };
+      this.goods.forEach((food) => {
+        total.normal += food.price * food.count;
+        total.member += food.memberPrice * food.count;
+        total.count += food.count;
+      });
+      return total;
     }
   },
   methods: {
@@ -142,6 +154,9 @@ export default {
     },
     cancel() {
       this.action = false;
+    },
+    __back2cart() {
+      this.$router.push({name: 'cart'});
     }
   }
 };

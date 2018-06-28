@@ -13,6 +13,7 @@
       <div class="submit">
         <van-submit-bar
           :button-text="submittitle"
+          :disabled="disable"
           :price="totalAttr.normal*100"
           @submit="onSubmit">
           <van-checkbox class="checkbox" v-model="checked" @change="selectall">全选</van-checkbox>
@@ -75,6 +76,19 @@ export default {
       } else {
         return '编辑';
       }
+    },
+    disable() {
+      if (this.result.length === 0 && this.submittitle === '结算') {
+        return true;
+      }
+      return false;
+    },
+    ischecked() {
+      if (this.result.length === this.selectFoods.length) {
+        this.checked = true;
+      } else {
+        this.checked = false;
+      }
     }
   },
   methods: {
@@ -93,8 +107,9 @@ export default {
         this.$store.commit('clearCarts');
       } else {
         // 结算
-        log.info('pay');
-        this.$router.push({name: 'pay'});
+        // 计算选中的商品
+        const goods = this.__selectCartGoods();
+        this.$router.push({name: 'pay', params: {goods: goods}});
       }
     },
     showmain() {
@@ -108,6 +123,17 @@ export default {
       } else {
         this.result = [];
       }
+    },
+    __selectCartGoods() {
+      const paygoods = [];
+      this.selectFoods.forEach(good => {
+        this.result.forEach(id => {
+          if (id === good.id) {
+            paygoods.push(good);
+          }
+        })
+      });
+      return paygoods;
     }
   }
 };
