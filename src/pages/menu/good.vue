@@ -69,7 +69,7 @@ export default {
       return result;
     },
     back() {
-      // this.$router.push({name: 'menu'});
+      this.$router.push({name: 'menu'});
     },
     add2cart() {
       this.$refs.sku.shownext(this.good, false);

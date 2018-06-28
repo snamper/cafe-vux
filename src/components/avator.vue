@@ -1,5 +1,5 @@
 <template>
-  <div class="avator" :style="{height: height + 'px'}">
+  <div class="avator" :style="{height: high}">
     <img
       :src="url"
       :style="{

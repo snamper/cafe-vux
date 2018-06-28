@@ -3,6 +3,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -113,6 +114,15 @@ export default new Router({
       path: '/orderdetail',
       component: () => import('../pages/order/orderdetail.vue').then(m => m.default),
       props: true
+    },
+    {
+      name: '404',
+      path: '/404',
+      component: () => import('../pages/main/pagenotfound.vue').then(m => m.default)
+    },
+    {
+      path: '*',
+      redirect: '/404'
     }
   ]
 });

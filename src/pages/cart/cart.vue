@@ -75,9 +75,6 @@ export default {
       } else {
         return '编辑';
       }
-    },
-    checked() {
-      this.selectFoods.length === this.result.length ? true: false;
     }
   },
   methods: {
