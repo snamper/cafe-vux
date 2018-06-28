@@ -66,6 +66,17 @@ export default {
       });
     });
   },
+  setCount(state, payload) {
+    log.debug('payload is ' + JSON.stringify(payload));
+    state.goods.forEach((category) => {
+      category.list.forEach((good) => {
+        if (payload.good === good) {
+          good.count = payload.count;
+          return;
+        }
+      });
+    });
+  },
   clearCarts(state, payload) {
     state.goods.forEach(category => {
       category.list.forEach(good => {

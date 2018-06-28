@@ -9,12 +9,18 @@
               <img :src="getImageUrl(good.imageUrl, 400)" style="height:100px;width: 100px">
               <div class="product">
                 <div class="name" v-if="edit">{{good.name}}</div>
-                <van-stepper v-else disable-input v-model="value" ></van-stepper>
+                <van-stepper
+                  v-else
+                  @change="change"
+                  integer
+                  :max="1000"
+                  v-model="value" >
+                </van-stepper>
                 <div class="price-number">
                   <span class="price">￥{{good.price}}</span>
                   <span class="slot">
                     <slot name="right-bottom">
-                      <span class="number">x{{good.count}}</span>
+                      <span class="number">x{{value}}</span>
                     </slot>
                   </span>
                 </div>
@@ -36,7 +42,8 @@ const log = new Logger('page/menu/productbanner');
 export default {
   data() {
     return {
-      value: this.good.count
+      value: this.good.count,
+      getImageUrl
     };
   },
   props: {
@@ -80,14 +87,9 @@ export default {
           break;
       }
     },
-    getImageUrl(url, size) {
-      return getImageUrl(url, size);
-    },
-    plus(value) {
-      log.debug('plus value is ' + value);
-    },
-    minus(value) {
-      log.debug('minus value is ' + value);
+    change(value) {
+      log.debug('change value to ' + value);
+      this.$store.commit('setCount', {good: this.good, count: this.value});
     }
   }
 };
