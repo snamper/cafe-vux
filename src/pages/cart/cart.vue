@@ -7,7 +7,7 @@
       </div>
       <van-checkbox-group v-model="result">
         <div class="order" v-for="(product, index) in selectFoods" :key="index">
-          <productbanner showcheckbox :good="product"></productbanner>
+          <productbanner showcheckbox :good="product" :edit="!edit"></productbanner>
         </div>
       </van-checkbox-group>
       <div class="submit">
