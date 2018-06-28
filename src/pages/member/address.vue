@@ -9,7 +9,7 @@
     </van-nav-bar>
     <van-address-list
       v-model="chosenAddressId"
-      :list="addressList"
+      :list="list"
       @add="onAdd"
       @edit="onEdit"
     ></van-address-list>
@@ -54,7 +54,7 @@ export default {
         list.push(this.__covert(this.address));
         return list;
       } else if(!isObjEmpty(this.User.member)) {
-        return this.AddressList;
+        return this.addressList;
       }
     },
     chooseId() {
@@ -91,12 +91,19 @@ export default {
       this.$router.push({name: 'addressedit', params: {address: this.addresses[index]}});
     },
     finish() {
-      let param = null;
-      this.addresses.forEach(address => {
-        if (this.chosenAddressId === address.id) {
-          param = address;
-        }
-      });
+      log.debug('finish');
+      // debugger
+      let param = {};
+      if (this.addresses.length !== 0) {
+        this.addresses.forEach(address => {
+          if (this.chosenAddressId === address.id) {
+            param = address;
+          }
+        });
+      } else {
+        param = this.address;
+      }
+      log.debug('param is ' + JSON.stringify(param));
       this.$router.push({name: 'pay', params: {address: param}});
     },
     back() {

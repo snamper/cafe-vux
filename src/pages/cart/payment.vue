@@ -29,7 +29,7 @@
             <van-radio :name="wechat.value" />
           </div>
         </van-cell>
-        <van-cell clickable @click="choose(member)">
+        <van-cell v-if="User.member" clickable @click="choose(member)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="member.img"></avator>
@@ -54,6 +54,7 @@ import { mapState, mapGetters } from 'vuex';
 import avator from '../../components/avator';
 import { deliverPrice } from '../../common/js/consts';
 import Logger from 'chivy';
+import { isObjEmpty } from '../../common/js/util';
 const log = new Logger('page/cart/payment');
 export default {
   data () {
@@ -84,8 +85,8 @@ export default {
       vm.to = to.path;
       // 当购物车为空的时候,返回主页面
       // 当页面不是从record来也返回主页面
-      log.debug('selectfoods length is ' + vm.$store.getters.selectFoods.length);
-      if (vm.$store.getters.selectFoods.length === 0 && to.path !== '/record') {
+      log.debug('selectfoods length is ' + vm.$store.getters.records.length);
+      if (vm.$store.getters.records.length === 0 && to.path !== '/record') {
         vm.$router.push({name: 'menu'});
       }
     });
@@ -99,6 +100,9 @@ export default {
     deliverType: {
       type: Boolean,
       default: false
+    },
+    address: {
+      type: Object
     }
   },
   components: {
@@ -121,21 +125,11 @@ export default {
     ]),
     // 购物总价
     totalPrice() {
-      // 页面从record来的时候显示订单总价
-      // 当有会员登录的情况下,此时计算出来的购物车不为0的时候返回会员价
-      // 当没有会员的时候计算出来的购物车不为0的时候返回普通价
-      // 当计算出来的购物车价格为0的时候,表示已点击过了支付价格,所以此时价格为之前记录的价格.
-      if (typeof (this.record) !== 'undefined') {
-        // 从订单页面跳转过来的则显示订单的总价
-        return this.record.amount;
-      } else if (this.User.member !== null && this.totalRecords.member !== 0) {
-        // 显示会员价
-        return this.totalRecords.member;
-      } else if (this.totalRecords.normal !== 0) {
-        // 显示非会员价
-        return this.totalRecords.normal;
+      // 非会员价
+      if (!isObjEmpty(this.User.uuid)) {
+        return this.deliverType ? this.totalRecords.normal + this.deliverPrice : this.totalRecords.normal;
       } else {
-        return this.recordPrice;
+        return this.deliverType ? this.totalRecords.member + this.deliverPrice : this.totalRecords.member;
       }
     },
     // 会员余额
@@ -147,54 +141,33 @@ export default {
     // 计算具体的商品
     details() {
       const details = [];
-      if (this.records.length !== 0) {
-        this.records.forEach((good) => {
-          let detail = '';
-          if (this.show.member) {
-            detail = {
-              productId: good.id,
-              amount: good.count * good.memberPrice,
-              count: good.count
-            };
-          } else {
-            detail = {
-              productId: good.id,
-              amount: good.count * good.price,
-              count: good.count
-            };
-          }
-          details.push(detail);
-        });
-      }
+      this.records.forEach(good => {
+        let detail;
+        if (this.radio === this.member.value) {
+          detail = {
+            productId: good.id,
+            amount: good.count * good.memberPrice,
+            count: good.count
+          };
+        } else {
+          detail = {
+            productId: good.id,
+            amount: good.count * good.price,
+            count: good.count
+          };
+        }
+        details.push(detail);
+      });
       return details;
     },
     order() {
-      const BALANCE = 'BALANCE';
-      const CASH = 'CASH';
       const result = {
         amount: this.totalPrice,
-        userId: null,
-        userCode: null,
-        userName: null,
-        cashOrBalance: null,
-        details: null
+        userId: !isObjEmpty(this.User.member) ? this.User.member.id : '',
+        userCode: !isObjEmpty(this.User.uuid) ? this.User.uuid: '',
+        cashOrBalance: !isObjEmpty(this.User.member) && this.totalPrice <= this.User.member.balance && this.radio === this.member.value ? 'BALANCE' : 'CASH',
+        details: this.details
       };
-      if (this.User.member !== null) {
-        result.userId = this.User.member.id;
-        if (this.User.member.name !== '') {
-          result.userName = this.User.member.name;
-        } else {
-          result.userName = this.User.member.phone;
-        }
-      } else {
-        result.userCode = this.UUID;
-      }
-      if (this.show.member) {
-        result.cashOrBalance = BALANCE;
-      } else {
-        result.cashOrBalance = CASH;
-      }
-      result.details = this.details;
       return result;
     }
   },
@@ -218,7 +191,7 @@ export default {
       });
     },
     back() {
-      this.$router.push({name: 'pay'});
+      this.$router.push({name: 'pay', params: {address: this.address}});
     },
     payit() {
       // let _this = this;
@@ -234,14 +207,14 @@ export default {
           // 支付宝支付
           log.info('alipay pay');
           this.$store.dispatch('submitRecord', this.order).then(resp => {
-              window.location.href = this.__payurl('alipay', 0.01, resp);
+            window.location.href = this.__payurl('alipay', this.totalPrice, resp);
           });
           break;
         case this.wechat.value:
           // 微信支付
           log.info('wechat pay');
           this.$store.dispatch('submitRecord', this.order).then(resp => {
-              window.location.href = this.__payurl('wechat', 0.01, resp);
+            window.location.href = this.__payurl('wechat', this.totalPrice, resp);
           });
           break;
         case this.member.value:

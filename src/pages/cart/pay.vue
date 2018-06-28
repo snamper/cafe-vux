@@ -130,7 +130,7 @@ export default {
     },
     onSubmit() {
       log.debug('onsubmit');
-      this.$router.push({name: 'payment', params: {deliverType: this.deliverType}});
+      this.$router.push({name: 'payment', params: {deliverType: this.deliverType, address: this.address}});
     },
     select() {
       this.action = true;

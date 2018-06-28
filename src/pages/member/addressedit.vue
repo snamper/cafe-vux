@@ -3,9 +3,7 @@
     <van-nav-bar
       :title="title"
       left-arrow
-      right-text="完成"
-      @click-left="back"
-      @click-right="onSave">
+      @click-left="back">
     </van-nav-bar>
     <van-address-edit
       :address-info="addressinfo"
@@ -29,7 +27,8 @@ export default {
   data() {
     return {
       areaList,
-      searchResult: []
+      searchResult: [],
+      addressinfo: {},
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -59,8 +58,7 @@ export default {
     title() {
       return isObjEmpty(this.address) ? '添加地址' : '修改地址';
     },
-    addressinfo() {
-      log.debug('findcode is ' + findCode(this.address.county));
+    addresslist() {
       return isObjEmpty(this.address) ? {}: {
         id: this.address.id,
         name: this.address.name,
@@ -91,9 +89,11 @@ export default {
         isdefault: content.is_default
       };
       if (!isObjEmpty(this.User.uuid)) {
+        log.debug('not member and save it to address');
         this.$store.commit('update', {type: 'address', value: address});
         this.$router.push({name: 'address'});
       } else {
+        log.debug('you are the member save it to addresses');
         this.$store.dispatch('saveAddress', address);
       }
     },
