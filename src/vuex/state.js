@@ -12,5 +12,7 @@ export default {
     // 配送地址
     address: null,
     // 填写的地址
-    addresses: []
+    addresses: [],
+    // loading页面
+    isLoading: false
 };

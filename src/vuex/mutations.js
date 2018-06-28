@@ -72,5 +72,8 @@ export default {
         good.count = 0;
       });
     });
+  },
+  updateLoadingStatus(state, payload) {
+    state.isLoading = payload.isLoading;
   }
 };

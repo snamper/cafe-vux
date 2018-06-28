@@ -1,5 +1,5 @@
 <template>
-  <div class="menu">
+  <div class="menu" v-if="!isLoading">
     <logo></logo>
     <banner
       title="所有商品">
@@ -19,7 +19,7 @@
 
 <script type="text/ecmascript=6">
 import { Button, List } from 'vant';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import sku from '../../components/sku';
 import logo from '../../components/logo';
 import banner from '../../components/banner';
@@ -40,11 +40,17 @@ export default {
     sku
   },
   created() {
-    this.$store.dispatch('getGoods');
+    this.$store.commit('updateLoadingStatus', {isLoading: true});
+    this.$store.dispatch('getGoods').then(() => {
+      this.$store.commit('updateLoadingStatus', {isLoading: false});
+    });
   },
   computed: {
     ...mapGetters([
       'products'
+    ]),
+    ...mapState([
+      'isLoading'
     ])
   },
   methods: {
