@@ -5,11 +5,11 @@
         <van-checkbox class="title" v-model="checked" @change="selectall">树影啡香</van-checkbox>
         <span @click="showdelete">{{editTitle}}</span>
       </div>
-      <div class="order" v-for="(product, index) in selectFoods" :key="index">
-        <van-checkbox-group v-model="result">
-          <product :checked="checked" showcheckbox :good="product" @select="select"></product>
-        </van-checkbox-group>
-      </div>
+      <van-checkbox-group v-model="result">
+        <div class="order" v-for="(product, index) in selectFoods" :key="index">
+          <productbanner showcheckbox :good="product"></productbanner>
+        </div>
+      </van-checkbox-group>
       <div class="submit">
         <van-submit-bar
           :button-text="submittitle"
@@ -34,7 +34,7 @@
 <script type="text/ecmascript=6">
 import { Checkbox, CheckboxGroup, SubmitBar, Button } from 'vant';
 import { mapGetters } from 'vuex';
-import product from '../../components/productbanner';
+import productbanner from '../../components/productbanner';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/cart');
 export default {
@@ -51,7 +51,11 @@ export default {
     [CheckboxGroup.name]: CheckboxGroup,
     [SubmitBar.name]: SubmitBar,
     [Button.name]: Button,
-    product
+    productbanner
+  },
+  activated() {
+    log.debug('activated');
+    this.__setselected();
   },
   computed: {
     ...mapGetters([
@@ -71,9 +75,18 @@ export default {
       } else {
         return '编辑';
       }
+    },
+    checked() {
+      this.selectFoods.length === this.result.length ? true: false;
     }
   },
   methods: {
+    __setselected() {
+      this.result = [];
+      this.selectFoods.forEach(good => {
+        this.result.push(good.id);
+      });
+    },
     showdelete() {
       this.edit = !this.edit;
     },
@@ -92,11 +105,12 @@ export default {
     },
     selectall() {
       log.debug('select all');
-      this.select();
-    },
-    select(data) {
-      log.debug('data is ' + data);
-      this.data = this.checked;
+      // this.select();
+      if (this.checked) {
+        this.__setselected();
+      } else {
+        this.result = [];
+      }
     }
   }
 };

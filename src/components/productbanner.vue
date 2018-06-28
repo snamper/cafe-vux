@@ -5,7 +5,7 @@
         <van-cell>
           <template slot="title">
             <div class="title">
-              <van-checkbox class="checkbox" v-model="checked" v-if="showcheckbox"></van-checkbox>
+              <van-checkbox class="checkbox" v-if="showcheckbox" :name="good.id"></van-checkbox>
               <img :src="getImageUrl(good.imageUrl, 400)" style="height:100px;width: 100px">
               <div class="product">
                 <div class="name">{{good.name}}</div>
@@ -44,10 +44,6 @@ export default {
     },
     good: {
       type: Object
-    },
-    checked: {
-      type: Boolean,
-      default: false
     }
   },
   components: {
