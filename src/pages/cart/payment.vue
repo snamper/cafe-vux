@@ -83,10 +83,8 @@ export default {
       log.debug('beforeRouteEnter to path is ' + to.path);
       // 保存这个路由是从那个地方来的
       vm.to = to.path;
-      // 当购物车为空的时候,返回主页面
-      // 当页面不是从record来也返回主页面
-      log.debug('selectfoods length is ' + vm.$store.getters.records.length);
-      if (vm.$store.getters.records.length === 0 && to.path !== '/record') {
+      log.debug('records is ' + JSON.stringify(vm.$store.state.records));
+      if (to.path === '/' || isObjEmpty(vm.$store.state.records)) {
         vm.$router.push({name: 'menu'});
       }
     });
@@ -207,14 +205,16 @@ export default {
           // 支付宝支付
           log.info('alipay pay');
           this.$store.dispatch('submitRecord', this.order).then(resp => {
-            window.location.href = this.__payurl('alipay', this.totalPrice, resp);
+            log.warn('alipay');
+            // window.location.href = this.__payurl('alipay', this.totalPrice, resp);
           });
           break;
         case this.wechat.value:
           // 微信支付
           log.info('wechat pay');
           this.$store.dispatch('submitRecord', this.order).then(resp => {
-            window.location.href = this.__payurl('wechat', this.totalPrice, resp);
+            log.warn('alipay');
+            // window.location.href = this.__payurl('wechat', this.totalPrice, resp);
           });
           break;
         case this.member.value:

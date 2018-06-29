@@ -17,7 +17,7 @@
                   v-model="value" >
                 </van-stepper>
                 <div class="price-number">
-                  <span class="price">￥{{good.price}}</span>
+                  <span class="price">￥{{good.price ? good.price : good.amount}}</span>
                   <span class="slot">
                     <slot name="right-bottom">
                       <span class="number">x{{value}}</span>

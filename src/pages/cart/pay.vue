@@ -151,7 +151,13 @@ export default {
 };
 </script>
 
-<style lang=stylus' rel=stylesheet/stylus' scoped>
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+.van-nav-bar
+  position fixed
+  left 0
+  top 0
+  width 100%
 .content
+  margin-top 46px
   margin-bottom 50px
 </style>

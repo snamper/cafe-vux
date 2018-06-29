@@ -160,6 +160,8 @@ export default {
         line-height 40px
         margin-left auto
         margin-right 10px
+    .van-checkbox-group
+      margin-bottom 100px
     .submit
       .van-submit-bar
         bottom 50px
