@@ -10,8 +10,13 @@
         v-for="(title, index) in tabtitle"
         :key="index"
         :title="title">
-        <div class="test" v-for="(record, index) in recordList" :key="index">
-          <order :order="record"></order>
+        <div v-if="recordList.length > 0">
+          <div class="test" v-for="(record, index) in recordList" :key="index">
+            <order :order="record"></order>
+          </div>
+        </div>
+        <div class="no_order" v-else>
+            <span>暂无订单</span>
         </div>
       </van-tab>
     </van-tabs>
@@ -19,7 +24,7 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { Tab, Tabs, NavBar } from 'vant';
+import { Tab, Tabs, NavBar, Icon } from 'vant';
 import { mapState } from 'vuex';
 import order from  './oneorder';
 import { status } from '../../common/js/consts';
@@ -121,6 +126,7 @@ export default {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
     [NavBar.name]: NavBar,
+    [Icon.name]: Icon,
     order
   },
   methods: {
@@ -178,4 +184,10 @@ export default {
   width 100%
 .van-tabs
   margin-top 46px
+  .no_order
+    display flex
+    justify-content center
+    padding-top 50%
+    font-size 50px
+    color rgb(140, 153, 159)
 </style>
