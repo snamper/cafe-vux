@@ -119,9 +119,11 @@ export default {
       justify-content center
       align-items center
       .content
-        border 1px solid red
         .van-icon
+          display flex
+          justify-content center
           font-size 30px
+          margin-bottom 5px
         .name
           font-size 16px
   .loginout
