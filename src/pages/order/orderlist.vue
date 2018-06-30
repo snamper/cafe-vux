@@ -10,7 +10,7 @@
         v-for="(title, index) in tabtitle"
         :key="index"
         :title="title">
-        <div class="test" v-for="(record, index) in records" :key="index">
+        <div class="test" v-for="(record, index) in recordList" :key="index">
           <order :order="record"></order>
         </div>
       </van-tab>
@@ -22,6 +22,7 @@
 import { Tab, Tabs, NavBar } from 'vant';
 import { mapState } from 'vuex';
 import order from  './oneorder';
+import { status } from '../../common/js/consts';
 import { isObjEmpty } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/orderlist');
@@ -29,7 +30,8 @@ export default {
   data() {
     return {
       tabtitle: ['全部', '待付款', '待发货', '已发货', '已完成'],
-      active: ''
+      active: 0,
+      status
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -40,19 +42,80 @@ export default {
         vm.$store.commit('updateLoadingStatus', {isLoading: true});
         vm.__getRecord().then(() => {
           vm.$store.commit('updateLoadingStatus', {isLoading: false});
-          log.error('finished');
+          vm.__selected();
         });
       } else {
         vm.$router.push({name: 'member'});
       }
     });
   },
+  props: {
+    value: {
+      type: String,
+      default: '全部'
+    }
+  },
   computed: {
     ...mapState([
       'User',
       'records',
       'isLoading'
-    ])
+    ]),
+    notpay() {
+      const result = [];
+      // debugger
+      for (let i = 0; i < this.records.length; i++) {
+        const record = this.records[i];
+        if (record.status === 'NOTPAY') {
+          result.push(record);
+        }
+      }
+      return result;
+    },
+    wait4delivery() {
+      const result = [];
+      for (let i = 0; i < this.records.length; i++) {
+        const record = this.records[i];
+        if (record.status === 'WAIT4DELIVERY') {
+          result.push(record);
+        }
+      }
+      return result;
+    },
+    alreadydelivery() {
+      const result = [];
+      for (let i = 0; i < this.records.length; i++) {
+        const record = this.records[i];
+        if (record.status === 'ALREADYDELIVERY') {
+          result.push(record);
+        }
+      }
+      return result;
+    },
+    finish() {
+      const result = [];
+      for (let i = 0; i < this.records.length; i++) {
+        const record = this.records[i];
+        if (record.status === 'FINISH') {
+          result.push(record);
+        }
+      }
+      return result;
+    },
+    recordList() {
+      switch(this.active) {
+        case 0:
+          return this.records;
+        case 1:
+          return this.notpay;
+        case 2:
+          return this.wait4delivery;
+        case 3:
+          return this.alreadydelivery;
+        case 4:
+          return this.finish;
+      }
+    }
   },
   components: {
     [Tab.name]: Tab,
@@ -82,6 +145,26 @@ export default {
           resolve();
         });
       });
+    },
+    __selected() {
+      log.debug('this.records length is ' + this.records.length);
+      switch(this.value){
+        case this.tabtitle[0]:
+          this.active = 0;
+          break;
+        case this.tabtitle[1]:
+          this.active = 1;
+          break;
+        case this.tabtitle[2]:
+          this.active = 2;
+          break;
+        case this.tabtitle[3]:
+          this.active = 3;
+          break;
+        case this.tabtitle[4]:
+          this.active = 4;
+          break;
+      }
     }
   }
 };

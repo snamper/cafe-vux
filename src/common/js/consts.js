@@ -91,6 +91,18 @@ const status = {
     key: 'NOTPAY',
     value: '待付款'
   },
+  WAIT4DELIVERY: {
+    key: 'WAIT4DELIVERY',
+    value: '待发货'
+  },
+  ALREADYDELIVERY: {
+    key: 'ALREADYDELIVERY',
+    value: '已发货'
+  },
+  FINISH: {
+    key: 'FINISH',
+    value: '已完成'
+  },
   SUCCESS: {
     key: 'SUCCESS',
     value: '已付款'

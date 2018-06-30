@@ -10,25 +10,25 @@
       <van-cell title="我的订单" is-link value="查看全部订单" :to="{name: 'order'}"></van-cell>
     </van-cell-group>
     <van-row gutter="20">
-      <van-col span="6">
-        <div class="content">
+      <van-col span="6" @click.native="jump(status.NOTPAY)">
+        <div class="content" >
           <van-icon name="pending-payment"></van-icon>
           <div class="name">待付款</div>
         </div>
       </van-col>
-      <van-col span="6">
+      <van-col span="6" @click.native="jump(status.WAIT4DELIVERY)">
         <div class="content">
           <van-icon name="tosend"></van-icon>
           <div class="name">待发货</div>
         </div>
       </van-col>
-      <van-col span="6">
+      <van-col span="6" @click.native="jump(status.ALREADYDELIVERY)">
         <div class="content">
           <van-icon name="logistics"></van-icon>
           <div class="name">已发货</div>
         </div>
       </van-col>
-      <van-col span="6">
+      <van-col span="6" @click.native="jump(status.FINISH)">
         <div class="content">
           <van-icon name="completed"></van-icon>
           <div class="name">已完成</div>
@@ -60,12 +60,14 @@ import { Cell, CellGroup, Row, Col, Icon, Button  } from 'vant';
 import { mapState, mapGetters } from 'vuex';
 import round from '../../components/round';
 import avator from '../../components/avator';
+import { status } from  '../../common/js/consts.js';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/member');
 export default {
   data() {
     return {
-      avatorurl: '../../../static/img/avator.jpg'
+      avatorurl: '../../../static/img/avator.jpg',
+      status
     };
   },
   components: {
@@ -93,6 +95,22 @@ export default {
     },
     login() {
       this.$router.push({name: 'login'});
+    },
+    jump(type) {
+      switch(type) {
+        case status.NOTPAY:
+          this.$router.push({name: 'order', params: {value: status.NOTPAY.value}});
+          break;
+        case status.WAIT4DELIVERY:
+          this.$router.push({name: 'order', params: {value: status.WAIT4DELIVERY.value}});
+          break;
+        case status.ALREADYDELIVERY:
+          this.$router.push({name: 'order', params: {value: status.ALREADYDELIVERY.value}});
+          break;
+        case status.FINISH:
+          this.$router.push({name: 'order', params: {value: status.FINISH.value}});
+          break;
+      }
     }
   }
 };

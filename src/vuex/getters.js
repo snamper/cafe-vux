@@ -61,15 +61,6 @@ export default {
     });
     return sliders;
   },
-  notpay(state) {
-    const result = [];
-    state.records.forEach(record => {
-      if (record.status === status.NOTPAY.key) {
-        result.push(record);
-      }
-    });
-    return result;
-  },
   success(state) {
     const result = [];
     state.records.forEach(record => {
