@@ -7,7 +7,7 @@
     <van-tabbar v-model="active" @change="change">
       <van-tabbar-item icon="home" :to="{name: 'menu'}">主页</van-tabbar-item>
       <van-tabbar-item icon="like-o" :to="{name: 'active'}">今日活动</van-tabbar-item>
-      <van-tabbar-item icon="cart" :to="{name: 'cart'}">购物车</van-tabbar-item>
+      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info">购物车</van-tabbar-item>
       <van-tabbar-item icon="contact" :to="{name: 'member'}">我的</van-tabbar-item>
     </van-tabbar>
   </div>
@@ -15,6 +15,7 @@
 
 <script type="text/ecmascript=6">
 import { Tabbar, TabbarItem } from 'vant';
+import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('pages/main');
 export default {
@@ -30,6 +31,41 @@ export default {
   created() {
     log.info('start init UUID');
     this.$store.commit('init');
+  },
+  computed: {
+    ...mapGetters([
+      'selectFoods'
+    ]),
+    selected() {
+      switch (this.$route.path) {
+        case '/menu':
+          this.active = 0;
+          break;
+        case '/cart':
+          this.active = 2;
+          break;
+        case '/active':
+          this.active = 1;
+          break;
+        case '/member':
+          this.active = 3;
+          break;
+        case '/login':
+          this.active = 3;
+          break;
+      }
+    },
+    info() {
+      if (this.selectFoods.length === 0) {
+        return '';
+      } else {
+        let result = 0;
+        this.selectFoods.forEach(good => {
+          result += good.count;
+        });
+        return result;
+      }
+    }
   },
   methods: {
     change(active) {

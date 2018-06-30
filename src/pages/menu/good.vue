@@ -86,6 +86,11 @@ export default {
   background-color rgb(244, 244, 244)
   margin-bottom 50px
   .content
+    .van-nav-bar
+      position fixed
+      left 0px
+      top 0px
+      width 100%
     .desc
       text-indent 32px
       font-size 16px

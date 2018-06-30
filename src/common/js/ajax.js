@@ -95,5 +95,9 @@ function deleteAddresses(param) {
   return ajaxPost(url.deleteAddresses, param, arguments[1] ? arguments[1] : null);
 }
 
+function getBasicInfoList(param) {
+  return ajaxPost(url.deleteAddresses, param, arguments[1] ? arguments[1] : null);
+}
+
 export { getCategoriedProducts, getRecordList, isExistUserName, memberLogin, getAddresses, saveAddresses, deleteAddresses };
-export { createMember, saveRecordList, alterStatus, modifyBasicInfo, modifyPassword, getMemberById };
+export { createMember, saveRecordList, alterStatus, modifyBasicInfo, modifyPassword, getMemberById, getBasicInfoList };

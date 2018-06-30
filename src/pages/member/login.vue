@@ -203,7 +203,7 @@ export default {
       if(valid) {
         // 注册用户
         const param ={
-          mobile: this.account,
+          mobile: this.account.content,
           passWd: md5(this.pwd)
         };
         this.$store.dispatch('resigter', param).then(() => {

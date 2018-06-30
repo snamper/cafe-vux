@@ -1,11 +1,11 @@
 <template>
-  <div class="order">
+  <div class="order" v-if="!isLoading">
     <van-nav-bar
       title="订单列表"
       left-arrow
       @click-left="back">
     </van-nav-bar>
-    <van-tabs v-model="active" :swipe-threshold="0" >
+    <van-tabs v-model="active" :swipe-threshold="5" >
       <van-tab
         v-for="(title, index) in tabtitle"
         :key="index"
@@ -37,7 +37,11 @@ export default {
     log.debug('from path is ' + from.path);
     next(vm => {
       if (from.path === '/member' || from.path === '/orderdetail') {
-        vm.__getRecord();
+        vm.$store.commit('updateLoadingStatus', {isLoading: true});
+        vm.__getRecord().then(() => {
+          vm.$store.commit('updateLoadingStatus', {isLoading: false});
+          log.error('finished');
+        });
       } else {
         vm.$router.push({name: 'member'});
       }
@@ -46,7 +50,8 @@ export default {
   computed: {
     ...mapState([
       'User',
-      'records'
+      'records',
+      'isLoading'
     ])
   },
   components: {
@@ -60,20 +65,22 @@ export default {
       this.$router.push({name: 'member'});
     },
     __getRecord() {
-      let param = {};
-      if (isObjEmpty(this.User.uuid)) {
-        param = {
-          userId: this.User.member.id,
-          needDetail: true
-        };
-      } else {
-        param = {
-          userCode: this.User.uuid,
-          needDetail: true
+      return new Promise((resolve)=> {
+        let param = {};
+        if (isObjEmpty(this.User.uuid)) {
+          param = {
+            userId: this.User.member.id,
+            needDetail: true
+          };
+        } else {
+          param = {
+            userCode: this.User.uuid,
+            needDetail: true
+          }
         }
-      }
-      this.$store.dispatch('getRecords', param).then(resp => {
-        log.debug('resp is ' + JSON.stringify(resp));
+        this.$store.dispatch('getRecords', param).then(() => {
+          resolve();
+        });
       });
     }
   }

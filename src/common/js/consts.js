@@ -24,7 +24,9 @@ const url = {
   // 保存配送地址
   saveAddresses: '/shop/product/show/ui/saveAddresses.do',
   // 删除配送地址
-  deleteAddresses: '/shop/product/show/ui/deleteAddresses.do'
+  deleteAddresses: '/shop/product/show/ui/deleteAddresses.do',
+  // 获取会员信息
+  getBasicInfoList: '/shop/member/show/ui/getBasicInfoList.do'
 };
 
 const consts = {
@@ -69,7 +71,7 @@ const regex = {
   account: '^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$',
   mobile: '^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$',
   /* eslint-disable no-useless-escape */
-  email: '^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$',
+  email: '^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$',
   // 中文名
   chineseName: '[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*'
 };

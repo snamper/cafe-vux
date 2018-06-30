@@ -206,6 +206,7 @@ export default {
           log.info('alipay pay');
           this.$store.dispatch('submitRecord', this.order).then(resp => {
             log.warn('alipay');
+            this.$router.push({name: 'member'});
             // window.location.href = this.__payurl('alipay', this.totalPrice, resp);
           });
           break;
@@ -214,6 +215,7 @@ export default {
           log.info('wechat pay');
           this.$store.dispatch('submitRecord', this.order).then(resp => {
             log.warn('alipay');
+            this.$router.push({name: 'member'});
             // window.location.href = this.__payurl('wechat', this.totalPrice, resp);
           });
           break;
