@@ -9,7 +9,7 @@
       <van-steps
         :active="active"
         icon="logistics"
-        title="交易关闭"
+        :title="status"
         description="买家取消">
         <van-step>买家下单</van-step>
         <van-step>商家接单</van-step>
@@ -58,13 +58,15 @@
 import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps } from 'vant';
 import product from '../../components/productbanner';
 import addr from '../../components/addresscard';
+import { status } from '../../common/js/consts';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/orderdetail');
 export default {
   data() {
     return {
       active: 2,
-      delivertype: '自提'
+      delivertype: '自提',
+      status
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -91,6 +93,11 @@ export default {
   props: {
     detail: {
       type: Object
+    }
+  },
+  computed: {
+    status() {
+      return '已关闭'
     }
   },
   methods: {

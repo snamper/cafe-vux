@@ -5,9 +5,9 @@
         <van-col class="orderid" span="16">
           订单号:<span>{{orderId}}</span>
           </van-col>
-        <van-col class="status" span="8">{{status}}</van-col>
+        <van-col class="status" span="8">{{orderstatus}}</van-col>
       </van-row>
-      <van-panel title="title" :desc="orderId" :status="status"></van-panel>
+      <!-- <van-panel title="title" :desc="orderId" :status="orderstatus"></van-panel> -->
     </div>
     <div class="product-wrapper">
       <product :good="order.details[0]" ></product>
@@ -16,20 +16,32 @@
     <div class="total van-hairline--top-bottom">
       合计:<span>￥{{order.amount}}</span>
     </div>
+    <div class="ops-warpper" v-if="orderstatus === status.NOTPAY.status">
+      <van-cell-group>
+        <van-cell>
+          <div class="ops">
+            <van-button class="cancel" type="default" size="small">取消订单</van-button>
+            <van-button class="confirm" type="default" size="small">确认付款</van-button>
+          </div>
+        </van-cell>
+      </van-cell-group>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript=6">
-import { Cell, CellGroup, Panel, Row, Col } from 'vant';
+import { Cell, CellGroup, Row, Col, Button } from 'vant';
 import product from '../../components/productbanner';
 import banner from '../../components/banner';
+import { status } from '../../common/js/consts';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/oneorder');
 export default {
   data() {
     return {
-      status: '交易关闭',
-      orderId: 'E12932908409823098340'
+      // status: '交易关闭',
+      orderId: 'E12932908409823098340',
+      status
     };
   },
   props: {
@@ -40,11 +52,26 @@ export default {
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
-    [Panel.name]: Panel,
     [Row.name]: Row,
     [Col.name]: Col,
+    [Button.name]: Button,
     product,
     banner
+  },
+  computed: {
+    orderstatus() {
+      // debugger
+      switch(this.order.status) {
+        case this.status.NOTPAY.key:
+          return this.status.NOTPAY.status;
+        case this.status.WAIT4DELIVERY.key:
+          return this.status.WAIT4DELIVERY.status;
+        case this.status.ALREADYDELIVERY.key:
+          return this.status.ALREADYDELIVERY.status;
+        case this.status.FINISH.key:
+          return this.status.FINISH.status;
+      }
+    }
   },
   methods: {
     showmore() {
@@ -95,4 +122,15 @@ export default {
     span
       font-size 16px
       price-color()
+  .ops-warpper
+    .van-cell
+      padding 10px 5px
+    .ops
+      display flex
+      justify-content flex-end
+      .cancel
+        margin-right 10px
+        price-color()
+      .confirm
+        price-color()
 </style>

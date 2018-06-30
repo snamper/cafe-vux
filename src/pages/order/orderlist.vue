@@ -71,7 +71,7 @@ export default {
       // debugger
       for (let i = 0; i < this.records.length; i++) {
         const record = this.records[i];
-        if (record.status === 'NOTPAY') {
+        if (record.status === this.status.NOTPAY.key) {
           result.push(record);
         }
       }
@@ -81,7 +81,7 @@ export default {
       const result = [];
       for (let i = 0; i < this.records.length; i++) {
         const record = this.records[i];
-        if (record.status === 'WAIT4DELIVERY') {
+        if (record.status === this.status.WAIT4DELIVERY.key) {
           result.push(record);
         }
       }
@@ -91,7 +91,7 @@ export default {
       const result = [];
       for (let i = 0; i < this.records.length; i++) {
         const record = this.records[i];
-        if (record.status === 'ALREADYDELIVERY') {
+        if (record.status === this.status.ALREADYDELIVERY.key) {
           result.push(record);
         }
       }
@@ -101,7 +101,7 @@ export default {
       const result = [];
       for (let i = 0; i < this.records.length; i++) {
         const record = this.records[i];
-        if (record.status === 'FINISH') {
+        if (record.status === this.status.FINISH.key) {
           result.push(record);
         }
       }
