@@ -67,7 +67,7 @@
     </div>
     <div class="submit" v-if="showlogin">
       <div class="login">
-        <van-button style="width:97%" type="primary" @click="login">登录</van-button>
+        <van-button style="width:97%" type="primary" @click="login" :disabled="disable.login">登录</van-button>
       </div>
       <div class="ops">
         <van-row type="flex">
@@ -79,8 +79,8 @@
     </div>
     <div class="submit" v-else>
       <div class="submit-wrapper">
-        <van-button class="registerbtn" type="primary" @click="register">注册</van-button>
-        <van-button class="loginbtn"  type="primary" @click="show">登录</van-button>
+        <van-button class="registerbtn" type="primary" @click="register" :disabled="disable.register">注册</van-button>
+        <van-button class="loginbtn"  type="default" @click="show">登录</van-button>
       </div>
     </div>
     <div class="foot">
@@ -103,13 +103,17 @@ import avator from '../../components/avator';
 import { mapState } from 'vuex';
 import md5 from 'blueimp-md5';
 import { regex } from '../../common/js/consts.js';
-import { regexmatch } from '../../common/js/util.js';
+import { regexmatch, isObjEmpty } from '../../common/js/util.js';
 import Logger from 'chivy';
 const log = new Logger('page/member/login');
 export default {
   data() {
     return {
       showlogin: true,
+      disable: {
+        login: false,
+        register: false
+      },
       img: {
         url: '../../../static/img/tian.jpg',
         width: 100,
@@ -178,7 +182,8 @@ export default {
       this.showlogin = !this.showlogin;
     },
     login() {
-      const valid = !this.username.error && !this.password.error;
+      this.disable.login = true;
+      const valid = !this.username.error && !this.password.error && !isObjEmpty(this.username.content) && !isObjEmpty(this.password.content);
       if (valid) {
         // 用户登录
         const param = {
@@ -187,19 +192,23 @@ export default {
         };
         this.$store.dispatch('login', param).then(() => {
           this.__toast('登录成功').then(() => {
+            this.disable.login = false;
             this.__jump();
           });
         }).catch((error) => {
           this.__toast('登录失败').then(() => {
+            this.disable.login = false;
             this.__fail(true);
           });
         });
       } else {
         this.__toast('请填写正确的内容');
+        this.disable.login = false;
       }
     },
     register() {
-      const valid = !this.account.error && !this.pwd.error && !this.repwd.error;
+      this.disable.register = true;
+      const valid = !this.account.error && !this.pwd.error && !this.repwd.error && !isObjEmpty(this.account.content) && !isObjEmpty(this.pwd.content) && !isObjEmpty(this.repwd.content);
       if(valid) {
         // 注册用户
         const param ={
@@ -208,15 +217,18 @@ export default {
         };
         this.$store.dispatch('resigter', param).then(() => {
           this.__toast('注册成功').then(() => {
+            this.disable.register = false;
             this.__jump();
           });
         }).catch((error) => {
           this.__toast('注册失败').then(() => {
             this.__fail(true);
+            this.disable.register = false;
           })
         });
       } else {
         this.__toast('请填写正确的信息');
+        this.disable.register = false;
       }
     },
     checkduplicate(data) {
