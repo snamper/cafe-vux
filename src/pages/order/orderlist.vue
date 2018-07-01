@@ -70,45 +70,16 @@ export default {
       'isLoading'
     ]),
     notpay() {
-      const result = [];
-      // debugger
-      for (let i = 0; i < this.records.length; i++) {
-        const record = this.records[i];
-        if (record.status === this.status.NOTPAY.key) {
-          result.push(record);
-        }
-      }
-      return result;
+      return this.records.filter(record => record.status === this.status.NOTPAY.key);
     },
     wait4delivery() {
-      const result = [];
-      for (let i = 0; i < this.records.length; i++) {
-        const record = this.records[i];
-        if (record.status === this.status.WAIT4DELIVERY.key) {
-          result.push(record);
-        }
-      }
-      return result;
+      return this.records.filter(record => record.status === this.status.WAIT4DELIVERY.key);
     },
     alreadydelivery() {
-      const result = [];
-      for (let i = 0; i < this.records.length; i++) {
-        const record = this.records[i];
-        if (record.status === this.status.ALREADYDELIVERY.key) {
-          result.push(record);
-        }
-      }
-      return result;
+      return this.records.filter(record => record.status === this.status.ALREADYDELIVERY.key);
     },
     finish() {
-      const result = [];
-      for (let i = 0; i < this.records.length; i++) {
-        const record = this.records[i];
-        if (record.status === this.status.FINISH.key) {
-          result.push(record);
-        }
-      }
-      return result;
+      return this.records.filter(record => record.status === this.status.FINISH.key);
     },
     recordList() {
       switch(this.active) {
@@ -138,18 +109,7 @@ export default {
     },
     __getRecord() {
       return new Promise((resolve)=> {
-        let param = {};
-        if (isObjEmpty(this.User.uuid)) {
-          param = {
-            userId: this.User.member.id,
-            needDetail: true
-          };
-        } else {
-          param = {
-            userCode: this.User.uuid,
-            needDetail: true
-          }
-        }
+        const parmm = isObjEmpty(this.User.uuid) ? { userId: this.User.member.id, needDetail: true } : { userId: this.User.uuid, needDetail: true };
         this.$store.dispatch('getRecords', param).then(() => {
           resolve();
         });

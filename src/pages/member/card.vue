@@ -74,10 +74,6 @@ export default {
       'username'
     ])
   },
-  created() {
-    log.debug('member ' + JSON.stringify(this.User));
-    log.debug('username ' + JSON.stringify(this.username));
-  },
   methods: {
     back() {
       this.$router.push({name: 'member'});

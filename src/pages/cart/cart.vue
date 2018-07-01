@@ -78,17 +78,10 @@ export default {
       }
     },
     disable() {
-      if (this.result.length === 0 && this.submittitle === '结算') {
-        return true;
-      }
-      return false;
+      return this.result.length === 0 && this.submittitle === '结算' ? true : false;
     },
     ischecked() {
-      if (this.result.length === this.selectFoods.length) {
-        this.checked = true;
-      } else {
-        this.checked = false;
-      }
+      return this.result.length === this.selectFoods.length ? true : false;
     }
   },
   methods: {

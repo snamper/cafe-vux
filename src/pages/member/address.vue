@@ -92,22 +92,19 @@ export default {
     },
     finish() {
       log.debug('finish');
-      // debugger
-      let param = {};
-      if (this.addresses.length !== 0) {
-        this.addresses.forEach(address => {
-          if (this.chosenAddressId === address.id) {
-            param = address;
-          }
-        });
-      } else {
-        param = this.address;
-      }
+      const param = this.addresses.length !== 0 ? this.__selectAddress(this.addresses, this.chosenAddressId) : this.address;
       log.debug('param is ' + JSON.stringify(param));
       this.$router.push({name: 'pay', params: {address: param}});
     },
     back() {
       this.$router.push({name: 'pay'});
+    },
+    __selectAddress(addresses, id) {
+      addresses.forEach(address => {
+        if (id === address.id) {
+          return address;
+        }
+      });
     },
     __covert(address) {
       return {

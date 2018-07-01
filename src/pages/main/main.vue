@@ -38,15 +38,7 @@ export default {
       'selectFoods'
     ]),
     info() {
-      if (this.selectFoods.length === 0) {
-        return '';
-      } else {
-        let result = 0;
-        this.selectFoods.forEach(good => {
-          result += good.count;
-        });
-        return result;
-      }
+      return this.selectFoods.length === 0 ? '' : this.__totalcount(this.selectFoods);
     }
   },
   methods: {
@@ -71,6 +63,13 @@ export default {
           this.active = 3;
           break;
       }
+    },
+    __totalcount(goods) {
+      let count = 0;
+      goods.forEach(good => {
+        count += good.count;
+      });
+      return count;
     }
   }
 };
