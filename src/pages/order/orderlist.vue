@@ -48,6 +48,9 @@ export default {
         vm.__getRecord().then(() => {
           vm.$store.commit('updateLoadingStatus', {isLoading: false});
           vm.__selected();
+        }).catch(error=> {
+          vm.$store.commit('updateLoadingStatus', {isLoading: false});
+          vm.__selected();
         });
       } else {
         vm.$router.push({name: 'member'});

@@ -117,7 +117,8 @@ const status = {
   },
   CLOSED: {
     key: 'CLOSED',
-    value: '已关闭'
+    value: '已关闭',
+    sttus: '交易关闭'
   },
   PAYERROR: {
     key: 'PAYERROR',

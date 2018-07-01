@@ -3,16 +3,16 @@
     <div class="banner">
       <van-row>
         <van-col class="orderid" span="16">
-          订单号:<span>{{orderId}}</span>
+          订单号:<span>{{order.id}}</span>
           </van-col>
         <van-col class="status" span="8">{{orderstatus}}</van-col>
       </van-row>
       <!-- <van-panel title="title" :desc="orderId" :status="orderstatus"></van-panel> -->
     </div>
-    <div class="product-wrapper">
+    <div class="product-wrapper" @click="showmore">
       <product :good="order.details[0]" ></product>
     </div>
-    <div v-if="order.details.length > 0" class="showmore" @click="showmore">查看全部{{order.details.length}}件商品</div>
+    <div v-if="order.details.length > 1" class="showmore" @click="showmore">查看全部{{order.details.length}}件商品</div>
     <div class="total van-hairline--top-bottom">
       合计:<span>￥{{order.amount}}</span>
     </div>
@@ -70,6 +70,8 @@ export default {
           return this.status.ALREADYDELIVERY.status;
         case this.status.FINISH.key:
           return this.status.FINISH.status;
+        case this.status.CLOSED.key:
+          return this.status.CLOSED.status;
       }
     }
   },

@@ -102,5 +102,12 @@ export default {
       context.commit('update', {type: 'records', value: payload});
       resolve();
     });
+  },
+  alterStatus(context, payload) {
+    return new Promise((resolve, reject) => {
+      AJAX.alterStatus(payload).then(resp => {
+        resolve();
+      });
+    });
   }
 };
