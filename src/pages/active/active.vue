@@ -52,6 +52,7 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .active
+  margin-bottom 50px
   background-color rgb(244, 244, 244)
   .products
     display flex

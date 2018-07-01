@@ -6,9 +6,9 @@
         left-arrow
         @click-left="back">
       </van-nav-bar>
-      <van-swipe :autoplay="3000">
+      <van-swipe :autoplay="3000" class="swiper">
         <van-swipe-item v-for="(image, index) in sliders(good.imageUrl)" :key="index">
-          <img :src="image.url" />
+          <img :src="image.url" width="100%" height="auto"/>
         </van-swipe-item>
       </van-swipe>
       <nameprice class="nameprice" :name="good.name" :price="good.price" :memberPrice="good.memberPrice"></nameprice>
@@ -57,7 +57,7 @@ export default {
     next(vm => {
       log.debug('beforeRouteEnter to path is ' + to.path);
       // 保存这个路由是从那个地方来的
-      vm.to = to.path;
+      vm.to = from.path;
       if (isObjEmpty(vm.good)) {
         vm.$router.push({name: 'menu'});
       }
@@ -79,9 +79,9 @@ export default {
       }
     },
     url() {
-      if (to === '/menu') {
+      if (this.to === '/menu') {
         return true;
-      } else if(to === '/active') {
+      } else if(this.to === '/active') {
         return false;
       } else {
         return null;
@@ -125,6 +125,8 @@ export default {
       left 0px
       top 0px
       width 100%
+    .swiper
+      margin-top 46px
     .desc
       text-indent 32px
       font-size 16px

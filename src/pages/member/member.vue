@@ -129,6 +129,7 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .member-wrapper
+  margin-bottom 50px
   .avator
     width 100%
     height 200px

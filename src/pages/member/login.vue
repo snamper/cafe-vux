@@ -323,53 +323,55 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.logo
-  display flex
-  justify-content center
-  align-items center
-  height 160px
-  width 100%
-  margin-top 10px
-.input
-  margin 10px 0px
-.submit
-  width 100%
-  .login
+.login
+  margin-bottom 50px
+  .logo
     display flex
     justify-content center
+    align-items center
+    height 160px
+    width 100%
+    margin-top 10px
+  .input
     margin 10px 0px
-  .ops
-    .van-row
-      .van-col
-        font-size 18px
-        padding 10px 0
-        display flex
-      .register
-        justify-content flex-end
-        padding-right 10px
-      .vistor
-        justify-content center
-      .forget
-        justify-content flex-start
-        padding-left 10px
-  .submit-wrapper
-    display flex
-    justify-content space-between
-    .registerbtn,.loginbtn
-      display inline-block
-      width 45%
-    .registerbtn
-      margin-left 15px
-    .loginbtn
-      margin-right 15px
-.foot
-  .divider
-    font-size 18px
-    padding 10px
-    margin 10px 0px
-    display flex
-    justify-content center
-  .icon
-    display flex
-    justify-content center
+  .submit
+    width 100%
+    .login
+      display flex
+      justify-content center
+      margin 10px 0px
+    .ops
+      .van-row
+        .van-col
+          font-size 18px
+          padding 10px 0
+          display flex
+        .register
+          justify-content flex-end
+          padding-right 10px
+        .vistor
+          justify-content center
+        .forget
+          justify-content flex-start
+          padding-left 10px
+    .submit-wrapper
+      display flex
+      justify-content space-between
+      .registerbtn,.loginbtn
+        display inline-block
+        width 45%
+      .registerbtn
+        margin-left 15px
+      .loginbtn
+        margin-right 15px
+  .foot
+    .divider
+      font-size 18px
+      padding 10px
+      margin 10px 0px
+      display flex
+      justify-content center
+    .icon
+      display flex
+      justify-content center
 </style>
