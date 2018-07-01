@@ -43,7 +43,7 @@ export default {
     log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
-      if (from.path === '/member' || from.path === '/orderdetail') {
+      if (from.path === '/member' || from.path === '/orderdetail' || from.path === '/payment') {
         vm.$store.commit('updateLoadingStatus', {isLoading: true});
         vm.__getRecord().then(() => {
           vm.$store.commit('updateLoadingStatus', {isLoading: false});

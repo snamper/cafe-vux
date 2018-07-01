@@ -208,7 +208,11 @@ export default {
       });
     },
     back() {
-      this.$router.push({name: 'pay', params: {address: this.address}});
+      if (this.url) {
+        this.$router.push({name: 'pay', params: {address: this.address}});
+      } else {
+        this.$router.push({name: 'order'});
+      }
     },
     payit() {
       // let _this = this;

@@ -37,7 +37,10 @@ export default new Router({
         {
           name: 'member',
           path: 'member',
-          component: () => import('../pages/member/member.vue').then(m => m.default)
+          component: () => import('../pages/member/member.vue').then(m => m.default),
+          meta: {
+            keepAlive: true
+          }
         },
         {
           name: 'login',

@@ -31,12 +31,29 @@ export default {
   created() {
     log.info('start init UUID');
     this.$store.commit('init');
+    this.__selected();
   },
   computed: {
     ...mapGetters([
       'selectFoods'
     ]),
-    selected() {
+    info() {
+      if (this.selectFoods.length === 0) {
+        return '';
+      } else {
+        let result = 0;
+        this.selectFoods.forEach(good => {
+          result += good.count;
+        });
+        return result;
+      }
+    }
+  },
+  methods: {
+    change(active) {
+      log.debug('active is ' + active);
+    },
+    __selected() {
       switch (this.$route.path) {
         case '/menu':
           this.active = 0;
@@ -54,23 +71,7 @@ export default {
           this.active = 3;
           break;
       }
-    },
-    info() {
-      if (this.selectFoods.length === 0) {
-        return '';
-      } else {
-        let result = 0;
-        this.selectFoods.forEach(good => {
-          result += good.count;
-        });
-        return result;
-      }
     }
-  },
-  methods: {
-    change(active) {
-      log.debug('active is ' + active);
-    },
   }
 };
 </script>

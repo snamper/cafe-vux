@@ -37,7 +37,7 @@
     </van-row>
     <van-cell-group>
       <van-cell title="购物车" :to="{name: 'cart'}">
-        <round></round>
+        <round :number="number"></round>
       </van-cell>
     </van-cell-group>
     <van-cell-group v-if="User.member">
@@ -87,7 +87,18 @@ export default {
     ...mapGetters([
       'selectFoods',
       'username'
-    ])
+    ]),
+    number() {
+      if (this.selectFoods.length === 0) {
+        return 0;
+      } else {
+        let result = 0;
+        this.selectFoods.forEach(good => {
+          result += good.count;
+        });
+        return result;
+      }
+    }
   },
   methods: {
     logout() {
