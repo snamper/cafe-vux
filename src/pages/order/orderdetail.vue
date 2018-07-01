@@ -72,7 +72,7 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps, Button } from 'vant';
+import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps, Button, Toast } from 'vant';
 import product from '../../components/productbanner';
 import addr from '../../components/addresscard';
 import orderstatus from '../../components/orderstatus';
@@ -157,12 +157,23 @@ export default {
       this.$store.dispatch('alterStatus', param).then((resp) => {
         if (resp) {
           this.$router.push({name: 'order'});
+        } else {
+          this.__showAndToast('取消错误');
         }
+      }).catch(error => {
+        this.__showAndToast('取消错误');
       });
     },
     confirmOrder() {
       this.$store.dispatch('setcartsgoods',this.detail.details).then(() => {
         this.$router.push({name: 'payment', params: {orderid: this.detail.id}});
+      });
+    },
+    __showAndToast(context) {
+      Toast({
+        message: context,
+        forbidClick: true,
+        duration: 1000
       });
     }
   }

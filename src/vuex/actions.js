@@ -77,6 +77,7 @@ export default {
   getRecords(context, payload) {
     return new Promise(resolve => {
       AJAX.getRecordList(payload).then(data => {
+        log.debug('data is ' + JSON.stringify(data));
         context.commit('update', {type: 'records', value: data});
         resolve();
       });
