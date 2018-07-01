@@ -109,7 +109,7 @@ export default {
     },
     __getRecord() {
       return new Promise((resolve)=> {
-        const param = isObjEmpty(this.User.uuid) ? { userId: this.User.member.id, needDetail: true } : { userId: this.User.uuid, needDetail: true };
+        const param = isObjEmpty(this.User.uuid) ? { userId: this.User.member.id, needDetail: true } : { userCode: this.User.uuid, needDetail: true };
         this.$store.dispatch('getRecords', param).then(() => {
           resolve();
         });
