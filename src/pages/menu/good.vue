@@ -35,6 +35,7 @@ const log = new Logger('page/menu/good');
 export default {
   data() {
     return {
+      to: ''
     }
   },
   components: {
@@ -54,6 +55,9 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      log.debug('beforeRouteEnter to path is ' + to.path);
+      // 保存这个路由是从那个地方来的
+      vm.to = to.path;
       if (isObjEmpty(vm.good)) {
         vm.$router.push({name: 'menu'});
       }
@@ -73,6 +77,15 @@ export default {
         });
         return result;
       }
+    },
+    url() {
+      if (to === '/menu') {
+        return true;
+      } else if(to === '/active') {
+        return false;
+      } else {
+        return null;
+      }
     }
   },
   methods: {
@@ -86,7 +99,11 @@ export default {
       return result;
     },
     back() {
-      this.$router.push({name: 'menu'});
+      if(this.url) {
+        this.$router.push({name: 'menu'});
+      } else {
+        this.$router.push({name: 'active'});
+      }
     },
     add2cart() {
       this.$refs.sku.shownext(this.good, false);

@@ -5,7 +5,7 @@
       :name="product.name"
       :price="product.price"
       :memberPrice="product.memberPrice">
-      <van-button class="button" size="mini" type="default" @click="buy">购买</van-button>
+      <van-button style="color:rgb(255, 97, 25)" class="button" size="mini" type="default" @click="buy">购买</van-button>
     </nameprice>
   </div>
 </template>

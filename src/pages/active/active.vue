@@ -16,14 +16,21 @@
 import { mapGetters } from 'vuex';
 import banner from '../../components/banner';
 import orderdetail from '../../components/orderdetail';
+import { isObjEmpty } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('page/active/active');
 export default {
   data() {
     return {
-      loading: false,
-      finished: true
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$store.commit('updateLoadingStatus', {isLoading: true});
+      vm.$store.dispatch('getGoods').then(() => {
+        vm.$store.commit('updateLoadingStatus', {isLoading: false});
+      });
+    });
   },
   components: {
     orderdetail,
