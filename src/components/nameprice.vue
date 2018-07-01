@@ -50,10 +50,10 @@
       line-height 32px
       .normal,.member
         price-color()
-        font-size 14px
+        font-size 10px
       .member
         padding-left 5px
-        font-size 12px
+        font-size 10px
     .operation
       margin-left auto
       margin-right 5px
