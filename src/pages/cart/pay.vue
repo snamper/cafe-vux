@@ -7,7 +7,7 @@
     </van-nav-bar>
     <div class="content">
       <addr :address="address" @addaddress="addaddress"></addr>
-      <div class="orderlist" v-for="(good, index) in records" :key="index">
+      <div class="orderlist" v-for="(good, index) in carts" :key="index">
         <product :good="good"></product>
       </div>
       <van-cell-group>
@@ -27,8 +27,8 @@
             <div>会员优惠</div>
             <div v-if="delivertype === '快递'">快递费用</div>
           </template>
-          <div>￥{{totalRecords.normal}}</div>
-          <div>￥{{totalRecords.normal - totalRecords.member}}</div>
+          <div>￥{{totalCarts.normal}}</div>
+          <div>￥{{totalCarts.normal - totalCarts.member}}</div>
           <div v-if="delivertype === '快递'">￥{{deliverPrice}}</div>
         </van-cell>
       </van-cell-group>
@@ -77,7 +77,7 @@ export default {
     log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
-      if (vm.records.length === 0) {
+      if (vm.carts.length === 0) {
         vm.$router.push({name: 'cart'});
       }
     });
@@ -102,19 +102,19 @@ export default {
   },
   computed: {
     ...mapState([
-      'records'
+      'carts'
     ]),
     ...mapGetters([
-      'totalRecords'
+      'totalCarts'
     ]),
     value() {
-      return '￥' + this.totalRecords.normal;
+      return '￥' + this.totalCarts.normal;
     },
     type() {
       isObjEmpty(this.address) ? 'add' : 'edit';
     },
     price() {
-      return this.delivertype === '自提' ? this.totalRecords.normal * 100 : (this.totalRecords.normal + this.deliverPrice) * 100;
+      return this.delivertype === '自提' ? this.totalCarts.normal * 100 : (this.totalCarts.normal + this.deliverPrice) * 100;
     },
     deliverType() {
       return this.delivertype === '自提' ? false : true;

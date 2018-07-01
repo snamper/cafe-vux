@@ -19,8 +19,6 @@ export default {
     } else if (payload.type === 'carts') {
       state.carts = payload.value;
     } else if (payload.type === 'address') {
-      log.debug('now update the address');
-      log.debug('print value [' + JSON.stringify(payload.value) + ']');
       state.address = payload.value;
     } else if (payload.type === 'addresses') {
       state.addresses = payload.value;

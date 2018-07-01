@@ -8,7 +8,7 @@ export default {
     // 订单
     records: [],
     // 提交的订单 需要在真正提交订单的时候去清空
-    carts: null,
+    carts: [],
     // 配送地址
     address: null,
     // 填写的地址

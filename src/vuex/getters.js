@@ -26,15 +26,15 @@ export default {
     });
     return total;
   },
-  totalRecords(state) {
+  totalCarts(state) {
     const total = {
       normal: 0,
       member: 0,
       count: 0
     };
-    state.records.forEach(food => {
+    state.carts.forEach(food => {
       total.normal += food.price * food.count;
-      total.member += food.memberPrice * food.count;
+      total.member += food.memberPrice ? food.memberPrice : 0 * food.count;
       total.count += food.count;
     });
     return total;

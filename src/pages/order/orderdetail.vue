@@ -61,8 +61,8 @@
         <van-cell-group>
           <van-cell>
             <div class="ops">
-              <van-button class="cancel" type="default" size="small">取消订单</van-button>
-              <van-button class="confirm" type="default" size="small">确认付款</van-button>
+              <van-button class="cancel" type="default" size="small" @click.native="cancelOrder">取消订单</van-button>
+              <van-button class="confirm" type="default" size="small" @click.native="confirmOrder">确认付款</van-button>
             </div>
           </van-cell>
         </van-cell-group>
@@ -150,7 +150,20 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push({name: 'order', params: {order: this.order}});
+      this.$router.push({name: 'order', params: {order: this.detail}});
+    },
+    cancelOrder() {
+      const param = {entityId: this.detail.id, status: this.status.CLOSED.key};
+      this.$store.dispatch('alterStatus', param).then((resp) => {
+        if (resp) {
+          this.$router.push({name: 'order'});
+        }
+      });
+    },
+    confirmOrder() {
+      this.$store.dispatch('setcartsgoods',this.detail.details).then(() => {
+        this.$router.push({name: 'payment', params: {orderid: this.detail.id}});
+      });
     }
   }
 };

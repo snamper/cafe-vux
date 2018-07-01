@@ -99,14 +99,14 @@ export default {
   },
   setcartsgoods(context, payload) {
     return new Promise((resolve, reject) => {
-      context.commit('update', {type: 'records', value: payload});
+      context.commit('update', {type: 'carts', value: payload});
       resolve();
     });
   },
   alterStatus(context, payload) {
     return new Promise((resolve, reject) => {
       AJAX.alterStatus(payload).then(resp => {
-        resolve();
+        resolve(resp.status);
       });
     });
   }

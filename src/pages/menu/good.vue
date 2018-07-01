@@ -16,7 +16,7 @@
     </div>
     <van-goods-action>
       <van-goods-action-mini-btn icon="wap-home" text="首页" :to="{name: 'menu'}"></van-goods-action-mini-btn>
-      <van-goods-action-mini-btn icon="cart" text="购物车" :to="{name: 'cart'}"></van-goods-action-mini-btn>
+      <van-goods-action-mini-btn icon="cart" text="购物车" :to="{name: 'cart'}" :info="info"></van-goods-action-mini-btn>
       <van-goods-action-big-btn text="加入购物车" @click="add2cart"></van-goods-action-big-btn>
       <van-goods-action-big-btn text="立即购买" primary @click="buyit" ></van-goods-action-big-btn>
     </van-goods-action>
@@ -26,6 +26,7 @@
 
 <script type="text/ecmascript=6">
 import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Swipe, SwipeItem, NavBar } from 'vant';
+import { mapGetters } from 'vuex';
 import { getImageUrl, isObjEmpty } from '../../common/js/util.js';
 import nameprice from '../../components/nameprice';
 import sku from '../../components/sku';
@@ -57,6 +58,22 @@ export default {
         vm.$router.push({name: 'menu'});
       }
     });
+  },
+  computed: {
+    ...mapGetters([
+      'selectFoods'
+    ]),
+    info() {
+      if (this.selectFoods.length === 0) {
+        return '';
+      } else {
+        let result = 0;
+        this.selectFoods.forEach(good => {
+          result += good.count;
+        });
+        return result;
+      }
+    }
   },
   methods: {
     sliders(images) {

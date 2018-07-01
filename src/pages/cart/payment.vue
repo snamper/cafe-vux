@@ -83,8 +83,8 @@ export default {
       log.debug('beforeRouteEnter to path is ' + to.path);
       // 保存这个路由是从那个地方来的
       vm.to = to.path;
-      log.debug('records is ' + JSON.stringify(vm.$store.state.records));
-      if (to.path === '/' || isObjEmpty(vm.$store.state.records)) {
+      log.debug('records is ' + JSON.stringify(vm.$store.state.carts));
+      if (to.path === '/' || isObjEmpty(vm.$store.state.carts)) {
         vm.$router.push({name: 'menu'});
       }
     });
@@ -101,6 +101,10 @@ export default {
     },
     address: {
       type: Object
+    },
+    orderid: {
+      type: Number,
+      default: null
     }
   },
   components: {
@@ -116,18 +120,22 @@ export default {
   computed: {
     ...mapState([
       'User',
-      'records'
+      'carts'
     ]),
     ...mapGetters([
-      'totalRecords'
+      'totalCarts'
     ]),
     // 购物总价
     totalPrice() {
-      // 非会员价
-      if (!isObjEmpty(this.User.uuid)) {
-        return this.deliverType ? this.totalRecords.normal + this.deliverPrice : this.totalRecords.normal;
+      if (this.url) {
+        // 非会员价
+        if (!isObjEmpty(this.User.uuid)) {
+          return this.deliverType ? this.totalCarts.normal + this.deliverPrice : this.totalCarts.normal;
+        } else {
+          return this.deliverType ? this.totalCarts.member + this.deliverPrice : this.totalCarts.member;
+        }
       } else {
-        return this.deliverType ? this.totalRecords.member + this.deliverPrice : this.totalRecords.member;
+        return this.totalCarts.normal;
       }
     },
     // 会员余额
@@ -139,18 +147,20 @@ export default {
     // 计算具体的商品
     details() {
       const details = [];
-      this.records.forEach(good => {
+      this.carts.forEach(good => {
         let detail;
         if (this.radio === this.member.value) {
           detail = {
             productId: good.id,
             amount: good.count * good.memberPrice,
+            price: good.memberPrice,
             count: good.count
           };
         } else {
           detail = {
             productId: good.id,
             amount: good.count * good.price,
+            price: good.price,
             count: good.count
           };
         }
@@ -167,6 +177,15 @@ export default {
         details: this.details
       };
       return result;
+    },
+    url() {
+      if (this.to === '/pay') {
+        return true;
+      } else if (this.to === '/order' || this.to === '/orderdetail') {
+        return false;
+      } else {
+        return null;
+      }
     }
   },
   methods: {
@@ -204,23 +223,36 @@ export default {
         case this.alipay.value:
           // 支付宝支付
           log.info('alipay pay');
-          this.$store.dispatch('submitRecord', this.order).then(resp => {
-            log.warn('alipay');
+          if (this.url) {
+            this.$store.dispatch('submitRecord', this.order).then(resp => {
+              log.warn('alipay new');
+              this.$router.push({name: 'member'});
+              // window.location.href = this.__payurl('alipay', this.totalPrice, resp);
+            });
+          } else {
+            log.warn('alipay old');
             this.$router.push({name: 'member'});
-            // window.location.href = this.__payurl('alipay', this.totalPrice, resp);
-          });
+            // window.location.href = this.__payurl('alipay', this.totalPrice, orderid);
+          }
           break;
         case this.wechat.value:
           // 微信支付
           log.info('wechat pay');
-          this.$store.dispatch('submitRecord', this.order).then(resp => {
-            log.warn('alipay');
+          if (this.url) {
+            this.$store.dispatch('submitRecord', this.order).then(resp => {
+              log.warn('wechat new');
+              this.$router.push({name: 'member'});
+              // window.location.href = this.__payurl('wechat', this.totalPrice, resp);
+            });
+          } else {
+            log.warn('wechat old');
             this.$router.push({name: 'member'});
-            // window.location.href = this.__payurl('wechat', this.totalPrice, resp);
-          });
+            // window.location.href = this.__payurl('wechat', this.totalPrice, orderid);
+          }
           break;
         case this.member.value:
           log.info('member pay');
+          // TODO 需要判断是第一次提交订单还是已有订单付款
           this.$store.dispatch('submitRecord', this.order).then(resp => {
             if (resp !== null) {
               this.__toast('支付成功');
