@@ -4,13 +4,7 @@ const log = new Logger('vuex/getters');
 export default {
   // 被选择的商品
   selectFoods(state, getters) {
-    const foods = [];
-    getters.products.forEach((food) => {
-      if (food.count > 0) {
-        foods.push(food);
-      }
-    });
-    return foods;
+    return getters.products.filter(food => food.count > 0);
   },
   // 总价,总会员价,总数量
   totalAttr(state, getters) {
@@ -53,40 +47,16 @@ export default {
   },
   // 滑动显示的商品
   sliders(state, getters) {
-    const sliders = [];
-    getters.products.forEach((good) => {
-        if (good.imageSliderUrl !== '') {
-            sliders.push(good);
-        }
-    });
-    return sliders;
+    return getters.products.filter(good => good.imageSliderUrl !== '');
   },
   success(state) {
-    const result = [];
-    state.records.forEach(record => {
-      if (record.status === status.SUCCESS.key) {
-        result.push(record);
-      }
-    });
-    return result;
+    return state.records.filter(record => record.status === status.SUCCESS.key);
   },
   refund(state) {
-    const result = [];
-    state.records.forEach(record => {
-      if (record.status === status.REFUND.key) {
-        result.push(record);
-      }
-    });
-    return result;
+    return state.records.filter(record => record.status === status.REFUND.key);
   },
   closed(state) {
-    const result = [];
-    state.records.forEach(record => {
-      if (record.status === status.CLOSED.key) {
-        result.push(record);
-      }
-    });
-    return result;
+    return state.records.filter(record => record.status === status.CLOSED.key);
   },
   username(state) {
     log.debug('reserve');
