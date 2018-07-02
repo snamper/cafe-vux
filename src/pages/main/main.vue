@@ -5,7 +5,7 @@
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
     <van-tabbar v-model="active" @change="change">
-      <van-tabbar-item icon="home" :to="{name: 'menu'}">主页</van-tabbar-item>
+      <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('tabBar.menu')}}</van-tabbar-item>
       <van-tabbar-item icon="like-o" :to="{name: 'active'}">今日活动</van-tabbar-item>
       <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info">购物车</van-tabbar-item>
       <van-tabbar-item icon="contact" :to="{name: 'member'}">我的</van-tabbar-item>
