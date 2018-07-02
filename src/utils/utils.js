@@ -1,6 +1,6 @@
 // 对象是否为空
 export const isObjEmpty = obj => (obj === null || obj === '' || typeof (obj) === 'undefined');
-
+// 对象是否为非空
 export const isObjNotEmpty = obj => !isObjEmpty(obj);
 
 const splitUrl = (url, size) => {

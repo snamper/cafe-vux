@@ -1,27 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import carts from './modules/carts';
-import login from './modules/login';
-
+import state from './state';
+import getters from './getters';
+import mutations from './mutations';
+import actions from './actions';
 Vue.use(Vuex);
 
-const app = {
-  state: {
-    // loading页面
-    isLoading: false
-  },
-  mutations: {
-    updateLoadingStatus(state, payload) {
-      state.isLoading = payload.isLoading;
-    }
-  }
-};
-
 export default new Vuex.Store({
-  modules: {
-    carts,
-    login
-  },
-  app,
+  state,
+  getters,
+  mutations,
+  actions,
   strict: true
 });

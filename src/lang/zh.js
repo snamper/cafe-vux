@@ -1,8 +1,10 @@
 export default {
-  menu: '主页',
-  active: '今日活动',
-  cart: '购物车',
-  member: '我的',
+  tabbar: {
+    menu: '主页',
+    active: '今日活动',
+    cart: '购物车',
+    member: '我的'
+  },
   carts: '购物车',
   add2cart: '加入购物车',
   buy: '立即购买',
