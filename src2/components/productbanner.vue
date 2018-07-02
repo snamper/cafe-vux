@@ -36,7 +36,7 @@
 
 <script type="text/ecmascript=6">
 import { Checkbox, Icon, Cell, CellGroup, CellSwipe, Stepper } from 'vant';
-import { resizeImage } from '@/utils/utils.js';
+import { getImageUrl } from '../common/js/util.js';
 import Logger from 'chivy';
 const log = new Logger('page/menu/productbanner');
 export default {
@@ -96,7 +96,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import '../../styles/mixin.styl'
+@import '../common/stylus/mixin.styl'
 .product-banner
   padding 0px
   .van-cell

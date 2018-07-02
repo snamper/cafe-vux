@@ -1,5 +1,6 @@
 import { ajax } from '@/store/utils/ajax';
 import { url } from '@/store/utils/consts';
+import { initStorage } from '@/utils/storage';
 import { getMemberInfo, setModifyData } from '@/store/utils/utils';
 export default {
   getGoods(context) {
@@ -102,6 +103,15 @@ export default {
     return new Promise(resolve => {
       ajax(url.modifyBasicInfo, param).then(data => {
         resolve(data.success);
+      });
+    });
+  },
+  initUser(context, payload) {
+    return new Promise(resolve => {
+      initStorage().then(resp => {
+        context.commit('update', {type: 'uuid', value: resp.uuid});
+        context.commit('update', {type: 'member', value: resp.member});
+        resolve();
       });
     });
   }

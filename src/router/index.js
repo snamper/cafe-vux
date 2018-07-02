@@ -15,7 +15,7 @@ export const routerMap = [
         meta: {
           keepAlive: true
         }
-      },
+      }/* ,
       {
         name: 'cart',
         path: 'cart',
@@ -42,7 +42,7 @@ export const routerMap = [
         name: 'login',
         path: 'login',
         component: () => import('@/views/main/member/index').then(m => m.default)
-      }
+      } */
     ]
   }/* , */
   /* {

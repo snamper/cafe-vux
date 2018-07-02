@@ -25,7 +25,7 @@
 
 <script type="text/ecmascript=6">
 import { Sku, Button, Toast } from 'vant';
-import { resizeImage } from '@/utils/utils';
+import { getImageUrl } from '../common/js/util';
 import { mapState } from 'vuex';
 import Vue from 'vue';
 import Logger from 'chivy';
@@ -155,7 +155,7 @@ export default {
         ],
         goods: {
           title: good.name,
-          picture: resizeImage(good.imageUrl, 400),
+          picture: getImageUrl(good.imageUrl, 400),
           price: good.price
         },
         price: good.price,

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Logger from 'chivy';
-import { isObjNotEmpty } from './utils';
+import { isObjNotEmpty } from '@/utils/utils';
 const log = new Logger('common/js/ajax');
 
 export const ajax = (url, payload = '') => {

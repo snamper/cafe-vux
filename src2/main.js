@@ -2,10 +2,10 @@ import Vue from 'vue';
 import FastClick from 'fastclick';
 import App from './App.vue';
 import router from './router';
-import store from './store/';
+import store from './vuex/';
+import './common/css/iconfont.css';
+import './common/stylus/index.styl';
 import i18n from './lang';
-import '@/icon/iconfont.css';
-import '@/styles/index.styl';
 
 FastClick.attach(document.body);
 Vue.config.productionTip = false;
