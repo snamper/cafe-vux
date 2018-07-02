@@ -12,3 +12,5 @@ test.json
 *.njsproj
 *.sln
 test.html
+src2/
+src2.7z
