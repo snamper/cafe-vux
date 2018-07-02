@@ -29,42 +29,6 @@ const url = {
   getBasicInfoList: '/shop/member/show/ui/getBasicInfoList.do'
 };
 
-const consts = {
-  session: {
-    set: 'set',
-    get: 'get',
-    remove: 'remove'
-  },
-  key: {
-    uuid: 'uuid',
-    member: 'member'
-  }
-};
-
-const mainswiper = [
-  {
-    url: '',
-    img: '/static/img/maniswiper1.jpg',
-    title: 'TianBakery1'
-  },
-  {
-    url: '',
-    img: '/static/img/maniswiper2.jpg',
-    title: 'TianBakery2'
-  }
-];
-
-const gender = {
-  Male: {
-    key: 'M',
-    value: '男'
-  },
-  FaMale: {
-    key: 'F',
-    value: '女'
-  }
-};
-
 const regex = {
   // 密码由6-21字母和数字组成
   password: '^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$',
@@ -128,4 +92,4 @@ const status = {
 
 const deliverPrice = 25;
 
-export { url, consts, mainswiper, regex, gender, expressType, status, deliverPrice };
+export { url, regex, expressType, status, deliverPrice };

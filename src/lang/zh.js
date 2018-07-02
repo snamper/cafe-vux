@@ -15,6 +15,7 @@ export default {
     myaddress: '我的地址'
   },
   login: {
+    vistor: '游客',
     username: '用户名',
     password: '密码',
     placeholder: {
