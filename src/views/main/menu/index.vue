@@ -20,10 +20,10 @@
 <script type="text/ecmascript=6">
 import { Button, List } from 'vant';
 import { mapGetters, mapState } from 'vuex';
-import sku from '../../components/sku';
-import logo from '../../components/logo';
-import banner from '../../components/banner';
-import product from '../../components/productbanner';
+import sku from '@/components/sku';
+import logo from '@/components/logo';
+import banner from '@/components/banner';
+import product from '@/components/productbanner';
 import Logger from 'chivy';
 const log = new Logger('page/menu/menu');
 export default {
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import '../../common/stylus/mixin.styl'
+@import '../../../styles/mixin.styl';
 .menu
   background-color rgb(244, 244, 244)
   margin-bottom 50px

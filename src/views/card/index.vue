@@ -35,10 +35,10 @@
 
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, Row, Col, Icon, NavBar } from 'vant';
-import avator from '../../components/avator';
-import split from '../../components/split';
+import avator from '@/components/avator';
+import split from '@/components/split';
+import { isObjEmpty, isObjNotEmpty } from '@/utils/utils.js';
 import { mapState, mapGetters } from 'vuex';
-import { isObjEmpty } from '../../common/js/util';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/card');
 export default {

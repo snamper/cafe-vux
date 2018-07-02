@@ -6,15 +6,15 @@
       <div class="tips">{{time}}s后返回主页面</div>
     </div>
     <div class="tips"></div>
-  </div> 
+  </div>
 </template>
 
 <script>
-import avator from '../../components/avator';
+import avator from '@/components/avator';
 export default {
   data() {
     return {
-      img: '../../../static/img/tian.jpg',
+      img: './tian.jpg',
       time: 5
     };
   },

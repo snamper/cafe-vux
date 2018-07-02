@@ -98,7 +98,7 @@
 
 <script type="text/ecmascript=6">
 import { Field, NavBar, CellGroup, DatetimePicker, Picker, Area, Actionsheet, Button, Toast } from 'vant';
-import AreaList from '../../common/js/area.js';
+import AreaList from '@/utils/area.js';
 import { mapState } from 'vuex';
 import { regexmatch, formatDate, isObjEmpty } from '../../common/js/util.js';
 import { regex } from '../../common/js/consts.js';
@@ -277,7 +277,7 @@ export default {
           error = isObjEmpty(this.birthday.content);
           if(error) {
             this.__toast('请选择生日');
-          } 
+          }
           break;
         case this.mobile.key:
           error = isObjEmpty(this.mobile.content) || !regexmatch(data.content, regex.mobile);

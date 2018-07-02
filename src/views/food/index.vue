@@ -27,9 +27,9 @@
 <script type="text/ecmascript=6">
 import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Swipe, SwipeItem, NavBar } from 'vant';
 import { mapGetters } from 'vuex';
-import { getImageUrl, isObjEmpty } from '../../common/js/util.js';
+import { getImageUrl, isObjEmpty } from '@/utils/utils.js';
 import nameprice from '../../components/nameprice';
-import sku from '../../components/sku';
+import sku from '@/components/sku';
 import Logger from 'chivy';
 const log = new Logger('page/menu/good');
 export default {

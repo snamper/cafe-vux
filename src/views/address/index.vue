@@ -20,7 +20,7 @@
 // 判断是否是会员，不是会员则只能添加一个地址，且无法保存地址，如果是会员则可以保存多个地址
 import { NavBar, Cell, CellGroup, AddressList, Toast } from 'vant';
 import { mapState, mapGetters } from 'vuex';
-import { isObjEmpty } from '../../common/js/util';
+import { isObjEmpty, isObjNotEmpty } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('pages/member/address');
 export default {
@@ -34,7 +34,7 @@ export default {
       if (isObjEmpty(vm.$store.state.User.uuid) && isObjEmpty(vm.$store.state.User.member)) {
         vm.$router.push({name: 'menu'});
       }
-      if(!isObjEmpty(vm.User.member)){
+      if(isObjNotEmpty(vm.User.member)){
         vm.__getaddresslist();
       }
     })
@@ -49,16 +49,16 @@ export default {
       'addressList'
     ]),
     list() {
-      if (!isObjEmpty(this.address)) {
+      if (isObjNotEmpty(this.address)) {
         const list = [];
         list.push(this.__covert(this.address));
         return list;
-      } else if(!isObjEmpty(this.User.member)) {
+      } else if(isObjNotEmpty(this.User.member)) {
         return this.addressList;
       }
     },
     chooseId() {
-      if (!isObjEmpty(this.address)) {
+      if (isObjNotEmpty(this.address)) {
         this.chosenAddressId = this.address.memberId;
       } else {
         this.addresses.forEach(address => {

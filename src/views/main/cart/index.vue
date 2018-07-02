@@ -35,7 +35,7 @@
 <script type="text/ecmascript=6">
 import { Checkbox, CheckboxGroup, SubmitBar, Button } from 'vant';
 import { mapGetters } from 'vuex';
-import productbanner from '../../components/productbanner';
+import productbanner from '@/components/productbanner';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/cart');
 export default {
@@ -135,7 +135,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import '../../common/stylus/mixin.styl';
+@import '../../../styles/mixin.styl';
 .cart
   height 100%
   width 100%

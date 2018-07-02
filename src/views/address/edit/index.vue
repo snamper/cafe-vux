@@ -18,9 +18,9 @@
 
 <script type="text/ecmascript=6">
 import { AddressEdit, NavBar } from 'vant';
-import areaList from '../../common/js/area.js';
+import areaList from '@/utils/area.js';
+import { isObjEmpty, findCode } from '@/utils/utils.js';
 import { mapState } from 'vuex';
-import { isObjEmpty, findCode } from '../../common/js/util.js';
 import Logger from 'chivy';
 const log = new Logger('pages/member/addressedit');
 export default {

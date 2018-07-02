@@ -58,8 +58,8 @@
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, Row, Col, Icon, Button  } from 'vant';
 import { mapState, mapGetters } from 'vuex';
-import round from '../../components/round';
-import avator from '../../components/avator';
+import round from './round';
+import avator from '@/components/avator';
 import { status } from  '../../common/js/consts.js';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/member');

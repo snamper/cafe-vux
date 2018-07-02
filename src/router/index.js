@@ -5,13 +5,13 @@ Vue.use(Router);
 export const routerMap = [
   {
     path: '/',
-    component: () => import('@/views/main/index.vue').then(m => m.default),
+    component: () => import('@/views/main/index').then(m => m.default),
     redirect: '/menu',
     children: [
       {
         name: 'menu',
         path: 'menu',
-        component: () => import('@/views/main/menu/index.vue').then(m => m.default),
+        component: () => import('@/views/main/menu/index').then(m => m.default),
         meta: {
           keepAlive: true
         }
@@ -19,13 +19,13 @@ export const routerMap = [
       {
         name: 'cart',
         path: 'cart',
-        component: () => import('@/views/main/cart/index.vue').then(m => m.default),
+        component: () => import('@/views/main/cart/index').then(m => m.default),
         meta: {keepAlive: true }
       },
       {
         name: 'active',
         path: 'active',
-        component: () => import('@/views/main/active/index.vue').then(m => m.default),
+        component: () => import('@/views/main/active/index').then(m => m.default),
         meta: {
           keepAlive: true
         }
@@ -33,7 +33,7 @@ export const routerMap = [
       {
         name: 'member',
         path: 'member',
-        component: () => import('@/views/main/member/index.vue').then(m => m.default),
+        component: () => import('@/views/main/member/index').then(m => m.default),
         meta: {
           keepAlive: true
         }
@@ -41,14 +41,14 @@ export const routerMap = [
       {
         name: 'login',
         path: 'login',
-        component: () => import('@/views/main/member/index.vue').then(m => m.default)
+        component: () => import('@/views/main/member/index').then(m => m.default)
       }
     ]
-  },
-  {
+  }/* , */
+  /* {
     name: 'food',
     path: '/food',
-    component: () => import('@/views/main/food/index.vue').then(m => m.default),
+    component: () => import('@/views/food/index').then(m => m.default),
     props: true,
     meta: {
       keepAlive: true
@@ -57,13 +57,13 @@ export const routerMap = [
   {
     name: 'card',
     path: '/card',
-    component: () => import('@/views/main/card/index.vue').then(m => m.default),
+    component: () => import('@/views/card/index').then(m => m.default),
     props: true
   },
   {
     name: 'order',
     path: '/order',
-    component: () => import('@/views/main/order/index.vue').then(m => m.default),
+    component: () => import('@/views/order/index').then(m => m.default),
     props: true,
     meta: {
       keepAlive: true
@@ -72,34 +72,34 @@ export const routerMap = [
   {
     name: 'pay',
     path: '/pay',
-    component: () => import('@/views/main/pay/index.vue').then(m => m.default),
+    component: () => import('@/views/pay/index').then(m => m.default),
     props: true,
     meta: { keepAlive: true }
   },
   {
     name: 'address',
     path: '/address',
-    component: () => import('@/views/main/address/index.vue').then(m => m.default),
+    component: () => import('@/views/address/index').then(m => m.default),
     props: true,
     meta: { keepAlive: true }
   },
   {
     name: 'records',
     path: '/records',
-    component: () => import('@/views/main/records/index.vue').then(m => m.default),
+    component: () => import('@/views/records/index').then(m => m.default),
     props: true
   },
   {
     name: 'record',
     path: '/record',
-    component: () => import('@/views/main/record/index.vue').then(m => m.default),
+    component: () => import('@/views/record/index').then(m => m.default),
     props: true
   },
   {
     name: '404',
     path: '/404',
-    component: () => import('@/views/main/error/index.vue').then(m => m.default)
-  }
+    component: () => import('@/views/error/index').then(m => m.default)
+  } */
 ];
 
 export default new Router({
