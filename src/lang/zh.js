@@ -6,11 +6,13 @@ export default {
   carts: '购物车',
   add2cart: '加入购物车',
   buy: '立即购买',
+  finish: '完成',
   text: {
     productlist: '商品列表',
     subtitle: '蛋糕手工打造',
     productdetail: '商品详情',
-    products: '所有商品'
+    products: '所有商品',
+    myaddress: '我的地址'
   },
   login: {
     username: '用户名',

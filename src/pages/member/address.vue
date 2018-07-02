@@ -1,9 +1,9 @@
 <template>
   <div class="address">
     <van-nav-bar
-      title="我的地址"
+      :title="$('text.myaddress')"
       left-arrow
-      right-text="完成"
+      :right-text="$('finish')"
       @click-right="finish"
       @click-left="back">
     </van-nav-bar>
