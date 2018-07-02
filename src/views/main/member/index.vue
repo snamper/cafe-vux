@@ -60,13 +60,13 @@ import { Cell, CellGroup, Row, Col, Icon, Button  } from 'vant';
 import { mapState, mapGetters } from 'vuex';
 import round from './round';
 import avator from '@/components/avator';
-import { status } from  '../../common/js/consts.js';
+import { status } from  '@/utils/consts.js';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/member');
 export default {
   data() {
     return {
-      avatorurl: '../../../static/img/avator.jpg',
+      avatorurl: './avator.jpg',
       status
     };
   },
