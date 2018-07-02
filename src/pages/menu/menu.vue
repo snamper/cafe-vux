@@ -2,7 +2,7 @@
   <div class="menu" v-if="!isLoading">
     <logo></logo>
     <banner
-      title="所有商品">
+      :title="$('text.products')">
     </banner>
     <div class="cards" v-for="(product, index) in products" :key="index">
       <div class="product" @click="showdetail(product)">

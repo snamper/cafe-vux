@@ -1,8 +1,8 @@
 <template>
   <div class="active">
     <banner
-      title="商品列表"
-      subtitle="蛋糕手工打造">
+      :title="$('text.productlist')"
+      :subtitle="$('text.subtitle')">
     </banner>
     <div class="products" >
       <div class="product" v-for="(product, index) in sliders" :key="index">

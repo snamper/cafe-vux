@@ -2,7 +2,7 @@
   <div class="good">
     <div class="content" v-if="good">
       <van-nav-bar
-        title="商品详情"
+        :title="$('text.productdetail')"
         left-arrow
         @click-left="back">
       </van-nav-bar>
@@ -15,10 +15,10 @@
       <div class="desc">{{good.description}}</div>
     </div>
     <van-goods-action>
-      <van-goods-action-mini-btn icon="wap-home" text="首页" :to="{name: 'menu'}"></van-goods-action-mini-btn>
-      <van-goods-action-mini-btn icon="cart" text="购物车" :to="{name: 'cart'}" :info="info"></van-goods-action-mini-btn>
-      <van-goods-action-big-btn text="加入购物车" @click="add2cart"></van-goods-action-big-btn>
-      <van-goods-action-big-btn text="立即购买" primary @click="buyit" ></van-goods-action-big-btn>
+      <van-goods-action-mini-btn icon="wap-home" :text="$('menu')" :to="{name: 'menu'}"></van-goods-action-mini-btn>
+      <van-goods-action-mini-btn icon="cart" :text="$('carts')" :to="{name: 'cart'}" :info="info"></van-goods-action-mini-btn>
+      <van-goods-action-big-btn :text="$('add2cart')" @click="add2cart"></van-goods-action-big-btn>
+      <van-goods-action-big-btn :text="$('buy')" primary @click="buyit" ></van-goods-action-big-btn>
     </van-goods-action>
     <sku ref="sku" confirm></sku>
   </div>

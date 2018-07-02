@@ -1,9 +1,16 @@
 export default {
-  tabBar: {
-    menu: '主页',
-    active: '今日活动',
-    cart: '购物车',
-    member: '我的'
+  menu: '主页',
+  active: '今日活动',
+  cart: '购物车',
+  member: '我的',
+  carts: '购物车',
+  add2cart: '加入购物车',
+  buy: '立即购买',
+  text: {
+    productlist: '商品列表',
+    subtitle: '蛋糕手工打造',
+    productdetail: '商品详情',
+    products: '所有商品'
   },
   login: {
     username: '用户名',
@@ -14,6 +21,5 @@ export default {
       account: '手机号码/邮箱名',
       confirm: '请确认密码'
     }
-  },
-  test: '测试'
+  }
 };
