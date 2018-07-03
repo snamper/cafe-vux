@@ -58,19 +58,19 @@ const log = new Logger('page/cart/payment');
 export default {
   data () {
     return {
-      radio: $t('pay.alipay'),
+      radio: this.$t('pay.alipay'),
       recordPrice: 0,
       alipay: {
-        value: $t('pay.alipay'),
-        img: './img/alipay.png'
+        value: this.$t('pay.alipay'),
+        img: '../../../static/img/alipay.png'
       },
       wechat: {
-        value: $t('pay.wechat'),
-        img: './img/wechat.png'
+        value: this.$t('pay.wechat'),
+        img: '../../../static/img/wechat.png'
       },
       member: {
-        value: $t('pay.wechat'),
-        img: './img/tianicon.jpg'
+        value: this.$t('pay.wechat'),
+        img: '../../../static/img/tianicon.jpg'
       },
       // 记录从那个地方来
       to: null
@@ -219,7 +219,7 @@ export default {
       // 付款成功后提示
       // 清空购物车
       if (this.radio === this.member.value && this.User.member.balance < this.totalPrice) {
-        this.__toast($t('pay.tips1'));
+        this.__toast(this.$t('pay.tips1'));
         return;
       }
       switch (this.radio) {
@@ -229,13 +229,13 @@ export default {
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
               log.warn('alipay new');
-              this.__toast($t('pay.tips2'));
+              this.__toast(this.$t('pay.tips2'));
               this.$router.push({name: 'member'});
               // window.location.href = this.__payurl('alipay', this.totalPrice, resp);
             });
           } else {
             log.warn('alipay old');
-            this.__toast($t('pay.tips2'));
+            this.__toast(this.$t('pay.tips2'));
             this.$router.push({name: 'member'});
             // window.location.href = this.__payurl('alipay', this.totalPrice, orderid);
           }
@@ -246,13 +246,13 @@ export default {
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
               log.warn('wechat new');
-              this.__toast($t('pay.tips2'));
+              this.__toast(this.$t('pay.tips2'));
               this.$router.push({name: 'member'});
               // window.location.href = this.__payurl('wechat', this.totalPrice, resp);
             });
           } else {
             log.warn('wechat old');
-            this.__toast($t('pay.tips2'));
+            this.__toast(this.$t('pay.tips2'));
             this.$router.push({name: 'member'});
             // window.location.href = this.__payurl('wechat', this.totalPrice, orderid);
           }
@@ -262,7 +262,7 @@ export default {
           // TODO 需要判断是第一次提交订单还是已有订单付款
           this.$store.dispatch('submitRecord', this.order).then(resp => {
             if (resp !== null) {
-              this.__toast($t('pay.tips3'));
+              this.__toast(this.$t('pay.tips3'));
               this.$router.push({name: 'records'});
             }
           });

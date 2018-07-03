@@ -29,7 +29,7 @@
           </template>
         </van-cell>
       </van-cell-group>
-      <span slot="right">{{$('good.delete')}}</span>
+      <span slot="right">{{$t('good.delete')}}</span>
     </van-cell-swipe>
   </div>
 </template>

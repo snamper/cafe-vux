@@ -14,7 +14,7 @@ import avator from '@/components/avator';
 export default {
   data() {
     return {
-      img: './img/tian.jpg',
+      img: '../../../static/img/tian.jpg',
       time: 5
     };
   },

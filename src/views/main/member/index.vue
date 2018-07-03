@@ -66,7 +66,7 @@ const log = new Logger('member');
 export default {
   data() {
     return {
-      avatorurl: './img/avator.jpg',
+      avatorurl: '../../../../static/img/avator.jpg',
       status
     };
   },

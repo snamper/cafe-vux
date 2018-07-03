@@ -97,11 +97,11 @@
 
 <script type="text/ecmascript=6">
 import { Button, Field, CellGroup, Toast, Row, Col } from 'vant';
-import avator from '../../components/avator';
+import avator from '@/components/avator';
 import { mapState } from 'vuex';
 import md5 from 'blueimp-md5';
-import { regex } from '../../common/js/consts.js';
-import { regexmatch, isObjEmpty } from '../../common/js/util.js';
+import { regex } from '@/utils/consts.js';
+import { regexmatch, isObjEmpty } from '@/utils/utils.js';
 import Logger from 'chivy';
 const log = new Logger('login');
 export default {
@@ -113,7 +113,7 @@ export default {
         register: false
       },
       img: {
-        url: './img/tian.jpg',
+        url: '../../../../static/img/tian.jpg',
         width: 100,
         height: 100
       },

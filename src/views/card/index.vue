@@ -44,7 +44,7 @@ const log = new Logger('vuex/member/card');
 export default {
   data() {
     return {
-      avatorurl: './img/avator.jpg'
+      avatorurl: '../../../static/img/avator.jpg'
     };
   },
   beforeRouteEnter(to, from, next) {
