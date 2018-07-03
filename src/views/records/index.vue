@@ -26,9 +26,9 @@
 <script type="text/ecmascript=6">
 import { Tab, Tabs, NavBar, Icon } from 'vant';
 import { mapState } from 'vuex';
-import order from  './oneorder';
-import { status } from '../../common/js/consts';
-import { isObjEmpty } from '../../common/js/util';
+import order from  './one';
+import { status } from '@/utils/consts';
+import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/orderlist');
 export default {

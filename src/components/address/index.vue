@@ -20,7 +20,7 @@
 
 <script type="text/ecmascript=6">
 import { Icon } from 'vant';
-import { isObjEmpty } from '../common/js/util';
+import { isObjEmpty } from '@/utils/utils';
 export default {
   components: {
     [Icon.name]: Icon

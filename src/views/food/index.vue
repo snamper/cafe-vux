@@ -27,8 +27,8 @@
 <script type="text/ecmascript=6">
 import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Swipe, SwipeItem, NavBar } from 'vant';
 import { mapGetters } from 'vuex';
-import { getImageUrl, isObjEmpty } from '@/utils/utils.js';
-import nameprice from '../../components/nameprice';
+import { resizeImage, isObjEmpty } from '@/utils/utils.js';
+import nameprice from '@/components/desc/nameprice';
 import sku from '@/components/sku';
 import Logger from 'chivy';
 const log = new Logger('page/menu/good');
@@ -93,7 +93,7 @@ export default {
       const imageList = images.split(';');
       const result = [];
       imageList.forEach(image => {
-        result.push({url: getImageUrl(image, 400)})
+        result.push({url: resizeImage(image, 400)})
       });
       log.debug('silders is ' + JSON.stringify(result));
       return result;

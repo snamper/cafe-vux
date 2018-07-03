@@ -15,7 +15,7 @@ export const routerMap = [
         meta: {
           keepAlive: true
         }
-      }/* ,
+      },
       {
         name: 'cart',
         path: 'cart',
@@ -25,7 +25,7 @@ export const routerMap = [
       {
         name: 'active',
         path: 'active',
-        component: () => import('@/views/main/active/index').then(m => m.default),
+        component: () => import('@/views/main/activity/index').then(m => m.default),
         meta: {
           keepAlive: true
         }
@@ -42,10 +42,10 @@ export const routerMap = [
         name: 'login',
         path: 'login',
         component: () => import('@/views/main/member/index').then(m => m.default)
-      } */
+      }
     ]
-  }/* , */
-  /* {
+  },
+  {
     name: 'food',
     path: '/food',
     component: () => import('@/views/food/index').then(m => m.default),
@@ -94,7 +94,7 @@ export const routerMap = [
     path: '/record',
     component: () => import('@/views/record/index').then(m => m.default),
     props: true
-  },
+  }/* ,
   {
     name: '404',
     path: '/404',

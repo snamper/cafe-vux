@@ -11,7 +11,7 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { isObjEmpty } from '../common/js/util';
+import { isObjEmpty } from '@/utils/utils';
 export default {
   props: {
     url: {

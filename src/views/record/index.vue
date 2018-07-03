@@ -73,10 +73,10 @@
 
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps, Button, Toast } from 'vant';
-import product from '@/components/productbanner';
-import addr from '@/components/addresscard';
-import orderstatus from '@/components/orderstatus';
-import { status } from '@/common/js/consts';
+import product from '@/components/good';
+import addr from '@/components/address';
+import orderstatus from '@/components/status';
+import { status } from '@/utils/consts';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/orderdetail');
 export default {
@@ -181,7 +181,8 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import '../../styles/mixin.styl';.van-nav-bar
+@import '../../styles/mixin.styl';
+.van-nav-bar
   position fixed
   left 0px
   top 0px

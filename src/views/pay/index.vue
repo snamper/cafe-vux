@@ -51,15 +51,13 @@
 <script>
 import { Button, NavBar, RadioGroup, Radio, CellGroup, Cell, Toast } from 'vant';
 import { mapState, mapGetters } from 'vuex';
-import avator from '../../components/avator';
-import { deliverPrice } from '../../common/js/consts';
+import avator from '@/components/avator';
+import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-import { isObjEmpty } from '../../common/js/util';
 const log = new Logger('page/cart/payment');
 export default {
   data () {
     return {
-      deliverPrice,
       radio: '支付宝',
       recordPrice: 0,
       alipay: {
@@ -120,7 +118,8 @@ export default {
   computed: {
     ...mapState([
       'User',
-      'carts'
+      'carts',
+      'deliverPrice'
     ]),
     ...mapGetters([
       'totalCarts'

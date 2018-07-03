@@ -14,9 +14,9 @@
 
 <script type="text/ecmascript=6">
 import { mapGetters } from 'vuex';
-import banner from '../../components/banner';
-import orderdetail from '../../components/orderdetail';
-import { isObjEmpty } from '../../common/js/util';
+import banner from '@/components/banner';
+import orderdetail from '@/components/desc';
+import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('page/active/active');
 export default {

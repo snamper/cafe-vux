@@ -14,5 +14,7 @@ export default {
   // 会员信息
   member: null,
   // 是否显示loading页面
-  isLoading: false
+  isLoading: false,
+  // 快递价格
+  deliverPrice: 25
 };

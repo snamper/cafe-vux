@@ -55,17 +55,15 @@
 <script type='text/ecmascript=6'>
 import { NavBar, Cell, CellGroup, Field, SubmitBar, Actionsheet, Picker } from 'vant';
 import { mapState, mapGetters } from 'vuex';
-import product from '../../components/productbanner';
-import addr from '../../components/addresscard';
-import split from '../../components/split';
+import product from '@/components/good';
+import addr from '@/components/address';
+import split from '@/components/split';
+import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-import { isObjEmpty } from '../../common/js/util';
-import { deliverPrice } from '../../common/js/consts';
 const log = new Logger('pages/cart/pay');
 export default {
   data() {
     return {
-      deliverPrice,
       delivertype: '自提',
       action: false,
       comment: '',
@@ -102,7 +100,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'carts'
+      'carts',
+      'deliverPrice'
     ]),
     ...mapGetters([
       'totalCarts'

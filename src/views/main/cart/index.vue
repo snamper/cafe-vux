@@ -35,7 +35,7 @@
 <script type="text/ecmascript=6">
 import { Checkbox, CheckboxGroup, SubmitBar, Button } from 'vant';
 import { mapGetters } from 'vuex';
-import productbanner from '@/components/productbanner';
+import productbanner from '@/components/good';
 import Logger from 'chivy';
 const log = new Logger('pages/cart/cart');
 export default {
