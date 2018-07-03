@@ -2,7 +2,7 @@
   <div class="cart">
     <div class="cart" v-if="selectFoods.length !== 0">
       <div class="banner">
-        <van-checkbox class="title" v-model="checked" @change="selectall">树影啡香</van-checkbox>
+        <van-checkbox class="title" v-model="checked" @change="selectall">{{$t('cart.shopName')}}</van-checkbox>
         <span @click="showdelete">{{editTitle}}</span>
       </div>
       <van-checkbox-group v-model="result">
@@ -16,16 +16,16 @@
           :disabled="disable"
           :price="totalAttr.normal*100"
           @submit="onSubmit">
-          <van-checkbox class="checkbox" v-model="checked" @change="selectall">全选</van-checkbox>
+          <van-checkbox class="checkbox" v-model="checked" @change="selectall">{{$t('cart.selectAll')}}</van-checkbox>
         </van-submit-bar>
       </div>
     </div>
     <div v-else class="nocart">
       <div class="text">
-        <div class="title">购物车快饿瘪了~~</div>
-        <div class="subtitle">请购买商品</div>
+        <div class="title">{{$t('cart.nonSelect')}}</div>
+        <div class="subtitle">{{$t('cart.selectGoods')}}</div>
         <div class="search">
-          <van-button type="default" size="small" @click="showmain">去逛逛</van-button>
+          <van-button type="default" size="small" @click="showmain">{{$t('cart.vistor')}}</van-button>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@ import { Checkbox, CheckboxGroup, SubmitBar, Button } from 'vant';
 import { mapGetters } from 'vuex';
 import productbanner from '@/components/good';
 import Logger from 'chivy';
-const log = new Logger('pages/cart/cart');
+const log = new Logger('cart');
 export default {
   data() {
     return {
@@ -64,21 +64,13 @@ export default {
       'totalAttr',
     ]),
     submittitle() {
-      if (this.edit) {
-        return '删除';
-      } else {
-        return '结算';
-      }
+      return this.edit ? $t('cart.delete') : $t('cart.pay');
     },
     editTitle() {
-      if (this.edit) {
-        return '完成';
-      } else {
-        return '编辑';
-      }
+      return this.edit ? $t('cart.finish') : $t('cart.edit');
     },
     disable() {
-      return this.result.length === 0 && this.submittitle === '结算' ? true : false;
+      return this.result.length === 0 && this.submittitle === $t('cart.count') ? true : false;
     },
     ischecked() {
       return this.result.length === this.selectFoods.length ? true : false;

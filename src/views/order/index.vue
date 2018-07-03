@@ -1,7 +1,7 @@
 <template>
   <div class="pay">
     <van-nav-bar
-      title="待付款的订单"
+      :title="$t('order.wait4payOrder')"
       left-arrow
       @click-left="back">
     </van-nav-bar>
@@ -11,31 +11,31 @@
         <product :good="good"></product>
       </div>
       <van-cell-group>
-        <van-cell title="配送方式" :value="delivertype" is-link @click="select"/>
+        <van-cell :title="$t('order.deliveryType')" :value="delivertype" is-link @click="select"/>
         <van-field
           v-model="comment"
-          label="留言"
-          placeholder="点击给商家留言">
+          :label="$t('order.message')"
+          :placeholder="$t('order.messagePlaceholder')">
         </van-field>
-        <van-cell title="合计" :value="value"/>
+        <van-cell :title="$t('order.summary')" :value="value"/>
       </van-cell-group>
       <split></split>
       <van-cell-group>
         <van-cell>
           <template slot="title">
-            <div>商品总价</div>
-            <div>会员优惠</div>
-            <div v-if="delivertype === '快递'">快递费用</div>
+            <div>{{$t('order.productTotalPrice')}}</div>
+            <div>{{$t('order.memberDiscount')}}</div>
+            <div v-if="delivertype === $t('order.fastDelivery')">{{$t('order.deliveryPrice')}}</div>
           </template>
           <div>￥{{totalCarts.normal}}</div>
           <div>￥{{totalCarts.normal - totalCarts.member}}</div>
-          <div v-if="delivertype === '快递'">￥{{deliverPrice}}</div>
+          <div v-if="delivertype === $t('order.fastDelivery')">￥{{deliverPrice}}</div>
         </van-cell>
       </van-cell-group>
     </div>
     <div class="submit">
       <van-submit-bar
-        button-text="提交订单"
+        :button-text="$t('order.submitOrder')"
         :price="price"
         :disabled="address === null ? true : false"
         @submit="onSubmit">
@@ -64,11 +64,11 @@ const log = new Logger('pages/cart/pay');
 export default {
   data() {
     return {
-      delivertype: '自提',
+      delivertype: $t('order.self'),
       action: false,
       comment: '',
       cardType: 'add',
-      columns: ['自提','快递']
+      columns: [$t('order.self'),$t('order.fastDelivery')]
     };
   },
   beforeRouteEnter(from, to, next){
@@ -113,10 +113,10 @@ export default {
       isObjEmpty(this.address) ? 'add' : 'edit';
     },
     price() {
-      return this.delivertype === '自提' ? this.totalCarts.normal * 100 : (this.totalCarts.normal + this.deliverPrice) * 100;
+      return this.delivertype === $t('order.self') ? this.totalCarts.normal * 100 : (this.totalCarts.normal + this.deliverPrice) * 100;
     },
     deliverType() {
-      return this.delivertype === '自提' ? false : true;
+      return this.delivertype === $t('order.self') ? false : true;
     }
   },
   methods: {
@@ -133,7 +133,6 @@ export default {
     },
     select() {
       this.action = true;
-      log.debug('select type 自提和快递');
     },
     confirm(value) {
       log.debug(JSON.stringify(value));

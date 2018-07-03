@@ -8,7 +8,7 @@
 export default {
   data() {
     return {
-      url: '../../static/img/loading.gif'
+      url: './img/loading.gif'
     };
   }
 };

@@ -119,7 +119,7 @@ export default {
     __showAndToast() {
       this.show = false;
       Toast({
-        message: '添加购物车成功~',
+        message: $t('sku.success'),
         forbidClick: true,
         duration: 1000
       });
@@ -129,7 +129,7 @@ export default {
       const suk = {
         tree: [
           {
-            k: '规格',
+            k: $t('sku.spec'),
             v: [
               {
                 id: good.id,

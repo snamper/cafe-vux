@@ -6,7 +6,8 @@ export default {
     member: '我的'
   },
   menu: {
-    buy: '购买'
+    buyit: '购买',
+    allProduct: '所有商品'
   },
   member: {
     myorder: '我的订单',
@@ -64,7 +65,7 @@ export default {
   card: {
     myCard: '我的会员卡',
     edit: '修改',
-    name: '名字',
+    name: '姓名',
     birthday: '生日',
     sex: '性别',
     tel: '电话号码',
@@ -75,6 +76,31 @@ export default {
     notSet: '未设置',
     active: '已激活',
     disactive: '未激活'
+  },
+  modify: {
+    infoSetting: '会员信息设置',
+    name: '姓名',
+    namePlaceholder: '请输入姓名',
+    birthday: '生日',
+    select: '请选择',
+    sex: '性别',
+    tel: '电话号码',
+    telPlaceholder: '请输入电话号码',
+    email: '电子邮箱',
+    emailPlaceholder: '请输入邮箱地址',
+    area: '所在地',
+    address: '详细地址',
+    addressPlaceholder: '请输入街道门牌号',
+    male: '男',
+    female: '女',
+    tips1: '请检查填写内容',
+    tips2: '手机已被注册，请重新输入手机号码',
+    tips3: '个人信息修改成功',
+    tips4: '个人信息修改失败',
+    tips5: '请输入中文姓名',
+    tips6: '请选择生日',
+    tips7: '请输入正确的电话号码',
+    tips8: '请输入正确的邮件地址'
   },
   food: {
     productdetail: '商品详情',
@@ -102,11 +128,62 @@ export default {
     alipay: '支付宝',
     wechat: '微信支付',
     balance: '余额支付',
-    tips: '余额不足，请重新选择支付方式',
-    tips1: '此功能暂未开通',
-    tips2: '支付成功'
+    tips1: '余额不足，请重新选择支付方式',
+    tips2: '此功能暂未开通',
+    tips3: '支付成功'
+  },
+  record: {
+    finishOrder: '交易完成的订单',
+    buyer: '买家下单',
+    accept: '商家接单',
+    getGood: '买家提货',
+    finish: '交易完成',
+    deliveryType: '配送方式',
+    buyerMessage: '买家留言',
+    message: '留言',
+    summary: '合计',
+    none: '无',
+    amount: '商品金额',
+    deliveryPrice: '运费',
+    payAmount: '应付金额',
+    orderId: id => `订单编号: ${id}`,
+    createTime: time => `创建时间: ${time}`,
+    cancelOrder: '取消订单',
+    confirmOrder: '确认付款',
+    timeout: '超时关闭',
+    tips1: '取消错误'
   },
   records: {
-    finishOrder: '交易完成的订单'
+    orderlist: '订单列表',
+    none: '暂无订单',
+    all: '全部',
+    wait4pay: '待付款',
+    wait4delivery: '待发货',
+    alreadydelivery: '已发货',
+    finish: '已完成',
+    orderId: '订单编号:',
+    showGoods: length => `查看全部${length}件商品`,
+    summary: '合计:',
+    tips1: '取消错误'
+  },
+  sku: {
+    success: '添加购物车成功~',
+    sepc: '规格'
+  },
+  addressCard: {
+    cotact: name => `收货人：${name}`,
+    tel: tel => `联系电话：${tel}`,
+    address: address => `配送地址：${address}`,
+    addContact: '添加订单联系人信息'
+  },
+  namePrice: {
+    memberPrice: price => `会员价:￥${price}`
+  },
+  good: {
+    delete: '删除'
+  },
+  error: {
+    error: '哎呀，出错了~',
+    tips: time => `${time}s后返回主页面`
   }
 };

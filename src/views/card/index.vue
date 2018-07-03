@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <van-nav-bar
-      title="我的会员卡"
+      :title="$t('card.mycard')"
       left-arrow
       @click-left="back">
     </van-nav-bar>
@@ -13,7 +13,7 @@
           <span class="name">{{username}}</span>
         </div>
       </template>
-      <div class="content">修改</div>
+      <div class="content">{{$t('card.edit')}}</div>
       <template slot="right-icon">
         <van-icon name="arrow"/>
       </template>
@@ -21,14 +21,14 @@
     </van-cell-group>
     <split></split>
     <van-cell-group v-if="User.member">
-      <van-cell title="姓名" :value="show(User.member.name)" />
-      <van-cell title="生日" :value="show(User.member.birthday)" />
-      <van-cell title="性别" :value="show(User.member.gender)" />
-      <van-cell title="电话号码" :value="show(User.member.phone)" />
-      <van-cell title="所在地" :value="show(User.member.area)" />
-      <van-cell title="详细地址" :value="show(User.member.address)" />
-      <van-cell title="积分" :value="show(User.member.point)" />
-      <van-cell title="会员状态" :value="status(User.member.status)" />
+      <van-cell :title="$t('card.name')" :value="show(User.member.name)" />
+      <van-cell :title="$t('card.birthday')" :value="show(User.member.birthday)" />
+      <van-cell :title="$t('card.sex')" :value="show(User.member.gender)" />
+      <van-cell :title="$t('card.tel')" :value="show(User.member.phone)" />
+      <van-cell :title="$t('card.area')" :value="show(User.member.area)" />
+      <van-cell :title="$t('card.address')" :value="show(User.member.address)" />
+      <van-cell :title="$t('card.point')" :value="show(User.member.point)" />
+      <van-cell :title="$t('card.status')" :value="status(User.member.status)" />
     </van-cell-group>
   </div>
 </template>
@@ -44,7 +44,7 @@ const log = new Logger('vuex/member/card');
 export default {
   data() {
     return {
-      avatorurl: '../../../static/img/avator.jpg'
+      avatorurl: './img/avator.jpg'
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -79,10 +79,10 @@ export default {
       this.$router.push({name: 'member'});
     },
     show(data) {
-      return isObjEmpty(data) ? '未设置' : data;
+      return isObjEmpty(data) ? $t('card.notSet') : data;
     },
     status(data) {
-      return data ? '已激活' : '未激活';
+      return data ? $t('card.active') : $t('card.disactive');
     }
   }
 };

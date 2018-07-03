@@ -11,9 +11,9 @@
       <van-cell-group>
         <van-field
           v-model="username.content"
-          label="用户名"
+          :label="$t('login.username')"
           icon="clear"
-          placeholder="请输入用户名"
+          :placeholder="$t('login.usernamePlaceholder')"
           required
           :error="username.error"
           @blur="check(username)"
@@ -22,8 +22,8 @@
         <van-field
           v-model="password.content"
           type="password"
-          label="密码"
-          placeholder="请输入密码"
+          :label="$t('login.password')"
+          :placeholder="$t('login.inputPassword')"
           @blur="check(password)"
           :error="password.error"
           @click-icon="clean(password)"
@@ -35,9 +35,9 @@
       <van-cell-group>
         <van-field
           v-model="account.content"
-          label="用户名"
+          :label="$t('login.username')"
           icon="clear"
-          placeholder="手机号码/邮箱名"
+          :placeholder="$t('login.accountPlaceholder')"
           required
           :error="account.error"
           @blur="checkduplicate(account)"
@@ -46,8 +46,8 @@
         <van-field
           v-model="pwd.content"
           type="password"
-          label="输入密码"
-          placeholder="请输入密码"
+          :label="$t('login.inputPassword')"
+          :placeholder="$t('login.passwordPlaceholder')"
           :error="pwd.error"
           @blur="check(pwd)"
           @click-icon="clean(pwd)"
@@ -56,8 +56,8 @@
         <van-field
           v-model="repwd.content"
           type="password"
-          label="确认密码"
-          placeholder="请确认密码"
+          :label="$t('login.comfirmPassword')"
+          :placeholder="$t('login.confirmPlaceholder')"
           :error="repwd.error"
           @blur="check(repwd)"
           @click-icon="clean(repwd)"
@@ -67,26 +67,24 @@
     </div>
     <div class="submit" v-if="showlogin">
       <div class="login">
-        <van-button style="width:97%" type="primary" @click="login" :disabled="disable.login">登录</van-button>
+        <van-button style="width:97%" type="primary" @click="login" :disabled="disable.login">{{$t('login.login')}}</van-button>
       </div>
       <div class="ops">
         <van-row type="flex">
-          <van-col class="forget" span="8" @click.native="forget">忘记密码</van-col>
-          <van-col class="vistor" span="8" @click.native="vistor">游客访问</van-col>
-          <van-col class="register" span="8" @click.native="show">注册</van-col>
+          <van-col class="forget" span="8" @click.native="forget">{{$t('login.forgetPassword')}}</van-col>
+          <van-col class="vistor" span="8" @click.native="vistor">{{$t('login.vistorVistor')}}</van-col>
+          <van-col class="register" span="8" @click.native="show">{{$t('login.register')}}</van-col>
         </van-row>
       </div>
     </div>
     <div class="submit" v-else>
       <div class="submit-wrapper">
-        <van-button class="registerbtn" type="primary" @click="register" :disabled="disable.register">注册</van-button>
-        <van-button class="loginbtn"  type="default" @click="show">登录</van-button>
+        <van-button class="registerbtn" type="primary" @click="register" :disabled="disable.register">{{$t('login.register')}}</van-button>
+        <van-button class="loginbtn"  type="default" @click="show">{{$t('login.login')}}</van-button>
       </div>
     </div>
     <div class="foot">
-      <div class="divider">
-        第三方登录
-      </div>
+      <div class="divider">{{$t('login.third')}}</div>
       <div class="icon">
         <avator
           :url="third.weibo.url"
@@ -105,7 +103,7 @@ import md5 from 'blueimp-md5';
 import { regex } from '../../common/js/consts.js';
 import { regexmatch, isObjEmpty } from '../../common/js/util.js';
 import Logger from 'chivy';
-const log = new Logger('page/member/login');
+const log = new Logger('login');
 export default {
   data() {
     return {
@@ -115,13 +113,13 @@ export default {
         register: false
       },
       img: {
-        url: '../../../static/img/tian.jpg',
+        url: './img/tian.jpg',
         width: 100,
         height: 100
       },
       third: {
         weibo: {
-          url: '../../../static/img/weibo.png',
+          url: './weibo.png',
           radius: 50
         }
       },

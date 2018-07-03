@@ -7,7 +7,7 @@
     <van-tabbar v-model="active" @change="change">
       <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('main.menu')}}</van-tabbar-item>
       <van-tabbar-item icon="like-o" :to="{name: 'active'}">{{$t('main.active')}}</van-tabbar-item>
-      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info">{{$t('main.cart')}}</van-tabbar-item>
+      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="count">{{$t('main.cart')}}</van-tabbar-item>
       <van-tabbar-item icon="contact" :to="{name: 'member'}">{{$t('main.member')}}</van-tabbar-item>
     </van-tabbar>
   </div>
@@ -15,9 +15,10 @@
 
 <script type="text/ecmascript=6">
 import { Tabbar, TabbarItem } from 'vant';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
+import { isObjNotEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('pages/main');
+const log = new Logger('main');
 export default {
   data() {
     return {
@@ -31,15 +32,20 @@ export default {
   created() {
     log.info('start init UUID');
     this.$store.dispatch('initUser').then(() => {
+      log.info('initUser finished');
       this.__selected();
+      log.info('__selected finished');
     });
   },
   computed: {
+    ...mapState([
+      'info'
+    ]),
     ...mapGetters([
       'selectFoods'
     ]),
-    info() {
-      return this.selectFoods.length === 0 ? '' : this.__totalcount(this.selectFoods);
+    count() {
+      return isObjNotEmpty(this.info) ? '' : this.info;
     }
   },
   methods: {
@@ -64,13 +70,6 @@ export default {
           this.active = 3;
           break;
       }
-    },
-    __totalcount(goods) {
-      let count = 0;
-      goods.forEach(good => {
-        count += good.count;
-      });
-      return count;
     }
   }
 };

@@ -1,16 +1,16 @@
 <template>
   <div class="info">
     <van-nav-bar
-      title="会员信息设置"
+      :title="$t('modify.infoSetting')"
       left-arrow
       @click-left="back">
     </van-nav-bar>
     <van-cell-group>
       <van-field
         v-model="name.content"
-        label="姓名"
+        :label="$t('modify.name')"
         icon="clear"
-        placeholder="请输入姓名"
+        :placeholder="$t('modify.namePlaceholder')"
         required
         :error="name.error"
         @blur="check(name)"
@@ -19,8 +19,8 @@
       </van-field>
       <van-field
         v-model="birthday.content"
-        label="生日"
-        placeholder="请选择"
+        :label="$t('modify.birthday')"
+        :placeholder="$t('modify.select')"
         required
         :error="birthday.error"
         @blur="check(birthday)"
@@ -28,15 +28,15 @@
       </van-field>
       <van-field
         v-model="sex.content"
-        label="性别"
-        placeholder="请选择"
+        :label="$t('modify.sex')"
+        :placeholder="$t('modify.select')"
         @focus="selectsex">
       </van-field>
       <van-field
         v-model="mobile.content"
-        label="电话号码"
+        :label="$t('modify.tel')"
         icon="clear"
-        placeholder="请输入电话号码"
+        :placeholder="$t('modify.telPlaceholder')"
         required
         :error="mobile.error"
         @blur="check(mobile)"
@@ -45,9 +45,9 @@
       </van-field>
       <van-field
         v-model="email.content"
-        label="电子邮箱"
+        :label="$t('modify.email')"
         icon="clear"
-        placeholder="请输入邮箱地址"
+        :placeholder="$t('modify.emailPlaceholder')"
         required
         :error="email.error"
         @blur="check(email)"
@@ -56,15 +56,15 @@
       </van-field>
       <van-field
         v-model="area.content"
-        label="所在地"
-        placeholder="请选择"
+        :label="$t('modify.area')"
+        :placeholder="$t('modify.select')"
         @focus="selectarea">
       </van-field>
       <van-field
         v-model="address.content"
-        label="详细地址"
+        :label="$t('modify.address')"
         :error="address.error"
-        placeholder="请输入街道门牌号">
+        :placeholder="$t('modify.addressPlaceholder')">
       </van-field>
     </van-cell-group>
     <div class="save">
@@ -98,10 +98,10 @@
 
 <script type="text/ecmascript=6">
 import { Field, NavBar, CellGroup, DatetimePicker, Picker, Area, Actionsheet, Button, Toast } from 'vant';
-import AreaList from '@/utils/area.js';
 import { mapState } from 'vuex';
-import { regexmatch, formatDate, isObjEmpty } from '../../common/js/util.js';
-import { regex } from '../../common/js/consts.js';
+import AreaList from '@/utils/area.js';
+import { regexmatch, formatDate, isObjEmpty } from '@/utils/utils.js';
+import { regex } from '@/utils/consts.js';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/info');
 export default {
@@ -114,7 +114,7 @@ export default {
         action: false
       },
       areaList: AreaList,
-      sexcolumns: ['请选择', '男', '女' ],
+      sexcolumns: [$t('modify.select'), $t('modify.male'), $t('modify.female')],
       currentDate: new Date(),
       minDate: new Date(1900, 1, 1),
       mobile: {
@@ -234,12 +234,12 @@ export default {
     save() {
       const error = this.name.error || this.birthday.error || this.mobile.error || isObjEmpty(this.name.content) || isObjEmpty(this.birthday.content) || isObjEmpty (this.mobile.content);
       if (error) {
-        this.__toast('请检查填写内容');
+        this.__toast($t('modify.tips1'));
       } else {
         // 查重
         this.$store.dispatch('duplicate', {name: this.mobile.content}).then(resp => {
           if (resp) {
-            this.__toast('手机已被注册，请冲洗输入手机号码');
+            this.__toast($t('modify.tips2'));
             this.mobile.content = '';
           } else {
             const param = {
@@ -253,10 +253,10 @@ export default {
             }
             this.$store.dispatch('modifyInfo', param).then(resp => {
               if (resp) {
-                this.__toast('个人信息修改成功', 'success');
+                this.__toast($t('modify.tips3'), 'success');
                 //TODO 需要更新state中的内容
               } else {
-                this.__toast('个人信息修改失败', 'fail');
+                this.__toast($t('modify.tips4'), 'fail');
               }
             });
           }
@@ -270,25 +270,25 @@ export default {
         case this.name.key:
           error = isObjEmpty(this.name.content) || !regexmatch(data.content, regex.chineseName) ;
           if (error) {
-            this.__toast('请输入中文姓名');
+            this.__toast($t('modify.tips5'));
           }
           break;
         case this.birthday.key:
           error = isObjEmpty(this.birthday.content);
           if(error) {
-            this.__toast('请选择生日');
+            this.__toast($t('modify.tips6'));
           }
           break;
         case this.mobile.key:
           error = isObjEmpty(this.mobile.content) || !regexmatch(data.content, regex.mobile);
           if(error) {
-            this.__toast('请输入正确的电话号码');
+            this.__toast($t('modify.tips7'));
           }
           break;
         case this.email.key:
           error = isObjEmpty(this.email.content) || !regexmatch(data.content, regex.email);
           if(error) {
-            this.__toast('请输入正确的邮件地址');
+            this.__toast($t('modify.tips8'));
           }
       }
       data.error = error;

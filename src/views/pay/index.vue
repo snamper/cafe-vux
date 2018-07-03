@@ -1,7 +1,7 @@
 <template>
  <div class="payment">
    <van-nav-bar
-      title="请选择支付方式"
+      :title="$t('pay.selectPayType')"
       left-arrow
       @click-left="back">
     </van-nav-bar>
@@ -43,7 +43,7 @@
       </van-cell-group>
     </van-radio-group>
     <div class="confirm">
-      <van-button type="primary" @click.native="payit">确认支付￥{{totalPrice}}元</van-button>
+      <van-button type="primary" @click.native="payit">{{$t('pay.totalPrice', totalPrice)}}</van-button>
     </div>
  </div>
 </template>
@@ -58,19 +58,19 @@ const log = new Logger('page/cart/payment');
 export default {
   data () {
     return {
-      radio: '支付宝',
+      radio: $t('pay.alipay'),
       recordPrice: 0,
       alipay: {
-        value: '支付宝',
-        img: '../../../static/img/alipay.png'
+        value: $t('pay.alipay'),
+        img: './img/alipay.png'
       },
       wechat: {
-        value: '微信支付',
-        img: '../../../static/img/wechat.png'
+        value: $t('pay.wechat'),
+        img: './img/wechat.png'
       },
       member: {
-        value: '余额支付',
-        img: '../../../static/img/tianicon.jpg'
+        value: $t('pay.wechat'),
+        img: './img/tianicon.jpg'
       },
       // 记录从那个地方来
       to: null
@@ -219,7 +219,7 @@ export default {
       // 付款成功后提示
       // 清空购物车
       if (this.radio === this.member.value && this.User.member.balance < this.totalPrice) {
-        this.__toast('余额不足，请重新选择支付方式');
+        this.__toast($t('pay.tips1'));
         return;
       }
       switch (this.radio) {
@@ -229,13 +229,13 @@ export default {
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
               log.warn('alipay new');
-              this.__toast('此功能暂未开通');
+              this.__toast($t('pay.tips2'));
               this.$router.push({name: 'member'});
               // window.location.href = this.__payurl('alipay', this.totalPrice, resp);
             });
           } else {
             log.warn('alipay old');
-            this.__toast('此功能暂未开通');
+            this.__toast($t('pay.tips2'));
             this.$router.push({name: 'member'});
             // window.location.href = this.__payurl('alipay', this.totalPrice, orderid);
           }
@@ -246,13 +246,13 @@ export default {
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
               log.warn('wechat new');
-              this.__toast('此功能暂未开通');
+              this.__toast($t('pay.tips2'));
               this.$router.push({name: 'member'});
               // window.location.href = this.__payurl('wechat', this.totalPrice, resp);
             });
           } else {
             log.warn('wechat old');
-            this.__toast('此功能暂未开通');
+            this.__toast($t('pay.tips2'));
             this.$router.push({name: 'member'});
             // window.location.href = this.__payurl('wechat', this.totalPrice, orderid);
           }
@@ -262,7 +262,7 @@ export default {
           // TODO 需要判断是第一次提交订单还是已有订单付款
           this.$store.dispatch('submitRecord', this.order).then(resp => {
             if (resp !== null) {
-              this.__toast('支付成功');
+              this.__toast($t('pay.tips3'));
               this.$router.push({name: 'records'});
             }
           });

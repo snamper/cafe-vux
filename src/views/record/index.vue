@@ -1,7 +1,7 @@
 <template>
   <div v-if="detail">
     <van-nav-bar
-      title="交易完成的订单"
+      :title="$t('record.finishOrder')"
       left-arrow
       @click-left="back">
     </van-nav-bar>
@@ -12,10 +12,10 @@
         :icon="stepicon"
         :title="orderstatus"
         :description="setpdesc">
-        <van-step>买家下单</van-step>
-        <van-step>商家接单</van-step>
-        <van-step>买家提货</van-step>
-        <van-step>交易完成</van-step>
+        <van-step>{{$t('record.buyer')}}</van-step>
+        <van-step>{{$t('record.accept')}}</van-step>
+        <van-step>{{$t('record.getGood')}}</van-step>
+        <van-step>{{$t('record.finish')}}</van-step>
       </van-steps>
       <orderstatus
         v-else
@@ -30,10 +30,10 @@
         </div>
       </div>
       <van-cell-group>
-        <van-cell title="配送方式" :value="delivertype"/>
+        <van-cell :title="$t('record.deliveryType')" :value="delivertype"/>
         <van-field
-          label="买家留言"
-          placeholder="无"
+          :label="$t('record.buyerMessage')"
+          :placeholder="$t('record.none')"
           disabled>
         </van-field>
         <van-cell title="合计" :value="`￥` + detail.amount"/>
@@ -41,19 +41,19 @@
       <van-cell-group>
         <van-cell>
           <template slot="title">
-            <div>商品金额</div>
-            <div>运费</div>
+            <div>{{$t('record.amount')}}</div>
+            <div>{{$t('record.deliveryPrice')}}</div>
           </template>
           <div>￥{{detail.amount}}</div>
-          <div> ￥25.00</div>
+          <div> ￥{{deliverPrice}}</div>
         </van-cell>
-        <van-cell title="应付金额" :value="`￥` + detail.amount"/>
+        <van-cell :title="$t('record.payAmount')" :value="`￥` + detail.amount"/>
       </van-cell-group>
       <van-cell-group>
         <van-cell>
           <template slot="title">
-            <div class="order">订单编号: {{detail.id}}</div>
-            <div class="order">创建时间: {{detail.createTimeAsString}}</div>
+            <div class="order">{{$t('record.orderId', detail.id)}}</div>
+            <div class="order">{{$t('record.createTime', detail.createTimeAsString)}}</div>
           </template>
         </van-cell>
       </van-cell-group>
@@ -61,8 +61,8 @@
         <van-cell-group>
           <van-cell>
             <div class="ops">
-              <van-button class="cancel" type="default" size="small" @click.native="cancelOrder">取消订单</van-button>
-              <van-button class="confirm" type="default" size="small" @click.native="confirmOrder">确认付款</van-button>
+              <van-button class="cancel" type="default" size="small" @click.native="cancelOrder">{{$t('record.cancelOrder')}}</van-button>
+              <van-button class="confirm" type="default" size="small" @click.native="confirmOrder">{{$t('record.confirmOrder')}}</van-button>
             </div>
           </van-cell>
         </van-cell-group>
@@ -124,6 +124,9 @@ export default {
     }
   },
   computed: {
+    ...mapState([
+      'deliverPrice'
+    ]),
     orderstatus() {
       switch(this.detail.status) {
         case this.status.NOTPAY.key:
@@ -145,7 +148,7 @@ export default {
       return 'logistics';
     },
     setpdesc() {
-      return '超时关闭'
+      return $t('record.timeout');
     }
   },
   methods: {
@@ -158,10 +161,10 @@ export default {
         if (resp) {
           this.$router.push({name: 'order'});
         } else {
-          this.__showAndToast('取消错误');
+          this.__showAndToast($t('record.tips1'));
         }
       }).catch(error => {
-        this.__showAndToast('取消错误');
+        this.__showAndToast($t('record.tips1'));
       });
     },
     confirmOrder() {

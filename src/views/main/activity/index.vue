@@ -1,8 +1,8 @@
 <template>
   <div class="active">
     <banner
-      :title="$('text.productlist')"
-      :subtitle="$('text.subtitle')">
+      :title="$t('activity.productlist')"
+      :subtitle="$t('activity.subtitle')">
     </banner>
     <div class="products" >
       <div class="product" v-for="(product, index) in sliders" :key="index">
@@ -18,7 +18,7 @@ import banner from '@/components/banner';
 import orderdetail from '@/components/desc';
 import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('page/active/active');
+const log = new Logger('activity');
 export default {
   data() {
     return {

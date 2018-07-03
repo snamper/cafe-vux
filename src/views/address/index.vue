@@ -1,9 +1,9 @@
 <template>
   <div class="address">
     <van-nav-bar
-      :title="$('text.myaddress')"
+      :title="$t('address.myaddress')"
       left-arrow
-      :right-text="$('finish')"
+      :right-text="$t('address.finish')"
       @click-right="finish"
       @click-left="back">
     </van-nav-bar>
@@ -82,7 +82,7 @@ export default {
         this.$router.push({name: 'addressedit'});
         return;
       }
-      Toast.fail('游客只能添加一个地址');
+      Toast.fail($t('address.tips'));
     },
     onEdit(item, index) {
       //TODO 区分游客还是会员，游客同样可以修改地址

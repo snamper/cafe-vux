@@ -2,7 +2,7 @@
   <div class="good">
     <div class="content" v-if="good">
       <van-nav-bar
-        :title="$('text.productdetail')"
+        :title="$t('food.productdetail')"
         left-arrow
         @click-left="back">
       </van-nav-bar>
@@ -15,10 +15,10 @@
       <div class="desc">{{good.description}}</div>
     </div>
     <van-goods-action>
-      <van-goods-action-mini-btn icon="wap-home" :text="$('menu')" :to="{name: 'menu'}"></van-goods-action-mini-btn>
-      <van-goods-action-mini-btn icon="cart" :text="$('carts')" :to="{name: 'cart'}" :info="info"></van-goods-action-mini-btn>
-      <van-goods-action-big-btn :text="$('add2cart')" @click="add2cart"></van-goods-action-big-btn>
-      <van-goods-action-big-btn :text="$('buy')" primary @click="buyit" ></van-goods-action-big-btn>
+      <van-goods-action-mini-btn icon="wap-home" :text="$t('food.menu')" :to="{name: 'menu'}"></van-goods-action-mini-btn>
+      <van-goods-action-mini-btn icon="cart" :text="$t('food.carts')" :to="{name: 'cart'}" :info="info"></van-goods-action-mini-btn>
+      <van-goods-action-big-btn :text="$t('food.add2cart')" @click="add2cart"></van-goods-action-big-btn>
+      <van-goods-action-big-btn :text="$t('food.buy')" primary @click="buyit" ></van-goods-action-big-btn>
     </van-goods-action>
     <sku ref="sku" confirm></sku>
   </div>
@@ -81,7 +81,7 @@ export default {
     url() {
       if (this.to === '/menu') {
         return true;
-      } else if(this.to === '/active') {
+      } else if(this.to === '/activity') {
         return false;
       } else {
         return null;
@@ -102,7 +102,7 @@ export default {
       if(this.url) {
         this.$router.push({name: 'menu'});
       } else {
-        this.$router.push({name: 'active'});
+        this.$router.push({name: 'activity'});
       }
     },
     add2cart() {

@@ -3,7 +3,7 @@
     <div class="banner">
       <van-row>
         <van-col class="orderid" span="16">
-          订单号:<span>{{order.id}}</span>
+          {{$t('records.orderId')}}:<span>{{order.id}}</span>
           </van-col>
         <van-col class="status" span="8">{{orderstatus}}</van-col>
       </van-row>
@@ -12,9 +12,9 @@
     <div class="product-wrapper" @click="showmore">
       <product :good="order.details[0]" ></product>
     </div>
-    <div v-if="order.details.length > 1" class="showmore" @click="showmore">查看全部{{order.details.length}}件商品</div>
+    <div v-if="order.details.length > 1" class="showmore" @click="showmore">{{$t('records.showGoods', order.details.length)}}</div>
     <div class="total van-hairline--top-bottom">
-      合计:<span>￥{{order.amount}}</span>
+      {{$t('records.summary')}}<span>￥{{order.amount}}</span>
     </div>
     <div class="ops-warpper" v-if="orderstatus === status.NOTPAY.status">
       <van-cell-group>
@@ -85,10 +85,10 @@ export default {
         if (resp) {
           this.$router.push({name: 'order'});
         } else {
-          this.__showAndToast('取消错误');
+          this.__showAndToast($t('records.tips1'));
         }
       }).catch(error => {
-        this.__showAndToast('取消错误');
+        this.__showAndToast($t('records.tips1'));
       });
     },
     confirmOrder() {

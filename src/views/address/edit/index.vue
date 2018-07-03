@@ -56,7 +56,7 @@ export default {
       return isObjEmpty(this.User.uuid) ? true: false;
     },
     title() {
-      return isObjEmpty(this.address) ? '添加地址' : '修改地址';
+      return isObjEmpty(this.address) ? $t('edit.addAddress') : $t('edit.editAddress');
     },
     addresslist() {
       return isObjEmpty(this.address) ? {}: {

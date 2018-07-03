@@ -1,7 +1,7 @@
 <template>
   <div class="order" v-if="!isLoading">
     <van-nav-bar
-      title="订单列表"
+      :title="$t('records.orderlist')"
       left-arrow
       @click-left="back">
     </van-nav-bar>
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="no_order" v-else>
-            <span>暂无订单</span>
+            <span>{{$t('records.none')}}</span>
         </div>
       </van-tab>
     </van-tabs>
@@ -34,7 +34,7 @@ const log = new Logger('vuex/member/orderlist');
 export default {
   data() {
     return {
-      tabtitle: ['全部', '待付款', '待发货', '已发货', '已完成'],
+      tabtitle: [$t('records.all'), $t('records.wait4pay'), $t('records.wait4delivery'), $t('records.alreadydelivery'), $t('records.finish')],
       active: 0,
       status
     };

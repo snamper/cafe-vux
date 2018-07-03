@@ -4,7 +4,7 @@
     <div class="info">
       <span class="price">
         <span class="normal">￥{{price}}</span>
-        <span class="member" v-if="memberPrice !== price">会员价:￥{{memberPrice}}</span>
+        <span class="member" v-if="memberPrice !== price">{{$t('namePrice.memberPrice', memberPrice)}}</span>
       </span>
       <span class="operation">
         <slot></slot>

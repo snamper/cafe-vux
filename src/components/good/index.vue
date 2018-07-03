@@ -6,7 +6,7 @@
           <template slot="title">
             <div class="title">
               <van-checkbox class="checkbox" v-if="showcheckbox" :name="good.id"></van-checkbox>
-              <img :src="getImageUrl(good.imageUrl, 400)" style="height:100px;width: 100px">
+              <img :src="resizeImage(good.imageUrl, 400)" style="height:100px;width: 100px">
               <div class="product">
                 <div class="name" v-if="edit">{{good.name}}</div>
                 <van-stepper
@@ -29,7 +29,7 @@
           </template>
         </van-cell>
       </van-cell-group>
-      <span slot="right">删除</span>
+      <span slot="right">{{$('good.delete')}}</span>
     </van-cell-swipe>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       value: this.good.count,
-      getImageUrl
+      resizeImage
     };
   },
   props: {

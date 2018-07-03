@@ -2,13 +2,13 @@
   <div class="menu" v-if="!isLoading">
     <logo></logo>
     <banner
-      :title="$('text.products')">
+      :title="$t('menu.allProduct')">
     </banner>
     <div class="cards" v-for="(product, index) in products" :key="index">
       <div class="product" @click="showdetail(product)">
         <product :showcheckbox="false" :good="product">
           <template slot="right-bottom">
-            <van-button class="button" type="default" size="mini" @click.stop.prevent="buy(product)">{{$t('menu.buy')}}</van-button>
+            <van-button class="button" type="default" size="mini" @click.stop.prevent="buy(product)">{{$t('menu.buyit')}}</van-button>
           </template>
         </product>
       </div>
@@ -25,7 +25,7 @@ import logo from '@/components/logo';
 import banner from '@/components/banner';
 import product from '@/components/good';
 import Logger from 'chivy';
-const log = new Logger('page/menu/menu');
+const log = new Logger('menu');
 export default {
   data() {
     return {
@@ -58,8 +58,7 @@ export default {
       this.$refs.sku.showit(product);
     },
     showdetail(product) {
-      log.info('page will change to good');
-      this.$router.push({name: 'good', params: {good: product}});
+      this.$router.push({name: 'food', params: {good: product}});
     }
   }
 };

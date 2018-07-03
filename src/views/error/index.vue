@@ -2,8 +2,8 @@
   <div class="pagenotfound">
     <div class="content">
       <avator :url="img" :size="200" :radius="50"></avator>
-      <div class="text">哎呀，出错了~</div>
-      <div class="tips">{{time}}s后返回主页面</div>
+      <div class="text">{{$t('error.error')}}</div>
+      <div class="tips">{{$t('error.tips', time)}}</div>
     </div>
     <div class="tips"></div>
   </div>
@@ -14,7 +14,7 @@ import avator from '@/components/avator';
 export default {
   data() {
     return {
-      img: './tian.jpg',
+      img: './img/tian.jpg',
       time: 5
     };
   },
