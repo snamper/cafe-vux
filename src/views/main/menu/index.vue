@@ -8,7 +8,7 @@
       <div class="product" @click="showdetail(product)">
         <product :showcheckbox="false" :good="product">
           <template slot="right-bottom">
-            <van-button class="button" type="default" size="mini" @click.stop.prevent="buy(product)">购买</van-button>
+            <van-button class="button" type="default" size="mini" @click.stop.prevent="buy(product)">{{$t('menu.buy')}}</van-button>
           </template>
         </product>
       </div>

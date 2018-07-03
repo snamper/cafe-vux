@@ -5,10 +5,10 @@
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
     <van-tabbar v-model="active" @change="change">
-      <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('tabbar.menu')}}</van-tabbar-item>
-      <van-tabbar-item icon="like-o" :to="{name: 'active'}">{{$t('tabbar.active')}}</van-tabbar-item>
-      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info">{{$t('tabbar.cart')}}</van-tabbar-item>
-      <van-tabbar-item icon="contact" :to="{name: 'member'}">{{$t('tabbar.member')}}</van-tabbar-item>
+      <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('main.menu')}}</van-tabbar-item>
+      <van-tabbar-item icon="like-o" :to="{name: 'active'}">{{$t('main.active')}}</van-tabbar-item>
+      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info">{{$t('main.cart')}}</van-tabbar-item>
+      <van-tabbar-item icon="contact" :to="{name: 'member'}">{{$t('main.member')}}</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
