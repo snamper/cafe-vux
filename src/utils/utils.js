@@ -1,3 +1,6 @@
+import Vue from 'vue';
+import { Toast } from 'vant';
+Vue.use(Toast);
 // 对象是否为空
 export const isObjEmpty = obj => (obj === null || obj === '' || typeof (obj) === 'undefined');
 // 对象是否为非空
@@ -51,3 +54,14 @@ export const findAreaCode = name => {
   return code;
 };
 
+export const toast = (message, forbidClick = 'false', type = 'text', position = 'middle', mask = 'false', loadingType = 'circular', duration = 1000) => {
+  Toast({
+    type,
+    position,
+    message,
+    mask,
+    forbidClick,
+    loadingType,
+    duration
+  });
+};

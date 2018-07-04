@@ -35,7 +35,17 @@ export default {
     forgetPassword: '忘记密码',
     vistorVistor: '游客访问',
     register: '注册',
-    third: '第三方登录'
+    third: '第三方登录',
+    tips1: '登录成功',
+    tips2: '登录失败',
+    tips3: '请填写正确的内容',
+    tips4: '注册成功',
+    tips5: '注册失败',
+    tips6: '用户名重复，请重新输入用户名',
+    tips7: '账户可以是邮箱或者手机号码',
+    tips8: '密码由6-21字母和数字组成',
+    tips9: '两次输入的密码不一致'
+
   },
   cart: {
     shopName: '树影啡香',
@@ -168,7 +178,9 @@ export default {
   },
   sku: {
     success: '添加购物车成功~',
-    sepc: '规格'
+    spec: '规格',
+    next: '下一步',
+    confirm: '确定'
   },
   addressCard: {
     cotact: name => `收货人：${name}`,

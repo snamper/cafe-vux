@@ -128,8 +128,10 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../../../styles/mixin.styl';
 .member-wrapper
-  margin-bottom 50px
+  bgcolor()
+  bottom()
   .avator
     width 100%
     height 200px

@@ -20,7 +20,7 @@
       <van-goods-action-big-btn :text="$t('food.add2cart')" @click="add2cart"></van-goods-action-big-btn>
       <van-goods-action-big-btn :text="$t('food.buy')" primary @click="buyit" ></van-goods-action-big-btn>
     </van-goods-action>
-    <sku ref="sku" confirm></sku>
+    <sku ref="sku"></sku>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ import { resizeImage, isObjEmpty } from '@/utils/utils.js';
 import nameprice from '@/components/desc/nameprice';
 import sku from '@/components/sku';
 import Logger from 'chivy';
-const log = new Logger('page/menu/good');
+const log = new Logger('food');
 export default {
   data() {
     return {
@@ -116,6 +116,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../../styles/mixin.styl'
 .good
   background-color rgb(244, 244, 244)
   margin-bottom 50px

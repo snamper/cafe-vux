@@ -6,7 +6,7 @@
     </banner>
     <div class="products" >
       <div class="product" v-for="(product, index) in sliders" :key="index">
-        <orderdetail :product="product" @click.native="showdetail(product)"></orderdetail>
+        <orderdetail :product="product" @click.native="jump2FoodPage(product)"></orderdetail>
       </div>
     </div>
   </div>
@@ -42,8 +42,7 @@ export default {
     ])
   },
   methods: {
-    showdetail(product) {
-      log.info('page will change to good');
+    jump2FoodPage(product) {
       this.$router.push({name: 'good', params: {good: product}});
     }
   }
@@ -51,9 +50,10 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../../../styles/mixin.styl';
 .active
-  margin-bottom 50px
-  background-color rgb(244, 244, 244)
+  bgcolor()
+  bottom()
   .products
     display flex
     flex-wrap wrap

@@ -5,10 +5,10 @@
       :title="$t('menu.allProduct')">
     </banner>
     <div class="cards" v-for="(product, index) in products" :key="index">
-      <div class="product" @click="showdetail(product)">
+      <div class="product" @click="jump2FoodPage(product)">
         <product :showcheckbox="false" :good="product">
           <template slot="right-bottom">
-            <van-button class="button" type="default" size="mini" @click.stop.prevent="buy(product)">{{$t('menu.buyit')}}</van-button>
+            <van-button class="button" type="default" size="mini" @click.native.stop.prevent="onBuyClicked(product)">{{$t('menu.buyit')}}</van-button>
           </template>
         </product>
       </div>
@@ -54,10 +54,13 @@ export default {
     ])
   },
   methods: {
-    buy(product) {
+    onBuyClicked(product) {
+      log.info('buy product');
       this.$refs.sku.showit(product);
     },
-    showdetail(product) {
+    // 点击显示good页面
+    jump2FoodPage(product) {
+      log.info('showdetail product');
       this.$router.push({name: 'food', params: {good: product}});
     }
   }
@@ -67,8 +70,8 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import '../../../styles/mixin.styl';
 .menu
-  background-color rgb(244, 244, 244)
-  margin-bottom 50px
+  bgcolor()
+  bottom()
   .cards
     .product
       margin 5px

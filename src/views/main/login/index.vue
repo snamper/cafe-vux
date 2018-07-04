@@ -16,17 +16,17 @@
           :placeholder="$t('login.usernamePlaceholder')"
           required
           :error="username.error"
-          @blur="check(username)"
-          @click-icon="clean(username)"
+          @blur="checkAvaliable(username)"
+          @click-icon="username.content = ''"
         />
         <van-field
           v-model="password.content"
           type="password"
           :label="$t('login.password')"
           :placeholder="$t('login.inputPassword')"
-          @blur="check(password)"
+          @blur="checkAvaliable(password)"
           :error="password.error"
-          @click-icon="clean(password)"
+          @click-icon="password.content = ''"
           required
         />
       </van-cell-group>
@@ -40,8 +40,8 @@
           :placeholder="$t('login.accountPlaceholder')"
           required
           :error="account.error"
-          @blur="checkduplicate(account)"
-          @click-icon="clean(account)"
+          @blur="checkAccountDuplicate(account)"
+          @click-icon="account.content = ''"
         />
         <van-field
           v-model="pwd.content"
@@ -49,8 +49,8 @@
           :label="$t('login.inputPassword')"
           :placeholder="$t('login.passwordPlaceholder')"
           :error="pwd.error"
-          @blur="check(pwd)"
-          @click-icon="clean(pwd)"
+          @blur="checkAvaliable(pwd)"
+          @click-icon="pwd.content = ''"
           required
         />
         <van-field
@@ -59,28 +59,28 @@
           :label="$t('login.comfirmPassword')"
           :placeholder="$t('login.confirmPlaceholder')"
           :error="repwd.error"
-          @blur="check(repwd)"
-          @click-icon="clean(repwd)"
+          @blur="checkAvaliable(repwd)"
+          @click-icon="repwd.content = ''"
           required
         />
       </van-cell-group>
     </div>
     <div class="submit" v-if="showlogin">
       <div class="login">
-        <van-button style="width:97%" type="primary" @click="login" :disabled="disable.login">{{$t('login.login')}}</van-button>
+        <van-button style="width:97%" type="primary" @click="onClickLogin" :disabled="disable.login">{{$t('login.login')}}</van-button>
       </div>
       <div class="ops">
         <van-row type="flex">
-          <van-col class="forget" span="8" @click.native="forget">{{$t('login.forgetPassword')}}</van-col>
-          <van-col class="vistor" span="8" @click.native="vistor">{{$t('login.vistorVistor')}}</van-col>
-          <van-col class="register" span="8" @click.native="show">{{$t('login.register')}}</van-col>
+          <van-col class="forget" span="8" @click.native="onClickForget">{{$t('login.forgetPassword')}}</van-col>
+          <van-col class="vistor" span="8" @click.native="onClickVistor">{{$t('login.vistorVistor')}}</van-col>
+          <van-col class="register" span="8" @click.native="onClickShow">{{$t('login.register')}}</van-col>
         </van-row>
       </div>
     </div>
     <div class="submit" v-else>
       <div class="submit-wrapper">
-        <van-button class="registerbtn" type="primary" @click="register" :disabled="disable.register">{{$t('login.register')}}</van-button>
-        <van-button class="loginbtn"  type="default" @click="show">{{$t('login.login')}}</van-button>
+        <van-button class="registerbtn" type="primary" @click="onClickRegister" :disabled="disable.register">{{$t('login.register')}}</van-button>
+        <van-button class="loginbtn"  type="default" @click="onClickShow">{{$t('login.login')}}</van-button>
       </div>
     </div>
     <div class="foot">
@@ -101,7 +101,7 @@ import avator from '@/components/avator';
 import { mapState } from 'vuex';
 import md5 from 'blueimp-md5';
 import { regex } from '@/utils/consts.js';
-import { regexmatch, isObjEmpty } from '@/utils/utils.js';
+import { regexmatch, isObjEmpty, toast } from '@/utils/utils.js';
 import Logger from 'chivy';
 const log = new Logger('login');
 export default {
@@ -119,7 +119,7 @@ export default {
       },
       third: {
         weibo: {
-          url: './weibo.png',
+          url: '../../../../static/img/weibo.png',
           radius: 50
         }
       },
@@ -164,22 +164,21 @@ export default {
     ])
   },
   beforeRouteEnter(to, from, next) {
-    log.info('beforeRouteEnter');
     next(vm => {
       log.debug('uuid is ' + vm.User.uuid);
-      if (vm.User.uuid === null) {
+      if (isObjEmpty(vm.User.uuid)) {
         vm.$router.push({name: 'member'});
       }
     })
   },
   methods: {
-    vistor() {
+    onClickVistor() {
       this.$router.push({name: 'member'});
     },
-    show() {
+    onClickShow() {
       this.showlogin = !this.showlogin;
     },
-    login() {
+    onClickLogin() {
       this.disable.login = true;
       const valid = !this.username.error && !this.password.error && !isObjEmpty(this.username.content) && !isObjEmpty(this.password.content);
       if (valid) {
@@ -189,68 +188,67 @@ export default {
           passWd: md5(this.password.content)
         };
         this.$store.dispatch('login', param).then(() => {
-          this.__toast('登录成功').then(() => {
+          this.Tips($t('login.tips1')).then(() => {
             this.disable.login = false;
-            this.__jump();
+            this.Jump2MemberPage();
           });
         }).catch((error) => {
-          this.__toast('登录失败').then(() => {
+          this.Tips($t('login.tips2')).then(() => {
             this.disable.login = false;
-            this.__fail(true);
+            this.ResetField(true);
           });
         });
       } else {
-        this.__toast('请填写正确的内容');
+        this.Tips($t('login.tips3'));
         this.disable.login = false;
       }
     },
-    register() {
+    onClickRegister() {
       this.disable.register = true;
       const valid = !this.account.error && !this.pwd.error && !this.repwd.error && !isObjEmpty(this.account.content) && !isObjEmpty(this.pwd.content) && !isObjEmpty(this.repwd.content);
-      if(valid) {
-        // 注册用户
-        const param ={
-          mobile: this.account.content,
-          passWd: md5(this.pwd)
-        };
-        this.$store.dispatch('resigter', param).then(() => {
-          this.__toast('注册成功').then(() => {
-            this.disable.register = false;
-            this.__jump();
-          });
-        }).catch((error) => {
-          this.__toast('注册失败').then(() => {
-            this.__fail(true);
-            this.disable.register = false;
-          })
-        });
-      } else {
-        this.__toast('请填写正确的信息');
+      if (!valid) {
+        this.Tips($t('login.tips3'));
         this.disable.register = false;
+        return;
       }
-    },
-    checkduplicate(data) {
-      // debugger
-      let avalid = true;
-      avalid = avalid && (data.content !== '' ? true : false);
-      avalid = avalid && this.__checkAccount(data.content);
-      if (avalid) {
-        this.$store.dispatch('duplicate', {name: data.content}).then(resp => {
-          log.debug(data.content + ' is duplicate in server? ' + resp);
-          if (resp) {
-            this.__toast('用户名重复，请重新输入用户名');
-            this.account.content = '';
-            data.error = true;
-          }
+      // 注册用户
+      const param ={
+        mobile: this.account.content,
+        passWd: md5(this.pwd)
+      };
+      this.$store.dispatch('resigter', param).then(() => {
+        this.Tips($t('login.tips4')).then(() => {
+          this.disable.register = false;
+          this.Jump2MemberPage();
         });
-      } else {
-        data.error = true;
-      }
+      }).catch((error) => {
+        this.Tips($t('login.tips5')).then(() => {
+          this.ResetField(true);
+          this.disable.register = false;
+        })
+      });
     },
-    forgetPwd() {
+    checkAccountDuplicate(data) {
+      // debugger
+      const avalid = isObjNotEmpty(data.content) && this.CheckAccountAvaliable(data.content);
+      if  (!avalid) {
+        data.error = true;
+        return;
+      }
+      this.$store.dispatch('duplicate', {name: data.content}).then(resp => {
+        log.debug(data.content + ' is duplicate in server? ' + resp);
+        if (resp) {
+          this.Tips($t('login.tips6'));
+          this.account.content = '';
+          data.error = true;
+        }
+      });
+
+    },
+    onClickForget() {
       log.info('forget password');
     },
-    check(data) {
+    checkAvaliable(data) {
       let error = false;
       data.error = error;
       if (data.content === '') {
@@ -258,32 +256,28 @@ export default {
       }
       switch(data.key) {
         case this.username.key:
-          error = !this.__checkAccount(data.content);
+          error = !this.CheckAccountAvaliable(data.content);
           if(error) {
-            this.__toast('账户可以是邮箱或者手机号码');
+            this.Tips($t('login.tips7'));
           }
           break;
         case this.pwd.key:
           error = !regexmatch(data.content, regex.password);
           if(error) {
-            this.__toast('密码由6-21字母和数字组成');
+            this.Tips($t('login.tips8'));
           }
           break;
         case this.repwd.key:
           error = this.repwd.content !== this.pwd.content ? true: false;
           if(error) {
-            this.__toast('两次输入的密码不一致');
+            this.Tips($t('login.tips9'));
           }
           break;
       }
       log.debug(data.key + ' check result is ' + error);
       data.error = error;
     },
-    clean(data) {
-      log.debug('clean data is ' + JSON.stringify(data));
-      data.content = '';
-    },
-    __checkAccount(account) {
+    CheckAccountAvaliable(account) {
       if (regexmatch(account, regex.mobile)) {
         return true;
       } else if(regexmatch(account, regex.email)) {
@@ -294,7 +288,7 @@ export default {
         return false;
       }
     },
-    __fail(status) {
+    ResetField(status) {
       // 密码清空
       this.showlogin = status;
       this.username.content = '';
@@ -303,17 +297,13 @@ export default {
       this.pwd.content = '';
       this.repwd.content = '';
     },
-    __toast(content) {
+    Tips(content) {
       return new Promise((resolve, reject) => {
-        Toast({
-          message: content,
-          forbidClick: true,
-          duration: 1000
-        });
+        this.toast(content, true);
         resolve();
       });
     },
-    __jump() {
+    Jump2MemberPage() {
       this.$router.push({name: 'member'});
     }
   }
@@ -321,8 +311,10 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../../../styles/mixin.styl';
 .login
-  margin-bottom 50px
+  bgcolor()
+  bottom()
   .logo
     display flex
     justify-content center

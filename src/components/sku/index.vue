@@ -13,10 +13,10 @@
       @add-cart="onAddCartClicked">
       <template v-if="showSelf" slot="sku-actions" slot-scope="props">
         <div class="van-sku-actions" v-if="next">
-          <van-button bottom-action @click="props.skuEventBus.$emit('sku:buy')">下一步</van-button>
+          <van-button bottom-action @click="props.skuEventBus.$emit('sku:buy')">{{$t('sku.next')}}</van-button>
         </div>
         <div class="van-sku-actions" v-if="!next">
-          <van-button bottom-action @click="props.skuEventBus.$emit('sku:addCart')">确定</van-button>
+          <van-button bottom-action @click="props.skuEventBus.$emit('sku:addCart')">{{$t('sku.confirm')}}</van-button>
         </div>
       </template>
     </van-sku>
@@ -25,7 +25,7 @@
 
 <script type="text/ecmascript=6">
 import { Sku, Button, Toast } from 'vant';
-import { resizeImage } from '@/utils/utils';
+import { resizeImage, toast } from '@/utils/utils';
 import { mapState } from 'vuex';
 import Vue from 'vue';
 import Logger from 'chivy';
@@ -36,14 +36,11 @@ export default {
       show: false,
       next: true,
       good: null,
-      showSelf: false
+      showSelf: false,
+      toast
     };
   },
   props: {
-    confirm: {
-      type: Boolean,
-      default: false
-    },
     confirm: {
       type: Boolean,
       default: false
@@ -59,7 +56,6 @@ export default {
       'carts'
     ]),
     sku() {
-      // log.debug('sku');
       return this.__sku(this.good);
     }
   },
@@ -73,28 +69,21 @@ export default {
     onAddCartClicked(data) {
       log.debug('add carts');
       this.__add2cart(data).then(() => {
-        this.__showAndToast();
+        this.toast($t('sku.success'))
       });
     },
-    onPointClicked() {
-      log.debug('积分兑换');
-    },
+    // 显示sku页面
     showit(good) {
-      log.debug('showit');
       this.good = good;
       this.show = true;
       this.showSelf = false;
     },
+    // 显示sku页面的Next和confirm
     shownext(good, flag) {
-      log.debug('shownext');
       this.good = good;
       this.show = true;
       this.showSelf = true;
       this.next = flag;
-    },
-    nextstep(data) {
-      log.debug('data is' + JSON.stringify(data));
-      this.$router.push({name: 'pay'});
     },
     __add2cart(data) {
       return new Promise((resolve, reject) => {
@@ -109,27 +98,12 @@ export default {
       product.count = data.selectedNum;
       return product;
     },
-    __submit(data) {
-      this.$store.dispatch('add2cart', this.__data(data)).then(result => {
-        if (result) {
-          this.__showAndToast();
-        }
-      });
-    },
-    __showAndToast() {
-      this.show = false;
-      Toast({
-        message: $t('sku.success'),
-        forbidClick: true,
-        duration: 1000
-      });
-    },
     __sku(good) {
       // log.debug('__sku good is ' + JSON.stringify(good));
       const suk = {
         tree: [
           {
-            k: $t('sku.spec'),
+            k:  this.$t('sku.spec'),
             v: [
               {
                 id: good.id,

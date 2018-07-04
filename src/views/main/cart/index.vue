@@ -2,8 +2,8 @@
   <div class="cart">
     <div class="cart" v-if="selectFoods.length !== 0">
       <div class="banner">
-        <van-checkbox class="title" v-model="checked" @change="selectall">{{$t('cart.shopName')}}</van-checkbox>
-        <span @click="showdelete">{{editTitle}}</span>
+        <van-checkbox class="title" v-model="checked" @change="onClickSelectAllCheckbox">{{$t('cart.shopName')}}</van-checkbox>
+        <span @click="onClickModifySwitch">{{editTitle}}</span>
       </div>
       <van-checkbox-group v-model="result">
         <div class="order" v-for="(product, index) in selectFoods" :key="index">
@@ -16,7 +16,7 @@
           :disabled="disable"
           :price="totalAttr.normal*100"
           @submit="onSubmit">
-          <van-checkbox class="checkbox" v-model="checked" @change="selectall">{{$t('cart.selectAll')}}</van-checkbox>
+          <van-checkbox class="checkbox" v-model="checked" @change="selectAllCheckbox">{{$t('cart.selectAll')}}</van-checkbox>
         </van-submit-bar>
       </div>
     </div>
@@ -25,7 +25,7 @@
         <div class="title">{{$t('cart.nonSelect')}}</div>
         <div class="subtitle">{{$t('cart.selectGoods')}}</div>
         <div class="search">
-          <van-button type="default" size="small" @click="showmain">{{$t('cart.vistor')}}</van-button>
+          <van-button type="default" size="small" @click="jump2MenuPage">{{$t('cart.vistor')}}</van-button>
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@ export default {
   },
   activated() {
     log.debug('activated');
-    this.__setselected();
+    this.SelectFoodIds()
   },
   computed: {
     ...mapGetters([
@@ -77,13 +77,7 @@ export default {
     }
   },
   methods: {
-    __setselected() {
-      this.result = [];
-      this.selectFoods.forEach(good => {
-        this.result.push(good.id);
-      });
-    },
-    showdelete() {
+    onClickModifySwitch() {
       this.edit = !this.edit;
     },
     onSubmit() {
@@ -92,26 +86,27 @@ export default {
         this.$store.commit('clearCarts');
       } else {
         // 结算
-        // 计算选中的商品
-        const goods = this.__selectCartGoods();
+        const goods = this.SelectedFoods();
         this.$store.dispatch('setcartsgoods', goods).then(() => {
           this.$router.push({name: 'pay'});
         });
       }
     },
-    showmain() {
+    jump2MenuPage() {
       this.$router.push({name: 'menu'});
     },
-    selectall() {
-      log.debug('select all');
-      // this.select();
-      if (this.checked) {
-        this.__setselected();
-      } else {
-        this.result = [];
-      }
+    onClickSelectAllCheckbox() {
+      this.checked ? this.SelectFoodIds : this.result = [];
     },
-    __selectCartGoods() {
+    // 购物车的IDs，用于选择返回
+    SelectFoodIds() {
+      this.result = [];
+      this.selectFoods.forEach(good => {
+        this.result.push(good.id);
+      });
+    },
+    // 计算选中的商品
+    SelectedFoods() {
       const paygoods = [];
       this.selectFoods.forEach(good => {
         this.result.forEach(id => {

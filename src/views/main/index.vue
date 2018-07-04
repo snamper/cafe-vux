@@ -17,6 +17,7 @@
 import { Tabbar, TabbarItem } from 'vant';
 import { mapGetters, mapState } from 'vuex';
 import { isObjNotEmpty } from '@/utils/utils';
+
 import Logger from 'chivy';
 const log = new Logger('main');
 export default {
@@ -32,9 +33,7 @@ export default {
   created() {
     log.info('start init UUID');
     this.$store.dispatch('initUser').then(() => {
-      log.info('initUser finished');
       this.__selected();
-      log.info('__selected finished');
     });
   },
   computed: {
@@ -52,6 +51,7 @@ export default {
     change(active) {
       log.debug('active is ' + active);
     },
+    // 根据路由代码激活当前选中图标
     __selected() {
       switch (this.$route.path) {
         case '/menu':
@@ -76,6 +76,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../../styles/mixin.styl'
 .main
-  background-color rgb(249, 249, 249)
+  bgcolor()
 </style>
