@@ -12,7 +12,7 @@
     <div class="product-wrapper" @click="showmore">
       <product :good="order.details[0]" ></product>
     </div>
-    <div v-if="order.details.length > 1" class="showmore" @click="showmore">{{$t('records.showGoods', order.details.length)}}</div>
+    <div v-if="order.details.length > 1" class="showmore" @click="showmore">{{$t('records.showGoods',order.details.length)}}</div>
     <div class="total van-hairline--top-bottom">
       {{$t('records.summary')}}<span>￥{{order.amount}}</span>
     </div>
@@ -20,8 +20,8 @@
       <van-cell-group>
         <van-cell>
           <div class="ops">
-            <van-button class="cancel" type="default" size="small" @click.native="cancelOrder">取消订单</van-button>
-            <van-button class="confirm" type="default" size="small" @click.native="confirmOrder">确认付款</van-button>
+            <van-button class="cancel" type="default" size="small" @click.native="cancelOrder">{{$t('records.cancel')}}</van-button>
+            <van-button class="confirm" type="default" size="small" @click.native="confirmOrder">{{$t('records.confirm')}}</van-button>
           </div>
         </van-cell>
       </van-cell-group>

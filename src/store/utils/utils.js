@@ -1,6 +1,21 @@
-import { isObjEmpty, isObjNotEmpty } from '@/utils/utils';
+import { isObjNotEmpty } from '@/utils/utils';
+import Logger from 'chivy';
+const log = new Logger('store/utils');
 // 当函数长度小于2的时候，可用，当第一个参数为空的时候显示''，否则显示输入的参数
-const param = () => arguments.length <= 2 ? isObjEmpty(arguments[0]) ? arguments[1] ? arguments[1] : '' : arguments[0] : '';
+// 单参数为空显示'', 两参数则显示后者
+const param = (...args) => {
+  switch (args.length) {
+    case 1:
+      log.warn('case is 1');
+      return isObjNotEmpty(args[0]) ? args[0] : '';
+    case 2:
+      log.warn('case is 2');
+      return isObjNotEmpty(args[0]) ? args[0] : args[1];
+    default:
+      log.warn('case is default');
+      return '';
+  }
+};
 
 export const getMemberInfo = data => {
   return {

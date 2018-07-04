@@ -3,7 +3,7 @@
     <van-nav-bar
       :title="$t('order.wait4payOrder')"
       left-arrow
-      @click-left="back">
+      @click-left="backHistoryPage">
     </van-nav-bar>
     <div class="content">
       <addr :address="address" @addaddress="addaddress"></addr>
@@ -25,11 +25,11 @@
           <template slot="title">
             <div>{{$t('order.productTotalPrice')}}</div>
             <div>{{$t('order.memberDiscount')}}</div>
-            <div v-if="delivertype === $t('order.fastDelivery')">{{$t('order.deliveryPrice')}}</div>
+            <div v-if="delivertype === columns[1]">{{$t('order.deliveryPrice')}}</div>
           </template>
           <div>￥{{totalCarts.normal}}</div>
           <div>￥{{totalCarts.normal - totalCarts.member}}</div>
-          <div v-if="delivertype === $t('order.fastDelivery')">￥{{deliverPrice}}</div>
+          <div v-if="delivertype === columns[1]">￥{{deliverPrice}}</div>
         </van-cell>
       </van-cell-group>
     </div>
@@ -60,22 +60,22 @@ import addr from '@/components/address';
 import split from '@/components/split';
 import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('pages/cart/pay');
+const log = new Logger('order');
 export default {
   data() {
     return {
-      delivertype: $t('order.self'),
+      delivertype: this.$t('order.self'),
       action: false,
       comment: '',
       cardType: 'add',
-      columns: [$t('order.self'),$t('order.fastDelivery')]
+      columns: [this.$t('order.self'), this.$t('order.fastDelivery')]
     };
   },
   beforeRouteEnter(from, to, next){
     log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
-      if (vm.carts.length === 0) {
+      if (vm.$store.state.carts.length === 0) {
         vm.$router.push({name: 'cart'});
       }
     });
@@ -113,14 +113,14 @@ export default {
       isObjEmpty(this.address) ? 'add' : 'edit';
     },
     price() {
-      return this.delivertype === $t('order.self') ? this.totalCarts.normal * 100 : (this.totalCarts.normal + this.deliverPrice) * 100;
+      return this.delivertype === this.columns[0] ? this.totalCarts.normal * 100 : (this.totalCarts.normal + this.deliverPrice) * 100;
     },
     deliverType() {
-      return this.delivertype === $t('order.self') ? false : true;
+      return this.delivertype === this.columns[0] ? false : true;
     }
   },
   methods: {
-    back() {
+    backHistoryPage() {
       this.$router.push({name: 'cart'});
     },
     addaddress() {
@@ -141,9 +141,6 @@ export default {
     },
     cancel() {
       this.action = false;
-    },
-    __back2cart() {
-      this.$router.push({name: 'cart'});
     }
   }
 };

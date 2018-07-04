@@ -7,28 +7,28 @@
       </div>
     </div>
     <van-cell-group>
-      <van-cell :title="$t('member.myorder')" is-link :value="$t('member.showorders')" :to="{name: 'order'}"></van-cell>
+      <van-cell :title="$t('member.myorder')" is-link :value="$t('member.showorders')" :to="{name: 'records'}"></van-cell>
     </van-cell-group>
     <van-row gutter="20">
-      <van-col span="6" @click.native="jump(status.NOTPAY)">
+      <van-col span="6" @click.native="Jump2OrderPage(status.NOTPAY)">
         <div class="content" >
           <van-icon name="pending-payment"></van-icon>
           <div class="name">{{$t('member.wait4pay')}}</div>
         </div>
       </van-col>
-      <van-col span="6" @click.native="jump(status.WAIT4DELIVERY)">
+      <van-col span="6" @click.native="Jump2OrderPage(status.WAIT4DELIVERY)">
         <div class="content">
           <van-icon name="tosend"></van-icon>
           <div class="name">{{$t('member.wait4delivery')}}</div>
         </div>
       </van-col>
-      <van-col span="6" @click.native="jump(status.ALREADYDELIVERY)">
+      <van-col span="6" @click.native="Jump2OrderPage(status.ALREADYDELIVERY)">
         <div class="content">
           <van-icon name="logistics"></van-icon>
           <div class="name">{{$t('member.alreadydelivery')}}</div>
         </div>
       </van-col>
-      <van-col span="6" @click.native="jump(status.FINISH)">
+      <van-col span="6" @click.native="Jump2OrderPage(status.FINISH)">
         <div class="content">
           <van-icon name="completed"></van-icon>
           <div class="name">{{$t('member.finish')}}</div>
@@ -46,10 +46,10 @@
       <van-cell title="我的信息" is-link ></van-cell> -->
     </van-cell-group>
     <van-cell-group class="loginout" v-if="member">
-      <van-button type="danger" @click.native="logout">{{$t('member.logout')}}</van-button>
+      <van-button type="danger" @click.native="onClickLogout">{{$t('member.logout')}}</van-button>
     </van-cell-group>
     <van-cell-group class="loginout" v-else>
-      <van-button type="primary" @click.native="login">{{$t('member.wantLogin')}}</van-button>
+      <van-button type="primary" @click.native="onClickLogin">{{$t('member.wantLogin')}}</van-button>
     </van-cell-group>
 
   </div>
@@ -61,7 +61,7 @@ import { mapState, mapGetters } from 'vuex';
 import round from './round';
 import avator from '@/components/avator';
 import { status } from  '@/utils/consts.js';
-import { isObjNotEmpty } from '@/utils/utils';
+import { isObjEmpty, isObjNotEmpty } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('member');
 export default {
@@ -83,7 +83,7 @@ export default {
   },
   beforeRouteEnter(from, to, next) {
     next(vm => {
-      vm.$store.dispatch('initUser')
+      vm.$store.dispatch('initUser');
     });
   },
   computed: {
@@ -107,39 +107,44 @@ export default {
       }
     },
     username() {
-      if (isObjNotEmpty(this.uuid) || isObjNotEmpty(this.member)) {
+      // debugger
+      if (isObjNotEmpty(this.uuid)) {
         return this.$t('member.vistor');
-      } else if (isObjNotEmpty(this.member.nick)) {
-        return this.member.nick;
-      } else if (isObjNotEmpty(this.member.name)) {
-        return this.member.name;
-      } else if (isObjNotEmpty(this.member.phone)) {
-        return this.member.phone;
-      } else if (isObjNotEmpty(this.member.email)) {
-        return this.member.email;
+      } else if (isObjNotEmpty(this.member)) {
+        if (isObjNotEmpty(this.member.nick)) {
+          return this.member.nick;
+        } else if (isObjNotEmpty(this.member.name)) {
+          return this.member.name;
+        } else if (isObjNotEmpty(this.member.phone)) {
+          return this.member.phone;
+        } else if (isObjNotEmpty(this.member.email)) {
+          return this.member.email;
+        }
       }
     },
   },
   methods: {
-    logout() {
-      this.$store.dispatch('loginout');
+    onClickLogout() {
+      log.info('onClickLogout');
+      this.$store.dispatch('logout');
     },
-    login() {
+    onClickLogin() {
+      log.info('onClickLogin');
       this.$router.push({name: 'login'});
     },
-    jump(type) {
+    Jump2OrderPage(type) {
       switch(type) {
         case status.NOTPAY:
-          this.$router.push({name: 'order', params: {value: status.NOTPAY.value}});
+          this.$router.push({name: 'records', params: {value: status.NOTPAY.value}});
           break;
         case status.WAIT4DELIVERY:
-          this.$router.push({name: 'order', params: {value: status.WAIT4DELIVERY.value}});
+          this.$router.push({name: 'records', params: {value: status.WAIT4DELIVERY.value}});
           break;
         case status.ALREADYDELIVERY:
-          this.$router.push({name: 'order', params: {value: status.ALREADYDELIVERY.value}});
+          this.$router.push({name: 'records', params: {value: status.ALREADYDELIVERY.value}});
           break;
         case status.FINISH:
-          this.$router.push({name: 'order', params: {value: status.FINISH.value}});
+          this.$router.push({name: 'records', params: {value: status.FINISH.value}});
           break;
       }
     }

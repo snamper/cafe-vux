@@ -101,7 +101,7 @@ import avator from '@/components/avator';
 import { mapState } from 'vuex';
 import md5 from 'blueimp-md5';
 import { regex } from '@/utils/consts.js';
-import { regexmatch, isObjEmpty, toast } from '@/utils/utils.js';
+import { regexMatch, isObjEmpty, isObjNotEmpty, toast } from '@/utils/utils.js';
 import Logger from 'chivy';
 const log = new Logger('login');
 export default {
@@ -147,7 +147,8 @@ export default {
         key: 'repwd',
         content: '',
         error: false
-      }
+      },
+      toast
     }
   },
   components: {
@@ -165,8 +166,8 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      log.debug('uuid is ' + vm.User.uuid);
-      if (isObjEmpty(vm.User.uuid)) {
+      log.debug('uuid is ' + vm.$store.state.uuid);
+      if (isObjEmpty(vm.$store.state.uuid)) {
         vm.$router.push({name: 'member'});
       }
     })
@@ -181,33 +182,33 @@ export default {
     onClickLogin() {
       this.disable.login = true;
       const valid = !this.username.error && !this.password.error && !isObjEmpty(this.username.content) && !isObjEmpty(this.password.content);
-      if (valid) {
-        // 用户登录
-        const param = {
-          name: this.username.content,
-          passWd: md5(this.password.content)
-        };
-        this.$store.dispatch('login', param).then(() => {
-          this.Tips($t('login.tips1')).then(() => {
-            this.disable.login = false;
-            this.Jump2MemberPage();
-          });
-        }).catch((error) => {
-          this.Tips($t('login.tips2')).then(() => {
-            this.disable.login = false;
-            this.ResetField(true);
-          });
-        });
-      } else {
-        this.Tips($t('login.tips3'));
+      if (!valid) {
+        this.toast(this.$t('login.tips3'), true, 'fail');
         this.disable.login = false;
+        return;
       }
+      // 用户登录
+      const param = {
+        name: this.username.content,
+        passWd: md5(this.password.content)
+      };
+      this.toast(this.$t('login.logining'), true, 'loading');
+      this.$store.dispatch('login', param).then(() => {
+        log.info('login success');
+        this.toast(this.$t('login.tips1'), true, 'success');
+        this.disable.login = false;
+        this.Jump2MemberPage();
+      }).catch((error) => {
+        this.toast(this.$t('login.tips2'), true, 'fail');
+        this.disable.login = false;
+        this.ResetField(true);
+      });
     },
     onClickRegister() {
       this.disable.register = true;
       const valid = !this.account.error && !this.pwd.error && !this.repwd.error && !isObjEmpty(this.account.content) && !isObjEmpty(this.pwd.content) && !isObjEmpty(this.repwd.content);
       if (!valid) {
-        this.Tips($t('login.tips3'));
+        this.toast(this.$t('login.tips3'), true, 'fail');
         this.disable.register = false;
         return;
       }
@@ -216,29 +217,33 @@ export default {
         mobile: this.account.content,
         passWd: md5(this.pwd)
       };
+      this.toast(this.$t('login.logining'), true, 'loading');
       this.$store.dispatch('resigter', param).then(() => {
-        this.Tips($t('login.tips4')).then(() => {
-          this.disable.register = false;
-          this.Jump2MemberPage();
-        });
+        this.toast.close();
+        this.toast(this.$t('login.tips4'), true, 'success');
+        this.disable.register = false;
+        this.Jump2MemberPage();
       }).catch((error) => {
-        this.Tips($t('login.tips5')).then(() => {
-          this.ResetField(true);
-          this.disable.register = false;
-        })
+        this.toast(this.$t('login.tips5'), true, 'fail');
+        this.ResetField(true);
+        this.disable.register = false;
       });
     },
     checkAccountDuplicate(data) {
+      if (isObjEmpty(data.content)){
+        return;
+      }
       // debugger
-      const avalid = isObjNotEmpty(data.content) && this.CheckAccountAvaliable(data.content);
-      if  (!avalid) {
+      if  (!this.CheckAccountAvaliable(data.content)) {
         data.error = true;
         return;
       }
+      this.toast(this.$t('login.validing'), true, 'loading');
       this.$store.dispatch('duplicate', {name: data.content}).then(resp => {
-        log.debug(data.content + ' is duplicate in server? ' + resp);
+        log.info(data.content + ' is duplicate in server? ' + resp);
+        // this.toast.close();
         if (resp) {
-          this.Tips($t('login.tips6'));
+          this.toast(this.$t('login.tips6'), true, 'text');
           this.account.content = '';
           data.error = true;
         }
@@ -253,24 +258,25 @@ export default {
       data.error = error;
       if (data.content === '') {
         error = true;
+        return;
       }
       switch(data.key) {
         case this.username.key:
           error = !this.CheckAccountAvaliable(data.content);
           if(error) {
-            this.Tips($t('login.tips7'));
+            this.toast(this.$t('login.tips7'));
           }
           break;
         case this.pwd.key:
-          error = !regexmatch(data.content, regex.password);
+          error = !regexMatch(data.content, regex.password);
           if(error) {
-            this.Tips($t('login.tips8'));
+            this.toast(this.$t('login.tips8'));
           }
           break;
         case this.repwd.key:
           error = this.repwd.content !== this.pwd.content ? true: false;
           if(error) {
-            this.Tips($t('login.tips9'));
+             this.toast(this.$t('login.tips9'));
           }
           break;
       }
@@ -278,11 +284,11 @@ export default {
       data.error = error;
     },
     CheckAccountAvaliable(account) {
-      if (regexmatch(account, regex.mobile)) {
+      if (regexMatch(account, regex.mobile)) {
         return true;
-      } else if(regexmatch(account, regex.email)) {
+      } else if(regexMatch(account, regex.email)) {
         return true;
-      } else if(regexmatch(account, regex.account)) {
+      } else if(regexMatch(account, regex.account)) {
         return true;
       } else {
         return false;
@@ -296,12 +302,6 @@ export default {
       this.account.content = '';
       this.pwd.content = '';
       this.repwd.content = '';
-    },
-    Tips(content) {
-      return new Promise((resolve, reject) => {
-        this.toast(content, true);
-        resolve();
-      });
     },
     Jump2MemberPage() {
       this.$router.push({name: 'member'});

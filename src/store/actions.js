@@ -2,6 +2,8 @@ import { ajax } from '@/store/utils/ajax';
 import { url } from '@/store/utils/consts';
 import { initStorage } from '@/utils/storage';
 import { getMemberInfo, setModifyData } from '@/store/utils/utils';
+import Logger from 'chivy';
+const log = new Logger('store/actions');
 export default {
   getGoods(context) {
     return new Promise(resolve => {
@@ -60,7 +62,10 @@ export default {
       ajax(url.memberLogin, payload).then(data => {
         if (data.status) {
           // TODO  可能会有两次请求
+          /* eslint-disable */
+          // debugger
           const member = getMemberInfo(data);
+          log.warn('member is ' + JSON.stringify(member));
           context.commit('update', {type: 'login', value: member});
           resolve();
         } else {
@@ -94,7 +99,7 @@ export default {
   // 注销
   logout(context) {
     return new Promise(resolve => {
-      context.commit('update', {type: 'loginout'});
+      context.commit('update', {type: 'logout'});
       resolve();
     });
   },

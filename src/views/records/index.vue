@@ -30,11 +30,11 @@ import order from  './one';
 import { status } from '@/utils/consts';
 import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('vuex/member/orderlist');
+const log = new Logger('records');
 export default {
   data() {
     return {
-      tabtitle: [$t('records.all'), $t('records.wait4pay'), $t('records.wait4delivery'), $t('records.alreadydelivery'), $t('records.finish')],
+      tabtitle: [this.$t('records.all'), this.$t('records.wait4pay'), this.$t('records.wait4delivery'), this.$t('records.alreadydelivery'), this.$t('records.finish')],
       active: 0,
       status
     };
@@ -65,7 +65,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'User',
+      'uuid',
+      'member',
       'records',
       'isLoading'
     ]),
@@ -109,7 +110,7 @@ export default {
     },
     __getRecord() {
       return new Promise((resolve)=> {
-        const param = isObjEmpty(this.User.uuid) ? { userId: this.User.member.id, needDetail: true } : { userCode: this.User.uuid, needDetail: true };
+        const param = isObjEmpty(this.uuid) ? { userId: this.member.id, needDetail: true } : { userCode: this.uuid, needDetail: true };
         this.$store.dispatch('getRecords', param).then(() => {
           resolve();
         });

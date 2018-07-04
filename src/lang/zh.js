@@ -33,6 +33,8 @@ export default {
     accountPlaceholder: '手机号码/邮箱名',
     confirmPlaceholder: '请确认密码',
     login: '登录',
+    logining: '登录中',
+    validing: '查询中',
     forgetPassword: '忘记密码',
     vistorVistor: '游客访问',
     register: '注册',
@@ -177,6 +179,8 @@ export default {
     orderId: '订单编号:',
     showGoods: length => `查看全部${length}件商品`,
     summary: '合计:',
+    cancel: '取消订单',
+    confirm: '确认付款',
     tips1: '取消错误'
   },
   sku: {
