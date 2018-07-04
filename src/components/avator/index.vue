@@ -11,7 +11,7 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { isObjEmpty } from '@/utils/utils';
+import { isObjNotEmpty } from '@/utils/utils';
 export default {
   props: {
     url: {
@@ -35,14 +35,14 @@ export default {
   },
   computed: {
     wide() {
-      if(!isObjEmpty(this.size)) {
+      if(isObjNotEmpty(this.size)) {
         return this.size + 'px';
       } else {
         return this.width + 'px';
       }
     },
     high() {
-      if(!isObjEmpty(this.size)) {
+      if(isObjNotEmpty(this.size)) {
         return this.size + 'px';
       } else {
         return this.height + 'px';

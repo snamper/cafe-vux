@@ -19,7 +19,8 @@ export default {
     carts: '购物车',
     memberCard: '我的会员卡',
     logout: '注销',
-    wantLogin: '我要登录'
+    wantLogin: '我要登录',
+    vistor: '游客'
   },
   login: {
     vistor: '游客',
@@ -45,7 +46,9 @@ export default {
     tips7: '账户可以是邮箱或者手机号码',
     tips8: '密码由6-21字母和数字组成',
     tips9: '两次输入的密码不一致'
-
+  },
+  desc: {
+    buy: '购买'
   },
   cart: {
     shopName: '树影啡香',

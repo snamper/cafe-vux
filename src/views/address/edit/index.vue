@@ -19,7 +19,7 @@
 <script type="text/ecmascript=6">
 import { AddressEdit, NavBar } from 'vant';
 import areaList from '@/utils/area.js';
-import { isObjEmpty, findCode } from '@/utils/utils.js';
+import { isObjEmpty, findAreaCode } from '@/utils/utils.js';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('pages/member/addressedit');
@@ -31,13 +31,13 @@ export default {
       addressinfo: {},
     }
   },
-  beforeRouteEnter(to, from, next) {
+  /* beforeRouteEnter(to, from, next) {
     next(vm => {
       if (isObjEmpty(vm.$store.state.User.uuid) && isObjEmpty(vm.$store.state.User.member)) {
         vm.$router.push({name: 'cart'});
       }
     })
-  },
+  }, */
   props: {
     address: {
       type: Object,

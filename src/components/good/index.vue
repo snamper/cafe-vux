@@ -11,7 +11,7 @@
                 <div class="name" v-if="edit">{{good.name}}</div>
                 <van-stepper
                   v-else
-                  @change="change"
+                  @change="OnStepperChange"
                   integer
                   :max="1000"
                   v-model="value" >
@@ -78,17 +78,14 @@ export default {
   },
   methods: {
     onClose(clickPosition, instance) {
-      log.debug('onclose');
       switch (clickPosition) {
         case 'right':
-          log.debug('right click');
           this.good.count = 0
           this.$store.commit('subCount', this.good);
           break;
       }
     },
-    change(value) {
-      log.debug('change value to ' + value);
+    OnStepperChange(value) {
       this.$store.commit('setCount', {good: this.good, count: this.value});
     }
   }

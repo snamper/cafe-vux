@@ -1,11 +1,11 @@
 <template>
   <div class="orderdetail" v-if="product">
-    <img :src="url(product.imageUrl)">
+    <img :src="GetURL(product.imageUrl)">
     <nameprice
       :name="product.name"
       :price="product.price"
       :memberPrice="product.memberPrice">
-      <van-button style="color:rgb(255, 97, 25)" class="button" size="mini" type="default" @click="buy">购买</van-button>
+      <van-button style="color:rgb(255, 97, 25)" class="button" size="mini" type="default" @click="onClickBuy">{{$t('desc.buy')}}</van-button>
     </nameprice>
   </div>
 </template>
@@ -17,13 +17,13 @@ import { resizeImage } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('page/menu/product');
 export default {
-  components: {
-    [Button.name]: Button,
-    nameprice
-  },
   data() {
     return {
     }
+  },
+  components: {
+    [Button.name]: Button,
+    nameprice
   },
   props: {
     product: {
@@ -31,11 +31,11 @@ export default {
     }
   },
   methods: {
-    url(imageUrl) {
+    GetURL(imageUrl) {
       // log.debug(imageUrl);
       return resizeImage(imageUrl, 400);
     },
-    buy() {
+    onClickBuy() {
       this.$emit('buy',{product: this.product});
     }
   }

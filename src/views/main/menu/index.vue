@@ -56,7 +56,7 @@ export default {
   methods: {
     onBuyClicked(product) {
       log.info('buy product');
-      this.$refs.sku.showit(product);
+      this.$refs.sku.SkuShow(product);
     },
     // 点击显示good页面
     jump2FoodPage(product) {

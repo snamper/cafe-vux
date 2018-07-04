@@ -56,36 +56,37 @@ export default {
       'carts'
     ]),
     sku() {
-      return this.__sku(this.good);
+      return this.SkuData(this.good);
     }
   },
   methods: {
     onBuyClicked(data) {
       log.debug('onBuyClicked' + JSON.stringify(data));
-      this.__add2cart(data).then(() => {
+      this.Add2Cart(data).then(() => {
         this.$router.push({name: 'pay'});
       });
     },
     onAddCartClicked(data) {
       log.debug('add carts');
-      this.__add2cart(data).then(() => {
+      this.Add2Cart(data).then(() => {
         this.toast($t('sku.success'))
       });
     },
     // 显示sku页面
-    showit(good) {
-      this.good = good;
-      this.show = true;
-      this.showSelf = false;
+    SkuShow(good) {
+      this.ShowSku(good, false)
     },
     // 显示sku页面的Next和confirm
-    shownext(good, flag) {
-      this.good = good;
-      this.show = true;
-      this.showSelf = true;
+    NextOrConfirmShow(good, flag) {
+      this.ShowSku(good, true)
       this.next = flag;
     },
-    __add2cart(data) {
+    ShowSku(good, flag) {
+      this.good = good;
+      this.show = true;
+      this.showSelf = flag;
+    },
+    Add2Cart(data) {
       return new Promise((resolve, reject) => {
         const good = data.selectedSkuComb.good;
         const count = data.selectedNum;
@@ -93,13 +94,12 @@ export default {
         resolve();
       });
     },
-    __data(data) {
+    CountedGood(data) {
       let product = data.selectedSkuComb.good;
       product.count = data.selectedNum;
       return product;
     },
-    __sku(good) {
-      // log.debug('__sku good is ' + JSON.stringify(good));
+    SkuData(good) {
       const suk = {
         tree: [
           {

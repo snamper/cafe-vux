@@ -106,10 +106,10 @@ export default {
       }
     },
     add2cart() {
-      this.$refs.sku.shownext(this.good, false);
+      this.$refs.sku.NextOrConfirmShow(this.good, false);
     },
     buyit() {
-      this.$refs.sku.shownext(this.good, true);
+      this.$refs.sku.NextOrConfirmShow(this.good, true);
     }
   }
 };

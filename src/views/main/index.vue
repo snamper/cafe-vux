@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     change(active) {
-      log.debug('active is ' + active);
+      log.info('active is ' + active);
     },
     // 根据路由代码激活当前选中图标
     __selected() {

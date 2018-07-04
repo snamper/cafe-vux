@@ -1,7 +1,7 @@
 <template>
   <div class="banner van-hairline--top-bottom" v-if="title" :style="{height:height + 'px'}">
-    <h1 :style="{fontSize: titleSize + 'px'}" @click="onTitle">{{title}}</h1>
-    <h3 v-if="subtitle" :style="{fontSize: subTitleSize + 'px'}" @click="onSubtitle">{{subtitle}}</h3>
+    <h1 :style="{fontSize: titleSize + 'px'}" @click="onClickTitle">{{title}}</h1>
+    <h3 v-if="subtitle" :style="{fontSize: subTitleSize + 'px'}" @click="onClickSubTitle">{{subtitle}}</h3>
   </div>
 </template>
 
@@ -36,11 +36,11 @@ export default {
     }
   },
   methods: {
-    onTitle() {
-      this.$emit('clickTitle');
+    onClickTitle() {
+      this.$emit('onClickTitle');
     },
-    onSubtitle() {
-      this.$emit('clickSubTitle');
+    onClickSubTitle() {
+      this.$emit('onClickSubTitle');
     }
   }
 };

@@ -2,54 +2,54 @@
   <div class="member-wrapper">
     <div class="avator">
       <div class="info">
-        <avator :url="avatorurl" :radius="50" :width="100" :height="100"></avator>
+        <avator :url="url" :radius="50" :width="100" :height="100"></avator>
         <div class="name">{{username}}</div>
       </div>
     </div>
     <van-cell-group>
-      <van-cell :title="$('member.myorder')" is-link :value="$('member.showorders')" :to="{name: 'order'}"></van-cell>
+      <van-cell :title="$t('member.myorder')" is-link :value="$t('member.showorders')" :to="{name: 'order'}"></van-cell>
     </van-cell-group>
     <van-row gutter="20">
       <van-col span="6" @click.native="jump(status.NOTPAY)">
         <div class="content" >
           <van-icon name="pending-payment"></van-icon>
-          <div class="name">{{$('member.wait4pay')}}</div>
+          <div class="name">{{$t('member.wait4pay')}}</div>
         </div>
       </van-col>
       <van-col span="6" @click.native="jump(status.WAIT4DELIVERY)">
         <div class="content">
           <van-icon name="tosend"></van-icon>
-          <div class="name">{{$('member.wait4delivery')}}</div>
+          <div class="name">{{$t('member.wait4delivery')}}</div>
         </div>
       </van-col>
       <van-col span="6" @click.native="jump(status.ALREADYDELIVERY)">
         <div class="content">
           <van-icon name="logistics"></van-icon>
-          <div class="name">{{$('member.alreadydelivery')}}</div>
+          <div class="name">{{$t('member.alreadydelivery')}}</div>
         </div>
       </van-col>
       <van-col span="6" @click.native="jump(status.FINISH)">
         <div class="content">
           <van-icon name="completed"></van-icon>
-          <div class="name">{{$('member.finish')}}</div>
+          <div class="name">{{$t('member.finish')}}</div>
         </div>
       </van-col>
     </van-row>
     <van-cell-group>
-      <van-cell :title="$('member.carts')" :to="{name: 'cart'}">
+      <van-cell :title="$t('member.carts')" :to="{name: 'cart'}">
         <round :number="number"></round>
       </van-cell>
     </van-cell-group>
-    <van-cell-group v-if="User.member">
-      <van-cell :title="$('member.memberCard')" is-link :to="{name: 'card'}"></van-cell>
+    <van-cell-group v-if="member">
+      <van-cell :title="$t('member.memberCard')" is-link :to="{name: 'card'}"></van-cell>
       <!-- <van-cell title="我的积分" is-link ></van-cell>
       <van-cell title="我的信息" is-link ></van-cell> -->
     </van-cell-group>
-    <van-cell-group class="loginout" v-if="User.member">
-      <van-button type="danger" @click.native="logout">{{$('member.logout')}}</van-button>
+    <van-cell-group class="loginout" v-if="member">
+      <van-button type="danger" @click.native="logout">{{$t('member.logout')}}</van-button>
     </van-cell-group>
     <van-cell-group class="loginout" v-else>
-      <van-button type="primary" @click.native="login">{{$('member.wantLogin')}}</van-button>
+      <van-button type="primary" @click.native="login">{{$t('member.wantLogin')}}</van-button>
     </van-cell-group>
 
   </div>
@@ -61,12 +61,13 @@ import { mapState, mapGetters } from 'vuex';
 import round from './round';
 import avator from '@/components/avator';
 import { status } from  '@/utils/consts.js';
+import { isObjNotEmpty } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('member');
 export default {
   data() {
     return {
-      avatorurl: '../../../../static/img/avator.jpg',
+      url: '../../../../static/img/avator.jpg',
       status
     };
   },
@@ -80,9 +81,15 @@ export default {
     avator,
     round
   },
+  beforeRouteEnter(from, to, next) {
+    next(vm => {
+      vm.$store.dispatch('initUser')
+    });
+  },
   computed: {
     ...mapState([
-      'User'
+      'uuid',
+      'member'
     ]),
     ...mapGetters([
       'selectFoods',
@@ -98,7 +105,20 @@ export default {
         });
         return result;
       }
-    }
+    },
+    username() {
+      if (isObjNotEmpty(this.uuid) || isObjNotEmpty(this.member)) {
+        return this.$t('member.vistor');
+      } else if (isObjNotEmpty(this.member.nick)) {
+        return this.member.nick;
+      } else if (isObjNotEmpty(this.member.name)) {
+        return this.member.name;
+      } else if (isObjNotEmpty(this.member.phone)) {
+        return this.member.phone;
+      } else if (isObjNotEmpty(this.member.email)) {
+        return this.member.email;
+      }
+    },
   },
   methods: {
     logout() {
