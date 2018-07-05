@@ -61,8 +61,8 @@
         <van-cell-group>
           <van-cell>
             <div class="ops">
-              <van-button class="cancel" type="default" size="small" @click.native="cancelOrder">{{$t('record.cancelOrder')}}</van-button>
-              <van-button class="confirm" type="default" size="small" @click.native="confirmOrder">{{$t('record.confirmOrder')}}</van-button>
+              <van-button class="cancel" type="default" size="small" @click.native="onclickCancel">{{$t('record.cancelOrder')}}</van-button>
+              <van-button class="confirm" type="default" size="small" @click.native="onclickConfirm">{{$t('record.confirmOrder')}}</van-button>
             </div>
           </van-cell>
         </van-cell-group>
@@ -73,9 +73,11 @@
 
 <script type="text/ecmascript=6">
 import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps, Button, Toast } from 'vant';
+import { mapState } from 'vuex';
 import product from '@/components/good';
 import addr from '@/components/address';
 import orderstatus from '@/components/status';
+import { toast } from '@/utils/utils';
 import { status } from '@/utils/consts';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/orderdetail');
@@ -92,7 +94,8 @@ export default {
         county: '成华区',
         address: '昭觉市南路33号'
       },
-      status
+      status,
+      toast
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -148,7 +151,7 @@ export default {
       return 'logistics';
     },
     setpdesc() {
-      return $t('record.timeout');
+      return this.$t('record.timeout');
     }
   },
   methods: {
@@ -161,22 +164,15 @@ export default {
         if (resp) {
           this.$router.push({name: 'order'});
         } else {
-          this.__showAndToast($t('record.tips1'));
+          this.toast(this.$t('record.tips1'));
         }
       }).catch(error => {
-        this.__showAndToast($t('record.tips1'));
+        this.toast(this.$t('record.tips1'));
       });
     },
     confirmOrder() {
       this.$store.dispatch('setcartsgoods',this.detail.details).then(() => {
         this.$router.push({name: 'payment', params: {orderid: this.detail.id}});
-      });
-    },
-    __showAndToast(context) {
-      Toast({
-        message: context,
-        forbidClick: true,
-        duration: 1000
       });
     }
   }

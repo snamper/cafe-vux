@@ -9,10 +9,10 @@
       </van-row>
       <!-- <van-panel title="title" :desc="orderId" :status="orderstatus"></van-panel> -->
     </div>
-    <div class="product-wrapper" @click="showmore">
+    <div class="product-wrapper" @click="showRecord">
       <product :good="order.details[0]" ></product>
     </div>
-    <div v-if="order.details.length > 1" class="showmore" @click="showmore">{{$t('records.showGoods',order.details.length)}}</div>
+    <div v-if="order.details.length > 1" class="showmore" @click="showRecord">{{recordsCount}}</div>
     <div class="total van-hairline--top-bottom">
       {{$t('records.summary')}}<span>￥{{order.amount}}</span>
     </div>
@@ -20,8 +20,8 @@
       <van-cell-group>
         <van-cell>
           <div class="ops">
-            <van-button class="cancel" type="default" size="small" @click.native="cancelOrder">{{$t('records.cancel')}}</van-button>
-            <van-button class="confirm" type="default" size="small" @click.native="confirmOrder">{{$t('records.confirm')}}</van-button>
+            <van-button class="cancel" type="default" size="small" @click.native="onclickCancel">{{$t('records.cancel')}}</van-button>
+            <van-button class="confirm" type="default" size="small" @click.native="onclickConfirm">{{$t('records.confirm')}}</van-button>
           </div>
         </van-cell>
       </van-cell-group>
@@ -34,6 +34,7 @@ import { Cell, CellGroup, Row, Col, Button, Toast } from 'vant';
 import product from '@/components/good';
 import banner from '@/components/banner';
 import { status } from '@/utils/consts';
+import { toast } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/oneorder');
 export default {
@@ -41,7 +42,8 @@ export default {
     return {
       // status: '交易关闭',
       orderId: 'E12932908409823098340',
-      status
+      status,
+      toast
     };
   },
   props: {
@@ -73,34 +75,30 @@ export default {
         case this.status.CLOSED.key:
           return this.status.CLOSED.status;
       }
-    }
+    },
+    recordsCount() {
+      return this.order.details.length > 0 ? this.$t('records.showGoods', this.order.details.length) : '';
+    },
   },
   methods: {
-    showmore() {
-      this.$router.push({name: 'orderdetail', params: {detail: this.order}});
+    showRecord() {
+      this.$router.push({name: 'record', params: {detail: this.order}});
     },
-    cancelOrder() {
+    onclickCancel() {
       const param = {entityId: this.order.id, status: this.status.CLOSED.key};
       this.$store.dispatch('alterStatus', param).then((resp) => {
         if (resp) {
           this.$router.push({name: 'order'});
         } else {
-          this.__showAndToast($t('records.tips1'));
+          this.toast(this.$t('records.tips1'));
         }
       }).catch(error => {
-        this.__showAndToast($t('records.tips1'));
+        this.toast(this.$t('records.tips1'));
       });
     },
-    confirmOrder() {
+    onclickConfirm() {
       this.$store.dispatch('setcartsgoods',this.order.details).then(() => {
         this.$router.push({name: 'payment', params: {deliverType: this.order.deliverType}});
-      });
-    },
-    __showAndToast(context) {
-      Toast({
-        message: context,
-        forbidClick: true,
-        duration: 1000
       });
     }
   }

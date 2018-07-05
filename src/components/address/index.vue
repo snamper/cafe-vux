@@ -22,6 +22,11 @@
 import { Icon } from 'vant';
 import { isObjEmpty } from '@/utils/utils';
 export default {
+  data() {
+    return {
+      addContact: this.$t('addressCard.addContact')
+    }
+  },
   components: {
     [Icon.name]: Icon
   },
@@ -32,7 +37,7 @@ export default {
     },
     addText: {
       type: String,
-      default: $t('addressCard.addContact')
+      default: this.addContact
     },
     editable: {
       type: Boolean,
