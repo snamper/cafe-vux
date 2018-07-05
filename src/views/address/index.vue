@@ -1,78 +1,116 @@
 <template>
   <div class="address">
-    <div>
-      <van-nav-bar
-        :title="$t('address.myaddress')"
-        left-arrow
-        :right-text="$t('address.finish')"
-        @click-right="jump2PayPage"
-        @click-left="backHistoryPage">
-      </van-nav-bar>
-      <van-address-list
-        v-model="chosenAddressId"
-        :list="list"
-        @add="onAdd"
-        @edit="onEdit">
-      </van-address-list>
-    </div>
-    <edit :address="address"></edit>
-    
+    <van-nav-bar
+      :title="navBarTitle"
+      left-arrow
+      :right-text="rightText"
+      @click-right="jump2PayPage"
+      @click-left="backHistoryPage">
+    </van-nav-bar>
+    <van-address-list v-if="show"
+      v-model="chosenAddressId"
+      :list="list"
+      @add="onAdd"
+      @edit="onEdit">
+    </van-address-list>
+    <van-address-edit v-else
+      :address-info="addressObj"
+      :area-list="areaList"
+      :show-set-default="showsetdefault"
+      show-search-result
+      show-delete
+      @save="onSave"
+      @delete="onDelete">
+    </van-address-edit>
   </div>
 </template>
 
 <script type="text/ecmascript=6">
 // 判断是否是会员，不是会员则只能添加一个地址，且无法保存地址，如果是会员则可以保存多个地址
-import { NavBar, Cell, CellGroup, AddressList, Toast } from 'vant';
-import { mapState, mapGetters } from 'vuex';
+import { NavBar, Cell, CellGroup, AddressList, AddressEdit } from 'vant';
+import { mapState } from 'vuex';
+import areaList from '@/utils/area';
 import { isObjEmpty, isObjNotEmpty } from '@/utils/utils';
-import edit from './edit';
 import Logger from 'chivy';
-const log = new Logger('pages/member/address');
+const log = new Logger('address');
 export default {
   data() {
     return {
-      chosenAddressId: ''
+      show: true,
+      chosenAddressId: '',
+      areaList,
+      edit: false,
+      // 地址列表
+      addresses: [],
+      // 需要修改的地址
+      address: {}
     };
   },
   beforeRouteEnter(to, from, next) {
+    log.info('beforeRouteEnter address page');
     next(vm => {
-      if (isObjEmpty(vm.$store.state.User.uuid) && isObjEmpty(vm.$store.state.User.member)) {
-        vm.$router.push({name: 'menu'});
-      }
-      if(isObjNotEmpty(vm.User.member)){
-        vm.GetAddressList(this.User.member.id);
-      }
-      // vm.GetAddressList(this.User.member.id);
+      vm.$store.dispatch('initUser').then(() => {
+        if (isObjEmpty(vm.$store.state.uuid) && isObjEmpty(vm.$store.state.member)) {
+          // vm.$router.push({name: 'menu'});
+        }
+        if(isObjNotEmpty(vm.$store.state.member)){
+          vm.GetAddressList(vm.$store.state.member.id);
+        }
+        vm.show = true;
+      });
+
     })
   },
   computed: {
     ...mapState([
-      'User',
-      'address',
-      'addresses'
+      'uuid',
+      "member"
     ]),
-    ...mapGetters([
-      'addressList'
-    ]),
-    list() {
-      if (isObjNotEmpty(this.address)) {
-        const list = [];
-        list.push(this.ConvertAddress(this.address));
-        return list;
-      } else if(isObjNotEmpty(this.User.member)) {
-        return this.addressList;
-      }
-    },
     chooseId() {
-      if (isObjNotEmpty(this.address)) {
-        this.chosenAddressId = this.address.memberId;
+      if (this.addresses.length === 1) {
+        this.chosenAddressId = this.addresses[0].id;
       } else {
-        this.addresses.forEach(address => {
-          if (address.defaultEntity) {
+        this.addressed.forEach(address => {
+          if(address.defaultEntity) {
             this.chosenAddressId = address.id;
           }
         });
       }
+    },
+    rightText() {
+      return this.edit ? '' : this.$t('address.finish');
+    },
+    // 是否显示默认地址
+    showsetdefault() {
+      return isObjNotEmpty(this.uuid) ? false : true;
+    },
+    navBarTitle() {
+      return this.show ? this.$t('address.myaddress') : this.edit ? this.$t('address.editAddress') : this.$t('address.addAddress');
+    },
+    addressObj() {
+      return isObjEmpty(this.address) ? {}: {
+        id: this.address.id,
+        name: this.address.name,
+        tel: this.address.mobile,
+        province: this.address.province,
+        city: this.address.city,
+        county: this.address.county,
+        address_detail: this.address.address,
+        area_code: this.FindAreaCode(this.address.county),
+        is_default: isObjEmpty(this.defaultEntity) ? false : this.defaultEntity
+      };
+    },
+    list() {
+      const list = [];
+      this.addresses.forEach(address => {
+        list.push({
+          id: address.id,
+          name: address.name,
+          tel: address.mobile,
+          address: address.province + address.city + address.county + address.address
+        });
+      });
+      return list;
     }
   },
   components: {
@@ -80,48 +118,72 @@ export default {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
     [AddressList.name]: AddressList,
-    edit
+    [AddressEdit.name]: AddressEdit
   },
   methods: {
     onAdd() {
-      // 新增收货地址，当address已经存在的情况下，就提示用户不能再次添加地址了
-      if (isObjEmpty(this.address)) {
-        this.$router.push({name: 'addressedit'});
+      // 如果不是会员且已有收获地址，就不显示编辑
+      if (isObjNotEmpty(this.uuid) && this.addresses.length !== 0) {
         return;
       }
-      Toast.fail($t('address.tips'));
+      // 显示编辑页面
+      this.show = false;
     },
     onEdit(item, index) {
-      //TODO 区分游客还是会员，游客同样可以修改地址
-      this.$router.push({name: 'addressedit', params: {address: this.addresses[index]}});
+      this.show = false;
+      this.address = this.addresses[index];
+    },
+    // 编辑页面中的保存
+    onSave() {
+      log.info('onSave');
+    },
+    onDelete() {
+      log.info('onDelete');
     },
     jump2PayPage() {
-      const param = this.addresses.length !== 0 ? this.SelectedAddress(this.addresses, this.chosenAddressId) : this.address;
-      this.$router.push({name: 'pay', params: {address: param}});
+      /* const param = this.addresses.length !== 0 ? this.SelectedAddress(this.addresses, this.chosenAddressId) : this.address;
+      this.$router.push({name: 'pay', params: {address: param}}); */
     },
     backHistoryPage() {
-      this.$router.push({name: 'pay'});
-    },
-    SelectedAddress(addresses, id) {
-      addresses.forEach(address => {
-        if (id === address.id) {
-          return address;
-        }
-      });
+      // 如果是添加或者修改地址，则返回前面
+      if (this.navBarTitle === this.$t('address.editAddress') || this.navBarTitle === this.$t('address.addAddress')) {
+        this.show = true;
+      }
+      // this.$router.push({name: 'order'});
     },
     ConvertAddress(address) {
       return {
-        id: address.memberId,
+        id: address.id,
         name: address.name,
         tel: address.mobile,
         address: address.province + address.city + address.county + address.address
       };
     },
     GetAddressList(id) {
+      this.addresses = [];
       const param = {
         entityId: id
       }
-      this.$store.dispatch('getAddress', param);
+      this.$store.dispatch('getAddress', param).then(resp => {
+        resp.forEach(address => {
+          this.addresses.push(address);
+        });
+        log.info('this.addressed is ' + JSON.stringify(this.addresses));
+      });
+    },
+    ClearAddress() {
+      this.address = {};
+    },
+    // 根据地址来查询code
+    FindAreaCode(address) {
+      let code = '';
+      Object.keys(this.areaList.county_list).forEach(key => {
+        if (this.areaList.county_list[key] === address) {
+          code = key;
+          return;
+        }
+      });
+      return code;
     }
   }
 };

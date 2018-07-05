@@ -27,8 +27,8 @@
             <div>{{$t('order.memberDiscount')}}</div>
             <div v-if="delivertype === columns[1]">{{$t('order.deliveryPrice')}}</div>
           </template>
-          <div>￥{{totalCarts.normal}}</div>
-          <div>￥{{totalCarts.normal - totalCarts.member}}</div>
+          <div>￥{{price.normal}}</div>
+          <div>￥{{price.normal - price.member}}</div>
           <div v-if="delivertype === columns[1]">￥{{deliverPrice}}</div>
         </van-cell>
       </van-cell-group>
@@ -36,7 +36,7 @@
     <div class="submit">
       <van-submit-bar
         :button-text="$t('order.submitOrder')"
-        :price="price"
+        :price="totalPrice"
         :disabled="address === null ? true : false"
         @submit="onSubmit">
       </van-submit-bar>
@@ -72,8 +72,6 @@ export default {
     };
   },
   beforeRouteEnter(from, to, next){
-    log.debug('to path is ' + to.path);
-    log.debug('from path is ' + from.path);
     next(vm => {
       if (vm.$store.state.carts.length === 0) {
         vm.$router.push({name: 'cart'});
@@ -103,17 +101,23 @@ export default {
       'carts',
       'deliverPrice'
     ]),
-    ...mapGetters([
-      'totalCarts'
-    ]),
+    price() {
+      let price = 0;
+      let member = 0;
+      this.carts.forEach(food => {
+        price += food.price * food.count;
+        member += food.memberPrice ? food.memberPrice : 0 * food.count;
+      });
+      return {normal: price, member: member};
+    },
     value() {
-      return '￥' + this.totalCarts.normal;
+      return '￥' + this.price.normal;
     },
     type() {
       isObjEmpty(this.address) ? 'add' : 'edit';
     },
-    price() {
-      return this.delivertype === this.columns[0] ? this.totalCarts.normal * 100 : (this.totalCarts.normal + this.deliverPrice) * 100;
+    totalPrice() {
+      return this.delivertype === this.columns[0] ? this.price.normal * 100 : (this.price.normal + this.deliverPrice) * 100;
     },
     deliverType() {
       return this.delivertype === this.columns[0] ? false : true;
@@ -124,18 +128,17 @@ export default {
       this.$router.push({name: 'cart'});
     },
     addaddress() {
-      log.debug('jump page to address');
+      log.info('jump page to address');
       this.$router.push({name: 'address'});
     },
     onSubmit() {
-      log.debug('onsubmit');
+      log.info('onsubmit');
       this.$router.push({name: 'payment', params: {deliverType: this.deliverType, address: this.address}});
     },
     select() {
       this.action = true;
     },
     confirm(value) {
-      log.debug(JSON.stringify(value));
       this.delivertype = value;
       this.action = false;
     },

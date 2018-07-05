@@ -102,7 +102,7 @@ export default {
     log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
-      if (from.path !== '/order') {
+      if (from.path !== '/records') {
         vm.$router.push({name: 'member'});
       }
     });

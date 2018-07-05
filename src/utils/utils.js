@@ -41,18 +41,6 @@ export const sex = sex => {
       return gender.FeMale.key;
   }
 };
-// 根据省市区查找ID
-export const findAreaCode = name => {
-  const area = require('./area');
-  let code = '';
-  Object.keys(area.default.county_list).forEach(key => {
-    if (area.default.county_list[key] === name) {
-      code = key;
-      return;
-    }
-  });
-  return code;
-};
 
 export const toast = (message, forbidClick = 'false', type = 'text', position = 'middle', mask = 'false', loadingType = 'circular', duration = 1000) => {
   Toast({

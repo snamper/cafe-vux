@@ -3,7 +3,7 @@
     <div class="cart" v-if="selectFoods.length !== 0">
       <div class="banner">
         <van-checkbox class="title" v-model="checked" @change="onClickSelectAllCheckbox">{{$t('cart.shopName')}}</van-checkbox>
-        <span @click="onClickModifySwitch">{{editTitle}}</span>
+        <span @click="onClickModifySwitch">{{editText}}</span>
       </div>
       <van-checkbox-group v-model="result">
         <div class="order" v-for="(product, index) in selectFoods" :key="index">
@@ -12,11 +12,11 @@
       </van-checkbox-group>
       <div class="submit">
         <van-submit-bar
-          :button-text="submittitle"
+          :button-text="opsText"
           :disabled="disable"
-          :price="totalAttr.normal*100"
+          :price="price"
           @submit="onSubmit">
-          <van-checkbox class="checkbox" v-model="checked" @change="selectAllCheckbox">{{$t('cart.selectAll')}}</van-checkbox>
+          <van-checkbox class="checkbox" v-model="checked" @change="onClickSelectAllCheckbox">{{$t('cart.selectAll')}}</van-checkbox>
         </van-submit-bar>
       </div>
     </div>
@@ -61,16 +61,23 @@ export default {
   computed: {
     ...mapGetters([
       'selectFoods',
-      'totalAttr',
     ]),
-    submittitle() {
-      return this.edit ? $t('cart.delete') : $t('cart.pay');
+    // 普通价格
+    price() {
+      let price = 0;
+      this.selectFoods.forEach(food => {
+        price += food.price * food.count;
+      })
+      return price * 100;
     },
-    editTitle() {
-      return this.edit ? $t('cart.finish') : $t('cart.edit');
+    opsText() {
+      return this.edit ? this.$t('cart.delete') : this.$t('cart.pay');
+    },
+    editText() {
+      return this.edit ? this.$t('cart.finish') : this.$t('cart.edit');
     },
     disable() {
-      return this.result.length === 0 && this.submittitle === $t('cart.count') ? true : false;
+      return this.result.length === 0 && this.opsText === this.$t('cart.count') ? true : false;
     },
     ischecked() {
       return this.result.length === this.selectFoods.length ? true : false;
@@ -88,7 +95,7 @@ export default {
         // 结算
         const goods = this.SelectedFoods();
         this.$store.dispatch('setcartsgoods', goods).then(() => {
-          this.$router.push({name: 'pay'});
+          this.$router.push({name: 'order'});
         });
       }
     },
@@ -128,7 +135,7 @@ export default {
   width 100%
   .cart
     .banner
-      background-color rgb(244, 244, 244)
+      // bgcolor()
       height 40px
       display flex
       .title

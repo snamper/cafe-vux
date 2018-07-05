@@ -3,7 +3,7 @@
     <div class="van-contact-card__content">
       <template v-if="type === 'add'">
         <van-icon class="van-contact-card__icon" name="add2" />
-        <div class="van-contact-card__text">{{addText}}</div>
+        <div class="van-contact-card__text">{{title}}</div>
       </template>
       <template v-else-if="type === 'edit'">
         <van-icon class="van-contact-card__icon" name="contact" />
@@ -20,11 +20,10 @@
 
 <script type="text/ecmascript=6">
 import { Icon } from 'vant';
-import { isObjEmpty } from '@/utils/utils';
+import { isObjEmpty, isObjNotEmpty } from '@/utils/utils';
 export default {
   data() {
     return {
-      addContact: this.$t('addressCard.addContact')
     }
   },
   components: {
@@ -36,8 +35,7 @@ export default {
       default: null
     },
     addText: {
-      type: String,
-      default: this.addContact
+      type: String
     },
     editable: {
       type: Boolean,
@@ -45,6 +43,9 @@ export default {
     }
   },
   computed: {
+    title() {
+      return isObjNotEmpty(this.addText) ? this.addText : this.$t('addressCard.addContact');
+    },
     type() {
       return isObjEmpty(this.address) ? 'add': 'edit';
     },

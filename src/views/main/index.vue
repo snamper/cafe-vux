@@ -78,5 +78,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import '../../styles/mixin.styl'
 .main
+  height 100%
   bgcolor()
 </style>

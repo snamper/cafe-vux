@@ -1,4 +1,5 @@
 import { setMember, setUuid } from '@/utils/storage';
+import Vue from 'vue';
 export default {
   update(state, payload) {
     switch (payload.type) {
@@ -37,6 +38,52 @@ export default {
   },
   updateLoadingStatus(state, payload) {
     state.isLoading = payload.isLoading;
-  }
+  },
+    // 添加
+    addCount(state, payload) {
+      state.goods.forEach((category) => {
+        category.list.forEach((good) => {
+          if (payload.good === good) {
+            if (!good.count) {
+              Vue.set(good, 'count', payload.count);
+            } else {
+              good.count += payload.count;
+            }
+          }
+        });
+      });
+    },
+    subCount(state, payload) {
+      state.goods.forEach((category) => {
+        category.list.forEach((good) => {
+          if (payload.good === good) {
+            if (payload.good.count === 0) {
+              good.count = 0;
+            } else if (good.count - payload.good.count >= 0) {
+              good.count = good.count - payload.good.count;
+            } else {
+              good.count = 0;
+            }
+          }
+        });
+      });
+    },
+    setCount(state, payload) {
+      state.goods.forEach((category) => {
+        category.list.forEach((good) => {
+          if (payload.good === good) {
+            good.count = payload.count;
+            return;
+          }
+        });
+      });
+    },
+    clearCarts(state, payload) {
+      state.goods.forEach(category => {
+        category.list.forEach(good => {
+          good.count = 0;
+        });
+      });
+    }
 };
 

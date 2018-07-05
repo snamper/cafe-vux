@@ -71,9 +71,7 @@ export default {
   address: {
     myaddress: '我的地址',
     finish: '完成',
-    tips: '游客只能添加一个地址'
-  },
-  edit: {
+    tips: '游客只能添加一个地址',
     addAddress: '添加地址',
     editAddress: '修改地址'
   },

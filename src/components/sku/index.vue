@@ -63,13 +63,14 @@ export default {
     onBuyClicked(data) {
       log.debug('onBuyClicked' + JSON.stringify(data));
       this.Add2Cart(data).then(() => {
-        this.$router.push({name: 'pay'});
+        this.$router.push({name: 'order'});
       });
     },
     onAddCartClicked(data) {
       log.debug('add carts');
       this.Add2Cart(data).then(() => {
-        this.toast($t('sku.success'))
+        this.show = false;
+        this.toast(this.$t('sku.success'));
       });
     },
     // 显示sku页面

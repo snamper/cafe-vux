@@ -29,28 +29,27 @@ export default {
     });
   },
   saveAddress(context, payload) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       ajax(url.saveAddresses, payload).then(data => {
         resolve();
       });
     });
   },
   getAddress(context, payload) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       ajax(url.getAddresses, payload).then(data => {
-        context.commit('update', {type: 'addresses', value: data});
-        resolve();
+        resolve(data);
       });
     });
   },
   setcartsgoods(context, payload) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       context.commit('update', {type: 'carts', value: payload});
       resolve();
     });
   },
   alterStatus(context, payload) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       ajax(url.alterStatus, payload).then(resp => {
         resolve(resp.status);
       });
