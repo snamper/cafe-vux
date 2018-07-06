@@ -23,8 +23,8 @@ export const routerMap = [
         meta: {keepAlive: true }
       },
       {
-        name: 'active',
-        path: 'active',
+        name: 'activity',
+        path: 'activity',
         component: () => import('@/views/main/activity/index').then(m => m.default),
         meta: {
           keepAlive: true

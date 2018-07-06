@@ -53,3 +53,12 @@ export const toast = (message, forbidClick = 'false', type = 'text', position = 
     duration
   });
 };
+
+export const convertAddress = addr => {
+  return {
+    id: addr.id,
+    name: addr.name,
+    tel: addr.mobile,
+    address: addr.province + addr.city + addr.county + (isObjNotEmpty(addr.address) ? addr.address : addr.address_detail)
+  };
+};

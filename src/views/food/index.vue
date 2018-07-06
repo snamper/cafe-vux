@@ -99,11 +99,7 @@ export default {
       return result;
     },
     back() {
-      if(this.url) {
-        this.$router.push({name: 'menu'});
-      } else {
-        this.$router.push({name: 'activity'});
-      }
+      isObjEmpty(this.url) ? this.$router.push({name : 'menu'}) : this.$router.push({path: this.to});
     },
     add2cart() {
       this.$refs.sku.NextOrConfirmShow(this.good, false);

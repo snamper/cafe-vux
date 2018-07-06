@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     jump2FoodPage(product) {
-      this.$router.push({name: 'good', params: {good: product}});
+      this.$router.push({name: 'food', params: {good: product}});
     }
   }
 };

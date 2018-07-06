@@ -137,7 +137,8 @@ export default {
   },
   pay: {
     selectPayType: '请选择支付方式',
-    totalPrice: totalPrice => `确认支付￥${totalPrice}元`,
+    totalPrice: '确认支付￥$',
+    unit: '元',
     alipay: '支付宝',
     wechat: '微信支付',
     balance: '余额支付',
@@ -159,8 +160,8 @@ export default {
     amount: '商品金额',
     deliveryPrice: '运费',
     payAmount: '应付金额',
-    orderId: id => `订单编号: ${id}`,
-    createTime: time => `创建时间: ${time}`,
+    orderId: '订单编号: ',
+    createTime: '创建时间: ',
     cancelOrder: '取消订单',
     confirmOrder: '确认付款',
     timeout: '超时关闭',
@@ -176,6 +177,8 @@ export default {
     finish: '已完成',
     orderId: '订单编号:',
     showGoods: length => `查看全部${length}件商品`,
+    showGoods1: '查看全部',
+    showGoods2: '件商品',
     summary: '合计:',
     cancel: '取消订单',
     confirm: '确认付款',
@@ -188,13 +191,13 @@ export default {
     confirm: '确定'
   },
   addressCard: {
-    cotact: name => `收货人：${name}`,
-    tel: tel => `联系电话：${tel}`,
-    address: address => `配送地址：${address}`,
+    cotact: '收货人：',
+    tel: '联系电话：',
+    address: '配送地址：',
     addContact: '添加订单联系人信息'
   },
   namePrice: {
-    memberPrice: price => `会员价:￥${price}`
+    memberPrice: '会员价:￥'
   },
   good: {
     delete: '删除'

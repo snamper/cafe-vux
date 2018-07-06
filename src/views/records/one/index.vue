@@ -77,8 +77,8 @@ export default {
       }
     },
     recordsCount() {
-      return this.order.details.length > 0 ? this.$t('records.showGoods', this.order.details.length) : '';
-    },
+      return this.order.details.length > 0 ? this.$t('records.showGoods1') + this.order.details.length + this.$t('records.showGoods2') : '';
+    }
   },
   methods: {
     showRecord() {

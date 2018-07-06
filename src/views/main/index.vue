@@ -6,7 +6,7 @@
     <router-view v-if="!$route.meta.keepAlive"></router-view>
     <van-tabbar v-model="active" @change="change">
       <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('main.menu')}}</van-tabbar-item>
-      <van-tabbar-item icon="like-o" :to="{name: 'active'}">{{$t('main.active')}}</van-tabbar-item>
+      <van-tabbar-item icon="like-o" :to="{name: 'activity'}">{{$t('main.active')}}</van-tabbar-item>
       <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="count">{{$t('main.cart')}}</van-tabbar-item>
       <van-tabbar-item icon="contact" :to="{name: 'member'}">{{$t('main.member')}}</van-tabbar-item>
     </van-tabbar>

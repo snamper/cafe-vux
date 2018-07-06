@@ -8,9 +8,9 @@
       <template v-else-if="type === 'edit'">
         <van-icon class="van-contact-card__icon" name="contact" />
         <div class="van-contact-card__text">
-          <div>{{$t('addressCard.cotact', address.name)}}</div>
-          <div>{{$t('addressCard.tel', address.mobile)}}</div>
-          <div>{{$t('addressCard.address', address.detail)}}</div>
+          <div>{{$t('addressCard.cotact')}}{{address.name}}</div>
+          <div>{{$t('addressCard.tel')}}{{ address.tel}}</div>
+          <div>{{$t('addressCard.address')}}{{address.address}}</div>
         </div>
       </template>
     </div>

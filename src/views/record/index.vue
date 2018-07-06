@@ -52,8 +52,8 @@
       <van-cell-group>
         <van-cell>
           <template slot="title">
-            <div class="order">{{$t('record.orderId', detail.id)}}</div>
-            <div class="order">{{$t('record.createTime', detail.createTimeAsString)}}</div>
+            <div class="order">{{$t('record.orderId')}}{{detail.id}}</div>
+            <div class="order">{{$t('record.createTime')}}{{detail.createTimeAsString}}</div>
           </template>
         </van-cell>
       </van-cell-group>

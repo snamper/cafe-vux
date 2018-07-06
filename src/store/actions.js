@@ -31,7 +31,14 @@ export default {
   saveAddress(context, payload) {
     return new Promise(resolve => {
       ajax(url.saveAddresses, payload).then(data => {
-        resolve();
+        resolve(data.success);
+      });
+    });
+  },
+  deleteAddress(context, payload) {
+    return new Promise(resolve => {
+      ajax(url.deleteAddresses, payload).then(data => {
+        resolve(data.success);
       });
     });
   },

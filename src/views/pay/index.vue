@@ -43,7 +43,7 @@
       </van-cell-group>
     </van-radio-group>
     <div class="confirm">
-      <van-button type="primary" @click.native="payit">{{$t('pay.totalPrice', totalPrice)}}</van-button>
+      <van-button type="primary" @click.native="payit">{{$t('pay.totalPrice')}}{{totalPrice}}{{$t('pay.unit')}}</van-button>
     </div>
  </div>
 </template>
