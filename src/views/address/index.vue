@@ -43,7 +43,7 @@ export default {
       areaList,
       edit: false,
       //当前地址
-      currentAddress: isObjNotEmpty(this.address) ? this.address: {},
+      currentAddress: isObjNotEmpty(this.address) ? this.address: null,
       // 地址列表
       addresses: []
     };
@@ -106,7 +106,7 @@ export default {
       return this.show ? this.$t('address.myaddress') : this.edit ? this.$t('address.editAddress') : this.$t('address.addAddress');
     },
     addressInfo() {
-      return isObjEmpty(this.currentAddress) ? {}: {
+      return isObjEmpty(this.currentAddress) ? null: {
         id: this.currentAddress.id,
         name: this.currentAddress.name,
         tel: isObjNotEmpty(this.currentAddress.mobile) ? this.currentAddress.mobile : this.currentAddress.tel,
@@ -199,8 +199,10 @@ export default {
     onFinish() {
       // 当前页面为修改页面的时候就返回列表页面
       if (this.show) {
-        this.$router.push({name: 'order', params: {address: this.currentAddress}});
+        log.info('onfinish in list page');
+        this.$router.push({name: 'order', params: {address: isObjEmpty(this.currentAddress) ? null : this.currentAddress}});
       } else {
+        log.info('onfinish in edit page');
         this.ShowListPage();
       }
     },
@@ -223,6 +225,7 @@ export default {
           resp.forEach(address => {
             if (address.defaultEntity) {
               this.chosenAddressId = address.id;
+              this.currentAddress = address;
             }
             this.addresses.push(address);
           });

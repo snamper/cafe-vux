@@ -107,7 +107,7 @@ export default {
       let member = 0;
       this.carts.forEach(food => {
         price += food.price * food.count;
-        member += food.memberPrice ? food.memberPrice : 0 * food.count;
+        member += (food.memberPrice ? food.memberPrice : 0) * food.count;
       });
       return {normal: price, member: member};
     },
@@ -134,7 +134,7 @@ export default {
     },
     onSubmit() {
       log.info('onsubmit');
-      this.$router.push({name: 'payment', params: {deliverType: this.deliverType, address: this.address}});
+      this.$router.push({name: 'pay', params: {deliverType: this.deliverType, address: this.address}});
     },
     select() {
       this.action = true;

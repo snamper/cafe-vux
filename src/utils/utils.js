@@ -55,10 +55,13 @@ export const toast = (message, forbidClick = 'false', type = 'text', position = 
 };
 
 export const convertAddress = addr => {
-  return {
-    id: addr.id,
-    name: addr.name,
-    tel: addr.mobile,
-    address: addr.province + addr.city + addr.county + (isObjNotEmpty(addr.address) ? addr.address : addr.address_detail)
-  };
+  if (isObjNotEmpty(addr)) {
+    return {
+      id: addr.id,
+      name: addr.name,
+      tel: addr.mobile,
+      address: addr.province + addr.city + addr.county + (isObjNotEmpty(addr.address) ? addr.address : addr.address_detail)
+    };
+  }
+  return null;
 };

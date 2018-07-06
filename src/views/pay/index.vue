@@ -29,15 +29,15 @@
             <van-radio :name="wechat.value" />
           </div>
         </van-cell>
-        <van-cell v-if="User.member" clickable @click="choose(member)">
+        <van-cell v-if="balance" clickable @click="choose(balance)">
           <template slot="title">
             <div class="title-wrapper">
-              <avator :url="member.img"></avator>
-              <span class="title">{{member.value}}(￥{{User.member.balance}})</span>
+              <avator :url="balance.img"></avator>
+              <span class="title">{{balance.value}}(￥{{member.balance}})</span>
             </div>
           </template>
           <div class="radio-wrapper">
-            <van-radio :name="member.value" />
+            <van-radio :name="balance.value" />
           </div>
         </van-cell>
       </van-cell-group>
@@ -49,15 +49,16 @@
 </template>
 
 <script>
-import { Button, NavBar, RadioGroup, Radio, CellGroup, Cell, Toast } from 'vant';
-import { mapState, mapGetters } from 'vuex';
+import { Button, NavBar, RadioGroup, Radio, CellGroup, Cell } from 'vant';
+import { mapState } from 'vuex';
 import avator from '@/components/avator';
-import { isObjEmpty } from '@/utils/utils';
+import { isObjEmpty, isObjNotEmpty, toast } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('page/cart/payment');
 export default {
   data () {
     return {
+      toast,
       radio: this.$t('pay.alipay'),
       recordPrice: 0,
       alipay: {
@@ -68,7 +69,7 @@ export default {
         value: this.$t('pay.wechat'),
         img: '../../../static/img/wechat.png'
       },
-      member: {
+      balance: {
         value: this.$t('pay.wechat'),
         img: '../../../static/img/tianicon.jpg'
       },
@@ -112,35 +113,41 @@ export default {
     [Radio.name]: Radio,
     [CellGroup.name]: CellGroup,
     [Cell.name]: Cell,
-    [Toast.name]: Toast,
     avator
   },
   computed: {
     ...mapState([
-      'User',
+      'uuid',
+      'member',
       'carts',
       'deliverPrice'
-    ]),
-    ...mapGetters([
-      'totalCarts'
     ]),
     // 购物总价
     totalPrice() {
       if (this.url) {
         // 非会员价
-        if (!isObjEmpty(this.User.uuid)) {
-          return this.deliverType ? this.totalCarts.normal + this.deliverPrice : this.totalCarts.normal;
+        if (isObjNotEmpty(this.uuid)) {
+          return this.deliverType ? this.price.normal + this.deliverPrice : this.price.normal;
         } else {
-          return this.deliverType ? this.totalCarts.member + this.deliverPrice : this.totalCarts.member;
+          return this.deliverType ? this.price.member + this.deliverPrice : this.price.member;
         }
       } else {
-        return this.totalCarts.normal;
+        return this.price.normal;
       }
+    },
+    price() {
+      let price = 0;
+      let member = 0;
+      this.carts.forEach(food => {
+        price += food.price * food.count;
+        member += (food.memberPrice ? food.memberPrice : 0) * food.count;
+      });
+      return {normal: price, member: member};
     },
     // 会员余额
     balance() {
-      if (this.User.member !== null) {
-        return this.User.member.balance;
+      if (isObjNotEmpty(this.member)) {
+        return this.balance.balance;
       }
     },
     // 计算具体的商品
@@ -170,17 +177,17 @@ export default {
     order() {
       const result = {
         amount: this.totalPrice,
-        userId: !isObjEmpty(this.User.member) ? this.User.member.id : '',
-        userCode: !isObjEmpty(this.User.uuid) ? this.User.uuid : '',
-        cashOrBalance: !isObjEmpty(this.User.member) && this.totalPrice <= this.User.member.balance && this.radio === this.member.value ? 'BALANCE' : 'CASH',
+        userId: isObjNotEmpty(this.member) ? this.member.id : '',
+        userCode: isObjNotEmpty(this.uuid) ? this.uuid : '',
+        cashOrBalance: isObjNotEmpty(this.balance) && this.totalPrice <= this.balance.balance && this.radio === this.balance.value ? 'BALANCE' : 'CASH',
         details: this.details
       };
       return result;
     },
     url() {
-      if (this.to === '/pay') {
+      if (this.to === '/order') {
         return true;
-      } else if (this.to === '/order' || this.to === '/orderdetail') {
+      } else if (this.to === '/records' || this.to === '/record') {
         return false;
       } else {
         return null;
@@ -191,7 +198,7 @@ export default {
     choose(data) {
       this.radio = data.value;
     },
-    __payurl(type, value, order) {
+    getPayURL(type, value, order) {
       switch (type) {
         case this.wechat.value:
           return '/shop/member/pay/wechat/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + order;
@@ -199,27 +206,18 @@ export default {
           return '/shop/member/pay/alipay/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + order;
       }
     },
-    __toast(context) {
-      Toast({
-        message: context,
-        forbidClick: true,
-        duration: 1000
-      });
-    },
     back() {
       if (this.url) {
-        this.$router.push({name: 'pay', params: {address: this.address}});
+        log.info('jump to order');
+        this.$router.push({name: 'order', params: {address: this.address}});
       } else {
-        this.$router.push({name: 'order'});
+        log.info('jump to records');
+        this.$router.push({name: 'records'});
       }
     },
     payit() {
-      // let _this = this;
-      // 提交付款 url.buyGoods
-      // 付款成功后提示
-      // 清空购物车
-      if (this.radio === this.member.value && this.User.member.balance < this.totalPrice) {
-        this.__toast(this.$t('pay.tips1'));
+      if (this.radio === this.balance.value && this.balance.balance < this.totalPrice) {
+        this.toast(this.$t('pay.tips1'));
         return;
       }
       switch (this.radio) {
@@ -229,15 +227,15 @@ export default {
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
               log.warn('alipay new');
-              this.__toast(this.$t('pay.tips2'));
+              this.toast(this.$t('pay.tips2'));
               this.$router.push({name: 'member'});
-              // window.location.href = this.__payurl('alipay', this.totalPrice, resp);
+              // window.location.href = this.getPayURL('alipay', this.totalPrice, resp);
             });
           } else {
             log.warn('alipay old');
-            this.__toast(this.$t('pay.tips2'));
+            this.toast(this.$t('pay.tips2'));
             this.$router.push({name: 'member'});
-            // window.location.href = this.__payurl('alipay', this.totalPrice, orderid);
+            // window.location.href = this.getPayURL('alipay', this.totalPrice, orderid);
           }
           break;
         case this.wechat.value:
@@ -246,23 +244,23 @@ export default {
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
               log.warn('wechat new');
-              this.__toast(this.$t('pay.tips2'));
+              this.toast(this.$t('pay.tips2'));
               this.$router.push({name: 'member'});
-              // window.location.href = this.__payurl('wechat', this.totalPrice, resp);
+              // window.location.href = this.getPayURL('wechat', this.totalPrice, resp);
             });
           } else {
             log.warn('wechat old');
-            this.__toast(this.$t('pay.tips2'));
+            this.toast(this.$t('pay.tips2'));
             this.$router.push({name: 'member'});
-            // window.location.href = this.__payurl('wechat', this.totalPrice, orderid);
+            // window.location.href = this.getPayURL('wechat', this.totalPrice, orderid);
           }
           break;
         case this.member.value:
           log.info('member pay');
           // TODO 需要判断是第一次提交订单还是已有订单付款
           this.$store.dispatch('submitRecord', this.order).then(resp => {
-            if (resp !== null) {
-              this.__toast(this.$t('pay.tips3'));
+            if (isObjNotEmpty(resp)) {
+              this.toast(this.$t('pay.tips2'));
               this.$router.push({name: 'records'});
             }
           });
