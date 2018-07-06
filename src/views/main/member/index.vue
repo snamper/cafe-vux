@@ -61,12 +61,13 @@ import { mapState, mapGetters } from 'vuex';
 import round from './round';
 import avator from '@/components/avator';
 import { status } from  '@/utils/consts.js';
-import { isObjEmpty, isObjNotEmpty } from '@/utils/utils';
+import { isObjEmpty, isObjNotEmpty, getUsername } from '@/utils/utils';
 import Logger from 'chivy';
 const log = new Logger('member');
 export default {
   data() {
     return {
+      getUsername,
       url: '../../../../static/img/avator.jpg',
       status
     };
@@ -107,20 +108,7 @@ export default {
       }
     },
     username() {
-      // debugger
-      if (isObjNotEmpty(this.uuid)) {
-        return this.$t('member.vistor');
-      } else if (isObjNotEmpty(this.member)) {
-        if (isObjNotEmpty(this.member.nick)) {
-          return this.member.nick;
-        } else if (isObjNotEmpty(this.member.name)) {
-          return this.member.name;
-        } else if (isObjNotEmpty(this.member.phone)) {
-          return this.member.phone;
-        } else if (isObjNotEmpty(this.member.email)) {
-          return this.member.email;
-        }
-      }
+      return getUsername(this.uuid, this.member, this.$t('member.vistor'));
     },
   },
   methods: {

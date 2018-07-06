@@ -100,13 +100,14 @@
 import { Field, NavBar, CellGroup, DatetimePicker, Picker, Area, Actionsheet, Button, Toast } from 'vant';
 import { mapState } from 'vuex';
 import AreaList from '@/utils/area.js';
-import { regexmatch, formatDate, isObjEmpty } from '@/utils/utils.js';
+import { regexMatch, formatDate, isObjEmpty, toast } from '@/utils/utils.js';
 import { regex } from '@/utils/consts.js';
 import Logger from 'chivy';
 const log = new Logger('vuex/member/info');
 export default {
   data() {
     return {
+      toast,
       show: {
         birthday: false,
         sex: false,
@@ -114,7 +115,7 @@ export default {
         action: false
       },
       areaList: AreaList,
-      sexcolumns: [$t('modify.select'), $t('modify.male'), $t('modify.female')],
+      sexcolumns: [this.$t('modify.select'), this.$t('modify.male'), this.$t('modify.female')],
       currentDate: new Date(),
       minDate: new Date(1900, 1, 1),
       mobile: {
@@ -155,10 +156,8 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    log.debug('to path is ' + to.path);
-    log.debug('from path is ' + from.path);
     next(vm => {
-      if (from.path !== '/card' || isObjEmpty(vm.User.member)) {
+      if (from.path !== '/card' || isObjEmpty(vm.$store.state.member)) {
         vm.$router.push({name: 'member'});
       }
     });
@@ -175,7 +174,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'User'
+      'uuid',
+      'member'
     ])
   },
   methods: {
@@ -213,19 +213,16 @@ export default {
     },
     dateConfirm(value) {
       const date = formatDate(value);
-      log.debug(JSON.stringify(date));
       this.birthday.content = date.Year + '-' + date.Month + '-' + date.Day;
       this.close();
     },
     pickerConfirm(data) {
-      log.debug(JSON.stringify(data));
       if (data !== this.sexcolumns[0]) {
         this.sex.content = data;
       }
       this.close();
     },
     areaConfirm(data) {
-      log.debug(JSON.stringify(data));
       if(data[0].code !== '-1' && data[1].code !== '-1' && data[2].code !== '-1') {
         this.area.content = data[0].name + data[1].name + data[2].name;
       }
@@ -234,16 +231,16 @@ export default {
     save() {
       const error = this.name.error || this.birthday.error || this.mobile.error || isObjEmpty(this.name.content) || isObjEmpty(this.birthday.content) || isObjEmpty (this.mobile.content);
       if (error) {
-        this.__toast($t('modify.tips1'));
+        this.toast(this.$t('modify.tips1'));
       } else {
         // 查重
         this.$store.dispatch('duplicate', {name: this.mobile.content}).then(resp => {
           if (resp) {
-            this.__toast($t('modify.tips2'));
+            this.toast(this.$t('modify.tips2'));
             this.mobile.content = '';
           } else {
             const param = {
-              userId: this.User.member.id,
+              userId: this.member.id,
               name: this.name.content,
               mobile: this.mobile.content,
               gender: isObjEmpty(this.sex.content) ? this.sex.content : null,
@@ -253,10 +250,10 @@ export default {
             }
             this.$store.dispatch('modifyInfo', param).then(resp => {
               if (resp) {
-                this.__toast($t('modify.tips3'), 'success');
+                this.toast(this.$t('modify.tips3'), 'success');
                 //TODO 需要更新state中的内容
               } else {
-                this.__toast($t('modify.tips4'), 'fail');
+                this.toast(this.$t('modify.tips4'), 'fail');
               }
             });
           }
@@ -268,39 +265,31 @@ export default {
       // debugger
       switch(data.key) {
         case this.name.key:
-          error = isObjEmpty(this.name.content) || !regexmatch(data.content, regex.chineseName) ;
+          error = isObjEmpty(this.name.content) || !regexMatch(data.content, regex.chineseName) ;
           if (error) {
-            this.__toast($t('modify.tips5'));
+            this.toast(this.$t('modify.tips5'));
           }
           break;
         case this.birthday.key:
           error = isObjEmpty(this.birthday.content);
           if(error) {
-            this.__toast($t('modify.tips6'));
+            this.toast(this.$t('modify.tips6'));
           }
           break;
         case this.mobile.key:
-          error = isObjEmpty(this.mobile.content) || !regexmatch(data.content, regex.mobile);
+          error = isObjEmpty(this.mobile.content) || !regexMatch(data.content, regex.mobile);
           if(error) {
-            this.__toast($t('modify.tips7'));
+            this.toast(this.$t('modify.tips7'));
           }
           break;
         case this.email.key:
-          error = isObjEmpty(this.email.content) || !regexmatch(data.content, regex.email);
+          error = isObjEmpty(this.email.content) || !regexMatch(data.content, regex.email);
           if(error) {
-            this.__toast($t('modify.tips8'));
+            this.toast(this.$t('modify.tips8'));
           }
       }
       data.error = error;
-    },
-    __toast() {
-      Toast({
-        message: arguments[0],
-        forbidClick: true,
-        duration: 1000,
-        type: arguments[1] ? arguments[1] : 'text'
-      });
-    },
+    }
   }
 };
 </script>

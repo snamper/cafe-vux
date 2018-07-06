@@ -7,7 +7,7 @@
     <van-tabbar v-model="active" @change="change">
       <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('main.menu')}}</van-tabbar-item>
       <van-tabbar-item icon="like-o" :to="{name: 'activity'}">{{$t('main.active')}}</van-tabbar-item>
-      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="count">{{$t('main.cart')}}</van-tabbar-item>
+      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info === 0 ? '' : info">{{$t('main.cart')}}</van-tabbar-item>
       <van-tabbar-item icon="contact" :to="{name: 'member'}">{{$t('main.member')}}</van-tabbar-item>
     </van-tabbar>
   </div>
@@ -15,15 +15,15 @@
 
 <script type="text/ecmascript=6">
 import { Tabbar, TabbarItem } from 'vant';
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import { isObjNotEmpty } from '@/utils/utils';
-
 import Logger from 'chivy';
 const log = new Logger('main');
 export default {
   data() {
     return {
-      active: 0
+      active: 0,
+      isObjNotEmpty
     }
   },
   components: {
@@ -37,15 +37,9 @@ export default {
     });
   },
   computed: {
-    ...mapState([
-      'info'
-    ]),
     ...mapGetters([
-      'selectFoods'
-    ]),
-    count() {
-      return isObjNotEmpty(this.info) ? '' : this.info;
-    }
+      'info'
+    ])
   },
   methods: {
     change(active) {

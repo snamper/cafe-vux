@@ -65,3 +65,19 @@ export const convertAddress = addr => {
   }
   return null;
 };
+
+export const getUsername = (uuid, member, vistor) => {
+  if (isObjNotEmpty(uuid)) {
+    return vistor;
+  } else if (isObjNotEmpty(member)) {
+    if (isObjNotEmpty(member.nick)) {
+      return member.nick;
+    } else if (isObjNotEmpty(member.name)) {
+      return member.name;
+    } else if (isObjNotEmpty(member.phone)) {
+      return member.phone;
+    } else if (isObjNotEmpty(member.email)) {
+      return member.email;
+    }
+  }
+};

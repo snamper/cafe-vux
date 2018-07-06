@@ -61,6 +61,12 @@ export const routerMap = [
     props: true
   },
   {
+    name: 'modify',
+    path: '/modify',
+    component: () => import('@/views/modify/index').then(m => m.default),
+    props: true
+  },
+  {
     name: 'order',
     path: '/order',
     component: () => import('@/views/order/index').then(m => m.default),
