@@ -27,15 +27,18 @@
 <script type="text/ecmascript=6">
 import { GoodsAction, GoodsActionBigBtn, GoodsActionMiniBtn, Swipe, SwipeItem, NavBar } from 'vant';
 import { mapGetters } from 'vuex';
-import { resizeImage, isObjEmpty } from '@/utils/utils.js';
 import nameprice from '@/components/desc/nameprice';
 import sku from '@/components/sku';
 import Logger from 'chivy';
-const log = new Logger('food');
+const log = new Logger('views/food');
 export default {
   data() {
     return {
-      to: ''
+      to: '',
+      isZero: this.$tools.isZero,
+      isEqual: this.$tools.isEqual,
+      resizeImage: this.$tools.resizeImage,
+      isObjEmpty: this.$tools.isEmpty
     }
   },
   components: {
@@ -68,7 +71,7 @@ export default {
       'selectFoods'
     ]),
     info() {
-      if (this.selectFoods.length === 0) {
+      if (isZero(this.selectFoods.length)) {
         return '';
       } else {
         let result = 0;
@@ -79,9 +82,9 @@ export default {
       }
     },
     url() {
-      if (this.to === '/menu') {
+      if (isEqual(this.to, '/menu')) {
         return true;
-      } else if(this.to === '/activity') {
+      } else if (isEqual(this.to, '/activity')) {
         return false;
       } else {
         return null;

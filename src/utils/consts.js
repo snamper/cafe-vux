@@ -1,15 +1,5 @@
-const regex = {
-  // 密码由6-21字母和数字组成
-  password: '^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$',
-  account: '^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$',
-  mobile: '^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$',
-  /* eslint-disable no-useless-escape */
-  email: '^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$',
-  // 中文名
-  chineseName: '[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*'
-};
-
-const status = {
+// 购物车状态
+export const status = {
   NOTPAY: {
     key: 'NOTPAY',
     value: '待付款',
@@ -48,7 +38,3 @@ const status = {
     value: '付款错误'
   }
 };
-
-const deliverPrice = 25;
-
-export { regex, status, deliverPrice };

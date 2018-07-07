@@ -4,7 +4,7 @@
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
-    <van-tabbar v-model="active" @change="change">
+    <van-tabbar v-model="active">
       <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('main.menu')}}</van-tabbar-item>
       <van-tabbar-item icon="like-o" :to="{name: 'activity'}">{{$t('main.active')}}</van-tabbar-item>
       <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info === 0 ? '' : info">{{$t('main.cart')}}</van-tabbar-item>
@@ -16,14 +16,12 @@
 <script type="text/ecmascript=6">
 import { Tabbar, TabbarItem } from 'vant';
 import { mapGetters } from 'vuex';
-import { isObjNotEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('main');
+const log = new Logger('views/main');
 export default {
   data() {
     return {
-      active: 0,
-      isObjNotEmpty
+      active: 0
     }
   },
   components: {
@@ -33,7 +31,7 @@ export default {
   created() {
     log.info('start init UUID');
     this.$store.dispatch('initUser').then(() => {
-      this.__selected();
+      this.Selected();
     });
   },
   computed: {
@@ -42,11 +40,8 @@ export default {
     ])
   },
   methods: {
-    change(active) {
-      log.info('active is ' + active);
-    },
     // 根据路由代码激活当前选中图标
-    __selected() {
+    Selected() {
       switch (this.$route.path) {
         case '/menu':
           this.active = 0;

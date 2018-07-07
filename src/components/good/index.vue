@@ -6,7 +6,7 @@
           <template slot="title">
             <div class="title">
               <van-checkbox class="checkbox" v-if="showcheckbox" :name="good.id"></van-checkbox>
-              <img :src="resizeImage(good.imageUrl, 400)" style="height:100px;width: 100px">
+              <img :src="Resize400(good.imageUrl)" style="height:100px;width: 100px">
               <div class="product">
                 <div class="name" v-if="edit">{{good.name}}</div>
                 <van-stepper
@@ -36,14 +36,12 @@
 
 <script type="text/ecmascript=6">
 import { Checkbox, Icon, Cell, CellGroup, CellSwipe, Stepper } from 'vant';
-import { resizeImage } from '@/utils/utils.js';
 import Logger from 'chivy';
-const log = new Logger('page/menu/productbanner');
+const log = new Logger('components/good');
 export default {
   data() {
     return {
-      value: this.good.count,
-      resizeImage
+      value: this.good.count
     };
   },
   props: {
@@ -77,6 +75,9 @@ export default {
     }
   },
   methods: {
+    Resize400(image) {
+      return this.$tools.resizeImage(image, 400);
+    },
     onClose(clickPosition, instance) {
       switch (clickPosition) {
         case 'right':

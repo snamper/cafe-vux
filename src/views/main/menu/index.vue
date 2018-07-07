@@ -25,7 +25,7 @@ import logo from '@/components/logo';
 import banner from '@/components/banner';
 import product from '@/components/good';
 import Logger from 'chivy';
-const log = new Logger('menu');
+const log = new Logger('views/main/menu');
 export default {
   data() {
     return {

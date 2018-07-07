@@ -52,13 +52,13 @@
 import { Button, NavBar, RadioGroup, Radio, CellGroup, Cell } from 'vant';
 import { mapState } from 'vuex';
 import avator from '@/components/avator';
-import { isObjEmpty, isObjNotEmpty, toast } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('page/cart/payment');
+const log = new Logger('views/pay');
 export default {
   data () {
     return {
-      toast,
+      isObjEmpty: this.$tools.isEmpty,
+      isObjNotEmpty: this.$tools.isNotEmpty,
       radio: this.$t('pay.alipay'),
       recordPrice: 0,
       alipay: {
@@ -83,7 +83,7 @@ export default {
       // 保存这个路由是从那个地方来的
       vm.to = to.path;
       log.debug('records is ' + JSON.stringify(vm.$store.state.carts));
-      if (to.path === '/' || isObjEmpty(vm.$store.state.carts)) {
+      if (to.path === '/' || this.$tools.isEmpty(vm.$store.state.carts)) {
         vm.$router.push({name: 'menu'});
       }
     });
@@ -126,7 +126,7 @@ export default {
     totalPrice() {
       if (this.url) {
         // 非会员价
-        if (isObjNotEmpty(this.uuid)) {
+        if (this.$tools.isNotEmpty(this.uuid)) {
           return this.deliverType ? this.price.normal + this.deliverPrice : this.price.normal;
         } else {
           return this.deliverType ? this.price.member + this.deliverPrice : this.price.member;
@@ -146,7 +146,7 @@ export default {
     },
     // 会员余额
     balance() {
-      if (isObjNotEmpty(this.member)) {
+      if (this.$tools.isNotEmpty(this.member)) {
         return this.balance.balance;
       }
     },
@@ -177,9 +177,9 @@ export default {
     order() {
       const result = {
         amount: this.totalPrice,
-        userId: isObjNotEmpty(this.member) ? this.member.id : '',
-        userCode: isObjNotEmpty(this.uuid) ? this.uuid : '',
-        cashOrBalance: isObjNotEmpty(this.balance) && this.totalPrice <= this.balance.balance && this.radio === this.balance.value ? 'BALANCE' : 'CASH',
+        userId: this.$tools.isNotEmpty(this.member) ? this.member.id : '',
+        userCode: this.$tools.isNotEmpty(this.uuid) ? this.uuid : '',
+        cashOrBalance: this.$tools.isNotEmpty(this.balance) && this.totalPrice <= this.balance.balance && this.radio === this.balance.value ? 'BALANCE' : 'CASH',
         details: this.details
       };
       return result;
@@ -217,7 +217,7 @@ export default {
     },
     payit() {
       if (this.radio === this.balance.value && this.balance.balance < this.totalPrice) {
-        this.toast(this.$t('pay.tips1'));
+        this.$toast(this.$t('pay.tips1'));
         return;
       }
       switch (this.radio) {
@@ -227,7 +227,7 @@ export default {
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
               log.warn('alipay new');
-              this.toast(this.$t('pay.tips2'));
+              this.$toast(this.$t('pay.tips2'));
               this.$router.push({name: 'member'});
               // window.location.href = this.getPayURL('alipay', this.totalPrice, resp);
             });
@@ -244,13 +244,13 @@ export default {
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
               log.warn('wechat new');
-              this.toast(this.$t('pay.tips2'));
+              this.$toast(this.$t('pay.tips2'));
               this.$router.push({name: 'member'});
               // window.location.href = this.getPayURL('wechat', this.totalPrice, resp);
             });
           } else {
             log.warn('wechat old');
-            this.toast(this.$t('pay.tips2'));
+            this.$toast(this.$t('pay.tips2'));
             this.$router.push({name: 'member'});
             // window.location.href = this.getPayURL('wechat', this.totalPrice, orderid);
           }
@@ -259,8 +259,8 @@ export default {
           log.info('member pay');
           // TODO 需要判断是第一次提交订单还是已有订单付款
           this.$store.dispatch('submitRecord', this.order).then(resp => {
-            if (isObjNotEmpty(resp)) {
-              this.toast(this.$t('pay.tips2'));
+            if (this.$tools.isNotEmpty(resp)) {
+              this.$toast(this.$t('pay.tips2'));
               this.$router.push({name: 'records'});
             }
           });

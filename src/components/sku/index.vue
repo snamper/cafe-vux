@@ -25,7 +25,6 @@
 
 <script type="text/ecmascript=6">
 import { Sku, Button, Toast } from 'vant';
-import { resizeImage, toast } from '@/utils/utils';
 import { mapState } from 'vuex';
 import Vue from 'vue';
 import Logger from 'chivy';
@@ -37,7 +36,7 @@ export default {
       next: true,
       good: null,
       showSelf: false,
-      toast
+      resizeImage: this.$tools.resizeImage
     };
   },
   props: {
@@ -70,7 +69,7 @@ export default {
       log.debug('add carts');
       this.Add2Cart(data).then(() => {
         this.show = false;
-        this.toast(this.$t('sku.success'));
+        this.$toast(this.$t('sku.success'));
       });
     },
     // 显示sku页面

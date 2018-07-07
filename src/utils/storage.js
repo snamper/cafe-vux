@@ -1,6 +1,6 @@
 import WebStorageCache from 'web-storage-cache';
 import Logger from 'chivy';
-import { isObjNotEmpty, isObjEmpty } from './utils';
+import MyUtils from './myUtils';
 const wsCache = new WebStorageCache();
 const uuidv4 = require('uuid/v4');
 const log = new Logger('utils/storage');
@@ -25,13 +25,15 @@ export const getUuid = () => uuidv4();
 // 初始化storage
 export const initStorage = () => {
   return new Promise(resolve => {
+    /* eslint-disable */
+    // debugger
     let result = {};
     const member = getStorage(key.member);
-    if (isObjNotEmpty(member)) {
+    if (MyUtils.isNotEmpty(member)) {
       result = {uuid: null, member: member};
     } else {
       let uuid = getStorage(key.uuid);
-      if (isObjEmpty(uuid)) {
+      if (MyUtils.isEmpty(uuid)) {
         uuid = uuidv4();
         log.debug('UUID is ' + uuid);
         setStorage({key: key.uuid, value: uuid});

@@ -34,16 +34,15 @@ import { Cell, CellGroup, Row, Col, Button, Toast } from 'vant';
 import product from '@/components/good';
 import banner from '@/components/banner';
 import { status } from '@/utils/consts';
-import { toast } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('vuex/member/oneorder');
+const log = new Logger('views/records/one');
 export default {
   data() {
     return {
       // status: '交易关闭',
       orderId: 'E12932908409823098340',
       status,
-      toast
+      toas
     };
   },
   props: {
@@ -90,10 +89,10 @@ export default {
         if (resp) {
           this.$router.push({name: 'order'});
         } else {
-          this.toast(this.$t('records.tips1'));
+          this.$toast(this.$t('records.tips1'));
         }
       }).catch(error => {
-        this.toast(this.$t('records.tips1'));
+        this.$toast(this.$t('records.tips1'));
       });
     },
     onclickConfirm() {

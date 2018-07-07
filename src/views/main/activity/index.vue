@@ -18,7 +18,7 @@ import banner from '@/components/banner';
 import orderdetail from '@/components/desc';
 import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('activity');
+const log = new Logger('views/main/activity');
 export default {
   data() {
     return {

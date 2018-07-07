@@ -6,7 +6,6 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { isObjEmpty } from '@/utils/utils';
 export default {
   props: {
     title: {
@@ -27,7 +26,7 @@ export default {
   computed: {
     height() {
       let height = 0;
-      if(isObjEmpty(this.subtitle)) {
+      if (this.$tools.isEmpty(this.subtitle)) {
         height = 20 + this.titleSize;
       } else {
         height = 40 + this.titleSize + this.subTitleSize;

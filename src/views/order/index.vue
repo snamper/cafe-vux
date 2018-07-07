@@ -6,7 +6,7 @@
       @click-left="backHistoryPage">
     </van-nav-bar>
     <div class="content">
-      <addr :address="convertAddress(address)" @addaddress="addaddress"></addr>
+      <addr :address="getAddress(address)" @addaddress="addaddress"></addr>
       <div class="orderlist" v-for="(good, index) in carts" :key="index">
         <product :good="good"></product>
       </div>
@@ -58,13 +58,11 @@ import { mapState, mapGetters } from 'vuex';
 import product from '@/components/good';
 import addr from '@/components/address';
 import split from '@/components/split';
-import { isObjEmpty, convertAddress } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('order');
+const log = new Logger('views/order');
 export default {
   data() {
     return {
-      convertAddress,
       delivertype: this.$t('order.self'),
       action: false,
       comment: '',
@@ -115,7 +113,7 @@ export default {
       return '￥' + this.price.normal;
     },
     type() {
-      isObjEmpty(this.address) ? 'add' : 'edit';
+      this.$tools.isEmpty(this.address) ? 'add' : 'edit';
     },
     totalPrice() {
       return this.delivertype === this.columns[0] ? this.price.normal * 100 : (this.price.normal + this.deliverPrice) * 100;
@@ -145,6 +143,9 @@ export default {
     },
     cancel() {
       this.action = false;
+    },
+    getAddress(address) {
+      return this.$tools.convertAddress(address);
     }
   }
 };

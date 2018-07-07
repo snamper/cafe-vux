@@ -37,10 +37,9 @@
 import { Cell, CellGroup, Row, Col, Icon, NavBar } from 'vant';
 import avator from '@/components/avator';
 import split from '@/components/split';
-import { isObjEmpty, isObjNotEmpty, getUsername } from '@/utils/utils.js';
 import { mapState, mapGetters } from 'vuex';
 import Logger from 'chivy';
-const log = new Logger('vuex/member/card');
+const log = new Logger('views/card');
 export default {
   data() {
     return {
@@ -52,7 +51,7 @@ export default {
     log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
-      if (from.path !== '/member' || isObjEmpty(vm.member)) {
+      if (from.path !== '/member' || this.$tools.isEmpty(vm.member)) {
         vm.$router.push({name: 'member'});
       }
     });
@@ -81,7 +80,7 @@ export default {
       this.$router.push({name: 'member'});
     },
     show(data) {
-      return isObjEmpty(data) ? this.$t('card.notSet') : data;
+      return this.$tools.isEmpty(data) ? this.$t('card.notSet') : data;
     },
     status(data) {
       return data ? this.$t('card.active') : this.$t('card.disactive');

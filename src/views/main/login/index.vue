@@ -100,10 +100,8 @@ import { Button, Field, CellGroup, Toast, Row, Col } from 'vant';
 import avator from '@/components/avator';
 import { mapState } from 'vuex';
 import md5 from 'blueimp-md5';
-import { regex } from '@/utils/consts.js';
-import { regexMatch, isObjEmpty, isObjNotEmpty, toast } from '@/utils/utils.js';
 import Logger from 'chivy';
-const log = new Logger('login');
+const log = new Logger('views/main/login');
 export default {
   data() {
     return {
@@ -147,8 +145,7 @@ export default {
         key: 'repwd',
         content: '',
         error: false
-      },
-      toast
+      }
     }
   },
   components: {
@@ -167,7 +164,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       log.debug('uuid is ' + vm.$store.state.uuid);
-      if (isObjEmpty(vm.$store.state.uuid)) {
+      if (this.$tools.isEmpty(vm.$store.state.uuid)) {
         vm.$router.push({name: 'member'});
       }
     })
@@ -181,9 +178,9 @@ export default {
     },
     onClickLogin() {
       this.disable.login = true;
-      const valid = !this.username.error && !this.password.error && !isObjEmpty(this.username.content) && !isObjEmpty(this.password.content);
+      const valid = !this.username.error && !this.password.error && !this.$tools.isEmpty(this.username.content) && !this.$tools.isEmpty(this.password.content);
       if (!valid) {
-        this.toast(this.$t('login.tips3'), true, 'fail');
+        this.$toast({message: this.$t('login.tips3'), mask: true, type: 'fail'});
         this.disable.login = false;
         return;
       }
@@ -192,23 +189,23 @@ export default {
         name: this.username.content,
         passWd: md5(this.password.content)
       };
-      this.toast(this.$t('login.logining'), true, 'loading');
+      this.$toast(this.$t('login.logining'), true, 'loading');
       this.$store.dispatch('login', param).then(() => {
         log.info('login success');
-        this.toast(this.$t('login.tips1'), true, 'success');
+        this.$toast({message: this.$t('login.tips1'), mask: true, type: 'success'});
         this.disable.login = false;
         this.Jump2MemberPage();
       }).catch((error) => {
-        this.toast(this.$t('login.tips2'), true, 'fail');
+        this.$toast({message: this.$t('login.tips2'), mask: true, type: 'fail'});
         this.disable.login = false;
         this.ResetField(true);
       });
     },
     onClickRegister() {
       this.disable.register = true;
-      const valid = !this.account.error && !this.pwd.error && !this.repwd.error && !isObjEmpty(this.account.content) && !isObjEmpty(this.pwd.content) && !isObjEmpty(this.repwd.content);
+      const valid = !this.account.error && !this.pwd.error && !this.repwd.error && !this.$tools.isEmpty(this.account.content) && !this.$tools.isEmpty(this.pwd.content) && !this.$tools.isEmpty(this.repwd.content);
       if (!valid) {
-        this.toast(this.$t('login.tips3'), true, 'fail');
+        this.$toast({message: this.$t('login.tips3'), mask: true, type: 'fail'});
         this.disable.register = false;
         return;
       }
@@ -217,20 +214,20 @@ export default {
         mobile: this.account.content,
         passWd: md5(this.pwd)
       };
-      this.toast(this.$t('login.logining'), true, 'loading');
+      this.$toast(this.$t('login.logining'), true, 'loading');
       this.$store.dispatch('resigter', param).then(() => {
-        this.toast.close();
-        this.toast(this.$t('login.tips4'), true, 'success');
+        this.$toast.close();
+        this.$toast({message: this.$t('login.tips4'), mask: true, type: 'success'});
         this.disable.register = false;
         this.Jump2MemberPage();
       }).catch((error) => {
-        this.toast(this.$t('login.tips5'), true, 'fail');
+        this.$toast({message: this.$t('login.tips5'), mask: true, type: 'fail'});
         this.ResetField(true);
         this.disable.register = false;
       });
     },
     checkAccountDuplicate(data) {
-      if (isObjEmpty(data.content)){
+      if (this.$tools.isEmpty(data.content)){
         return;
       }
       // debugger
@@ -238,12 +235,12 @@ export default {
         data.error = true;
         return;
       }
-      this.toast(this.$t('login.validing'), true, 'loading');
+      this.$toast({message: this.$t('login.validing'), mask: true, type: 'loading'});
       this.$store.dispatch('duplicate', {name: data.content}).then(resp => {
         log.info(data.content + ' is duplicate in server? ' + resp);
-        // this.toast.close();
+        // this.$toast.close();
         if (resp) {
-          this.toast(this.$t('login.tips6'), true, 'text');
+          this.$toast({message: this.$t('login.tips6'), mask: true, type: 'text'});
           this.account.content = '';
           data.error = true;
         }
@@ -264,19 +261,19 @@ export default {
         case this.username.key:
           error = !this.CheckAccountAvaliable(data.content);
           if(error) {
-            this.toast(this.$t('login.tips7'));
+            this.$toast(this.$t('login.tips7'));
           }
           break;
         case this.pwd.key:
-          error = !regexMatch(data.content, regex.password);
+          error = !this.$tools.regexMatch(data.content, regex.password);
           if(error) {
-            this.toast(this.$t('login.tips8'));
+            this.$toast(this.$t('login.tips8'));
           }
           break;
         case this.repwd.key:
           error = this.repwd.content !== this.pwd.content ? true: false;
           if(error) {
-             this.toast(this.$t('login.tips9'));
+             this.$toast(this.$t('login.tips9'));
           }
           break;
       }
@@ -284,15 +281,14 @@ export default {
       data.error = error;
     },
     CheckAccountAvaliable(account) {
-      if (regexMatch(account, regex.mobile)) {
+      if (this.$tools.isTelValid(account)) {
         return true;
-      } else if(regexMatch(account, regex.email)) {
+      } else if (this.$tools.isEmailValid(account)) {
         return true;
-      } else if(regexMatch(account, regex.account)) {
+      } else if (this.$tools.isAccountValid(account)) {
         return true;
-      } else {
-        return false;
       }
+      return false;
     },
     ResetField(status) {
       // 密码清空

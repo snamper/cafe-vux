@@ -28,9 +28,8 @@ import { Tab, Tabs, NavBar, Icon } from 'vant';
 import { mapState } from 'vuex';
 import order from  './one';
 import { status } from '@/utils/consts';
-import { isObjEmpty } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('records');
+const log = new Logger('views/records');
 export default {
   data() {
     return {
@@ -40,17 +39,15 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    log.debug('to path is ' + to.path);
-    log.debug('from path is ' + from.path);
     next(vm => {
       if (from.path === '/member' || from.path === '/orderdetail' || from.path === '/payment') {
         vm.$store.commit('updateLoadingStatus', {isLoading: true});
-        vm.__getRecord().then(() => {
+        vm.GetRecords().then(() => {
           vm.$store.commit('updateLoadingStatus', {isLoading: false});
-          vm.__selected();
+          vm.Selected();
         }).catch(error=> {
           vm.$store.commit('updateLoadingStatus', {isLoading: false});
-          vm.__selected();
+          vm.Selected();
         });
       } else {
         vm.$router.push({name: 'member'});
@@ -108,15 +105,15 @@ export default {
     back() {
       this.$router.push({name: 'member'});
     },
-    __getRecord() {
+    GetRecords() {
       return new Promise((resolve)=> {
-        const param = isObjEmpty(this.uuid) ? { userId: this.member.id, needDetail: true } : { userCode: this.uuid, needDetail: true };
+        const param = this.$tools.isEmpty(this.uuid) ? { userId: this.member.id, needDetail: true } : { userCode: this.uuid, needDetail: true };
         this.$store.dispatch('getRecords', param).then(() => {
           resolve();
         });
       });
     },
-    __selected() {
+    Selected() {
       log.debug('this.records length is ' + this.records.length);
       switch(this.value){
         case this.tabtitle[0]:

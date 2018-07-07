@@ -77,10 +77,9 @@ import { mapState } from 'vuex';
 import product from '@/components/good';
 import addr from '@/components/address';
 import orderstatus from '@/components/status';
-import { toast } from '@/utils/utils';
 import { status } from '@/utils/consts';
 import Logger from 'chivy';
-const log = new Logger('vuex/member/orderdetail');
+const log = new Logger('views/record');
 export default {
   data() {
     return {
@@ -94,8 +93,7 @@ export default {
         county: '成华区',
         address: '昭觉市南路33号'
       },
-      status,
-      toast
+      status
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -164,10 +162,10 @@ export default {
         if (resp) {
           this.$router.push({name: 'order'});
         } else {
-          this.toast(this.$t('record.tips1'));
+          this.$toast(this.$t('record.tips1'));
         }
       }).catch(error => {
-        this.toast(this.$t('record.tips1'));
+        this.$toast(this.$t('record.tips1'));
       });
     },
     confirmOrder() {

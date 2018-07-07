@@ -100,14 +100,11 @@
 import { Field, NavBar, CellGroup, DatetimePicker, Picker, Area, Actionsheet, Button, Toast } from 'vant';
 import { mapState } from 'vuex';
 import AreaList from '@/utils/area.js';
-import { regexMatch, formatDate, isObjEmpty, toast } from '@/utils/utils.js';
-import { regex } from '@/utils/consts.js';
 import Logger from 'chivy';
-const log = new Logger('vuex/member/info');
+const log = new Logger('views/modify');
 export default {
   data() {
     return {
-      toast,
       show: {
         birthday: false,
         sex: false,
@@ -157,7 +154,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (from.path !== '/card' || isObjEmpty(vm.$store.state.member)) {
+      if (from.path !== '/card' || this.$tools.isEmpty(vm.$store.state.member)) {
         vm.$router.push({name: 'member'});
       }
     });
@@ -229,31 +226,31 @@ export default {
       this.close();
     },
     save() {
-      const error = this.name.error || this.birthday.error || this.mobile.error || isObjEmpty(this.name.content) || isObjEmpty(this.birthday.content) || isObjEmpty (this.mobile.content);
+      const error = this.name.error || this.birthday.error || this.mobile.error || this.$tools.isEmpty(this.name.content) || this.$tools.isEmpty(this.birthday.content) || this.$tools.isEmpty (this.mobile.content);
       if (error) {
-        this.toast(this.$t('modify.tips1'));
+        this.$toast(this.$t('modify.tips1'));
       } else {
         // 查重
         this.$store.dispatch('duplicate', {name: this.mobile.content}).then(resp => {
           if (resp) {
-            this.toast(this.$t('modify.tips2'));
+            this.$toast(this.$t('modify.tips2'));
             this.mobile.content = '';
           } else {
             const param = {
               userId: this.member.id,
               name: this.name.content,
               mobile: this.mobile.content,
-              gender: isObjEmpty(this.sex.content) ? this.sex.content : null,
-              email: isObjEmpty(this.email.content) ? this.email.content : null,
-              address: isObjEmpty(this.area.content) ? this.area.content : null,
-              detailAddress : isObjEmpty(this.address.content) ? this.address.content : null
+              gender: this.$tools.isEmpty(this.sex.content) ? this.sex.content : null,
+              email: this.$tools.isEmpty(this.email.content) ? this.email.content : null,
+              address: this.$tools.isEmpty(this.area.content) ? this.area.content : null,
+              detailAddress : this.$tools.isEmpty(this.address.content) ? this.address.content : null
             }
             this.$store.dispatch('modifyInfo', param).then(resp => {
               if (resp) {
-                this.toast(this.$t('modify.tips3'), 'success');
+                this.$toast({message: this.$t('modify.tips3'), type: 'success'});
                 //TODO 需要更新state中的内容
               } else {
-                this.toast(this.$t('modify.tips4'), 'fail');
+                this.$toast({message: this.$t('modify.tips4'), type: 'fail'});
               }
             });
           }
@@ -265,27 +262,27 @@ export default {
       // debugger
       switch(data.key) {
         case this.name.key:
-          error = isObjEmpty(this.name.content) || !regexMatch(data.content, regex.chineseName) ;
+          error = this.$tools.isEmpty(this.name.content) || !this.$tools.isChineseNameValid(data.content);
           if (error) {
-            this.toast(this.$t('modify.tips5'));
+            this.$toast(this.$t('modify.tips5'));
           }
           break;
         case this.birthday.key:
-          error = isObjEmpty(this.birthday.content);
+          error = this.$tools.isEmpty(this.birthday.content);
           if(error) {
-            this.toast(this.$t('modify.tips6'));
+            this.$toast(this.$t('modify.tips6'));
           }
           break;
         case this.mobile.key:
-          error = isObjEmpty(this.mobile.content) || !regexMatch(data.content, regex.mobile);
+          error = this.$tools.isEmpty(this.mobile.content) || !this.$tools.isTelValid(data.content);
           if(error) {
-            this.toast(this.$t('modify.tips7'));
+            this.$toast(this.$t('modify.tips7'));
           }
           break;
         case this.email.key:
-          error = isObjEmpty(this.email.content) || !regexMatch(data.content, regex.email);
+          error = this.$tools.isEmpty(this.email.content) || !this.$tools.isEmailValid(data.content);
           if(error) {
-            this.toast(this.$t('modify.tips8'));
+            this.$toast(this.$t('modify.tips8'));
           }
       }
       data.error = error;

@@ -13,9 +13,8 @@
 <script type="text/ecmascript=6">
 import { Button } from 'vant';
 import nameprice from './nameprice';
-import { resizeImage } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('page/menu/product');
+const log = new Logger('components/desc');
 export default {
   data() {
     return {
@@ -33,7 +32,7 @@ export default {
   methods: {
     GetURL(imageUrl) {
       // log.debug(imageUrl);
-      return resizeImage(imageUrl, 400);
+      return this.$tools.resizeImage(imageUrl, 400);
     },
     onClickBuy() {
       this.$emit('buy',{product: this.product});

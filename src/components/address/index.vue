@@ -20,7 +20,6 @@
 
 <script type="text/ecmascript=6">
 import { Icon } from 'vant';
-import { isObjEmpty, isObjNotEmpty } from '@/utils/utils';
 export default {
   data() {
     return {
@@ -44,10 +43,10 @@ export default {
   },
   computed: {
     title() {
-      return isObjNotEmpty(this.addText) ? this.addText : this.$t('addressCard.addContact');
+      return this.$tools.isNotEmpty(this.addText) ? this.addText : this.$t('addressCard.addContact');
     },
     type() {
-      return isObjEmpty(this.address) ? 'add': 'edit';
+      return this.$tools.isEmpty(this.address) ? 'add': 'edit';
     },
     detail() {
       return address.province + address.city + address.county + address.address;

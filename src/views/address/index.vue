@@ -31,9 +31,8 @@
 import { NavBar, Cell, CellGroup, AddressList, AddressEdit } from 'vant';
 import { mapState } from 'vuex';
 import areaList from '@/utils/area';
-import { isObjEmpty, isObjNotEmpty, convertAddrss, toast } from '@/utils/utils';
 import Logger from 'chivy';
-const log = new Logger('address');
+const log = new Logger('views/address');
 export default {
   data() {
     return {
@@ -43,7 +42,7 @@ export default {
       areaList,
       edit: false,
       //当前地址
-      currentAddress: isObjNotEmpty(this.address) ? this.address: null,
+      currentAddress: this.$tools.isNotEmpty(this.address) ? this.address: null,
       // 地址列表
       addresses: []
     };
@@ -61,19 +60,19 @@ export default {
       // TODO 用后删除
       vm.$store.dispatch('initUser').then(() => {
         // 当直接进入该页面的时候，退回到主页
-        if (isObjEmpty(vm.$store.state.uuid) && isObjEmpty(vm.$store.state.member)) {
+        if (this.$tools.isEmpty(vm.$store.state.uuid) && this.$tools.isEmpty(vm.$store.state.member)) {
           vm.$router.push({name: 'menu'});
         }
         // 会员则从服务器获取寄送地址列表
-        if(isObjNotEmpty(vm.$store.state.member)) {
+        if(this.$tools.isNotEmpty(vm.$store.state.member)) {
           vm.GetAddressList(vm.$store.state.member.id);
         }
         // 当非会员且有地址的时候，默认为该地址
-        if (isObjNotEmpty(vm.$store.state.uuid) && vm.addresses.length === 1) {
+        if (this.$tools.isNotEmpty(vm.$store.state.uuid) && vm.addresses.length === 1) {
           vm.chosenAddressId = this.addresses[0].id;
         }
         // 当传过来的addres不为空的时候，设置currentAddress
-        if (isObjNotEmpty(vm.address)) {
+        if (this.$tools.isNotEmpty(vm.address)) {
           vm.currentAddress = vm.address;
         }
         // 避免从修改页面到其他页面后，不显示列表页面
@@ -96,26 +95,26 @@ export default {
     },
     // 是否显示默认地址
     showsetdefault() {
-      return isObjNotEmpty(this.uuid) ? false : true;
+      return this.$tools.isNotEmpty(this.uuid) ? false : true;
     },
     // 是否显示删除按钮
     showdelete() {
-      return isObjNotEmpty(this.uuid) ? false : true;
+      return this.$tools.isNotEmpty(this.uuid) ? false : true;
     },
     navBarTitle() {
       return this.show ? this.$t('address.myaddress') : this.edit ? this.$t('address.editAddress') : this.$t('address.addAddress');
     },
     addressInfo() {
-      return isObjEmpty(this.currentAddress) ? null: {
+      return this.$tools.isEmpty(this.currentAddress) ? null: {
         id: this.currentAddress.id,
         name: this.currentAddress.name,
-        tel: isObjNotEmpty(this.currentAddress.mobile) ? this.currentAddress.mobile : this.currentAddress.tel,
+        tel: this.$tools.isNotEmpty(this.currentAddress.mobile) ? this.currentAddress.mobile : this.currentAddress.tel,
         province: this.currentAddress.province,
         city: this.currentAddress.city,
         county: this.currentAddress.county,
-        address_detail: isObjNotEmpty(this.currentAddress.address) ? this.currentAddress.address: this.currentAddress.address_detail,
+        address_detail: this.$tools.isNotEmpty(this.currentAddress.address) ? this.currentAddress.address: this.currentAddress.address_detail,
         area_code: this.FindAreaCode(this.currentAddress.county),
-        is_default: isObjEmpty(this.currentAddress.defaultEntity) ? false : this.currentAddress.defaultEntity
+        is_default: this.$tools.isEmpty(this.currentAddress.defaultEntity) ? false : this.currentAddress.defaultEntity
       };
     },
     list() {
@@ -124,8 +123,8 @@ export default {
         list.push({
           id: address.id,
           name: address.name,
-          tel: isObjEmpty(address.mobile) ? address.tel : address.mobile,
-          address: address.province + address.city + address.county + (isObjEmpty(address.address) ? address.address_detail: address.address)
+          tel: this.$tools.isEmpty(address.mobile) ? address.tel : address.mobile,
+          address: address.province + address.city + address.county + (this.$tools.isEmpty(address.address) ? address.address_detail: address.address)
         });
       });
       return list;
@@ -133,12 +132,12 @@ export default {
   },
   methods: {
     onAdd() {
-      /** 
+      /**
        * 添加地址，逻辑如下
        * 会员可以添加多个地址
        * 非会员只能添加一个地址
       */
-      if (isObjNotEmpty(this.uuid) && this.addresses.length !== 0) {
+      if (this.$tools.isNotEmpty(this.uuid) && this.addresses.length !== 0) {
         this.toast(this.$t('address.tips'));
         return;
       }
@@ -168,7 +167,7 @@ export default {
         isdefault: content.is_default
       };
       // 非会员不需要刷新列表，只需要把currentAddress重置即可。
-      if (isObjNotEmpty(this.uuid)) {
+      if (this.$tools.isNotEmpty(this.uuid)) {
         content.id = 0;
         // 清空地址列表，加入新地址，更改选中的id值，更新当前地址
         this.addresses = [];
@@ -200,7 +199,7 @@ export default {
       // 当前页面为修改页面的时候就返回列表页面
       if (this.show) {
         log.info('onfinish in list page');
-        this.$router.push({name: 'order', params: {address: isObjEmpty(this.currentAddress) ? null : this.currentAddress}});
+        this.$router.push({name: 'order', params: {address: this.$tools.isEmpty(this.currentAddress) ? null : this.currentAddress}});
       } else {
         log.info('onfinish in edit page');
         this.ShowListPage();

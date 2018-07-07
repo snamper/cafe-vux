@@ -1,7 +1,7 @@
 import axios from 'axios';
+import MyUtils from '@/utils/myUtils';
 import Logger from 'chivy';
-import { isObjNotEmpty } from '@/utils/utils';
-const log = new Logger('common/js/ajax');
+const log = new Logger('store/utils/ajax');
 
 export const ajax = (url, payload = '') => {
   return new Promise((resolve, reject) => {
@@ -10,7 +10,9 @@ export const ajax = (url, payload = '') => {
       if (resp.status === 200) {
         const data = resp.data;
         log.debug('The response data is ' + JSON.stringify(data));
-        isObjNotEmpty(data) ? resolve(data) : reject(new Error('response data is empty'));
+        /* eslint-disable */
+        // debugger
+        MyUtils.isNotEmpty(data) ? resolve(data) : reject(new Error('response data is empty'));
       } else {
         reject(new Error('request url(' + url + ') response status code is ' + resp.status + '.'));
       }
@@ -19,3 +21,5 @@ export const ajax = (url, payload = '') => {
     });
   });
 };
+
+
