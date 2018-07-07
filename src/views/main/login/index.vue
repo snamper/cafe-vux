@@ -87,6 +87,7 @@
       <div class="divider">{{$t('login.third')}}</div>
       <div class="icon">
         <avator
+          @click.native="onClickWeibo"
           :url="third.weibo.url"
           :radius="third.weibo.radius">
         </avator>
@@ -164,12 +165,18 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       log.debug('uuid is ' + vm.$store.state.uuid);
-      if (this.$tools.isEmpty(vm.$store.state.uuid)) {
+      if (vm.$tools.isEmpty(vm.$store.state.uuid)) {
         vm.$router.push({name: 'member'});
       }
     })
   },
   methods: {
+    // 微博登陆
+    onClickWeibo() {
+      log.info('weibo login');
+      this.$toast(this.$t('pay.tips2'));
+      // window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=weibo';
+    },
     onClickVistor() {
       this.$router.push({name: 'member'});
     },

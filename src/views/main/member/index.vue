@@ -82,8 +82,14 @@ export default {
   },
   beforeRouteEnter(from, to, next) {
     next(vm => {
+      const id = vm.$tools.isCurrentJumpPage(window.location.href);
+      log.info('id is ' + id);
       vm.$store.dispatch('initUser');
     });
+  },
+  created() {
+    const id = this.$tools.isCurrentJumpPage(window.location.href);
+    log.error('id is ' + id);
   },
   computed: {
     ...mapState([

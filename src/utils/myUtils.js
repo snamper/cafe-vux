@@ -1,4 +1,5 @@
 import {regexMatch, splitUrl, regex, gender, appendZero} from './utils';
+import querystring from './queryString';
 import Logger from 'chivy';
 const log = new Logger('utils/myutils');
 
@@ -93,5 +94,10 @@ export default class Utils {
       Second: appendZero(datetime.getSeconds())
     };
   }
+  // 是否从正确的页面跳转回来
+  static isCurrentJumpPage = url => {
+    const array = url.split('?');
+    return array.length === 2 ? querystring.parse(array[1]) : null;
+  };
 
 };

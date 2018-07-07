@@ -78,7 +78,7 @@ export default {
       }
     },
     url() {
-      if (tihs.$tools.isEqual(this.to, '/menu')) {
+      if (this.$tools.isEqual(this.to, '/menu')) {
         return true;
       } else if (this.$tools.isEqual(this.to, '/activity')) {
         return false;
