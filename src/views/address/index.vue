@@ -66,10 +66,7 @@ export default {
         if (vm.$store.state.carts.length === 0) {
           vm.$router.push({name: 'cart'});
         }
-        // 会员则从服务器获取寄送地址列表
-        if(vm.$tools.isNotEmpty(vm.$store.state.member)) {
-          vm.GetAddressList(vm.$store.state.member.id);
-        }
+
         // 当非会员且有地址的时候，默认为该地址
         if (vm.$tools.isNotEmpty(vm.$store.state.uuid) && vm.addresses.length === 1) {
           vm.chosenAddressId = this.addresses[0].id;
@@ -77,6 +74,15 @@ export default {
         // 当传过来的addres不为空的时候，设置currentAddress
         if (vm.$tools.isNotEmpty(vm.address)) {
           vm.currentAddress = vm.address;
+        }
+        // 会员则从服务器获取寄送地址列表
+        if(vm.$tools.isNotEmpty(vm.$store.state.member)) {
+          vm.$store.commit('updateLoadingStatus', {isLoading: true});
+          vm.GetAddressList(vm.$store.state.member.id).then(() => {
+            vm.$store.commit('updateLoadingStatus', {isLoading: false});
+          }).catch(error => {
+            vm.$store.commit('updateLoadingStatus', {isLoading: false});
+          });
         }
         // 避免从修改页面到其他页面后，不显示列表页面
         vm.ShowListPage();

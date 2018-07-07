@@ -35,10 +35,6 @@ export default {
   data() {
     return {
       to: '',
-      isZero: this.$tools.isZero,
-      isEqual: this.$tools.isEqual,
-      resizeImage: this.$tools.resizeImage,
-      isObjEmpty: this.$tools.isEmpty
     }
   },
   components: {
@@ -61,7 +57,7 @@ export default {
       log.debug('beforeRouteEnter to path is ' + to.path);
       // 保存这个路由是从那个地方来的
       vm.to = from.path;
-      if (isObjEmpty(vm.good)) {
+      if (vm.$tools.isEmpty(vm.good)) {
         vm.$router.push({name: 'menu'});
       }
     });
@@ -71,7 +67,7 @@ export default {
       'selectFoods'
     ]),
     info() {
-      if (isZero(this.selectFoods.length)) {
+      if (this.$tools.isZero(this.selectFoods.length)) {
         return '';
       } else {
         let result = 0;
@@ -82,9 +78,9 @@ export default {
       }
     },
     url() {
-      if (isEqual(this.to, '/menu')) {
+      if (tihs.$tools.isEqual(this.to, '/menu')) {
         return true;
-      } else if (isEqual(this.to, '/activity')) {
+      } else if (this.$tools.isEqual(this.to, '/activity')) {
         return false;
       } else {
         return null;
@@ -96,13 +92,13 @@ export default {
       const imageList = images.split(';');
       const result = [];
       imageList.forEach(image => {
-        result.push({url: resizeImage(image, 400)})
+        result.push({url: this.$tools.resizeImage(image, 400)})
       });
       log.debug('silders is ' + JSON.stringify(result));
       return result;
     },
     back() {
-      isObjEmpty(this.url) ? this.$router.push({name : 'menu'}) : this.$router.push({path: this.to});
+      this.$tools.isEmpty(this.url) ? this.$router.push({name : 'menu'}) : this.$router.push({path: this.to});
     },
     add2cart() {
       this.$refs.sku.NextOrConfirmShow(this.good, false);

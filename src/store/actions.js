@@ -125,5 +125,10 @@ export default {
         resolve();
       });
     });
+  },
+  clearCarts(context, payload) {
+    return new Promise(resolve => {
+      context.commit('update', {type: 'carts', value: []});
+    });
   }
 };

@@ -1,5 +1,7 @@
 import { setMember, setUuid } from '@/utils/storage';
 import Vue from 'vue';
+import Logger from 'chivy';
+const log = new Logger('store/mutations');
 export default {
   update(state, payload) {
     switch (payload.type) {
@@ -56,7 +58,7 @@ export default {
     subCount(state, payload) {
       state.goods.forEach((category) => {
         category.list.forEach((good) => {
-          if (payload.good === good) {
+          if (payload.id === good.id) {
             if (payload.good.count === 0) {
               good.count = 0;
             } else if (good.count - payload.good.count >= 0) {
@@ -69,9 +71,12 @@ export default {
       });
     },
     setCount(state, payload) {
+      log.debug('payload is ' + JSON.stringify(payload));
+      /* eslint-disable */
+      debugger
       state.goods.forEach((category) => {
         category.list.forEach((good) => {
-          if (payload.good === good) {
+          if (payload.good.id === good.id) {
             good.count = payload.count;
             return;
           }

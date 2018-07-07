@@ -81,8 +81,9 @@ export default {
     onClose(clickPosition, instance) {
       switch (clickPosition) {
         case 'right':
+          log.info('delete button clicked');
           this.good.count = 0
-          this.$store.commit('subCount', this.good);
+          this.$store.commit('setCount', this.good);
           break;
       }
     },

@@ -58,6 +58,9 @@ export default {
     log.debug('activated');
     this.SelectFoodIds()
   },
+  mounted() {
+    this.edit = false;
+  },
   computed: {
     ...mapGetters([
       'selectFoods',

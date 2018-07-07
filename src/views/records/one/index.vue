@@ -3,7 +3,7 @@
     <div class="banner">
       <van-row>
         <van-col class="orderid" span="16">
-          {{$t('records.orderId')}}:<span>{{order.id}}</span>
+          {{$t('records.orderId')}}<span>{{order.id}}</span>
           </van-col>
         <van-col class="status" span="8">{{orderstatus}}</van-col>
       </van-row>
@@ -42,7 +42,6 @@ export default {
       // status: '交易关闭',
       orderId: 'E12932908409823098340',
       status,
-      toas
     };
   },
   props: {
@@ -97,7 +96,7 @@ export default {
     },
     onclickConfirm() {
       this.$store.dispatch('setcartsgoods',this.order.details).then(() => {
-        this.$router.push({name: 'payment', params: {deliverType: this.order.deliverType}});
+        this.$router.push({name: 'pay', params: {deliverType: this.order.deliverType}});
       });
     }
   }

@@ -226,15 +226,9 @@ export default {
           log.info('alipay pay');
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
-              log.warn('alipay new');
-              this.$toast(this.$t('pay.tips2'));
-              this.$router.push({name: 'member'});
               // window.location.href = this.getPayURL('alipay', this.totalPrice, resp);
             });
           } else {
-            log.warn('alipay old');
-            this.toast(this.$t('pay.tips2'));
-            this.$router.push({name: 'member'});
             // window.location.href = this.getPayURL('alipay', this.totalPrice, orderid);
           }
           break;
@@ -243,15 +237,9 @@ export default {
           log.info('wechat pay');
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
-              log.warn('wechat new');
-              this.$toast(this.$t('pay.tips2'));
-              this.$router.push({name: 'member'});
               // window.location.href = this.getPayURL('wechat', this.totalPrice, resp);
             });
           } else {
-            log.warn('wechat old');
-            this.$toast(this.$t('pay.tips2'));
-            this.$router.push({name: 'member'});
             // window.location.href = this.getPayURL('wechat', this.totalPrice, orderid);
           }
           break;
