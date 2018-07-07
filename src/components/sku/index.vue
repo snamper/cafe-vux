@@ -35,8 +35,7 @@ export default {
       show: false,
       next: true,
       good: null,
-      showSelf: false,
-      resizeImage: this.$tools.resizeImage
+      showSelf: false
     };
   },
   props: {
@@ -129,7 +128,7 @@ export default {
         ],
         goods: {
           title: good.name,
-          picture: resizeImage(good.imageUrl, 400),
+          picture: this.$tools.resizeImage(good.imageUrl, 400),
           price: good.price
         },
         price: good.price,

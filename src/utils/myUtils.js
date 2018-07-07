@@ -1,4 +1,6 @@
 import {regexMatch, splitUrl, regex, gender, appendZero} from './utils';
+import Logger from 'chivy';
+const log = new Logger('utils/myutils');
 
 export default class Utils {
   // 对象是否为空
@@ -52,12 +54,12 @@ export default class Utils {
 
   // 地址显示
   static convertAddress = address => {
-    if (this.isNotEmpty(address)) {
+    if (Utils.isNotEmpty(address)) {
       return {
         id: address.id,
         name: address.name,
         tel: address.mobile,
-        address: address.province + address.city + address.county + (this.isEmpty(address.address) ? address.address : address.address_detail)
+        address: address.province + address.city + address.county + Utils.isNotEmpty(address.address) ? address.address : address.address_detail
       };
     }
     return null;
@@ -65,14 +67,15 @@ export default class Utils {
 
   // 获取显示名字
   static getUsername = (uuid, member, vistor) => {
-    if (this.isNotEmpty(uuid)) {
+    log.debug('reverse ' + vistor);
+    if (Utils.isNotEmpty(uuid)) {
       return vistor;
-    } else if (this.isNotEmpty(member)) {
-      if (this.isNotEmpty(member.nick)) {
+    } else if (Utils.isNotEmpty(member)) {
+      if (Utils.isNotEmpty(member.nick)) {
         return member.nick;
-      } else if (this.isNotEmpty(member.phone)) {
+      } else if (Utils.isNotEmpty(member.phone)) {
         return member.phone;
-      } else if (this.isNotEmpty(member.email)) {
+      } else if (Utils.isNotEmpty(member.email)) {
         return member.email;
       }
     }

@@ -29,15 +29,15 @@
             <van-radio :name="wechat.value" />
           </div>
         </van-cell>
-        <van-cell v-if="balance" clickable @click="choose(balance)">
+        <van-cell v-if="memberObj" clickable @click="choose(memberObj)">
           <template slot="title">
             <div class="title-wrapper">
-              <avator :url="balance.img"></avator>
-              <span class="title">{{balance.value}}(￥{{member.balance}})</span>
+              <avator :url="memberObj.img"></avator>
+              <span class="title">{{memberObj.value}}(￥{{member.balance}})</span>
             </div>
           </template>
           <div class="radio-wrapper">
-            <van-radio :name="balance.value" />
+            <van-radio :name="memberObj.value" />
           </div>
         </van-cell>
       </van-cell-group>
@@ -69,8 +69,8 @@ export default {
         value: this.$t('pay.wechat'),
         img: '../../../static/img/wechat.png'
       },
-      balance: {
-        value: this.$t('pay.wechat'),
+      memberObj: {
+        value: this.$t('pay.balance'),
         img: '../../../static/img/tianicon.jpg'
       },
       // 记录从那个地方来
@@ -83,7 +83,7 @@ export default {
       // 保存这个路由是从那个地方来的
       vm.to = to.path;
       log.debug('records is ' + JSON.stringify(vm.$store.state.carts));
-      if (to.path === '/' || this.$tools.isEmpty(vm.$store.state.carts)) {
+      if (to.path === '/' || vm.$tools.isEmpty(vm.$store.state.carts)) {
         vm.$router.push({name: 'menu'});
       }
     });
@@ -147,7 +147,7 @@ export default {
     // 会员余额
     balance() {
       if (this.$tools.isNotEmpty(this.member)) {
-        return this.balance.balance;
+        return this.memberObj.balance;
       }
     },
     // 计算具体的商品
@@ -155,7 +155,7 @@ export default {
       const details = [];
       this.carts.forEach(good => {
         let detail;
-        if (this.radio === this.member.value) {
+        if (this.radio === this.memberObj.value) {
           detail = {
             productId: good.id,
             amount: good.count * good.memberPrice,
@@ -179,7 +179,7 @@ export default {
         amount: this.totalPrice,
         userId: this.$tools.isNotEmpty(this.member) ? this.member.id : '',
         userCode: this.$tools.isNotEmpty(this.uuid) ? this.uuid : '',
-        cashOrBalance: this.$tools.isNotEmpty(this.balance) && this.totalPrice <= this.balance.balance && this.radio === this.balance.value ? 'BALANCE' : 'CASH',
+        cashOrBalance: this.$tools.isNotEmpty(this.memberObj) && this.totalPrice <= this.memberObj.balance && this.radio === this.memberObj.value ? 'BALANCE' : 'CASH',
         details: this.details
       };
       return result;
@@ -216,7 +216,7 @@ export default {
       }
     },
     payit() {
-      if (this.radio === this.balance.value && this.balance.balance < this.totalPrice) {
+      if (this.radio === this.memberObj.value && this.memberObj.balance < this.totalPrice) {
         this.$toast(this.$t('pay.tips1'));
         return;
       }

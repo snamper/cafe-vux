@@ -37,7 +37,6 @@ export default {
   data() {
     return {
       show: true,
-      toast,
       chosenAddressId: '',
       areaList,
       edit: false,
@@ -60,19 +59,23 @@ export default {
       // TODO 用后删除
       vm.$store.dispatch('initUser').then(() => {
         // 当直接进入该页面的时候，退回到主页
-        if (this.$tools.isEmpty(vm.$store.state.uuid) && this.$tools.isEmpty(vm.$store.state.member)) {
+        if (vm.$tools.isEmpty(vm.$store.state.uuid) && vm.$tools.isEmpty(vm.$store.state.member)) {
           vm.$router.push({name: 'menu'});
         }
+        // 购物车为空直接回购物车
+        if (vm.$store.state.carts.length === 0) {
+          vm.$router.push({name: 'cart'});
+        }
         // 会员则从服务器获取寄送地址列表
-        if(this.$tools.isNotEmpty(vm.$store.state.member)) {
+        if(vm.$tools.isNotEmpty(vm.$store.state.member)) {
           vm.GetAddressList(vm.$store.state.member.id);
         }
         // 当非会员且有地址的时候，默认为该地址
-        if (this.$tools.isNotEmpty(vm.$store.state.uuid) && vm.addresses.length === 1) {
+        if (vm.$tools.isNotEmpty(vm.$store.state.uuid) && vm.addresses.length === 1) {
           vm.chosenAddressId = this.addresses[0].id;
         }
         // 当传过来的addres不为空的时候，设置currentAddress
-        if (this.$tools.isNotEmpty(vm.address)) {
+        if (vm.$tools.isNotEmpty(vm.address)) {
           vm.currentAddress = vm.address;
         }
         // 避免从修改页面到其他页面后，不显示列表页面
@@ -138,7 +141,7 @@ export default {
        * 非会员只能添加一个地址
       */
       if (this.$tools.isNotEmpty(this.uuid) && this.addresses.length !== 0) {
-        this.toast(this.$t('address.tips'));
+        this.$toast(this.$t('address.tips'));
         return;
       }
       this.ClearAddress();
