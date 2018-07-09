@@ -18,7 +18,7 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { Button, List } from 'vant';
+import { Button } from 'vant';
 import { mapGetters, mapState } from 'vuex';
 import sku from '@/components/sku';
 import logo from '@/components/logo';
@@ -33,7 +33,6 @@ export default {
   },
   components: {
     [Button.name]: Button,
-    [List.name]: List,
     logo,
     banner,
     product,

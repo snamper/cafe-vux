@@ -17,6 +17,14 @@ export const routerMap = [
         }
       },
       {
+        name: 'category',
+        path: 'category',
+        component: () => import('@/views/main/category/category').then(m => m.default),
+        meta: {
+          keepAlive: true
+        }
+      },
+      {
         name: 'cart',
         path: 'cart',
         component: () => import('@/views/main/cart/index').then(m => m.default),
