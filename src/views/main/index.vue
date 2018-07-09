@@ -4,6 +4,7 @@
       <router-view v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <div style="height:50px"></div>
     <van-tabbar v-model="active">
       <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('main.menu')}}</van-tabbar-item>
       <van-tabbar-item icon="like-o" :to="{name: 'activity'}">{{$t('main.active')}}</van-tabbar-item>
