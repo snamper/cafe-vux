@@ -8,7 +8,7 @@
               <van-checkbox class="checkbox" v-if="showcheckbox" :name="good.id"></van-checkbox>
               <img :src="Resize400(good.imageUrl)" style="height:100px;width: 100px">
               <div class="product">
-                <div class="name" v-if="edit">{{good.name}}</div>
+                <div class="name" v-if="edit">{{name(good)}}</div>
                 <van-stepper
                   v-else
                   @change="OnStepperChange"
@@ -89,6 +89,9 @@ export default {
     },
     OnStepperChange(value) {
       this.$store.commit('setCount', {good: this.good, count: this.value});
+    },
+    name(good) {
+      return this.$tools.isNotEmpty(good.name) ? good.name : good.productName;
     }
   }
 };
