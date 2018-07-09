@@ -29,7 +29,7 @@
             <van-radio :name="wechat.value" />
           </div>
         </van-cell>
-        <van-cell v-if="memberObj" clickable @click="choose(memberObj)">
+        <van-cell v-if="member" clickable @click="choose(memberObj)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="memberObj.img"></avator>

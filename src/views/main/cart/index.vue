@@ -154,7 +154,7 @@ export default {
       margin-bottom 100px
     .submit
       .van-submit-bar
-        bottom 50px
+        margin-bottom 50px
       .checkbox
         padding 15px 15px 15px 25px
   .nocart

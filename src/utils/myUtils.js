@@ -54,13 +54,17 @@ export default class Utils {
   };
 
   // 地址显示
-  static convertAddress = address => {
-    if (Utils.isNotEmpty(address)) {
+  static convertAddress = addressinfo => {
+    /*eslint-disable*/
+    // debugger
+    if (Utils.isNotEmpty(addressinfo)) {
+      const area = addressinfo.province + addressinfo.city + addressinfo.county;
+      const detail = Utils.isNotEmpty(addressinfo.address) ? addressinfo.address : addressinfo.address_detail;
       return {
-        id: address.id,
-        name: address.name,
-        tel: address.mobile,
-        address: address.province + address.city + address.county + Utils.isNotEmpty(address.address) ? address.address : address.address_detail
+        id: addressinfo.id,
+        name: addressinfo.name,
+        tel: Utils.isNotEmpty(addressinfo.mobile) ? addressinfo.mobile : addressinfo.tel,
+        address: area + detail
       };
     }
     return null;
