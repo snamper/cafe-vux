@@ -173,7 +173,7 @@ export default {
         county: content.county,
         address: content.address_detail,
         mobile: content.tel,
-        isdefault: content.is_default
+        defaultEntity: content.is_default
       };
       // 非会员不需要刷新列表，只需要把currentAddress重置即可。
       if (this.$tools.isNotEmpty(this.uuid)) {
