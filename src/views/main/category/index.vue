@@ -9,8 +9,8 @@
             ref="menuList"
             v-for="(item,index) in goods"
             :key="index"
+            :class="{'current':currentIndex===index}"
             @click="selectMenu(index,$event)">
-            <!-- :class="{'current':currentIndex===index}" -->
             <span class="text border-1px">{{item.name}}</span>
           </li>
         </ul>
@@ -34,6 +34,7 @@
         </ul>
       </div>
    </div>
+   <sku ref="sku"></sku>
  </div>
 </template>
 
@@ -42,6 +43,7 @@ import { Button } from 'vant';
 import BScroll from 'better-scroll';
 import logo from '@/components/logo';
 import product from '@/components/good';
+import sku from '@/components/sku';
 import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('views/main/category');
@@ -56,6 +58,7 @@ export default {
   components: {
     [Button.name]: Button,
     logo,
+    sku,
     product
   },
   created() {
@@ -63,6 +66,9 @@ export default {
     this.$store.dispatch('getGoods').then(() => {
       this.init();
       this.$store.commit('updateLoadingStatus', {isLoading: false});
+    }).catch(error => {
+      log.error(JSON.stringify(error));
+      this.$router.push({name: '404'});
     });
   },
   computed: {
@@ -155,7 +161,7 @@ export default {
       display table
       height 54px
       width 70px
-      padding 0 12px
+      padding-left 12px
       line-height 14px
       &.current
         position relative
@@ -184,10 +190,12 @@ export default {
     flex 1
     .title
       padding-left 14px
-      height 26px
-      line-height 26px
+      padding-top 5px
+      height 20px
+      line-height 20px
       border-left 2px solid #d9dde1
-      font-size 12px
+      font-size 16px
+      font-weight 700
       color: rgb(147, 153, 159)
       background #f3f5f7
     .food-item
@@ -209,6 +217,6 @@ export default {
       .product
         width 100%
         .button
-          font-size 18px
+          font-size 14px
           color rgb(255, 97, 25)
 </style>

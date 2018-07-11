@@ -126,15 +126,15 @@ export default {
         display flex
         flex-direction column
         .name
-          font-size 18px
+          font-size 16px
           font-weight 900
           padding 10px
         .price-number
           margin auto 0px 5px 10px
           display flex
-          font-size 18px
+          font-size 14px
           price-color()
           .slot
             margin-left auto
-            margin-right 10px
+            margin-right 5px
 </style>

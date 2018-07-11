@@ -11,7 +11,7 @@ export const routerMap = [
       {
         name: 'menu',
         path: 'menu',
-        component: () => import('@/views/main/menu/index').then(m => m.default),
+        component: () => import('@/views/main/category/index').then(m => m.default),
         meta: {
           keepAlive: true
         }
@@ -19,7 +19,7 @@ export const routerMap = [
       {
         name: 'category',
         path: 'category',
-        component: () => import('@/views/main/category/category').then(m => m.default),
+        component: () => import('@/views/main/menu/index').then(m => m.default),
         meta: {
           keepAlive: true
         }
@@ -108,12 +108,12 @@ export const routerMap = [
     path: '/record',
     component: () => import('@/views/record/index').then(m => m.default),
     props: true
-  }/* ,
+  },
   {
     name: '404',
     path: '/404',
     component: () => import('@/views/error/index').then(m => m.default)
-  } */
+  }
 ];
 
 export default new Router({
