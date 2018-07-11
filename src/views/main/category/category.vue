@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <logo></logo>
-    <div class="goods">
-      <div class="menu-wrapper" ref="menuWrapper">
+ <div>
+   <logo></logo>
+   <div class="goods">
+     <div class="menu-wrapper" ref="menuWrapper">
         <ul>
           <li
             class="menu-item"
@@ -33,16 +33,16 @@
           </li>
         </ul>
       </div>
-    </div>
-  </div>
+   </div>
+ </div>
 </template>
 
-<script type="text/ecmascript=6">
+<script>
 import { Button } from 'vant';
 import BScroll from 'better-scroll';
 import logo from '@/components/logo';
 import product from '@/components/good';
-import { mapGetters, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('views/main/category');
 export default {
@@ -72,8 +72,8 @@ export default {
     ]),
     currentIndex() {
       for (let i = 0; i < this.listHeight.length; i++) {
-        let height1 = this.listHeight[i];
-        let height2 = this.listHeight[i + 1];
+        const height1 = this.listHeight[i];
+        const height2 = this.listHeight[i + 1];
         if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
           this._followScroll(i);
           return i;
@@ -94,8 +94,8 @@ export default {
       });
     },
     selectMenu(index) {
-      let foodList = this.$refs.foodList;
-      let el = foodList[index];
+      const foodList = this.$refs.foodList;
+      const el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
     },
     _initScroll() {
@@ -115,18 +115,18 @@ export default {
     },
     _calculateHeight() {
       // debugger
-      let foodList = this.$refs.foodList;
+      const foodList = this.$refs.foodList;
       let height = 0;
       this.listHeight.push(height);
       for (let i = 0; i < foodList.length; i++) {
-        let item = foodList[i];
+        const item = foodList[i];
         height += item.clientHeight;
         this.listHeight.push(height);
       }
     },
     _followScroll(index) {
-      let menuList = this.$refs.menuList;
-      let el = menuList[index];
+      const menuList = this.$refs.menuList;
+      const el = menuList[index];
       this.meunScroll.scrollToElement(el, 300, 0, -100);
     },
     // 点击显示good页面
@@ -139,14 +139,14 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import '../../../styles/mixin.styl';
 .goods
-  display flex
+  border 1px sloid green
   position absolute
   top 120px
   bottom 50px
   width 100%
   overflow hidden
+  display flex
   .menu-wrapper
     flex 0 0 80px
     width 80px
@@ -164,12 +164,21 @@ export default {
         background #fff
         font-weight 700
         .text
-          border-none()
+          &:after
+            display: none
       .text
         display table-cell
         width 56px
         vertical-align middle
-        border-1px(rgba(7, 17, 27, 0.1))
+        position: relative
+        &:after
+          display: block
+          position: absolute
+          left: 0
+          bottom: 0
+          width: 100%
+          border-top: 1px solid rgba(7, 17, 27, 0.1)
+          content: ' '
         font-size 12px
   .foods-wrapper
     flex 1
@@ -184,13 +193,22 @@ export default {
     .food-item
       display flex
       margin 10px
-      border-1px(rgba(7, 17, 27, 0.1))
+      position: relative
+      &:after
+        display: block
+        position: absolute
+        left: 0
+        bottom: 0
+        width: 100%
+        border-top: 1px solid rgba(7, 17, 27, 0.1)
+        content: ' '
       &:last-child
-        border-none()
+        &:after
+          display: none
         margin-bottom: 0
       .product
         width 100%
         .button
           font-size 18px
-          price-color()
+          color rgb(255, 97, 25)
 </style>
