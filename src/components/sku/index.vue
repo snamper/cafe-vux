@@ -59,14 +59,16 @@ export default {
   },
   methods: {
     onBuyClicked(data) {
+      //TODO 需要加一个loading，创建待付款订单中，这个有点慢
       log.debug('onBuyClicked' + JSON.stringify(data));
       this.Add2Cart(data).then(() => {
+        log.warn('now jump to order page');
         this.$router.push({name: 'order'});
       });
     },
     onAddCartClicked(data) {
       log.debug('add carts');
-      this.Add2Cart(data).then(() => {
+      this.Add2SelectFoods(data).then(() => {
         this.show = false;
         this.$toast(this.$t('sku.success'));
       });
@@ -86,6 +88,15 @@ export default {
       this.showSelf = flag;
     },
     Add2Cart(data) {
+      return new Promise((resolve, reject) => {
+        const good = data.selectedSkuComb.good;
+        good.count = data.selectedNum;
+        const carts = [good];
+        this.$store.commit('update', {type: 'carts', value: carts});
+        resolve();
+      });
+    },
+    Add2SelectFoods(data) {
       return new Promise((resolve, reject) => {
         const good = data.selectedSkuComb.good;
         const count = data.selectedNum;

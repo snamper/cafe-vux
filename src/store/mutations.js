@@ -41,54 +41,54 @@ export default {
   updateLoadingStatus(state, payload) {
     state.isLoading = payload.isLoading;
   },
-    // 添加
-    addCount(state, payload) {
-      state.goods.forEach((category) => {
-        category.list.forEach((good) => {
-          if (payload.good === good) {
-            if (!good.count) {
-              Vue.set(good, 'count', payload.count);
-            } else {
-              good.count += payload.count;
-            }
+  // 添加
+  addCount(state, payload) {
+    state.goods.forEach((category) => {
+      category.list.forEach((good) => {
+        if (payload.good === good) {
+          if (!good.count) {
+            Vue.set(good, 'count', payload.count);
+          } else {
+            good.count += payload.count;
           }
-        });
+        }
       });
-    },
-    subCount(state, payload) {
-      state.goods.forEach((category) => {
-        category.list.forEach((good) => {
-          if (payload.id === good.id) {
-            if (payload.good.count === 0) {
-              good.count = 0;
-            } else if (good.count - payload.good.count >= 0) {
-              good.count = good.count - payload.good.count;
-            } else {
-              good.count = 0;
-            }
+    });
+  },
+  subCount(state, payload) {
+    state.goods.forEach((category) => {
+      category.list.forEach((good) => {
+        if (payload.id === good.id) {
+          if (payload.good.count === 0) {
+            good.count = 0;
+          } else if (good.count - payload.good.count >= 0) {
+            good.count = good.count - payload.good.count;
+          } else {
+            good.count = 0;
           }
-        });
+        }
       });
-    },
-    setCount(state, payload) {
-      log.debug('payload is ' + JSON.stringify(payload));
-      /* eslint-disable */
-      debugger
-      state.goods.forEach((category) => {
-        category.list.forEach((good) => {
-          if (payload.good.id === good.id) {
-            good.count = payload.count;
-            return;
-          }
-        });
+    });
+  },
+  setCount(state, payload) {
+    log.debug('payload is ' + JSON.stringify(payload));
+    /* eslint-disable */
+    // debugger
+    state.goods.forEach((category) => {
+      category.list.forEach((good) => {
+        if (payload.good.id === good.id) {
+          good.count = payload.count;
+          return;
+        }
       });
-    },
-    clearCarts(state, payload) {
-      state.goods.forEach(category => {
-        category.list.forEach(good => {
-          good.count = 0;
-        });
+    });
+  },
+  clearCarts(state, payload) {
+    state.goods.forEach(category => {
+      category.list.forEach(good => {
+        good.count = 0;
       });
-    }
+    });
+  }
 };
 

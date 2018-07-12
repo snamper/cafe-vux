@@ -2,9 +2,11 @@ import { ajax } from '@/store/utils/ajax';
 import { url } from '@/store/utils/consts';
 import { initStorage } from '@/utils/storage';
 import { getMemberInfo, setModifyData } from '@/store/utils/utils';
+// import Utils from '@/utils/MyUtils';
 import Logger from 'chivy';
 const log = new Logger('store/actions');
 export default {
+  // 获取分类产品数据
   getGoods(context) {
     return new Promise(resolve => {
       ajax(url.getCategoriedProducts).then(data => {
@@ -13,6 +15,7 @@ export default {
       });
     });
   },
+  // 提交订单
   submitRecord(context, payload) {
     return new Promise((resolve, reject) => {
       ajax(url.saveRecordList, payload).then(data => {
@@ -20,6 +23,7 @@ export default {
       });
     });
   },
+  // 获取订单信息
   getRecords(context, payload) {
     return new Promise(resolve => {
       ajax(url.getRecordList, payload).then(data => {
@@ -28,6 +32,7 @@ export default {
       });
     });
   },
+  // 保存配送地址
   saveAddress(context, payload) {
     return new Promise(resolve => {
       ajax(url.saveAddresses, payload).then(data => {
@@ -35,6 +40,7 @@ export default {
       });
     });
   },
+  // 删除配送地址
   deleteAddress(context, payload) {
     return new Promise(resolve => {
       ajax(url.deleteAddresses, payload).then(data => {
@@ -42,10 +48,12 @@ export default {
       });
     });
   },
+  // 获取配送地址
   getAddress(context, payload) {
     return new Promise(resolve => {
       ajax(url.getAddresses, payload).then(data => {
-        resolve(data);
+        context.commit('update', {type: 'addresses', value: data});
+        resolve();
       });
     });
   },
@@ -73,6 +81,7 @@ export default {
           const member = getMemberInfo(data);
           log.warn('member is ' + JSON.stringify(member));
           context.commit('update', {type: 'login', value: member});
+          context.commit('update', {type: 'address', value: null});
           resolve();
         } else {
           reject(new Error('login failed'));
@@ -106,6 +115,7 @@ export default {
   logout(context) {
     return new Promise(resolve => {
       context.commit('update', {type: 'logout'});
+      context.commit('update', {type: 'address', value: null});
       resolve();
     });
   },

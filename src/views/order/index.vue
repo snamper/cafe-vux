@@ -6,7 +6,7 @@
       @click-left="backHistoryPage">
     </van-nav-bar>
     <div class="content">
-      <addr :address="getAddress(address)" @addaddress="addaddress"></addr>
+      <addr :address="address" @addaddress="addaddress"></addr>
       <div class="orderlist" v-for="(good, index) in carts" :key="index">
         <product :good="good"></product>
       </div>
@@ -70,19 +70,22 @@ export default {
       columns: [this.$t('order.self'), this.$t('order.fastDelivery')]
     };
   },
-  beforeRouteEnter(from, to, next){
+  beforeRouteEnter(from, to, next) {
     next(vm => {
+      log.warn('carts length is ' + vm.$store.state.carts.length);
       if (vm.$store.state.carts.length === 0) {
         vm.$router.push({name: 'cart'});
       }
-      // 如果是会员则获取服务器数据，然后显示默认的地址
+      /** 
+       * 当前是否为会员登陆，如果会员登陆则先找出默认地址，并将state中address置为该地址
+      */
+      if (vm.$tools.isNotEmpty(vm.$store.state.member)) {
+        // 找出默认地址
+        vm.getAddresses(vm.$store.state.member.id).then(() => {
+          vm.getDefaultAddress();
+        });
+      }
     });
-  },
-  props: {
-    address: {
-      type: Object,
-      default: null
-    }
   },
   components: {
     [NavBar.name]: NavBar,
@@ -98,6 +101,8 @@ export default {
   },
   computed: {
     ...mapState([
+      'address',
+      'addresses',
       'carts',
       'deliverPrice'
     ]),
@@ -145,8 +150,22 @@ export default {
     cancel() {
       this.action = false;
     },
-    getAddress(address) {
-      return this.$tools.convertAddress(address);
+    // 获取所有配送地址
+    getAddresses(id) {
+      return this.$store.dispatch('getAddress', {entityId: id});
+    },
+    // 获取默认配送地址
+    // 如果有默认地址选中默认地址，如果没有，则默认为第一个地址
+    getDefaultAddress() {
+      return new Promise((resolve, reject) => {
+        this.addresses.forEach(address => {
+          if (address.defaultEntity) {
+            this.$store.commit('update', {type: 'address', value: address});
+          }
+        });
+        this.$store.commit('update', {type: 'address', value: this.addresses[0]});
+        resolve();
+      });
     }
   }
 };
