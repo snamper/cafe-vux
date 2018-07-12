@@ -53,6 +53,7 @@ export default {
     return new Promise(resolve => {
       ajax(url.getAddresses, payload).then(data => {
         context.commit('update', {type: 'addresses', value: data});
+        context.commit('setDefaultAddress');
         resolve();
       });
     });

@@ -6,7 +6,7 @@
       @click-left="backHistoryPage">
     </van-nav-bar>
     <div class="content">
-      <addr :address="address" @addaddress="addaddress"></addr>
+      <addr :address="ConverAddress(address)" @addaddress="addaddress"></addr>
       <div class="orderlist" v-for="(good, index) in carts" :key="index">
         <product :good="good"></product>
       </div>
@@ -76,13 +76,21 @@ export default {
       if (vm.$store.state.carts.length === 0) {
         vm.$router.push({name: 'cart'});
       }
-      /** 
+      /**
        * 当前是否为会员登陆，如果会员登陆则先找出默认地址，并将state中address置为该地址
+       * 需要看页面是从哪里来，如果是从address页面来，则不需要做这个服务器获取地址动作
       */
-      if (vm.$tools.isNotEmpty(vm.$store.state.member)) {
+      // debugger
+      vm.$toast.clear();
+      vm.$store.commit('updateLoadingStatus', {isLoading: true});
+      if (to.path !== '/address' && vm.$tools.isNotEmpty(vm.$store.state.member)) {
+        log.info('get address from server');
         // 找出默认地址
-        vm.getAddresses(vm.$store.state.member.id).then(() => {
-          vm.getDefaultAddress();
+        vm.GetAddresses(vm.$store.state.member.id).then(() => {
+          vm.$store.commit('updateLoadingStatus', {isLoading: false});
+        }).catch(error => {
+          log.error(error);
+          vm.$store.commit('updateLoadingStatus', {isLoading: false});
         });
       }
     });
@@ -151,21 +159,11 @@ export default {
       this.action = false;
     },
     // 获取所有配送地址
-    getAddresses(id) {
+    GetAddresses(id) {
       return this.$store.dispatch('getAddress', {entityId: id});
     },
-    // 获取默认配送地址
-    // 如果有默认地址选中默认地址，如果没有，则默认为第一个地址
-    getDefaultAddress() {
-      return new Promise((resolve, reject) => {
-        this.addresses.forEach(address => {
-          if (address.defaultEntity) {
-            this.$store.commit('update', {type: 'address', value: address});
-          }
-        });
-        this.$store.commit('update', {type: 'address', value: this.addresses[0]});
-        resolve();
-      });
+    ConverAddress(address) {
+      return this.$tools.convertAddress(address);
     }
   }
 };

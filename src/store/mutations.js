@@ -89,6 +89,16 @@ export default {
         good.count = 0;
       });
     });
+  },
+  setDefaultAddress(state, payload) {
+    // 遍历看是否存在默认地址
+    state.addresses.forEach(address => {
+      if (address.defaultEntity) {
+        state.address = address
+      }
+    });
+    // 如果没有默认地址，则为地址中的第一个
+    state.address =state.addresses[0];
   }
 };
 

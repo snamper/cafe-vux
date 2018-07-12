@@ -6,7 +6,7 @@
           <template slot="title">
             <div class="title">
               <van-checkbox class="checkbox" v-if="showcheckbox" :name="good.id"></van-checkbox>
-              <img :src="Resize400(good.imageUrl)" style="height:100px;width: 100px">
+              <img :src="Resize400(good.imageUrl)" style="height:100px;width:100px">
               <div class="product">
                 <div class="name" v-if="edit">{{name(good)}}</div>
                 <van-stepper

@@ -61,9 +61,14 @@ export default {
     onBuyClicked(data) {
       //TODO 需要加一个loading，创建待付款订单中，这个有点慢
       log.debug('onBuyClicked' + JSON.stringify(data));
+      this.$toast.loading('添加订单中...');
       this.Add2Cart(data).then(() => {
         log.warn('now jump to order page');
+        this.$toast.success('添加订单成功');
         this.$router.push({name: 'order'});
+        this.$toast.clear();
+      }).catch(error => {
+        log.error(error);
       });
     },
     onAddCartClicked(data) {
