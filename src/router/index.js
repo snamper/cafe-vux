@@ -11,14 +11,6 @@ export const routerMap = [
       {
         name: 'menu',
         path: 'menu',
-        component: () => import('@/views/main/category/index').then(m => m.default),
-        meta: {
-          keepAlive: true
-        }
-      },
-      {
-        name: 'category',
-        path: 'category',
         component: () => import('@/views/main/menu/index').then(m => m.default),
         meta: {
           keepAlive: true
