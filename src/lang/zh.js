@@ -204,6 +204,6 @@ export default {
   },
   error: {
     error: '哎呀，出错了~',
-    tips: time => `${time}s后返回主页面`
+    tips: 's后返回主页面'
   }
 };

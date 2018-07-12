@@ -75,6 +75,7 @@ export default {
       if (vm.$store.state.carts.length === 0) {
         vm.$router.push({name: 'cart'});
       }
+      // 如果是会员则获取服务器数据，然后显示默认的地址
     });
   },
   props: {

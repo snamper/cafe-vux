@@ -9,8 +9,8 @@
             ref="menuList"
             v-for="(item,index) in goods"
             :key="index"
-            :class="{'current':currentIndex===index}"
             @click="selectMenu(index,$event)">
+            <!-- :class="{'current':currentIndex===index}" 暂时未解决高亮的问题，暂不高亮显示 -->
             <span class="text border-1px">{{item.name}}</span>
           </li>
         </ul>
@@ -45,6 +45,7 @@ import logo from '@/components/logo';
 import product from '@/components/good';
 import sku from '@/components/sku';
 import { mapState } from 'vuex';
+/* import good from './test.js'; */
 import Logger from 'chivy';
 const log = new Logger('views/main/category');
 export default {
@@ -52,7 +53,8 @@ export default {
     return {
       listHeight: [],
       scrollY: 0,
-      selectedFood: {}
+      selectedFood: {}/* ,
+      goods: good.goods */
     };
   },
   components: {
@@ -70,6 +72,7 @@ export default {
       log.error(JSON.stringify(error));
       this.$router.push({name: '404'});
     });
+    /* this.init(); */
   },
   computed: {
     ...mapState([
@@ -77,9 +80,16 @@ export default {
       'goods'
     ]),
     currentIndex() {
+      /*eslint-disable */
+      // debugger
+      // log.error('this.listHeight.length = ' + this.listHeight.length);
       for (let i = 0; i < this.listHeight.length; i++) {
+        // log.warn('i = ' + i);
         const height1 = this.listHeight[i];
+        // log.warn('height1 = ' + height1);
         const height2 = this.listHeight[i + 1];
+        // log.warn('height2 = ' + height1);
+        // log.warn('this.scrollY = ' + this.scrollY);
         if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
           this._followScroll(i);
           return i;
@@ -100,6 +110,7 @@ export default {
       });
     },
     selectMenu(index) {
+      // log.error('selectMenu index is ' + index);
       const foodList = this.$refs.foodList;
       const el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
@@ -115,13 +126,14 @@ export default {
       this.foodsScroll.on('scroll', (pos) => {
         // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
         if (pos.y <= 0) {
-            this.scrollY = Math.abs(Math.round(pos.y));
+          this.scrollY = Math.abs(Math.round(pos.y));
         }
       });
     },
     _calculateHeight() {
       // debugger
       const foodList = this.$refs.foodList;
+      // log.debug(foodList);
       let height = 0;
       this.listHeight.push(height);
       for (let i = 0; i < foodList.length; i++) {
@@ -133,6 +145,7 @@ export default {
     _followScroll(index) {
       const menuList = this.$refs.menuList;
       const el = menuList[index];
+      log.info(el);
       this.meunScroll.scrollToElement(el, 300, 0, -100);
     },
     // 点击显示good页面

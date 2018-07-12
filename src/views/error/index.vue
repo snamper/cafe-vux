@@ -3,7 +3,7 @@
     <div class="content">
       <avator :url="img" :size="200" :radius="50"></avator>
       <div class="text">{{$t('error.error')}}</div>
-      <div class="tips">{{$t('error.tips', time)}}</div>
+      <div class="tips">{{time}}{{$t('error.tips')}}</div>
     </div>
     <div class="tips"></div>
   </div>
