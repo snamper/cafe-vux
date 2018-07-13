@@ -9,8 +9,9 @@
             ref="menuList"
             v-for="(item,index) in goods"
             :key="index"
-            @click="selectMenu(index,$event)">
-            <!-- :class="{'current':currentIndex===index}" 暂时未解决高亮的问题，暂不高亮显示 -->
+            :class="{'current':currentIndex===index}"
+            @click="selectMenu(index)">
+            <!--TODO 暂时未解决高亮的问题 -->
             <span class="text border-1px">{{item.name}}</span>
           </li>
         </ul>
@@ -110,7 +111,7 @@ export default {
       });
     },
     selectMenu(index) {
-      // log.error('selectMenu index is ' + index);
+      log.info('selectMenu index is ' + index);
       const foodList = this.$refs.foodList;
       const el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
@@ -145,7 +146,7 @@ export default {
     _followScroll(index) {
       const menuList = this.$refs.menuList;
       const el = menuList[index];
-      log.info(el);
+      log.info('_followScroll index is ' + index);
       this.meunScroll.scrollToElement(el, 300, 0, -100);
     },
     // 点击显示good页面

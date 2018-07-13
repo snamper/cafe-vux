@@ -19,7 +19,7 @@ export default {
   submitRecord(context, payload) {
     return new Promise((resolve, reject) => {
       ajax(url.saveRecordList, payload).then(data => {
-        data.success ? resolve(data.entityCode) : reject(new Error('submit record failed'));
+        data.status ? resolve(data.entityCode) : reject(new Error('submit record failed'));
       });
     });
   },
@@ -36,7 +36,7 @@ export default {
   saveAddress(context, payload) {
     return new Promise(resolve => {
       ajax(url.saveAddresses, payload).then(data => {
-        resolve(data.success);
+        resolve(data.status);
       });
     });
   },
@@ -44,7 +44,7 @@ export default {
   deleteAddress(context, payload) {
     return new Promise(resolve => {
       ajax(url.deleteAddresses, payload).then(data => {
-        resolve(data.success);
+        resolve(data.status);
       });
     });
   },
@@ -124,7 +124,7 @@ export default {
     const param = setModifyData(payload);
     return new Promise(resolve => {
       ajax(url.modifyBasicInfo, param).then(data => {
-        resolve(data.success);
+        resolve(data.status);
       });
     });
   },

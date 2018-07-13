@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import FastClick from 'fastclick';
-import { Toast } from 'vant';
+import { Toast, Lazyload } from 'vant';
 import App from './App.vue';
 import router from './router';
 import store from './store/';
@@ -13,6 +13,7 @@ FastClick.attach(document.body);
 Vue.config.productionTip = false;
 Vue.prototype.$tools = MyUtils;
 Vue.use(Toast);
+Vue.use(Lazyload);
 new Vue({
   el: '#app',
   i18n,

@@ -6,7 +6,7 @@
           <template slot="title">
             <div class="title">
               <van-checkbox class="checkbox" v-if="showcheckbox" :name="good.id"></van-checkbox>
-              <img :src="Resize400(good.imageUrl)" style="height:100px;width:100px">
+              <img v-lazy="Resize400(good.imageUrl)" style="height:100px;width:100px">
               <div class="product">
                 <div class="name" v-if="edit">{{name(good)}}</div>
                 <van-stepper
@@ -16,8 +16,12 @@
                   :max="1000"
                   v-model="value" >
                 </van-stepper>
-                <div class="price-number">
+                <div class="price-number" v-if="good.memberPrice !== good.price">
                   <span class="price">￥{{good.price ? good.price : good.amount}}</span>
+                </div>
+                <div class="price-number">
+                  <span class="price" v-if="good.memberPrice === good.price">￥{{good.price ? good.price : good.amount}}</span>
+                  <span class="member" v-if="good.memberPrice !== good.price">{{$t('namePrice.memberPrice')}}{{good.memberPrice}}</span>
                   <span class="slot">
                     <slot name="right-bottom">
                       <span class="number">x{{value}}</span>
@@ -128,13 +132,13 @@ export default {
         .name
           font-size 16px
           font-weight 900
-          padding 10px
+          padding 5px
         .price-number
-          margin auto 0px 5px 10px
+          margin auto 0px 5px 5px
           display flex
           font-size 14px
           price-color()
           .slot
             margin-left auto
-            margin-right 5px
+            margin-right 0px
 </style>

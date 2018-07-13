@@ -2,6 +2,7 @@
   <div class="orderdetail" v-if="product">
     <img :src="GetURL(product.imageUrl)">
     <nameprice
+      :fontSize="fontSize"
       :name="product.name"
       :price="product.price"
       :memberPrice="product.memberPrice">
@@ -27,6 +28,9 @@ export default {
   props: {
     product: {
       type: Object
+    },
+    fontSize: {
+      type: Number
     }
   },
   methods: {

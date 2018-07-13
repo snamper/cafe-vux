@@ -3,8 +3,8 @@
     <div class="title">{{name}}</div>
     <div class="info">
       <span class="price">
-        <span class="normal">￥{{price}}</span>
-        <span class="member" v-if="memberPrice !== price">{{$t('namePrice.memberPrice')}}{{memberPrice}}</span>
+        <span class="normal" :style="{fontSize: fontSize + 'px'}">￥{{price}}</span>
+        <span class="member" :style="{fontSize: fontSize + 'px'}" v-if="memberPrice !== price">{{$t('namePrice.memberPrice')}}{{memberPrice}}</span>
       </span>
       <span class="operation">
         <slot></slot>
@@ -26,6 +26,10 @@
     memberPrice: {
       type: Number,
       default: 0
+    },
+    fontSize: {
+      type: Number,
+      default: 18
     }
   }
  };
@@ -50,10 +54,10 @@
       line-height 32px
       .normal,.member
         price-color()
-        font-size 18px
+        /* font-size 18px */
       .member
         padding-left 5px
-        font-size 18px
+        /* font-size 18px */
     .operation
       margin-left auto
       margin-right 5px

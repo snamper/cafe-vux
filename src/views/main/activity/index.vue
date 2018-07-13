@@ -6,7 +6,7 @@
     </banner>
     <div class="products" >
       <div class="product" v-for="(product, index) in sliders" :key="index">
-        <orderdetail :product="product" @click.native="jump2FoodPage(product)"></orderdetail>
+        <orderdetail :fontSize="12" :product="product" @click.native="jump2FoodPage(product)"></orderdetail>
       </div>
     </div>
   </div>
