@@ -40,7 +40,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (from.path === '/member' || from.path === '/orderdetail' || from.path === '/payment') {
+      if (from.path === '/member' || from.path === '/record' || from.path === '/payment') {
         vm.$store.commit('updateLoadingStatus', {isLoading: true});
         vm.GetRecords().then(() => {
           vm.$store.commit('updateLoadingStatus', {isLoading: false});

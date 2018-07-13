@@ -154,13 +154,13 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push({name: 'order', params: {order: this.detail}});
+      this.$router.push({name: 'records', params: {order: this.detail}});
     },
     cancelOrder() {
       const param = {entityId: this.detail.id, status: this.status.CLOSED.key};
       this.$store.dispatch('alterStatus', param).then((resp) => {
         if (resp) {
-          this.$router.push({name: 'order'});
+          this.$router.push({name: 'records'});
         } else {
           this.$toast(this.$t('record.tips1'));
         }
@@ -170,7 +170,7 @@ export default {
     },
     confirmOrder() {
       this.$store.dispatch('setcartsgoods',this.detail.details).then(() => {
-        this.$router.push({name: 'payment', params: {orderid: this.detail.id}});
+        this.$router.push({name: 'pay', params: {orderid: this.detail.id}});
       });
     }
   }
