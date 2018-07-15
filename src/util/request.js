@@ -3,7 +3,7 @@ import Logger from '../../node_modules/_chivy@0.1.7@chivy';
 const log = new Logger('utils/myutils');
 
 const service = axios.create({
-  baseURL: '/shop',
+  baseURL: '/rest/shop',
   timeout: 5000
 });
 

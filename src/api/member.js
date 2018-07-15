@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from '@/util/request';
 
 export const isExistUserName = name => {
   const data = {

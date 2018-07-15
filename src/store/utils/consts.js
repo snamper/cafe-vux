@@ -1,6 +1,6 @@
 export const url = {
   // 获取分类商品的列表
-  getCategoriedProducts: '/shop/category/show/ui/getCategoriedProducts.do',
+  getCategoriedProducts: '/rest/shop/product/show/ui/getCategoriedProducts.do',
   // 获取购买商品列表
   getRecordList: '/shop/product/show/ui/getRecordList.do',
   // 是否用户名已存在

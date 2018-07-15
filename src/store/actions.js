@@ -1,3 +1,4 @@
+/* import { getCategoriedProducts } from '@/api/product'; */
 import { ajax } from '@/store/utils/ajax';
 import { url } from '@/store/utils/consts';
 import { initStorage } from '@/utils/storage';
@@ -8,8 +9,18 @@ const log = new Logger('store/actions');
 export default {
   // 获取分类产品数据
   getGoods(context) {
+    /* return getCategoriedProducts().then(resp => {
+      log.warn('getCategoriedProducts');
+      log.debug(JSON.stringify(resp));
+    }); */
+    const data = {
+      envData: {
+        pageNo: 1,
+        pageSize: 20
+      }
+    };
     return new Promise(resolve => {
-      ajax(url.getCategoriedProducts).then(data => {
+      ajax(url.getCategoriedProducts, data).then(data => {
         context.commit('update', {type: 'goods', value: data});
         resolve();
       });

@@ -1,4 +1,18 @@
-import service from '@/utils/request';
+import service from '@/util/request';
+
+export const getCategoriedProducts = () => {
+  const data = {
+    envData: {
+      pageNo: 1,
+      pageSize: 20
+    }
+  };
+  return service({
+    url: '/product/show/ui/getCategoriedProducts.do',
+    method: 'post',
+    data
+  });
+};
 
 export const getRecordList = (userId, userCode, needDetail) => {
   const data = {
