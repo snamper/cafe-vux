@@ -28,9 +28,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      "/shop": {
+      "/rest/shop": {
         // target: "http://localhost:21080",
-        target: server ? "http://www.tianbakery.store" : "http://192.168.9.11:21080",
+        target: server ? "http://www.tianbakery.store" : "http://127.0.0.1:15080",
         changeOrigin: true,
         pathReWrite: {
           "^/shop": ""
@@ -38,7 +38,7 @@ module.exports = {
       },
       "/upload": {
         // target: "http://localhost:21080",
-        target: server ? "http://www.tianbakery.store" : "http://192.168.9.11:21080",
+        target: server ? "http://www.tianbakery.store" : "http://127.0.0.1:15080",
         changeOrigin: true,
         pathReWrite: {
           "^/upload": ""

@@ -1,6 +1,6 @@
 import querystring from './queryString';
-import Logger from '../../node_modules/_chivy@0.1.7@chivy';
-const log = new Logger('utils/myutils');
+import Logger from 'chivy';
+const log = new Logger('utils/myUtils');
 
 // 根据尺寸获取图片
 const splitUrl = (url, size) => {
@@ -103,7 +103,7 @@ export default class Utils {
 
   // 获取显示名字
   static getUsername = (uuid, member, vistor) => {
-    log.debug('reverse ' + vistor);
+    log.debug('reverse ');
     if (Utils.isNotEmpty(uuid)) {
       return vistor;
     } else if (Utils.isNotEmpty(member)) {

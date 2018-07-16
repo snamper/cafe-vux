@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Logger from '../../node_modules/_chivy@0.1.7@chivy';
+import Logger from 'chivy';
 const log = new Logger('utils/myutils');
 
 const service = axios.create({
@@ -8,7 +8,12 @@ const service = axios.create({
 });
 
 service.interceptors.request.use(config => {
-  return config;
+  config => {
+    config.headers = {
+      'Content-Type': 'application/x-www.form-urlencoded'
+    };
+    return config;
+  };
 });
 
 service.interceptors.response.use(
