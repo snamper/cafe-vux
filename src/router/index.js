@@ -102,12 +102,6 @@ export const routerMap = [
     props: true
   },
   {
-    name: 'test',
-    path: '/test',
-    component: () => import('@/views/test/test').then(m => m.default),
-    props: true
-  },
-  {
     name: '404',
     path: '/404',
     component: () => import('@/views/error/index').then(m => m.default)

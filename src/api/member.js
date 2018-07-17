@@ -1,4 +1,4 @@
-import service from '@/util/request';
+import service from '@/utils/request';
 
 export const isExistUserName = name => {
   const data = {
@@ -81,6 +81,47 @@ export const getBasicInfoList = entityId => {
   };
   return service({
     url: '/member/show/ui/getBasicInfoList.do',
+    method: 'post',
+    data
+  });
+};
+
+export const getAddresses = entityId => {
+  const data = {
+    entityId
+  };
+  return service({
+    url: '/product/show/ui/getAddresses.do',
+    method: 'post',
+    data
+  });
+};
+
+export const saveAddresses = (memberId, name, province, city, county, address, mobile, code, defaultEntity) => {
+  const data = {
+    memberId,
+    name,
+    province,
+    city,
+    county,
+    address,
+    mobile,
+    code,
+    defaultEntity
+  };
+  return service({
+    url: '/product/show/ui/saveAddresses.do',
+    method: 'post',
+    data
+  });
+};
+
+export const deleteAddresses = entityId => {
+  const data = {
+    entityId
+  };
+  return service({
+    url: '/product/show/ui/deleteAddresses.do',
     method: 'post',
     data
   });
