@@ -116,12 +116,12 @@ export default {
     avator
   },
   computed: {
-    ...mapState([
-      'uuid',
-      'member',
-      'carts',
-      'deliverPrice'
-    ]),
+    ...mapState({
+      'uuid': state => state.member.uuid,
+      'member': state => state.member.member,
+      'carts': state => state.product.carts,
+      'deliverPrice': state => state.product.deliverPrice
+    }),
     // 购物总价
     totalPrice() {
       if (this.url) {

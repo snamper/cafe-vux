@@ -75,7 +75,7 @@ const product = {
   actions: {
     // 获取分类产品数据
     getGoods: ({ commit }) => {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         getCategoriedProducts().then(data => {
           commit('UPDATE_GOODS', data);
           resolve();
@@ -100,9 +100,9 @@ const product = {
       });
     },
     // 设置实际选中购物商品
-    setCartsgoods({ commit }, payload) {
+    setCartsgoods({ commit }, goods) {
       return new Promise(resolve => {
-        commit('update', {type: 'carts', value: payload});
+        commit('UPDATE_CARTS', goods);
         resolve();
       });
     },
@@ -118,6 +118,7 @@ const product = {
     clearCarts({ commit }) {
       return new Promise(resolve => {
         commit('UPDATE_CARTS', []);
+        resolve();
       });
     }
   }

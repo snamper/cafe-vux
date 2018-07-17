@@ -125,9 +125,9 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'deliverPrice'
-    ]),
+    ...mapState({
+      'deliverPrice': state => state.product.deliverPrice
+    }),
     orderstatus() {
       switch(this.detail.status) {
         case this.status.NOTPAY.key:

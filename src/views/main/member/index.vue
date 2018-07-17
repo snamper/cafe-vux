@@ -92,10 +92,10 @@ export default {
     log.error('id is ' + id);
   },
   computed: {
-    ...mapState([
-      'uuid',
-      'member'
-    ]),
+    ...mapState({
+      'uuid': state => state.member.uuid,
+      'member': state => state.member.member
+    }),
     ...mapGetters([
       'selectFoods',
       'username'

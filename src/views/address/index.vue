@@ -72,12 +72,12 @@ export default {
     })
   },
   computed: {
-    ...mapState([
-      'uuid',
-      'member',
-      'addresses',
-      'address'
-    ]),
+    ...mapState({
+      'uuid': state =>  state.member.uuid,
+      'member': state => state.member.member,
+      'addresses': state => state.member.addresses,
+      'address': state => state.member.address
+    }),
     rightText() {
       return this.edit ? '' : this.$t('address.finish');
     },
@@ -192,7 +192,7 @@ export default {
       // 当前页面为修改页面的时候就返回列表页面
       if (this.show) {
         log.info('onfinish in list page');
-        this.$store.commit('update', {type: 'address', value: this.currentSelectAddress});
+        this.$store.commit('UPDATE_ADDRESS', this.currentSelectAddress);
         this.$router.push({name: 'order'});
       } else {
         log.info('onfinish in edit page');

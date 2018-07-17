@@ -61,12 +61,12 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'uuid',
-      'member',
-      'records',
-      'isLoading'
-    ]),
+    ...mapState({
+      'uuid': state => state.member.uuid,
+      'member': state => state.member.member,
+      'records': state => state.product.records,
+      'isLoading': state => state.product.isLoading
+    }),
     notpay() {
       return this.records.filter(record => record.status === this.status.NOTPAY.key);
     },

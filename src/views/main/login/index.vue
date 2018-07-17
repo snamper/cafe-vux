@@ -158,9 +158,6 @@ export default {
     avator
   },
   computed: {
-    ...mapState([
-      'User'
-    ])
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -243,7 +240,7 @@ export default {
         return;
       }
       this.$toast({message: this.$t('login.validing'), mask: true, type: 'loading'});
-      this.$store.dispatch('duplicate', {name: data.content}).then(resp => {
+      this.$store.dispatch('duplicate', data.content).then(resp => {
         log.info(data.content + ' is duplicate in server? ' + resp);
         // this.$toast.close();
         if (resp) {
@@ -287,6 +284,7 @@ export default {
       log.debug(data.key + ' check result is ' + error);
       data.error = error;
     },
+    // 检查账号是否可用
     CheckAccountAvaliable(account) {
       if (this.$tools.isTelValid(account)) {
         return true;

@@ -170,10 +170,10 @@ export default {
     [Button.name]: Button
   },
   computed: {
-    ...mapState([
-      'uuid',
-      'member'
-    ])
+    ...mapState({
+      'uuid': state => state.member.uuid,
+      'member': state => state.member.member
+    })
   },
   methods: {
     close() {
@@ -231,7 +231,7 @@ export default {
         this.$toast(this.$t('modify.tips1'));
       } else {
         // 查重
-        this.$store.dispatch('duplicate', {name: this.mobile.content}).then(resp => {
+        this.$store.dispatch('duplicate', this.mobile.content).then(resp => {
           if (resp) {
             this.$toast(this.$t('modify.tips2'));
             this.mobile.content = '';

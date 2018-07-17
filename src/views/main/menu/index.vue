@@ -75,10 +75,10 @@ export default {
     /* this.init(); */
   },
   computed: {
-    ...mapState([
-      'isLoading',
-      'goods'
-    ]),
+    ...mapState({
+      'isLoading': state => state.product.isLoading,
+      'goods': state => state.product.goods
+    }),
     currentIndex() {
       /*eslint-disable */
       // debugger

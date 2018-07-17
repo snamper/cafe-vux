@@ -58,6 +58,7 @@ import { mapState, mapGetters } from 'vuex';
 import product from '@/components/good';
 import addr from '@/components/address';
 import split from '@/components/split';
+import { convertAddress } from '@/utils/address';
 import Logger from 'chivy';
 const log = new Logger('views/order');
 export default {
@@ -108,12 +109,12 @@ export default {
     split
   },
   computed: {
-    ...mapState([
-      'address',
-      'addresses',
-      'carts',
-      'deliverPrice'
-    ]),
+    ...mapState({
+      'address': state => state.member.address,
+      'addresses': state => satate.member.addresses,
+      'carts': state => state.product.carts,
+      'deliverPrice': state => state.product.deliverPrice
+    }),
     price() {
       let price = 0;
       let member = 0;
@@ -163,7 +164,7 @@ export default {
       return this.$store.dispatch('getAddress', {entityId: id});
     },
     ConverAddress(address) {
-      return this.$tools.convertAddress(address);
+      return convertAddress(address);
     }
   }
 };

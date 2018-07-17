@@ -25,9 +25,9 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.$store.commit('updateLoadingStatus', {isLoading: true});
+      vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: true});
       vm.$store.dispatch('getGoods').then(() => {
-        vm.$store.commit('updateLoadingStatus', {isLoading: false});
+        vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false});
       });
     });
   },

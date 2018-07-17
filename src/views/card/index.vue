@@ -48,7 +48,6 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    log.debug('to path is ' + to.path);
     log.debug('from path is ' + from.path);
     next(vm => {
       if (from.path !== '/member' || this.$tools.isEmpty(vm.member)) {
@@ -67,10 +66,10 @@ export default {
     split
   },
   computed: {
-    ...mapState([
-      'uuid',
-      'member'
-    ]),
+    ...mapState({
+      'uuid': state => state.member.uuid,
+      'member': state => state.member.member
+    }),
     username() {
       return getUsername(this.uuid, this.member, this.$t('member.vistor'));
     }
