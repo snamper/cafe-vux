@@ -1,6 +1,6 @@
-import Vue from '../node_modules/_vue@2.5.16@vue';
+import Vue from 'vue';
 import FastClick from 'fastclick';
-import { Toast, Lazyload } from '../node_modules/_vant@1.1.13@vant';
+import { Toast, Lazyload } from 'vant';
 import App from './App.vue';
 import router from './router';
 import store from './store';

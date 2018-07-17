@@ -97,7 +97,7 @@ export default {
         const good = data.selectedSkuComb.good;
         good.count = data.selectedNum;
         const carts = [good];
-        this.$store.commit('update', {type: 'carts', value: carts});
+        this.$store.commit('UPDATE_CARTS', carts);
         resolve();
       });
     },
@@ -105,7 +105,7 @@ export default {
       return new Promise((resolve, reject) => {
         const good = data.selectedSkuComb.good;
         const count = data.selectedNum;
-        this.$store.commit('addCount', {good, count});
+        this.$store.commit('ADD_COUNT', {good, count});
         resolve();
       });
     },

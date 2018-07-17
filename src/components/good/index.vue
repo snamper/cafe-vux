@@ -88,12 +88,12 @@ export default {
         case 'right':
           log.info('delete button clicked');
           this.good.count = 0
-          this.$store.commit('setCount', this.good);
+          this.$store.commit('SET_COUNT', this.good);
           break;
       }
     },
     OnStepperChange(value) {
-      this.$store.commit('setCount', {good: this.good, count: this.value});
+      this.$store.commit('SET_COUNT', {good: this.good, count: this.value});
     },
     name(good) {
       return this.$tools.isNotEmpty(good.name) ? good.name : good.productName;
