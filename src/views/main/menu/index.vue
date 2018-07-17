@@ -48,14 +48,13 @@ import sku from '@/components/sku';
 import { mapState } from 'vuex';
 /* import good from './test.js'; */
 import Logger from 'chivy';
-const log = new Logger('views/main/category');
+const log = new Logger('views/main/menu');
 export default {
   data() {
     return {
       listHeight: [],
       scrollY: 0,
-      selectedFood: {}/* ,
-      goods: good.goods */
+      selectedFood: {}
     };
   },
   components: {
@@ -65,10 +64,10 @@ export default {
     product
   },
   created() {
-    this.$store.commit('updateLoadingStatus', {isLoading: true});
+    this.$store.commit('UPDATE_LOADING_STATUS', {isLoading: true});
     this.$store.dispatch('getGoods').then(() => {
       this.init();
-      this.$store.commit('updateLoadingStatus', {isLoading: false});
+      this.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false});
     }).catch(error => {
       log.error(JSON.stringify(error));
       this.$router.push({name: '404'});
@@ -111,7 +110,7 @@ export default {
       });
     },
     selectMenu(index) {
-      log.info('selectMenu index is ' + index);
+      // log.info('selectMenu index is ' + index);
       const foodList = this.$refs.foodList;
       const el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
@@ -146,7 +145,7 @@ export default {
     _followScroll(index) {
       const menuList = this.$refs.menuList;
       const el = menuList[index];
-      log.info('_followScroll index is ' + index);
+      // log.info('_followScroll index is ' + index);
       this.meunScroll.scrollToElement(el, 300, 0, -100);
     },
     // 点击显示good页面

@@ -33,7 +33,7 @@ module.exports = {
         target: server ? "http://www.tianbakery.store" : "http://127.0.0.1:15080",
         changeOrigin: true,
         pathReWrite: {
-          "^/shop": ""
+          "^/rest/shop": ""
         }
       },
       "/upload": {

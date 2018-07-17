@@ -1,6 +1,6 @@
 import WebStorageCache from 'web-storage-cache';
 import Logger from 'chivy';
-import MyUtils from './myUtils';
+import Tools from './tools';
 const wsCache = new WebStorageCache();
 const uuidv4 = require('uuid/v4');
 const log = new Logger('utils/storage');
@@ -29,11 +29,11 @@ export const initStorage = () => {
     // debugger
     let result = {};
     const member = getStorage(key.member);
-    if (MyUtils.isNotEmpty(member)) {
+    if (Tools.isNotEmpty(member)) {
       result = {uuid: null, member: member};
     } else {
       let uuid = getStorage(key.uuid);
-      if (MyUtils.isEmpty(uuid)) {
+      if (Tools.isEmpty(uuid)) {
         uuid = uuidv4();
         log.debug('UUID is ' + uuid);
         setStorage({key: key.uuid, value: uuid});
@@ -50,7 +50,7 @@ export const setMember = value => {
 };
 
 // 注销成功后
-export const setUuid = state => {
+export const setUuid = () => {
   delStorage(key.member);
   const uuid = uuidv4();
   setStorage({key: key.uuid, value: uuidv4()});

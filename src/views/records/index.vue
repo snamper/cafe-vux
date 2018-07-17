@@ -27,7 +27,7 @@
 import { Tab, Tabs, NavBar, Icon } from 'vant';
 import { mapState } from 'vuex';
 import order from  './one';
-import { status } from '@/utils/consts';
+import { status } from '@/utils/products';
 import Logger from 'chivy';
 const log = new Logger('views/records');
 export default {

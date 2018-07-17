@@ -1,6 +1,6 @@
 import { memberLogin, isExistUserName, createMember, modifyBasicInfo, saveAddresses, deleteAddresses, getAddresses } from '@/api/member';
 import { setMember, setUuid, initStorage } from '@/utils/storage';
-import { getMemberInfo, setModifyData } from '@/utils/Utils';
+import { getMemberInfo, setModifyData } from '@/utils/memberInfo';
 const member = {
   state: {
     // UUID

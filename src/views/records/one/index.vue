@@ -33,7 +33,7 @@
 import { Cell, CellGroup, Row, Col, Button, Toast } from 'vant';
 import product from '@/components/good';
 import banner from '@/components/banner';
-import { status } from '@/utils/consts';
+import { status } from '@/utils/products';
 import Logger from 'chivy';
 const log = new Logger('views/records/one');
 export default {

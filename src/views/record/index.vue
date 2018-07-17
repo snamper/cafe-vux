@@ -77,7 +77,7 @@ import { mapState } from 'vuex';
 import product from '@/components/good';
 import addr from '@/components/address';
 import orderstatus from '@/components/status';
-import { status } from '@/utils/consts';
+import { status } from '@/utils/products';
 import Logger from 'chivy';
 const log = new Logger('views/record');
 export default {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Logger from 'chivy';
-const log = new Logger('utils/myutils');
+const log = new Logger('utils/request');
 
 const service = axios.create({
   baseURL: '/rest/shop',
