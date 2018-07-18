@@ -23,10 +23,10 @@ export const memberLogin = (name, passWd) => {
   });
 };
 
-export const createMember = (mobile, passWd) => {
+export const createMember = (mobile, passwd) => {
   const data = {
     mobile,
-    passWd
+    passwd
   };
   return service({
     url: '/member/show/ui/createMember.do',

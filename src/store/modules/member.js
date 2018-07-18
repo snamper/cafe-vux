@@ -1,6 +1,8 @@
 import { memberLogin, isExistUserName, createMember, modifyBasicInfo, saveAddresses, deleteAddresses, getAddresses } from '@/api/member';
 import { setMember, setUuid, initStorage } from '@/utils/storage';
 import { getMemberInfo, setModifyData } from '@/utils/memberInfo';
+import Logger from 'chivy';
+const log = new Logger('store/modules/member');
 const member = {
   state: {
     // UUID
@@ -54,6 +56,7 @@ const member = {
             const member = getMemberInfo(data);
             commit('LOGIN_IN', member);
             commit('UPDATE_ADDRESS', null);
+            resolve();
           } else {
             reject(new Error('login failed'));
           }
@@ -72,13 +75,13 @@ const member = {
     resigter({commit}, user) {
       return new Promise((resolve, reject) => {
         createMember(user.mobile, user.passWd).then(data => {
+          log.debug('RESPONSE DATA IS ' + JSON.stringify(data));
           if (data.status) {
             const memberinfo = getMemberInfo(data);
             commit('UPDATE_MEMBER', memberinfo);
-            resolve();
-          } else {
-            reject(new Error('resigter failed'));
+            commit('LOGIN_IN', memberinfo);
           }
+          resolve(data.status);
         });
       });
     },

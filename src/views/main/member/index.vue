@@ -82,6 +82,7 @@ export default {
     round
   },
   beforeRouteEnter(from, to, next) {
+    log.info('beforeRouteEnter');
     next(vm => {
       const id = vm.$tools.isCurrentJumpPage(window.location.href);
       log.info('id is ' + id);
@@ -89,8 +90,9 @@ export default {
     });
   },
   created() {
+    log.info('created');
     const id = this.$tools.isCurrentJumpPage(window.location.href);
-    log.error('id is ' + id);
+    log.debug('id is ' + id);
   },
   computed: {
     ...mapState({

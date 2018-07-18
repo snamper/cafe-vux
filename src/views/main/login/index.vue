@@ -97,10 +97,11 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { Button, Field, CellGroup, Toast, Row, Col } from 'vant';
+import { Button, Field, CellGroup, Row, Col } from 'vant';
 import avator from '@/components/avator';
 import { mapState } from 'vuex';
 import md5 from 'blueimp-md5';
+import { isPwdValid, isAccountValid, isTelValid, isEmailValid, isChineseNameValid } from '@/utils/validate';
 import Logger from 'chivy';
 const log = new Logger('views/main/login');
 export default {
@@ -177,12 +178,15 @@ export default {
       this.$toast(this.$t('pay.tips2'));
       // window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=weibo';
     },
+    // 游客
     onClickVistor() {
       this.$router.push({name: 'member'});
     },
+    // 显示登陆和注册
     onClickShow() {
       this.showlogin = !this.showlogin;
     },
+    // 登陆
     onClickLogin() {
       this.disable.login = true;
       const valid = !this.username.error && !this.password.error && !this.$tools.isEmpty(this.username.content) && !this.$tools.isEmpty(this.password.content);
@@ -208,6 +212,7 @@ export default {
         this.ResetField(true);
       });
     },
+    // 注册
     onClickRegister() {
       this.disable.register = true;
       const valid = !this.account.error && !this.pwd.error && !this.repwd.error && !this.$tools.isEmpty(this.account.content) && !this.$tools.isEmpty(this.pwd.content) && !this.$tools.isEmpty(this.repwd.content);
@@ -219,20 +224,23 @@ export default {
       // 注册用户
       const param ={
         mobile: this.account.content,
-        passWd: md5(this.pwd)
+        passwd: md5(this.pwd)
       };
       this.$toast(this.$t('login.logining'), true, 'loading');
-      this.$store.dispatch('resigter', param).then(() => {
-        this.$toast.close();
-        this.$toast({message: this.$t('login.tips4'), mask: true, type: 'success'});
-        this.disable.register = false;
-        this.Jump2MemberPage();
-      }).catch((error) => {
-        this.$toast({message: this.$t('login.tips5'), mask: true, type: 'fail'});
-        this.ResetField(true);
-        this.disable.register = false;
+      this.$store.dispatch('resigter', param).then(resp => {
+        // debugger
+        if (resp) {
+          this.$toast({message: this.$t('login.tips4'), mask: true, type: 'success'});
+          this.disable.register = false;
+          this.Jump2MemberPage();
+        } else {
+          this.$toast({message: this.$t('login.tips5'), mask: true, type: 'fail'});
+          this.ResetField(true);
+          this.disable.register = false;
+        }
       });
     },
+    // 检查账户是否重复
     checkAccountDuplicate(data) {
       if (this.$tools.isEmpty(data.content)){
         return;
@@ -250,10 +258,13 @@ export default {
           this.$toast({message: this.$t('login.tips6'), mask: true, type: 'text'});
           this.account.content = '';
           data.error = true;
+        } else {
+          data.error = false;
         }
       });
 
     },
+    // 忘记密码
     onClickForget() {
       log.info('forget password');
     },
@@ -272,7 +283,7 @@ export default {
           }
           break;
         case this.pwd.key:
-          error = !this.$tools.regexMatch(data.content, regex.password);
+          error = !isPwdValid(data.content);
           if(error) {
             this.$toast(this.$t('login.tips8'));
           }
@@ -289,11 +300,11 @@ export default {
     },
     // 检查账号是否可用
     CheckAccountAvaliable(account) {
-      if (this.$tools.isTelValid(account)) {
+      if (isTelValid(account)) {
         return true;
-      } else if (this.$tools.isEmailValid(account)) {
+      } else if (isEmailValid(account)) {
         return true;
-      } else if (this.$tools.isAccountValid(account)) {
+      } else if (isAccountValid(account)) {
         return true;
       }
       return false;
