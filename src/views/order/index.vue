@@ -73,8 +73,8 @@ export default {
   },
   beforeRouteEnter(from, to, next) {
     next(vm => {
-      log.warn('carts length is ' + vm.$store.state.carts.length);
-      if (vm.$store.state.carts.length === 0) {
+      log.warn('carts length is ' + vm.carts.length);
+      if (vm.carts.length === 0) {
         vm.$router.push({name: 'cart'});
       }
       /**
@@ -83,15 +83,15 @@ export default {
       */
       // debugger
       vm.$toast.clear();
-      vm.$store.commit('updateLoadingStatus', {isLoading: true});
-      if (to.path !== '/address' && vm.$tools.isNotEmpty(vm.$store.state.member)) {
+      vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: true});
+      if (to.path !== '/address' && vm.$tools.isNotEmpty(vm.$store.state.member.member)) {
         log.info('get address from server');
         // 找出默认地址
-        vm.GetAddresses(vm.$store.state.member.id).then(() => {
-          vm.$store.commit('updateLoadingStatus', {isLoading: false});
+        vm.GetAddresses(vm.$store.state.member.member.id).then(() => {
+          vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false});
         }).catch(error => {
           log.error(error);
-          vm.$store.commit('updateLoadingStatus', {isLoading: false});
+          vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false});
         });
       }
     });

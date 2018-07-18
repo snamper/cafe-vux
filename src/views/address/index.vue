@@ -56,16 +56,16 @@ export default {
       // TODO 用后删除
       vm.$store.dispatch('initUser').then(() => {
         // 当直接进入该页面的时候，退回到主页
-        if (vm.$tools.isEmpty(vm.$store.state.uuid) && vm.$tools.isEmpty(vm.$store.state.member)) {
+        if (vm.$tools.isEmpty(vm.uuid) && vm.$tools.isEmpty(vm.member)) {
           vm.$router.push({name: 'menu'});
         }
         // 购物车为空直接回购物车
-        if (vm.$store.state.carts.length === 0) {
+        if (vm.carts.length === 0) {
           vm.$router.push({name: 'cart'});
         }
         // debugger
         // 选中的地址
-        vm.chosenAddressId = vm.$tools.isNotEmpty(vm.$store.state.address) ? vm.$store.state.address.id : '';
+        vm.chosenAddressId = vm.$tools.isNotEmpty(vm.address) ? vm.address.id : '';
         // 避免从修改页面到其他页面后，不显示列表页面
         vm.ShowListPage();
       });
@@ -76,7 +76,8 @@ export default {
       'uuid': state =>  state.member.uuid,
       'member': state => state.member.member,
       'addresses': state => state.member.addresses,
-      'address': state => state.member.address
+      'address': state => state.member.address,
+      'carts': state => state.product.carts
     }),
     rightText() {
       return this.edit ? '' : this.$t('address.finish');

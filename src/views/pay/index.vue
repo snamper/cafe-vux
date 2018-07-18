@@ -82,8 +82,8 @@ export default {
       log.debug('beforeRouteEnter to path is ' + to.path);
       // 保存这个路由是从那个地方来的
       vm.to = to.path;
-      log.debug('records is ' + JSON.stringify(vm.$store.state.carts));
-      if (to.path === '/' || vm.$tools.isEmpty(vm.$store.state.carts)) {
+      log.debug('records is ' + JSON.stringify(vm.carts));
+      if (to.path === '/' || vm.$tools.isEmpty(vm.carts)) {
         vm.$router.push({name: 'menu'});
       }
     });
@@ -226,6 +226,7 @@ export default {
           log.info('alipay pay');
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
+              this.$toast.success('success');
               // window.location.href = this.getPayURL('alipay', this.totalPrice, resp);
             });
           } else {
@@ -237,6 +238,7 @@ export default {
           log.info('wechat pay');
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
+              this.$toast.success('success');
               // window.location.href = this.getPayURL('wechat', this.totalPrice, resp);
             });
           } else {

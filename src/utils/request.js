@@ -22,8 +22,9 @@ const service = axios.create({
 
 service.interceptors.response.use(
   response => {
-    // log.debug('RESPONSE IS ' + JSON.stringify(response));
+    // log.warn(response);
     if (response.status === 200) {
+      // log.debug('RESPONSE IS ' + JSON.stringify(response.data));
       return response.data;
     } else {
       log.error('response status code is ' + response.status + '.');

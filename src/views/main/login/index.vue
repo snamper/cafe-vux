@@ -158,11 +158,14 @@ export default {
     avator
   },
   computed: {
+    ...mapState({
+      'uuid': state => state.member.uuid
+    })
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      log.debug('uuid is ' + vm.$store.state.uuid);
-      if (vm.$tools.isEmpty(vm.$store.state.uuid)) {
+      log.debug('uuid is ' + vm.uuid);
+      if (vm.$tools.isEmpty(vm.uuid)) {
         vm.$router.push({name: 'member'});
       }
     })

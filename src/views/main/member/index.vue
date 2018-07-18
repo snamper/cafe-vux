@@ -60,7 +60,8 @@ import { Cell, CellGroup, Row, Col, Icon, Button  } from 'vant';
 import { mapState, mapGetters } from 'vuex';
 import round from './round';
 import avator from '@/components/avator';
-import { status } from  '@/utils/products.js';
+import { status } from  '@/utils/products';
+import { getUsername } from '@/utils/memberInfo';
 import Logger from 'chivy';
 const log = new Logger('views/main/member');
 export default {
@@ -112,7 +113,7 @@ export default {
       }
     },
     username() {
-      return this.$tools.getUsername(this.uuid, this.member, this.$t('member.vistor'));
+      return getUsername(this.uuid, this.member, this.$t('member.vistor'));
     },
   },
   methods: {

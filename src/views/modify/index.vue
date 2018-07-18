@@ -154,7 +154,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (from.path !== '/card' || this.$tools.isEmpty(vm.$store.state.member)) {
+      if (from.path !== '/card' || this.$tools.isEmpty(vm.member)) {
         vm.$router.push({name: 'member'});
       }
     });

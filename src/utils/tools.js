@@ -1,4 +1,6 @@
 import querystring from './queryString';
+import Logger from 'chivy';
+const log = new Logger('utils/tools');
 // 小于0的数字前面加0
 const appendZero = number => number <= 9 ? ('0' + number) : number;
 
@@ -41,6 +43,7 @@ export default class Tools {
 
   // 是否从正确的页面跳转回来
   static isCurrentJumpPage = url => {
+    log.debug(url);
     const array = url.split('?');
     return array.length === 2 ? querystring.parse(array[1]) : null;
   };

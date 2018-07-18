@@ -4,7 +4,7 @@ export const getCategoriedProducts = () => {
   const data = {
     envData: {
       pageNo: 1,
-      pageSize: 20
+      pageSize: 1000
     }
   };
   return service({
@@ -16,6 +16,10 @@ export const getCategoriedProducts = () => {
 
 export const getRecordList = (userId, userCode, needDetail) => {
   const data = {
+    envData: {
+      pageNo: 1,
+      pageSize: 1000
+    },
     userId,
     userCode,
     needDetail
