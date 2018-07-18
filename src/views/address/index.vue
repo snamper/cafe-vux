@@ -156,7 +156,7 @@ export default {
         county: content.county,
         address: content.address_detail,
         mobile: content.tel,
-        code: content.area_code,
+        areaCode: content.area_code,
         defaultEntity: content.is_default
       };
       log.warn('address is ' + JSON.stringify(address));

@@ -116,7 +116,7 @@ const member = {
     saveAddress({commit}, address) {
       return new Promise(resolve => {
         saveAddresses(address.memberId, address.name, address.province, address.city, address.county, address.address, address.mobile, address.code, address.defaultEntity).then(data => {
-          resolve(data.status);
+          resolve(data.status || data.success);
         });
       });
     },
