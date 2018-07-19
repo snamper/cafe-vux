@@ -84,16 +84,16 @@ const product = {
     },
     // 提交订单
     submitRecord: ({ commit }, record) => {
-      return new Promise((resolve, reject) => {
-        saveRecordList(record.amount, record.userId, record.userCode, record.cashOrBalance, record.details).then(data => {
+      return new Promise(resolve => {
+        saveRecordList(record).then(data => {
           resolve(data.entityCode);
         });
       });
     },
     // 获取订单信息
-    getRecords: ({ commit }, userInfo) => {
+    getRecords: ({ commit }, user) => {
       return new Promise(resolve => {
-        getRecordList(userInfo.userId, userInfo.userCode, userInfo.needDetail).then(data => {
+        getRecordList(user).then(data => {
           commit('UPDATE_RECORDS', data);
           resolve();
         });
@@ -107,8 +107,8 @@ const product = {
       });
     },
     // 更新订单状态
-    alterStatus({ commit }, status) {
-      return alterStatus(status.entityId, status.status);
+    alterStatus({ commit }, order) {
+      return alterStatus(order);
     },
     // 清空选中的购物车
     clearCarts({ commit }) {

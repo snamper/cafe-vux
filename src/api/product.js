@@ -14,15 +14,15 @@ export const getCategoriedProducts = () => {
   });
 };
 
-export const getRecordList = (userId, userCode, needDetail) => {
+export const getRecordList = param => {
   const data = {
     envData: {
       pageNo: 1,
       pageSize: 1000
     },
-    userId,
-    userCode,
-    needDetail
+    userId: param.userId,
+    userCode: param.userCode,
+    needDetail: param.needDetail
   };
   return service({
     url: '/product/show/ui/getRecordList.do',
@@ -31,13 +31,18 @@ export const getRecordList = (userId, userCode, needDetail) => {
   });
 };
 
-export const saveRecordList = (amount, userId, userCode, cashOrBalance, details) => {
+export const saveRecordList = param => {
   const data = {
-    amount,
-    userId,
-    userCode,
-    cashOrBalance,
-    details
+    userName: param.userName,
+    deliveryLocation: param.deliveryLocation,
+    deliveryMobile: param.deliveryMobile,
+    deliveryTypeStr: param.deliveryTypeStr,
+    message: param.message,
+    amount: param.amount,
+    userId: param.userId,
+    userCode: param.userCode,
+    cashOrBalance: param.cashOrBalance,
+    details: param.details
   };
   return service({
     url: '/product/show/ui/saveRecordList.do',
@@ -46,10 +51,10 @@ export const saveRecordList = (amount, userId, userCode, cashOrBalance, details)
   });
 };
 
-export const alterStatus = (entityId, status) => {
+export const alterStatus = param => {
   const data = {
-    entityId,
-    status
+    entityId: param.entityId,
+    status: param.status
   };
   return service({
     url: '/product/show/ui/alterStatus.do',

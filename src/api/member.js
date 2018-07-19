@@ -1,8 +1,10 @@
 import service from '@/utils/request';
+import Logger from 'chivy';
+const log = new Logger('api/member');
 
-export const isExistUserName = name => {
+export const isExistUserName = param => {
   const data = {
-    name
+    name: param.name
   };
   return service({
     url: '/member/show/ui/isExistUserName.do',
@@ -11,10 +13,10 @@ export const isExistUserName = name => {
   });
 };
 
-export const memberLogin = (name, passWd) => {
+export const memberLogin = param => {
   const data = {
-    name,
-    passWd
+    name: param.name,
+    passWd: param.passWd
   };
   return service({
     url: '/member/show/ui/memberLogin.do',
@@ -23,10 +25,10 @@ export const memberLogin = (name, passWd) => {
   });
 };
 
-export const createMember = (mobile, passwd) => {
+export const createMember = param => {
   const data = {
-    mobile,
-    passwd
+    mobile: param.mobile,
+    passwd: param.passwd
   };
   return service({
     url: '/member/show/ui/createMember.do',
@@ -35,15 +37,15 @@ export const createMember = (mobile, passwd) => {
   });
 };
 
-export const modifyBasicInfo = (userId, name, mobile, gender, email, address, detailAddress) => {
+export const modifyBasicInfo = param => {
   const data = {
-    userId,
-    name,
-    mobile,
-    gender,
-    email,
-    address,
-    detailAddress
+    userId: param.id,
+    name: param.name,
+    mobile: param.mobile,
+    gender: param.gender,
+    email: param.email,
+    address: param.address,
+    detailAddress: param.detailAddress
   };
   return service({
     url: '/member/show/ui/modifyBasicInfo.do',
@@ -52,10 +54,10 @@ export const modifyBasicInfo = (userId, name, mobile, gender, email, address, de
   });
 };
 
-export const modifyPassword = (entityId, entityName) => {
+export const modifyPassword = param => {
   const data = {
-    entityId,
-    entityName
+    entityId: param.entityId,
+    entityName: param.entityName
   };
   return service({
     url: '/member/show/ui/createMember.do',
@@ -64,9 +66,9 @@ export const modifyPassword = (entityId, entityName) => {
   });
 };
 
-export const getMemberById = entityId => {
+export const getMemberById = param => {
   const data = {
-    entityId
+    entityId: param.entityId
   };
   return service({
     url: '/member/show/ui/getMemberById.do',
@@ -75,9 +77,9 @@ export const getMemberById = entityId => {
   });
 };
 
-export const getBasicInfoList = entityId => {
+export const getBasicInfoList = param => {
   const data = {
-    entityId
+    entityId: param.entityId
   };
   return service({
     url: '/member/show/ui/getBasicInfoList.do',
@@ -86,9 +88,9 @@ export const getBasicInfoList = entityId => {
   });
 };
 
-export const getAddresses = entityId => {
+export const getAddresses = param => {
   const data = {
-    entityId
+    entityId: param.entityId
   };
   return service({
     url: '/product/show/ui/getAddresses.do',
@@ -97,18 +99,19 @@ export const getAddresses = entityId => {
   });
 };
 
-export const saveAddresses = (memberId, name, province, city, county, address, mobile, code, defaultEntity) => {
+export const saveAddresses = param => {
   const data = {
-    memberId,
-    name,
-    province,
-    city,
-    county,
-    address,
-    mobile,
-    code,
-    defaultEntity
+    memberId: param.memberId,
+    name: param.name,
+    province: param.province,
+    city: param.city,
+    county: param.county,
+    address: param.address,
+    mobile: param.mobile,
+    areaCode: param.areaCode,
+    defaultEntity: param.defaultEntity
   };
+  log.debug('address is ' + JSON.stringify(data));
   return service({
     url: '/product/show/ui/saveAddresses.do',
     method: 'post',
@@ -116,9 +119,9 @@ export const saveAddresses = (memberId, name, province, city, county, address, m
   });
 };
 
-export const deleteAddresses = entityId => {
+export const deleteAddresses = param => {
   const data = {
-    entityId
+    entityId: param.entityId
   };
   return service({
     url: '/product/show/ui/deleteAddresses.do',
@@ -127,17 +130,17 @@ export const deleteAddresses = entityId => {
   });
 };
 
-export const updateAddresses = (id, name, province, city, county, address, mobile, code, defaultEntity) => {
+export const updateAddresses = param => {
   const data = {
-    id,
-    name,
-    province,
-    city,
-    county,
-    address,
-    mobile,
-    code,
-    defaultEntity
+    id: param.id,
+    name: param.name,
+    province: param.province,
+    city: param.city,
+    county: param.county,
+    address: param.address,
+    mobile: param.mobile,
+    areaCode: param.areaCode,
+    defaultEntity: param.defaultEntity
   };
   return service({
     url: '/shop/product/show/ui/updateAddresses.do',

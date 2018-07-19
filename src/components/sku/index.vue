@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     onBuyClicked(data) {
-      //TODO 需要加一个loading，创建待付款订单中，这个有点慢
       log.debug('onBuyClicked' + JSON.stringify(data));
       this.$toast.loading('添加订单中...');
       this.Add2Cart(data).then(() => {
@@ -92,13 +91,16 @@ export default {
       this.show = true;
       this.showSelf = flag;
     },
+    // 添加到购物商品清单中，既添加购物车又添加购物列表
     Add2Cart(data) {
-      return new Promise((resolve, reject) => {
-        const good = data.selectedSkuComb.good;
-        good.count = data.selectedNum;
-        const carts = [good];
-        this.$store.commit('UPDATE_CARTS', carts);
-        resolve();
+      return new Promise(resolve => {
+        this.Add2SelectFoods(data).then(() => {
+          const good = data.selectedSkuComb.good;
+          good.count = data.selectedNum;
+          const carts = [good];
+          this.$store.commit('UPDATE_CARTS', carts);
+          resolve();
+        });
       });
     },
     Add2SelectFoods(data) {

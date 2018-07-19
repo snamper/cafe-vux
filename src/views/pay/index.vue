@@ -7,7 +7,7 @@
     </van-nav-bar>
     <van-radio-group v-model="radio">
       <van-cell-group>
-        <van-cell clickable @click="choose(alipay)">
+        <van-cell clickable @click="Choose(alipay)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="alipay.img"></avator>
@@ -18,7 +18,7 @@
             <van-radio :name="alipay.value" />
           </div>
         </van-cell>
-        <van-cell clickable @click="choose(wechat)">
+        <van-cell clickable @click="Choose(wechat)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="wechat.img"></avator>
@@ -29,7 +29,7 @@
             <van-radio :name="wechat.value" />
           </div>
         </van-cell>
-        <van-cell v-if="member" clickable @click="choose(memberObj)">
+        <van-cell v-if="member" clickable @click="Choose(memberObj)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="memberObj.img"></avator>
@@ -82,7 +82,7 @@ export default {
       log.debug('beforeRouteEnter to path is ' + to.path);
       // 保存这个路由是从那个地方来的
       vm.to = to.path;
-      log.debug('records is ' + JSON.stringify(vm.carts));
+      log.debug('carts is ' + JSON.stringify(vm.carts));
       if (to.path === '/' || vm.$tools.isEmpty(vm.carts)) {
         vm.$router.push({name: 'menu'});
       }
@@ -97,9 +97,6 @@ export default {
     deliverType: {
       type: Boolean,
       default: false
-    },
-    address: {
-      type: Object
     },
     orderid: {
       type: Number,
@@ -120,7 +117,8 @@ export default {
       'uuid': state => state.member.uuid,
       'member': state => state.member.member,
       'carts': state => state.product.carts,
-      'deliverPrice': state => state.product.deliverPrice
+      'deliverPrice': state => state.product.deliverPrice,
+      'address': state => state.member.address
     }),
     // 购物总价
     totalPrice() {
@@ -176,6 +174,10 @@ export default {
     },
     order() {
       const result = {
+        userName: this.address.name,
+        deliveryLocation: this.address.province + this.address.city + this.address.county + (this.$tools.isEmpty(this.address.address) ? this.address.address_detail : this.address.address),
+        deliveryMobile: this.address.mobile,
+        paymentTypeStr: this.deliverType ? '快递' : '自取',
         amount: this.totalPrice,
         userId: this.$tools.isNotEmpty(this.member) ? this.member.id : '',
         userCode: this.$tools.isNotEmpty(this.uuid) ? this.uuid : '',
@@ -195,7 +197,7 @@ export default {
     }
   },
   methods: {
-    choose(data) {
+    Choose(data) {
       this.radio = data.value;
     },
     getPayURL(type, value, order) {
@@ -245,14 +247,16 @@ export default {
             // window.location.href = this.getPayURL('wechat', this.totalPrice, orderid);
           }
           break;
-        case this.member.value:
+        case this.memberObj.value:
           log.info('member pay');
+          log.debug('submitRecord payload is ' + JSON.stringify(this.order));
           // TODO 需要判断是第一次提交订单还是已有订单付款
-          this.$store.dispatch('submitRecord', this.order).then(resp => {
-            if (this.$tools.isNotEmpty(resp)) {
+          this.$store.dispatch('submitRecord', this.order).then(() => {
+            this.$router.push({name: 'records'});
+            /* if (this.$tools.isNotEmpty(resp)) {
               this.$toast(this.$t('pay.tips2'));
               this.$router.push({name: 'records'});
-            }
+            } */
           });
           break;
       }

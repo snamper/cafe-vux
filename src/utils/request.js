@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Tools from './tools';
 /* import qs from 'qs'; */
 import Logger from 'chivy';
 const log = new Logger('utils/request');
@@ -28,7 +29,9 @@ service.interceptors.response.use(
      */
     if (response.status === 200) {
       const data = response.data;
-      if (data.success || data.status) {
+      if (Tools.isEmpty(data.success)) {
+        return data;
+      } else if (data.success) {
         return data;
       } else {
         return Promise.reject(new Error('[success is ' + data.success + '] && [status is ' + data.status + '].'));

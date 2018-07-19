@@ -51,7 +51,7 @@ const member = {
     // 登陆成功后
     login({commit}, user) {
       return new Promise((resolve, reject) => {
-        memberLogin(user.name, user.passWd).then(data => {
+        memberLogin(user).then(data => {
           const member = getMemberInfo(data);
           commit('LOGIN_IN', member);
           commit('UPDATE_ADDRESS', null);
@@ -86,10 +86,10 @@ const member = {
     // 修改会员信息
     modifyInfo({commit}, user) {
       const param = setModifyData(user);
-      return modifyBasicInfo(param.userId, param.name, param.mobile, param.gender, param.email, param.address, param.detailAddress);
+      return modifyBasicInfo(param);
     },
     // 初始化用户
-    initUser({commit}, payload) {
+    initUser({commit}) {
       return new Promise(resolve => {
         initStorage().then(resp => {
           commit('UPDATE_UUID', resp.uuid);
@@ -100,19 +100,19 @@ const member = {
     },
     // 保存配送地址
     saveAddress({commit}, address) {
-      return saveAddresses(address.memberId, address.name, address.province, address.city, address.county, address.address, address.mobile, address.code, address.defaultEntity);
+      return saveAddresses(address);
     },
     // 删除配送地址
     deleteAddress({commit}, address) {
-      return deleteAddresses(address.entityId);
+      return deleteAddresses(address);
     },
     modifyAddress({commit}, address) {
-      return updateAddresses(address.id, address.name, address.province, address.city, address.county, address.address, address.mobile, address.code, address.defaultEntity);
+      return updateAddresses(address);
     },
     // 获取配送地址
     getAddress({commit}, user) {
       return new Promise(resolve => {
-        getAddresses(user.entityId).then(data => {
+        getAddresses(user).then(data => {
           commit('UPDATE_ADDRESSES', data);
           commit('SET_DEFAULT_ADDRESS');
           resolve();

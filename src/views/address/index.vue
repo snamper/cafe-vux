@@ -121,6 +121,7 @@ export default {
         list.push({
           id: address.id,
           name: address.name,
+          area_code: address.areaCode,
           tel: this.$tools.isEmpty(address.mobile) ? address.tel : address.mobile,
           address: address.province + address.city + address.county + (this.$tools.isEmpty(address.address) ? address.address_detail: address.address)
         });
@@ -186,13 +187,15 @@ export default {
       } else {
         // 新增
         if (this.edit) {
+          log.info('add address');
           this.$store.dispatch('saveAddress', address).then(() => {
             this.RefeshList();
           }).catch(error => {
             this.$toast.fail(this.$t('address.addfail'));
           });
         } else {
-          this.$store.dispatch('saveAddress', address).then(() => {
+          log.info('modify address');
+          this.$store.dispatch('modifyAddress', address).then(() => {
             this.RefeshList();
           }).catch(error => {
             this.$toast.fail(this.$t('address.editfail'));
@@ -206,10 +209,10 @@ export default {
       const param = {
         entityId: content.id
       }
-      this.$store.dispatch('deleteAddress', param).then(resp => {
-        if (resp) {
-          this.RefeshList();
-        }
+      this.$store.dispatch('deleteAddress', param).then(() => {
+        this.RefeshList();
+      }).catch(error => {
+        this.$toast.fail(this.$t('address.deletefail'));
       });
     },
     onFinish() {
@@ -226,7 +229,7 @@ export default {
     backHistoryPage() {
       // 如果是添加或者修改地址，则返回前面
       if (this.navBarTitle === this.$t('address.editAddress') || this.navBarTitle === this.$t('address.addAddress')) {
-        this.show = true;
+        this.ShowListPage();
       } else {
         this.$router.push({name: 'order'});
       }
@@ -263,7 +266,10 @@ export default {
     // 刷新List
     RefeshList() {
       this.GetAddressList(this.member.id).then(() => {
-        this.showListPage();
+        log.debug('RefeshList');
+        this.$store.commit('SET_DEFAULT_ADDRESS');
+        this.show = true;
+        this.edit = false;
       });
     },
     // 返回适合显示的address
@@ -276,7 +282,7 @@ export default {
         city: this.address.city,
         county: this.address.county,
         address_detail: this.$tools.isNotEmpty(this.address.address) ? this.address.address: this.address.address_detail,
-        area_code: this.address.area_code,
+        area_code: this.address.areaCode,
         is_default: this.$tools.isEmpty(this.address.defaultEntity) ? false : this.address.defaultEntity
       };
     }
