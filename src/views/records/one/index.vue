@@ -92,7 +92,7 @@ export default {
       });
     },
     onclickConfirm() {
-      this.$store.dispatch('setcartsgoods',this.order.details).then(() => {
+      this.$store.dispatch('setCartsgoods',this.order.details).then(() => {
         this.$router.push({name: 'pay', params: {deliverType: this.order.deliverType}});
       });
     }

@@ -97,7 +97,7 @@ export default {
       } else {
         // 结算
         const goods = this.SelectedFoods();
-        this.$store.dispatch('setcartsgoods', goods).then(() => {
+        this.$store.dispatch('setCartsgoods', goods).then(() => {
           this.$router.push({name: 'order'});
         });
       }

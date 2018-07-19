@@ -30,6 +30,7 @@ export const createMember = param => {
     mobile: param.mobile,
     passwd: param.passwd
   };
+  log.debug('createMember data is ' + JSON.stringify(data));
   return service({
     url: '/member/show/ui/createMember.do',
     method: 'post',
@@ -88,63 +89,3 @@ export const getBasicInfoList = param => {
   });
 };
 
-export const getAddresses = param => {
-  const data = {
-    entityId: param.entityId
-  };
-  return service({
-    url: '/product/show/ui/getAddresses.do',
-    method: 'post',
-    data
-  });
-};
-
-export const saveAddresses = param => {
-  const data = {
-    memberId: param.memberId,
-    name: param.name,
-    province: param.province,
-    city: param.city,
-    county: param.county,
-    address: param.address,
-    mobile: param.mobile,
-    areaCode: param.areaCode,
-    defaultEntity: param.defaultEntity
-  };
-  log.debug('address is ' + JSON.stringify(data));
-  return service({
-    url: '/product/show/ui/saveAddresses.do',
-    method: 'post',
-    data
-  });
-};
-
-export const deleteAddresses = param => {
-  const data = {
-    entityId: param.entityId
-  };
-  return service({
-    url: '/product/show/ui/deleteAddresses.do',
-    method: 'post',
-    data
-  });
-};
-
-export const updateAddresses = param => {
-  const data = {
-    id: param.id,
-    name: param.name,
-    province: param.province,
-    city: param.city,
-    county: param.county,
-    address: param.address,
-    mobile: param.mobile,
-    areaCode: param.areaCode,
-    defaultEntity: param.defaultEntity
-  };
-  return service({
-    url: '/shop/product/show/ui/updateAddresses.do',
-    method: 'post',
-    data
-  });
-};

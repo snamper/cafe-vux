@@ -252,6 +252,7 @@ export default {
           log.debug('submitRecord payload is ' + JSON.stringify(this.order));
           // TODO 需要判断是第一次提交订单还是已有订单付款
           this.$store.dispatch('submitRecord', this.order).then(() => {
+            log.info('now push to records');
             this.$router.push({name: 'records'});
           });
           break;

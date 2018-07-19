@@ -84,15 +84,6 @@ export default {
   data() {
     return {
       active: 2,
-      delivertype: '自提',
-      address: {
-        name: '张三',
-        mobile: '13333333333',
-        province: '四川省',
-        city: '成都市',
-        county: '成华区',
-        address: '昭觉市南路33号'
-      },
       status
     };
   },
@@ -128,6 +119,19 @@ export default {
     ...mapState({
       'deliverPrice': state => state.product.deliverPrice
     }),
+    address() {
+      return {
+        name: this.detail.userName,
+        tel: this.detail.deliveryMobile,
+        address: this.detail.deliveryLocation
+        /* name: '11',
+        tel: '13333333333',
+        address: 'xxxxxxxxxxxxx' */
+      };
+    },
+    delivertype() {
+      return '自提';
+    },
     orderstatus() {
       switch(this.detail.status) {
         case this.status.NOTPAY.key:
@@ -150,6 +154,12 @@ export default {
     },
     setpdesc() {
       return '超时关闭';
+    },
+    onclickConfirm() {
+
+    },
+    onclickCancel() {
+
     }
   },
   methods: {

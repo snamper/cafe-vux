@@ -8,9 +8,9 @@
       <template v-else-if="type === 'edit'">
         <van-icon class="van-contact-card__icon" name="contact" />
         <div class="van-contact-card__text">
-          <div>收货人：{{address.name}}</div>
-          <div>联系电话：{{ address.tel}}</div>
-          <div>配送地址{{address.address}}</div>
+          <div>收货人:{{address.name}}</div>
+          <div>联系电话:{{ address.tel}}</div>
+          <div>配送地址:{{address.address}}</div>
         </div>
       </template>
     </div>

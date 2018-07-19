@@ -1,4 +1,5 @@
-import { memberLogin, isExistUserName, createMember, modifyBasicInfo, saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/member';
+import { memberLogin, isExistUserName, createMember, modifyBasicInfo} from '@/api/member';
+import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
 import { setMember, setUuid, initStorage } from '@/utils/storage';
 import { getMemberInfo, setModifyData } from '@/utils/memberInfo';
 import Logger from 'chivy';

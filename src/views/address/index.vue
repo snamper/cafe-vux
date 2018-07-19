@@ -101,7 +101,7 @@ export default {
     },
     // 修改地址中的地址信息
     addressInfo() {
-      /** 
+      /**
        * 当前显示的是修改的页面的时候，判断选中的地址是否为空，当为空的时候返回address，否则返回选中的地址currentSelectAddress
        * 当前显示的是新增页面的时候，返回{}
       */
@@ -160,7 +160,8 @@ export default {
       log.debug('content is ' + JSON.stringify(content));
       // 组织需要提交的数据
       const address = {
-        memberId: this.uuid ? this.uuid : this.member.id,
+        id: this.member.id,
+        code: this.uuid,
         name: content.name,
         province: content.province,
         city: content.city,
@@ -170,7 +171,7 @@ export default {
         areaCode: content.area_code,
         defaultEntity: content.is_default
       };
-      /** 
+      /**
        * 非会员情况
        * 新增的时候只需要更新address，同时更新addresses数组
        * 修改的时候只需要更新address，同事更新addresses数组
@@ -188,7 +189,7 @@ export default {
         this.ShowListPage();
       } else {
         // 新增
-        if (this.edit) {
+        if (!this.edit) {
           log.info('add address');
           this.$store.dispatch('saveAddress', address).then(() => {
             this.RefeshList();

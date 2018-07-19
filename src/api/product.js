@@ -1,5 +1,6 @@
 import service from '@/utils/request';
-
+import Logger from 'chivy';
+const log = new Logger('api/product');
 export const getCategoriedProducts = () => {
   const data = {
     envData: {
@@ -44,6 +45,7 @@ export const saveRecordList = param => {
     cashOrBalance: param.cashOrBalance,
     details: param.details
   };
+  log.debug('saveRecordList param is ' + JSON.stringify(data));
   return service({
     url: '/product/show/ui/saveRecordList.do',
     method: 'post',
@@ -58,6 +60,70 @@ export const alterStatus = param => {
   };
   return service({
     url: '/product/show/ui/alterStatus.do',
+    method: 'post',
+    data
+  });
+};
+
+export const getAddresses = param => {
+  const data = {
+    entityId: param.entityId
+  };
+  return service({
+    url: '/product/show/ui/getAddresses.do',
+    method: 'post',
+    data
+  });
+};
+
+export const saveAddresses = param => {
+  const data = {
+    memberId: param.memberId,
+    name: param.name,
+    province: param.province,
+    city: param.city,
+    county: param.county,
+    address: param.address,
+    mobile: param.mobile,
+    areaCode: param.areaCode,
+    defaultEntity: param.defaultEntity
+  };
+  log.debug('address is ' + JSON.stringify(data));
+  return service({
+    url: '/product/show/ui/saveAddresses.do',
+    method: 'post',
+    data
+  });
+};
+
+export const deleteAddresses = param => {
+  const data = {
+    entityId: param.entityId
+  };
+  return service({
+    url: '/product/show/ui/deleteAddresses.do',
+    method: 'post',
+    data
+  });
+};
+
+export const updateAddresses = param => {
+  log.debug('updateAddresses param is ' + JSON.stringify(param));
+  const data = {
+    id: param.id,
+    code: param.code,
+    name: param.name,
+    province: param.province,
+    city: param.city,
+    county: param.county,
+    address: param.address,
+    mobile: param.mobile,
+    areaCode: param.areaCode,
+    defaultEntity: param.defaultEntity
+  };
+  log.debug('updateAddresses data is ' + JSON.stringify(data));
+  return service({
+    url: '/shop/product/show/ui/updateAddresses.do',
     method: 'post',
     data
   });
