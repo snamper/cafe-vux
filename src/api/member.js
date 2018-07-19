@@ -126,3 +126,22 @@ export const deleteAddresses = entityId => {
     data
   });
 };
+
+export const updateAddresses = (id, name, province, city, county, address, mobile, code, defaultEntity) => {
+  const data = {
+    id,
+    name,
+    province,
+    city,
+    county,
+    address,
+    mobile,
+    code,
+    defaultEntity
+  };
+  return service({
+    url: '/shop/product/show/ui/updateAddresses.do',
+    method: 'post',
+    data
+  });
+};

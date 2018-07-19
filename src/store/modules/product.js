@@ -86,7 +86,7 @@ const product = {
     submitRecord: ({ commit }, record) => {
       return new Promise((resolve, reject) => {
         saveRecordList(record.amount, record.userId, record.userCode, record.cashOrBalance, record.details).then(data => {
-          data.status ? resolve(data.entityCode) : reject(new Error('submit record failed'));
+          resolve(data.entityCode);
         });
       });
     },
@@ -108,11 +108,7 @@ const product = {
     },
     // 更新订单状态
     alterStatus({ commit }, status) {
-      return new Promise(resolve => {
-        alterStatus(status.entityId, status.status).then(data => {
-          resolve(data.status);
-        });
-      });
+      return alterStatus(status.entityId, status.status);
     },
     // 清空选中的购物车
     clearCarts({ commit }) {

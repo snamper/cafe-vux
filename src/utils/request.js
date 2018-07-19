@@ -23,11 +23,18 @@ const service = axios.create({
 service.interceptors.response.use(
   response => {
     // log.warn(response);
+    /**
+     * 当前HTTP返回不是200则返回error，如果是200则看success或者是status是否为真，如果真则返回数据
+     */
     if (response.status === 200) {
-      // log.debug('RESPONSE IS ' + JSON.stringify(response.data));
-      return response.data;
+      const data = response.data;
+      if (data.success || data.status) {
+        return data;
+      } else {
+        return Promise.reject(new Error('[success is ' + data.success + '] && [status is ' + data.status + '].'));
+      }
     } else {
-      log.error('response status code is ' + response.status + '.');
+      // log.error('response status code is ' + response.status + '.');
       return Promise.reject(new Error('response status code is ' + response.status + '.'));
     }
   },

@@ -36,11 +36,16 @@ const log = new Logger('views/address');
 export default {
   data() {
     return {
+      // 显示页面
       show: true,
-      chosenAddressId: '',
-      areaList,
+      // 修改页面 (false表示新增， true表示修改)
       edit: false,
-      currentSelectAddress: ''
+      // 选中的ID
+      chosenAddressId: '',
+      // 当前选中的地址
+      currentSelectAddress: '',
+      // 省市区列表
+      areaList
     };
   },
   components: {
@@ -53,8 +58,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     log.info('beforeRouteEnter address page');
     next(vm => {
-      // TODO 用后删除
-      vm.$store.dispatch('initUser').then(() => {
         // 当直接进入该页面的时候，退回到主页
         if (vm.$tools.isEmpty(vm.uuid) && vm.$tools.isEmpty(vm.member)) {
           vm.$router.push({name: 'menu'});
@@ -68,7 +71,6 @@ export default {
         vm.chosenAddressId = vm.$tools.isNotEmpty(vm.address) ? vm.address.id : '';
         // 避免从修改页面到其他页面后，不显示列表页面
         vm.ShowListPage();
-      });
     })
   },
   computed: {
@@ -79,6 +81,7 @@ export default {
       'address': state => state.member.address,
       'carts': state => state.product.carts
     }),
+    // 是否显示完成按钮
     rightText() {
       return this.edit ? '' : this.$t('address.finish');
     },
@@ -90,22 +93,26 @@ export default {
     showdelete() {
       return this.$tools.isNotEmpty(this.uuid) ? false : true;
     },
+    // 显示新增地址还是编辑地址
     navBarTitle() {
       return this.show ? this.$t('address.myaddress') : this.edit ? this.$t('address.editAddress') : this.$t('address.addAddress');
     },
     // 修改地址中的地址信息
     addressInfo() {
-      return this.$tools.isEmpty(this.address) ? {}: {
-        id: this.address.id,
-        name: this.address.name,
-        tel: this.$tools.isNotEmpty(this.address.mobile) ? this.address.mobile : this.address.tel,
-        province: this.address.province,
-        city: this.address.city,
-        county: this.address.county,
-        address_detail: this.$tools.isNotEmpty(this.address.address) ? this.address.address: this.address.address_detail,
-        area_code: this.address.area_code,
-        is_default: this.$tools.isEmpty(this.address.defaultEntity) ? false : this.address.defaultEntity
-      };
+      /** 
+       * 当前显示的是修改的页面的时候，判断选中的地址是否为空，当为空的时候返回address，否则返回选中的地址currentSelectAddress
+       * 当前显示的是新增页面的时候，返回{}
+      */
+      if (this.edit && this.$tools.isEmpty(this.address)) {
+        //修改页面
+        return this.ConvertAddress(this.currentSelectAddress);
+      } else if (this.edit && this.$tools.isNotEmpty(this.address)) {
+        // 设置当前选中的地址
+        this.currentSelectAddress = this.address;
+        return this.ConvertAddress(this.currentSelectAddress);
+      } else {
+        return {};
+      }
     },
     // 地址列表中的地址列表
     list() {
@@ -137,7 +144,7 @@ export default {
     },
     onEdit(item, index) {
       this.ShowEditPage();
-      this.$store.commit('update', {type: 'address', value: this.addresses[index]});
+      this.$store.commit('UPDATE_ADDRESS', this.addresses[index]);
     },
     // 选中的时候保存临时变量
     onSelect(item, index) {
@@ -147,7 +154,8 @@ export default {
     onSave(content) {
       // 不论是修改还是新增都会调用该方法，在保存完成之后，需要重新刷新一下列表，否则显示会出问题。
       log.info('onSave');
-      log.warn('content is ' + JSON.stringify(content));
+      log.debug('content is ' + JSON.stringify(content));
+      // 组织需要提交的数据
       const address = {
         memberId: this.uuid ? this.uuid : this.member.id,
         name: content.name,
@@ -159,22 +167,37 @@ export default {
         areaCode: content.area_code,
         defaultEntity: content.is_default
       };
-      log.warn('address is ' + JSON.stringify(address));
-      // 非会员不需要刷新列表，只需要把address重置即可。
+      /** 
+       * 非会员情况
+       * 新增的时候只需要更新address，同时更新addresses数组
+       * 修改的时候只需要更新address，同事更新addresses数组
+       * 会员情况
+       * 新增的时候需要提交服务器，并刷新列表
+       * 修改的时候需要提交服务器，并刷新列表
+      */
+     // 非会员的情况
       if (this.$tools.isNotEmpty(this.uuid)) {
         address.id = this.uuid;
-        // 更新
-        this.$store.commit('update', {type: 'address', value: address});
-        this.$store.commit('update', {type: 'addresses', value: [address]});
+        this.$store.commit('UPDATE_ADDRESS', address);
+        this.$store.commit('UPDATE_ADDRESSES', [address]);
         this.chosenAddressId = address.id;
         this.currentSelectAddress = address;
         this.ShowListPage();
       } else {
-        this.$store.dispatch('saveAddress', address).then(resp => {
-          if (resp) {
+        // 新增
+        if (this.edit) {
+          this.$store.dispatch('saveAddress', address).then(() => {
             this.RefeshList();
-          }
-        });
+          }).catch(error => {
+            this.$toast.fail(this.$t('address.addfail'));
+          });
+        } else {
+          this.$store.dispatch('saveAddress', address).then(() => {
+            this.RefeshList();
+          }).catch(error => {
+            this.$toast.fail(this.$t('address.editfail'));
+          });
+        }
       }
     },
     onDelete(content) {
@@ -242,6 +265,20 @@ export default {
       this.GetAddressList(this.member.id).then(() => {
         this.showListPage();
       });
+    },
+    // 返回适合显示的address
+    ConvertAddress(address) {
+      return {
+        id: this.address.id,
+        name: this.address.name,
+        tel: this.$tools.isNotEmpty(this.address.mobile) ? this.address.mobile : this.address.tel,
+        province: this.address.province,
+        city: this.address.city,
+        county: this.address.county,
+        address_detail: this.$tools.isNotEmpty(this.address.address) ? this.address.address: this.address.address_detail,
+        area_code: this.address.area_code,
+        is_default: this.$tools.isEmpty(this.address.defaultEntity) ? false : this.address.defaultEntity
+      };
     }
   }
 };

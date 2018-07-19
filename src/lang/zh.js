@@ -73,7 +73,9 @@ export default {
     finish: '完成',
     tips: '游客只能添加一个地址',
     addAddress: '添加地址',
-    editAddress: '修改地址'
+    editAddress: '修改地址',
+    addfail: '添加地址失败',
+    editfail: '修改地址失败'
   },
   card: {
     myCard: '我的会员卡',

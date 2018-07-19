@@ -252,15 +252,12 @@ export default {
       }
       this.$toast({message: this.$t('login.validing'), mask: true, type: 'loading'});
       this.$store.dispatch('duplicate', data.content).then(resp => {
-        log.info(data.content + ' is duplicate in server? ' + resp);
-        // this.$toast.close();
-        if (resp) {
           this.$toast({message: this.$t('login.tips6'), mask: true, type: 'text'});
           this.account.content = '';
           data.error = true;
-        } else {
-          data.error = false;
-        }
+      }).catch(error => {
+        log.error('account is duplicate, error is ' + JSON.stringify(error));
+        data.error = false;
       });
 
     },
