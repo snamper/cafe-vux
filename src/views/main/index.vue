@@ -6,10 +6,10 @@
     <router-view v-if="!$route.meta.keepAlive"></router-view>
     <div style="height:50px"></div>
     <van-tabbar v-model="active">
-      <van-tabbar-item icon="home" :to="{name: 'menu'}">{{$t('main.menu')}}</van-tabbar-item>
-      <van-tabbar-item icon="like-o" :to="{name: 'activity'}">{{$t('main.active')}}</van-tabbar-item>
-      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info === 0 ? '' : info">{{$t('main.cart')}}</van-tabbar-item>
-      <van-tabbar-item icon="contact" :to="{name: 'member'}">{{$t('main.member')}}</van-tabbar-item>
+      <van-tabbar-item icon="home" :to="{name: 'menu'}">主页</van-tabbar-item>
+      <van-tabbar-item icon="like-o" :to="{name: 'activity'}">今日活动</van-tabbar-item>
+      <van-tabbar-item icon="cart" :to="{name: 'cart'}" :info="info === 0 ? '' : info">购物车</van-tabbar-item>
+      <van-tabbar-item icon="contact" :to="{name: 'member'}">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div class="cart">
     <div class="cart" v-if="selectFoods.length !== 0">
       <div class="banner">
-        <van-checkbox class="title" v-model="checked" @change="onClickSelectAllCheckbox">{{$t('cart.shopName')}}</van-checkbox>
+        <van-checkbox class="title" v-model="checked" @change="onClickSelectAllCheckbox">Tian's Bakery</van-checkbox>
         <span @click="onClickModifySwitch">{{editText}}</span>
       </div>
       <van-checkbox-group v-model="result">
@@ -16,16 +16,16 @@
           :disabled="disable"
           :price="price"
           @submit="onSubmit">
-          <van-checkbox class="checkbox" v-model="checked" @change="onClickSelectAllCheckbox">{{$t('cart.selectAll')}}</van-checkbox>
+          <van-checkbox class="checkbox" v-model="checked" @change="onClickSelectAllCheckbox">全选</van-checkbox>
         </van-submit-bar>
       </div>
     </div>
     <div v-else class="nocart">
       <div class="text">
-        <div class="title">{{$t('cart.nonSelect')}}</div>
-        <div class="subtitle">{{$t('cart.selectGoods')}}</div>
+        <div class="title">购物车快饿瘪了~~</div>
+        <div class="subtitle">请购买商品</div>
         <div class="search">
-          <van-button type="default" size="small" @click="jump2MenuPage">{{$t('cart.vistor')}}</van-button>
+          <van-button type="default" size="small" @click="jump2MenuPage">去逛逛</van-button>
         </div>
       </div>
     </div>
@@ -74,13 +74,13 @@ export default {
       return price * 100;
     },
     opsText() {
-      return this.edit ? this.$t('cart.delete') : this.$t('cart.pay');
+      return this.edit ? '删除' : '结算';
     },
     editText() {
-      return this.edit ? this.$t('cart.finish') : this.$t('cart.edit');
+      return this.edit ? '完成' : '编辑';
     },
     disable() {
-      return this.result.length === 0 && this.opsText === this.$t('cart.count') ? true : false;
+      return this.result.length === 0 && this.opsText === '结算' ? true : false;
     },
     ischecked() {
       return this.result.length === this.selectFoods.length ? true : false;

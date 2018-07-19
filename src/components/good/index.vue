@@ -21,7 +21,7 @@
                 </div>
                 <div class="price-number">
                   <span class="price" v-if="good.memberPrice === good.price">￥{{good.price ? good.price : good.amount}}</span>
-                  <span class="member" v-if="good.memberPrice !== good.price">{{$t('namePrice.memberPrice')}}{{good.memberPrice}}</span>
+                  <span class="member" v-if="good.memberPrice !== good.price">会员价:￥{{good.memberPrice}}</span>
                   <span class="slot">
                     <slot name="right-bottom">
                       <span class="number">x{{value}}</span>
@@ -33,7 +33,7 @@
           </template>
         </van-cell>
       </van-cell-group>
-      <span slot="right">{{$t('good.delete')}}</span>
+      <span slot="right">删除</span>
     </van-cell-swipe>
   </div>
 </template>

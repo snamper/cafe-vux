@@ -8,9 +8,9 @@
       <template v-else-if="type === 'edit'">
         <van-icon class="van-contact-card__icon" name="contact" />
         <div class="van-contact-card__text">
-          <div>{{$t('addressCard.cotact')}}{{address.name}}</div>
-          <div>{{$t('addressCard.tel')}}{{ address.tel}}</div>
-          <div>{{$t('addressCard.address')}}{{address.address}}</div>
+          <div>收货人：{{address.name}}</div>
+          <div>联系电话：{{ address.tel}}</div>
+          <div>配送地址{{address.address}}</div>
         </div>
       </template>
     </div>
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     title() {
-      return this.$tools.isNotEmpty(this.addText) ? this.addText : this.$t('addressCard.addContact');
+      return this.$tools.isNotEmpty(this.addText) ? this.addText : '添加订单联系人信息';
     },
     type() {
       return this.$tools.isEmpty(this.address) ? 'add': 'edit';

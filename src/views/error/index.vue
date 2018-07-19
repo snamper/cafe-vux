@@ -2,8 +2,8 @@
   <div class="pagenotfound">
     <div class="content">
       <avator :url="img" :size="200" :radius="50"></avator>
-      <div class="text">{{$t('error.error')}}</div>
-      <div class="tips">{{time}}{{$t('error.tips')}}</div>
+      <div class="text">哎呀，出错了~</div>
+      <div class="tips">{{time}}s后返回主页面</div>
     </div>
     <div class="tips"></div>
   </div>

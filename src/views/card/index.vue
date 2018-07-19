@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <van-nav-bar
-      :title="$t('card.myCard')"
+      title="我的会员卡"
       left-arrow
       @click-left="back">
     </van-nav-bar>
@@ -13,7 +13,7 @@
           <span class="name">{{username}}</span>
         </div>
       </template>
-      <div class="content">{{$t('card.edit')}}</div>
+      <div class="content">修改</div>
       <template slot="right-icon">
         <van-icon name="arrow"/>
       </template>
@@ -21,14 +21,14 @@
     </van-cell-group>
     <split></split>
     <van-cell-group v-if="member">
-      <van-cell :title="$t('card.name')" :value="show(member.name)" />
-      <van-cell :title="$t('card.birthday')" :value="show(member.birthday)" />
-      <van-cell :title="$t('card.sex')" :value="show(member.gender)" />
-      <van-cell :title="$t('card.tel')" :value="show(member.phone)" />
-      <van-cell :title="$t('card.area')" :value="show(member.area)" />
-      <van-cell :title="$t('card.address')" :value="show(member.address)" />
-      <van-cell :title="$t('card.point')" :value="show(member.point)" />
-      <van-cell :title="$t('card.status')" :value="status(member.status)" />
+      <van-cell title="姓名" :value="show(member.name)" />
+      <van-cell title="生日" :value="show(member.birthday)" />
+      <van-cell title="性别" :value="show(member.gender)" />
+      <van-cell title="电话号码" :value="show(member.phone)" />
+      <van-cell title="所在地" :value="show(member.area)" />
+      <van-cell title="详细地址" :value="show(member.address)" />
+      <van-cell title="积分" :value="show(member.point)" />
+      <van-cell title="会员状态" :value="status(member.status)" />
     </van-cell-group>
   </div>
 </template>
@@ -71,7 +71,7 @@ export default {
       'member': state => state.member.member
     }),
     username() {
-      return getUsername(this.uuid, this.member, this.$t('member.vistor'));
+      return getUsername(this.uuid, this.member, '游客');
     }
   },
   methods: {
@@ -79,10 +79,10 @@ export default {
       this.$router.push({name: 'member'});
     },
     show(data) {
-      return this.$tools.isEmpty(data) ? this.$t('card.notSet') : data;
+      return this.$tools.isEmpty(data) ? '未设置' : data;
     },
     status(data) {
-      return data ? this.$t('card.active') : this.$t('card.disactive');
+      return data ? '已激活' : '未激活';
     }
   }
 };

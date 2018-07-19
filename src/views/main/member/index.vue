@@ -7,49 +7,49 @@
       </div>
     </div>
     <van-cell-group>
-      <van-cell :title="$t('member.myorder')" is-link :value="$t('member.showorders')" :to="{name: 'records'}"></van-cell>
+      <van-cell title="我的订单" is-link value="查看全部订单" :to="{name: 'records'}"></van-cell>
     </van-cell-group>
     <van-row gutter="20">
       <van-col span="6" @click.native="Jump2OrderPage(status.NOTPAY)">
         <div class="content" >
           <van-icon name="pending-payment"></van-icon>
-          <div class="name">{{$t('member.wait4pay')}}</div>
+          <div class="name">待付款</div>
         </div>
       </van-col>
       <van-col span="6" @click.native="Jump2OrderPage(status.WAIT4DELIVERY)">
         <div class="content">
           <van-icon name="tosend"></van-icon>
-          <div class="name">{{$t('member.wait4delivery')}}</div>
+          <div class="name">待发货</div>
         </div>
       </van-col>
       <van-col span="6" @click.native="Jump2OrderPage(status.ALREADYDELIVERY)">
         <div class="content">
           <van-icon name="logistics"></van-icon>
-          <div class="name">{{$t('member.alreadydelivery')}}</div>
+          <div class="name">已发货</div>
         </div>
       </van-col>
       <van-col span="6" @click.native="Jump2OrderPage(status.FINISH)">
         <div class="content">
           <van-icon name="completed"></van-icon>
-          <div class="name">{{$t('member.finish')}}</div>
+          <div class="name">已完成</div>
         </div>
       </van-col>
     </van-row>
     <van-cell-group>
-      <van-cell :title="$t('member.carts')" :to="{name: 'cart'}">
+      <van-cell title="购物车" :to="{name: 'cart'}">
         <round :number="number"></round>
       </van-cell>
     </van-cell-group>
     <van-cell-group v-if="member">
-      <van-cell :title="$t('member.memberCard')" is-link :to="{name: 'card'}"></van-cell>
+      <van-cell title="我的会员卡" is-link :to="{name: 'card'}"></van-cell>
       <!-- <van-cell title="我的积分" is-link ></van-cell>
       <van-cell title="我的信息" is-link ></van-cell> -->
     </van-cell-group>
     <van-cell-group class="loginout" v-if="member">
-      <van-button type="danger" @click.native="onClickLogout">{{$t('member.logout')}}</van-button>
+      <van-button type="danger" @click.native="onClickLogout">注销</van-button>
     </van-cell-group>
     <van-cell-group class="loginout" v-else>
-      <van-button type="primary" @click.native="onClickLogin">{{$t('member.wantLogin')}}</van-button>
+      <van-button type="primary" @click.native="onClickLogin">我要登录</van-button>
     </van-cell-group>
 
   </div>
@@ -115,7 +115,7 @@ export default {
       }
     },
     username() {
-      return getUsername(this.uuid, this.member, this.$t('member.vistor'));
+      return getUsername(this.uuid, this.member, '游客');
     },
   },
   methods: {

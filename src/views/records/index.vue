@@ -1,7 +1,7 @@
 <template>
   <div class="order" v-if="!isLoading">
     <van-nav-bar
-      :title="$t('records.orderlist')"
+      title="订单列表"
       left-arrow
       @click-left="back">
     </van-nav-bar>
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="no_order" v-else>
-            <span>{{$t('records.none')}}</span>
+            <span>暂无订单</span>
         </div>
       </van-tab>
     </van-tabs>
@@ -33,7 +33,7 @@ const log = new Logger('views/records');
 export default {
   data() {
     return {
-      tabtitle: [this.$t('records.all'), this.$t('records.wait4pay'), this.$t('records.wait4delivery'), this.$t('records.alreadydelivery'), this.$t('records.finish')],
+      tabtitle: ['全部', '待付款', '待发货', '已发货', '已完成'],
       active: 0,
       status
     };

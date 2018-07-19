@@ -25,7 +25,7 @@
                 <div class="product" @click="jump2FoodPage(good)">
                   <product :showcheckbox="false" :good="good">
                     <template slot="right-bottom">
-                      <van-button class="button" type="default" size="mini" @click.native.stop.prevent="onBuyClicked(good)">{{$t('menu.buyit')}}</van-button>
+                      <van-button class="button" type="default" size="mini" @click.native.stop.prevent="onBuyClicked(good)">购买</van-button>
                     </template>
                   </product>
                 </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="pay">
     <van-nav-bar
-      :title="$t('order.wait4payOrder')"
+      title="待付款的订单"
       left-arrow
       @click-left="backHistoryPage">
     </van-nav-bar>
@@ -11,21 +11,21 @@
         <product :good="good"></product>
       </div>
       <van-cell-group>
-        <van-cell :title="$t('order.deliveryType')" :value="delivertype" is-link @click="select"/>
+        <van-cell title="配送方式" :value="delivertype" is-link @click="select"/>
         <van-field
           v-model="comment"
-          :label="$t('order.message')"
-          :placeholder="$t('order.messagePlaceholder')">
+          label="留言"
+          placeholder="点击给商家留言">
         </van-field>
-        <van-cell :title="$t('order.summary')" :value="value"/>
+        <van-cell title="合计" :value="value"/>
       </van-cell-group>
       <split></split>
       <van-cell-group>
         <van-cell>
           <template slot="title">
-            <div>{{$t('order.productTotalPrice')}}</div>
-            <div>{{$t('order.memberDiscount')}}</div>
-            <div v-if="delivertype === columns[1]">{{$t('order.deliveryPrice')}}</div>
+            <div>商品总价</div>
+            <div>会员优惠</div>
+            <div v-if="delivertype === columns[1]">快递费用</div>
           </template>
           <div>￥{{price.normal}}</div>
           <div>￥{{price.normal - price.member}}</div>
@@ -35,7 +35,7 @@
     </div>
     <div class="submit">
       <van-submit-bar
-        :button-text="$t('order.submitOrder')"
+        button-text="提交订单"
         :price="totalPrice"
         :disabled="address === null ? true : false"
         @submit="onSubmit">
@@ -64,11 +64,11 @@ const log = new Logger('views/order');
 export default {
   data() {
     return {
-      delivertype: this.$t('order.self'),
+      delivertype: '自提',
       action: false,
       comment: '',
       cardType: 'add',
-      columns: [this.$t('order.self'), this.$t('order.fastDelivery')]
+      columns: ['自提', '快递']
     };
   },
   beforeRouteEnter(from, to, next) {

@@ -45,7 +45,9 @@ export default {
       // 当前选中的地址
       currentSelectAddress: '',
       // 省市区列表
-      areaList
+      areaList,
+      addAddress: '添加地址',
+      editAddress: '修改地址'
     };
   },
   components: {
@@ -83,7 +85,7 @@ export default {
     }),
     // 是否显示完成按钮
     rightText() {
-      return this.edit ? '' : this.$t('address.finish');
+      return this.edit ? '' : '完成';
     },
     // 是否显示默认地址
     showsetdefault() {
@@ -95,7 +97,7 @@ export default {
     },
     // 显示新增地址还是编辑地址
     navBarTitle() {
-      return this.show ? this.$t('address.myaddress') : this.edit ? this.$t('address.editAddress') : this.$t('address.addAddress');
+      return this.show ? '我的地址' : this.edit ? this.editAddress : this.addAddress;
     },
     // 修改地址中的地址信息
     addressInfo() {
@@ -137,7 +139,7 @@ export default {
        * 非会员只能添加一个地址
       */
       if (this.$tools.isNotEmpty(this.uuid) && this.$tools.isNotEmpty(this.address)) {
-        this.$toast(this.$t('address.tips'));
+        this.$toast('游客只能添加一个地址');
         return;
       }
       // 显示编辑页面
@@ -191,14 +193,14 @@ export default {
           this.$store.dispatch('saveAddress', address).then(() => {
             this.RefeshList();
           }).catch(error => {
-            this.$toast.fail(this.$t('address.addfail'));
+            this.$toast.fail('添加地址失败');
           });
         } else {
           log.info('modify address');
           this.$store.dispatch('modifyAddress', address).then(() => {
             this.RefeshList();
           }).catch(error => {
-            this.$toast.fail(this.$t('address.editfail'));
+            this.$toast.fail('修改地址失败');
           });
         }
       }
@@ -212,7 +214,7 @@ export default {
       this.$store.dispatch('deleteAddress', param).then(() => {
         this.RefeshList();
       }).catch(error => {
-        this.$toast.fail(this.$t('address.deletefail'));
+        this.$toast.fail('删除地址失败');
       });
     },
     onFinish() {
@@ -228,7 +230,7 @@ export default {
     },
     backHistoryPage() {
       // 如果是添加或者修改地址，则返回前面
-      if (this.navBarTitle === this.$t('address.editAddress') || this.navBarTitle === this.$t('address.addAddress')) {
+      if (this.navBarTitle === this.editAddress || this.navBarTitle === this.addAddress) {
         this.ShowListPage();
       } else {
         this.$router.push({name: 'order'});

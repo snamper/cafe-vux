@@ -3,7 +3,7 @@
     <div class="banner">
       <van-row>
         <van-col class="orderid" span="16">
-          {{$t('records.orderId')}}<span>{{order.id}}</span>
+          订单编号:<span>{{order.id}}</span>
           </van-col>
         <van-col class="status" span="8">{{orderstatus}}</van-col>
       </van-row>
@@ -14,14 +14,14 @@
     </div>
     <div v-if="order.details.length > 1" class="showmore" @click="showRecord">{{recordsCount}}</div>
     <div class="total van-hairline--top-bottom">
-      {{$t('records.summary')}}<span>￥{{order.amount}}</span>
+      计:<span>￥{{order.amount}}</span>
     </div>
     <div class="ops-warpper" v-if="orderstatus === status.NOTPAY.status">
       <van-cell-group>
         <van-cell>
           <div class="ops">
-            <van-button class="cancel" type="default" size="small" @click.native="onclickCancel">{{$t('records.cancel')}}</van-button>
-            <van-button class="confirm" type="default" size="small" @click.native="onclickConfirm">{{$t('records.confirm')}}</van-button>
+            <van-button class="cancel" type="default" size="small" @click.native="onclickCancel">取消订单</van-button>
+            <van-button class="confirm" type="default" size="small" @click.native="onclickConfirm">确认付款</van-button>
           </div>
         </van-cell>
       </van-cell-group>
@@ -75,7 +75,7 @@ export default {
       }
     },
     recordsCount() {
-      return this.order.details.length > 0 ? this.$t('records.showGoods1') + this.order.details.length + this.$t('records.showGoods2') : '';
+      return this.order.details.length > 0 ? '查看全部' + this.order.details.length + '件商品' : '';
     }
   },
   methods: {
@@ -84,14 +84,11 @@ export default {
     },
     onclickCancel() {
       const param = {entityId: this.order.id, status: this.status.CLOSED.key};
-      this.$store.dispatch('alterStatus', param).then((resp) => {
-        if (resp) {
-          this.$router.push({name: 'order'});
-        } else {
-          this.$toast(this.$t('records.tips1'));
-        }
+      this.$store.dispatch('alterStatus', param).then(() => {
+        this.$router.push({name: 'order'});
       }).catch(error => {
-        this.$toast(this.$t('records.tips1'));
+        log.error('error is ' + JSON.stringify(error));
+        this.$toast('取消错误');
       });
     },
     onclickConfirm() {

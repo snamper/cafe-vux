@@ -11,9 +11,9 @@
       <van-cell-group>
         <van-field
           v-model="username.content"
-          :label="$t('login.username')"
+          label="用户名"
           icon="clear"
-          :placeholder="$t('login.usernamePlaceholder')"
+          placeholder="请输入用户名"
           required
           :error="username.error"
           @blur="checkAvaliable(username)"
@@ -22,8 +22,8 @@
         <van-field
           v-model="password.content"
           type="password"
-          :label="$t('login.password')"
-          :placeholder="$t('login.inputPassword')"
+          label="密码"
+          placeholder="请输入密码"
           @blur="checkAvaliable(password)"
           :error="password.error"
           @click-icon="password.content = ''"
@@ -35,9 +35,9 @@
       <van-cell-group>
         <van-field
           v-model="account.content"
-          :label="$t('login.username')"
+          label="用户名"
           icon="clear"
-          :placeholder="$t('login.accountPlaceholder')"
+          placeholder="手机号码/邮箱名"
           required
           :error="account.error"
           @blur="checkAccountDuplicate(account)"
@@ -46,8 +46,8 @@
         <van-field
           v-model="pwd.content"
           type="password"
-          :label="$t('login.inputPassword')"
-          :placeholder="$t('login.passwordPlaceholder')"
+          label="输入密码"
+          placeholder="请输入密码"
           :error="pwd.error"
           @blur="checkAvaliable(pwd)"
           @click-icon="pwd.content = ''"
@@ -56,8 +56,8 @@
         <van-field
           v-model="repwd.content"
           type="password"
-          :label="$t('login.comfirmPassword')"
-          :placeholder="$t('login.confirmPlaceholder')"
+          label="确认密码"
+          placeholder="请确认密码"
           :error="repwd.error"
           @blur="checkAvaliable(repwd)"
           @click-icon="repwd.content = ''"
@@ -67,24 +67,24 @@
     </div>
     <div class="submit" v-if="showlogin">
       <div class="login">
-        <van-button style="width:97%" type="primary" @click="onClickLogin" :disabled="disable.login">{{$t('login.login')}}</van-button>
+        <van-button style="width:97%" type="primary" @click="onClickLogin" :disabled="disable.login">登录</van-button>
       </div>
       <div class="ops">
         <van-row type="flex">
-          <van-col class="forget" span="8" @click.native="onClickForget">{{$t('login.forgetPassword')}}</van-col>
-          <van-col class="vistor" span="8" @click.native="onClickVistor">{{$t('login.vistorVistor')}}</van-col>
-          <van-col class="register" span="8" @click.native="onClickShow">{{$t('login.register')}}</van-col>
+          <van-col class="forget" span="8" @click.native="onClickForget">忘记密码</van-col>
+          <van-col class="vistor" span="8" @click.native="onClickVistor">游客访问</van-col>
+          <van-col class="register" span="8" @click.native="onClickShow">注册</van-col>
         </van-row>
       </div>
     </div>
     <div class="submit" v-else>
       <div class="submit-wrapper">
-        <van-button class="registerbtn" type="primary" @click="onClickRegister" :disabled="disable.register">{{$t('login.register')}}</van-button>
-        <van-button class="loginbtn"  type="default" @click="onClickShow">{{$t('login.login')}}</van-button>
+        <van-button class="registerbtn" type="primary" @click="onClickRegister" :disabled="disable.register">注册</van-button>
+        <van-button class="loginbtn"  type="default" @click="onClickShow">登录</van-button>
       </div>
     </div>
     <div class="foot">
-      <div class="divider">{{$t('login.third')}}</div>
+      <div class="divider">第三方登录</div>
       <div class="icon">
         <avator
           @click.native="onClickWeibo"
@@ -175,7 +175,7 @@ export default {
     // 微博登陆
     onClickWeibo() {
       log.info('weibo login');
-      this.$toast(this.$t('pay.tips2'));
+      this.$toast('暂未开放第三方登陆');
       // window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=weibo';
     },
     // 游客
@@ -191,7 +191,7 @@ export default {
       this.disable.login = true;
       const valid = !this.username.error && !this.password.error && !this.$tools.isEmpty(this.username.content) && !this.$tools.isEmpty(this.password.content);
       if (!valid) {
-        this.$toast({message: this.$t('login.tips3'), mask: true, type: 'fail'});
+        this.$toast({message: '请填写正确的内容', mask: true, type: 'fail'});
         this.disable.login = false;
         return;
       }
@@ -200,14 +200,14 @@ export default {
         name: this.username.content,
         passWd: md5(this.password.content)
       };
-      this.$toast(this.$t('login.logining'), true, 'loading');
+      this.$toast('登录中', true, 'loading');
       this.$store.dispatch('login', param).then(() => {
         log.info('login success');
-        this.$toast({message: this.$t('login.tips1'), mask: true, type: 'success'});
+        this.$toast({message: '登录成功', mask: true, type: 'success'});
         this.disable.login = false;
         this.Jump2MemberPage();
       }).catch((error) => {
-        this.$toast({message: this.$t('login.tips2'), mask: true, type: 'fail'});
+        this.$toast({message: '登录失败', mask: true, type: 'fail'});
         this.disable.login = false;
         this.ResetField(true);
       });
@@ -217,7 +217,7 @@ export default {
       this.disable.register = true;
       const valid = !this.account.error && !this.pwd.error && !this.repwd.error && !this.$tools.isEmpty(this.account.content) && !this.$tools.isEmpty(this.pwd.content) && !this.$tools.isEmpty(this.repwd.content);
       if (!valid) {
-        this.$toast({message: this.$t('login.tips3'), mask: true, type: 'fail'});
+        this.$toast({message: '请填写正确的内容', mask: true, type: 'fail'});
         this.disable.register = false;
         return;
       }
@@ -226,18 +226,16 @@ export default {
         mobile: this.account.content,
         passwd: md5(this.pwd)
       };
-      this.$toast(this.$t('login.logining'), true, 'loading');
-      this.$store.dispatch('resigter', param).then(resp => {
-        // debugger
-        if (resp) {
-          this.$toast({message: this.$t('login.tips4'), mask: true, type: 'success'});
-          this.disable.register = false;
-          this.Jump2MemberPage();
-        } else {
-          this.$toast({message: this.$t('login.tips5'), mask: true, type: 'fail'});
-          this.ResetField(true);
-          this.disable.register = false;
-        }
+      this.$toast({message: '登录中', mask: true, type: 'loading'});
+      this.$store.dispatch('resigter', param).then(() => {
+        this.$toast({message: '注册成功', mask: true, type: 'success'});
+        this.disable.register = false;
+        this.Jump2MemberPage();
+      }).catch(error => {
+        log.error('error is ' + JSON.stringify(error));
+        this.$toast({message: '注册失败', mask: true, type: 'fail'});
+        this.ResetField(true);
+        this.disable.register = false;
       });
     },
     // 检查账户是否重复
@@ -250,9 +248,8 @@ export default {
         data.error = true;
         return;
       }
-      this.$toast({message: this.$t('login.validing'), mask: true, type: 'loading'});
       this.$store.dispatch('duplicate', data.content).then(resp => {
-          this.$toast({message: this.$t('login.tips6'), mask: true, type: 'text'});
+          this.$toast({message: '用户名重复，请重新输入用户名', mask: true, type: 'text'});
           this.account.content = '';
           data.error = true;
       }).catch(error => {
@@ -276,19 +273,19 @@ export default {
         case this.username.key:
           error = !this.CheckAccountAvaliable(data.content);
           if(error) {
-            this.$toast(this.$t('login.tips7'));
+            this.$toast('账户可以是邮箱或者手机号码');
           }
           break;
         case this.pwd.key:
           error = !isPwdValid(data.content);
           if(error) {
-            this.$toast(this.$t('login.tips8'));
+            this.$toast('密码由6-21字母和数字组成');
           }
           break;
         case this.repwd.key:
           error = this.repwd.content !== this.pwd.content ? true: false;
           if(error) {
-             this.$toast(this.$t('login.tips9'));
+             this.$toast('两次输入的密码不一致');
           }
           break;
       }

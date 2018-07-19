@@ -1,7 +1,7 @@
 <template>
  <div class="payment">
    <van-nav-bar
-      :title="$t('pay.selectPayType')"
+      title="请选择支付方式"
       left-arrow
       @click-left="back">
     </van-nav-bar>
@@ -43,7 +43,7 @@
       </van-cell-group>
     </van-radio-group>
     <div class="confirm">
-      <van-button type="primary" @click.native="payit">{{$t('pay.totalPrice')}}{{totalPrice}}{{$t('pay.unit')}}</van-button>
+      <van-button type="primary" @click.native="payit">确认支付￥{{totalPrice}}元</van-button>
     </div>
  </div>
 </template>
@@ -59,18 +59,18 @@ export default {
     return {
       isObjEmpty: this.$tools.isEmpty,
       isObjNotEmpty: this.$tools.isNotEmpty,
-      radio: this.$t('pay.alipay'),
+      radio: '支付宝',
       recordPrice: 0,
       alipay: {
-        value: this.$t('pay.alipay'),
+        value: '支付宝',
         img: '../../../static/img/alipay.png'
       },
       wechat: {
-        value: this.$t('pay.wechat'),
+        value: '微信支付',
         img: '../../../static/img/wechat.png'
       },
       memberObj: {
-        value: this.$t('pay.balance'),
+        value: '余额支付',
         img: '../../../static/img/tianicon.jpg'
       },
       // 记录从那个地方来
@@ -219,7 +219,7 @@ export default {
     },
     payit() {
       if (this.radio === this.memberObj.value && this.memberObj.balance < this.totalPrice) {
-        this.$toast(this.$t('pay.tips1'));
+        this.$toast('余额不足，请重新选择支付方式');
         return;
       }
       switch (this.radio) {
@@ -253,10 +253,6 @@ export default {
           // TODO 需要判断是第一次提交订单还是已有订单付款
           this.$store.dispatch('submitRecord', this.order).then(() => {
             this.$router.push({name: 'records'});
-            /* if (this.$tools.isNotEmpty(resp)) {
-              this.$toast(this.$t('pay.tips2'));
-              this.$router.push({name: 'records'});
-            } */
           });
           break;
       }

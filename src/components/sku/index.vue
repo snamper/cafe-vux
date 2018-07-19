@@ -13,10 +13,10 @@
       @add-cart="onAddCartClicked">
       <template v-if="showSelf" slot="sku-actions" slot-scope="props">
         <div class="van-sku-actions" v-if="next">
-          <van-button bottom-action @click="props.skuEventBus.$emit('sku:buy')">{{$t('sku.next')}}</van-button>
+          <van-button bottom-action @click="props.skuEventBus.$emit('sku:buy')">下一步</van-button>
         </div>
         <div class="van-sku-actions" v-if="!next">
-          <van-button bottom-action @click="props.skuEventBus.$emit('sku:addCart')">{{$t('sku.confirm')}}</van-button>
+          <van-button bottom-action @click="props.skuEventBus.$emit('sku:addCart')">确定</van-button>
         </div>
       </template>
     </van-sku>
@@ -74,7 +74,7 @@ export default {
       log.debug('add carts');
       this.Add2SelectFoods(data).then(() => {
         this.show = false;
-        this.$toast(this.$t('sku.success'));
+        this.$toast('添加购物车成功~');
       });
     },
     // 显示sku页面
@@ -120,7 +120,7 @@ export default {
       const suk = {
         tree: [
           {
-            k:  this.$t('sku.spec'),
+            k:  '规格',
             v: [
               {
                 id: good.id,
