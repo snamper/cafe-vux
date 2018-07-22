@@ -47,7 +47,7 @@ export const saveRecordList = param => {
   };
   log.debug('saveRecordList param is ' + JSON.stringify(data));
   return service({
-    url: '/product/show/ui/saveRecordList.do',
+    url: '/product/show/ui/saveRecord.do',
     method: 'post',
     data
   });
@@ -78,7 +78,7 @@ export const getAddresses = param => {
 
 export const saveAddresses = param => {
   const data = {
-    memberId: param.memberId,
+    memberId: param.id,
     name: param.name,
     province: param.province,
     city: param.city,

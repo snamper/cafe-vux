@@ -14,7 +14,7 @@
     </div>
     <div v-if="order.details.length > 1" class="showmore" @click="showRecord">{{recordsCount}}</div>
     <div class="total van-hairline--top-bottom">
-      计:<span>￥{{order.amount}}</span>
+      合计:<span>￥{{order.amount}}</span>
     </div>
     <div class="ops-warpper" v-if="orderstatus === status.NOTPAY.status">
       <van-cell-group>
@@ -39,8 +39,6 @@ const log = new Logger('views/records/one');
 export default {
   data() {
     return {
-      // status: '交易关闭',
-      orderId: 'E12932908409823098340',
       status,
     };
   },

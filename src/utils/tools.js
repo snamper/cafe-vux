@@ -50,4 +50,37 @@ export default class Tools {
 
   // 根据图片地址重新计算然后获取重绘后的图片地址
   static resizeImage = (url, size) => Tools.isEmpty(url) ? url : splitUrl(url, size);
+
+  // 打印log
+  static logger = (...args) => {
+    let str = '';
+    for (const arg in args) {
+      if (arg !== args[args.length]) {
+        str += ' ' + arg;
+      } else {
+        str += ' ';
+        switch (typeof (arg)) {
+          case 'undefined':
+            str += 'undefined';
+            break;
+          case 'Number':
+            str += arg;
+            break;
+          case 'String':
+            str += arg;
+            break;
+          case 'Boolean':
+            str += arg;
+            break;
+          case 'null':
+            str += 'null';
+            break;
+          case 'Object':
+            str += JSON.stringify(arg);
+            break;
+        }
+      }
+    }
+    return str;
+  }
 };

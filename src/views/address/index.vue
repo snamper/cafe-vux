@@ -171,6 +171,8 @@ export default {
         areaCode: content.area_code,
         defaultEntity: content.is_default
       };
+
+      log.debug('address is' + JSON.stringify(address));
       /**
        * 非会员情况
        * 新增的时候只需要更新address，同时更新addresses数组
