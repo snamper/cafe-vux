@@ -207,7 +207,9 @@ export default {
     Choose(data) {
       this.radio = data.value;
     },
+    // 获取微信和支付宝支付的地址
     getPayURL(type, value, orderId) {
+      log.debug('type is ' + type);
       switch (type) {
         case this.wechat.value:
           return '/shop/member/pay/wechat/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + orderId;
@@ -215,6 +217,7 @@ export default {
           return '/shop/member/pay/alipay/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + orderId;
       }
     },
+    // 返回按钮
     back() {
       if (this.url) {
         log.info('jump to order');
@@ -238,9 +241,9 @@ export default {
        * 2. 当微信支付的时候，如果成功则订单状态变更，如果失败则变更为订单关闭  （考虑订单关闭的时候是否需要提供重新购买按钮）
        * 3. 不存在余额支付的情况。
       */
-      if (this.radio === this.memberObj.value && this.memberObj.balance < this.totalPrice) {
+      if (this.radio === this.memberObj.value && this.member.balance < this.totalPrice) {
         this.$toast('余额不足，请重新选择支付方式');
-        return;
+        // return;
       }
       switch (this.radio) {
         case this.alipay.value:
@@ -248,32 +251,39 @@ export default {
           log.info('alipay pay');
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
-              this.$toast.success('success');
-              // window.location.href = this.getPayURL('alipay', this.totalPrice, resp);
+              window.location.href = this.getPayURL(this.alipay.value, this.totalPrice, resp);
             });
           } else {
-            // window.location.href = this.getPayURL('alipay', this.totalPrice, orderid);
+            window.location.href = this.getPayURL(this.alipay.value, this.totalPrice, this.orderid);
           }
           break;
         case this.wechat.value:
           // 微信支付
           log.info('wechat pay');
+          if (!this.$tools.isWeixin()) {
+            this.$toast.fail('请在微信中使用微信支付');
+            return;
+          }
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
-              this.$toast.success('success');
-              // window.location.href = this.getPayURL('wechat', this.totalPrice, resp);
+              window.location.href = this.getPayURL(this.wechat.value, this.totalPrice, resp.entityCode);
             });
           } else {
-            // window.location.href = this.getPayURL('wechat', this.totalPrice, orderid);
+            window.location.href = this.getPayURL(this.wechat.value, this.totalPrice, this.orderid);
           }
           break;
         case this.memberObj.value:
+          // 会员支付
           log.info('member pay');
           log.debug('submitRecord payload is ' + JSON.stringify(this.order));
-          // TODO 需要判断是第一次提交订单还是已有订单付款
-          this.$store.dispatch('submitRecord', this.order).then(() => {
-            log.info('now push to records');
-            this.$router.push({name: 'records'});
+          this.$store.dispatch('submitRecord', this.order).then(resp => {
+            const data = {
+              entityId: resp.entityId,
+              status: 'CLOSED'
+            };
+            return this.$store.dispatch('alterStatus', data).then(() => {
+              this.$router.push({name: 'records'});
+            });
           });
           break;
       }

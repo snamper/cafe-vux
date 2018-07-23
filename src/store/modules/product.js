@@ -86,7 +86,7 @@ const product = {
     submitRecord: ({ commit }, record) => {
       return new Promise(resolve => {
         saveRecordList(record).then(data => {
-          resolve(data.entityCode);
+          resolve(data);
         });
       });
     },
