@@ -83,4 +83,9 @@ export default class Tools {
     }
     return str;
   }
+  // 判断是否是在微信浏览器中打开
+  static isWeixin = () => {
+    const ua = navigator.userAgent.toLowerCase();
+    return ua.indexOf('micromessenger') !== -1;
+  }
 };

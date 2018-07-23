@@ -7,7 +7,7 @@
     </van-nav-bar>
     <van-radio-group v-model="radio">
       <van-cell-group>
-        <van-cell clickable @click="Choose(alipay)">
+        <van-cell v-if="visable" clickable @click="Choose(alipay)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="alipay.img"></avator>
@@ -59,6 +59,8 @@ export default {
     return {
       isObjEmpty: this.$tools.isEmpty,
       isObjNotEmpty: this.$tools.isNotEmpty,
+      // 是否显示支付宝付款
+      visable: true,
       radio: '支付宝',
       recordPrice: 0,
       alipay: {
@@ -85,6 +87,10 @@ export default {
       log.debug('carts is ' + JSON.stringify(vm.carts));
       if (to.path === '/' || vm.$tools.isEmpty(vm.carts)) {
         vm.$router.push({name: 'menu'});
+      }
+      if (vm.$tools.isWeixin()) {
+        log.debug('weixin browser found, not show alipay');
+        vm.visable = false;
       }
     });
   },
@@ -197,15 +203,16 @@ export default {
     }
   },
   methods: {
+    // 选择radio
     Choose(data) {
       this.radio = data.value;
     },
-    getPayURL(type, value, order) {
+    getPayURL(type, value, orderId) {
       switch (type) {
         case this.wechat.value:
-          return '/shop/member/pay/wechat/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + order;
+          return '/shop/member/pay/wechat/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + orderId;
         case this.alipay.value:
-          return '/shop/member/pay/alipay/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + order;
+          return '/shop/member/pay/alipay/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + orderId;
       }
     },
     back() {
@@ -217,8 +224,10 @@ export default {
         this.$router.push({name: 'records'});
       }
     },
+    // 实际支付
     payit() {
       /**
+       * 入口可以从三个地方过来，order/records/record 当从order过来的时候表示没有任何商品的购买，如果是records/record过来表示有购买商品
        * 支付方式为三种， 支付宝和微信以及会员余额支付
        * 当入口为未建立订单的时候
        * 1. 当支付宝支付的时候，a 判断是否是微信内，如果是则跳转到浏览器

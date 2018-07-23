@@ -31,6 +31,7 @@ export default {
   },
   created() {
     log.info('start init UUID');
+    // this.$toast('open it in weixin？' + this.$tools.isWeixin());
     this.$store.dispatch('initUser').then(() => {
       this.Selected();
     });
