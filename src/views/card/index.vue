@@ -85,7 +85,7 @@ export default {
       return this.$tools.isEmpty(data) ? '未设置' : data;
     },
     status(data) {
-      return data ? '已激活' : '未激活';
+      return data === 'Y' ? '已激活' : '未激活';
     }
   }
 };

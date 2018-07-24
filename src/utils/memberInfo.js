@@ -42,7 +42,8 @@ export const getMemberInfo = data => {
     area: param(data.area),
     address: param(data.address),
     avator: param(data.avator),
-    nick: param(data.nick)
+    nick: param(data.nick),
+    status: param(data.status)
   };
 };
 // 设置可以修改的数据

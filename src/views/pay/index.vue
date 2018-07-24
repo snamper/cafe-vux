@@ -59,9 +59,9 @@ export default {
     return {
       isObjEmpty: this.$tools.isEmpty,
       isObjNotEmpty: this.$tools.isNotEmpty,
-      // 是否显示支付宝付款
-      visable: true,
-      radio: '支付宝',
+      // 是否显示支付宝付款  暂时屏蔽支付宝支付
+      visable: false,
+      radio: '微信支付',
       recordPrice: 0,
       alipay: {
         value: '支付宝',
@@ -88,10 +88,10 @@ export default {
       if (to.path === '/' || vm.$tools.isEmpty(vm.carts)) {
         vm.$router.push({name: 'menu'});
       }
-      if (vm.$tools.isWeixin()) {
+      /* if (vm.$tools.isWeixin()) {
         log.debug('weixin browser found, not show alipay');
         vm.visable = false;
-      }
+      } */
     });
   },
   beforeRouteLeave (from, to, next) {
@@ -243,7 +243,7 @@ export default {
       */
       if (this.radio === this.memberObj.value && this.member.balance < this.totalPrice) {
         this.$toast('余额不足，请重新选择支付方式');
-        // return;
+        return;
       }
       switch (this.radio) {
         case this.alipay.value:
