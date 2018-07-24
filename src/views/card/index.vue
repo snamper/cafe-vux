@@ -38,6 +38,7 @@ import { Cell, CellGroup, Row, Col, Icon, NavBar } from 'vant';
 import avator from '@/components/avator';
 import split from '@/components/split';
 import { mapState, mapGetters } from 'vuex';
+import { getUsername } from "@/utils/memberInfo";
 import Logger from 'chivy';
 const log = new Logger('views/card');
 export default {
@@ -50,7 +51,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     log.debug('from path is ' + from.path);
     next(vm => {
-      if (from.path !== '/member' || this.$tools.isEmpty(vm.member)) {
+      // debugger
+      // 如果当前路径不从member或者modify跳转过来的或者UUID不为空，则跳转到member页面
+      if (!((from.path === '/modify' || from.path === '/member') && vm.$tools.isNotEmpty(vm.member))) {
         vm.$router.push({name: 'member'});
       }
     });

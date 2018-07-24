@@ -85,14 +85,14 @@ export default {
     log.info('beforeRouteEnter');
     next(vm => {
       const id = vm.$tools.isCurrentJumpPage(window.location.href);
-      log.info('id is ' + id);
+      // log.info('id is ' + id);
       vm.$store.dispatch('initUser');
     });
   },
   created() {
     log.info('created');
     const id = this.$tools.isCurrentJumpPage(window.location.href);
-    log.debug('id is ' + id);
+    // log.debug('id is ' + id);
   },
   computed: {
     ...mapState({
@@ -100,8 +100,7 @@ export default {
       'member': state => state.member.member
     }),
     ...mapGetters([
-      'selectFoods',
-      'username'
+      'selectFoods'
     ]),
     number() {
       if (this.selectFoods.length === 0) {

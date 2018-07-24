@@ -1,4 +1,6 @@
 import Tools from './tools';
+import Logger from 'chivy';
+const log = new Logger('utils/memberInfo');
 const gender = {
   Male: {
     key: 'M',
@@ -12,6 +14,7 @@ const gender = {
 // 当函数长度小于2的时候，可用，当第一个参数为空的时候显示''，否则显示输入的参数
 // 单参数为空显示'', 两参数则显示后者
 const param = (...args) => {
+  log.debug('args length is ' + args.length);
   switch (args.length) {
     case 1:
       return Tools.isNotEmpty(args[0]) ? args[0] : '';
@@ -72,6 +75,8 @@ export const sex = sex => {
 
 // 获取显示名字
 export const getUsername = (uuid, member, vistor) => {
+  /*eslint-disable*/
+  // debugger
   if (Tools.isNotEmpty(uuid)) {
     return vistor;
   } else if (Tools.isNotEmpty(member)) {
@@ -81,6 +86,8 @@ export const getUsername = (uuid, member, vistor) => {
       return member.phone;
     } else if (Tools.isNotEmpty(member.email)) {
       return member.email;
+    } else if (Tools.isNotEmpty(member.name)) {
+      return member.name;
     }
   }
 };
