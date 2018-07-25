@@ -30,6 +30,8 @@ export const initStorage = () => {
     let result = {};
     const member = getStorage(key.member);
     if (Tools.isNotEmpty(member)) {
+      // 需要再次从服务器上获取相关的信息，否则会出问题。
+      // TODO
       result = {uuid: null, member: member};
     } else {
       let uuid = getStorage(key.uuid);
