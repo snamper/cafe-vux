@@ -62,6 +62,7 @@ const member = {
     },
     // 用户名是否重复
     duplicate({commit}, name) {
+      log.debug('name is ' + name);
       return isExistUserName(name);
     },
     // 注册新用户

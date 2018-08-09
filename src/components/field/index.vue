@@ -46,7 +46,7 @@ export default {
               field.error = true;
               this.$toast(field.errorMessage);
             } else {
-              this.$store.dispatch('duplicate', field.content).then(resp => {
+              this.$store.dispatch('duplicate', {name: field.content}).then(resp => {
                 this.$toast({message: '用户名重复，请重新输入用户名', mask: true, type: 'text'});
                 field.content = '';
                 field.error = true;
