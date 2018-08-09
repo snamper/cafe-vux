@@ -30,7 +30,7 @@ module.exports = {
     proxyTable: {
       "/rest/shop": {
         // target: "http://localhost:21080",
-        target: server ? "http://www.tianbakery.store" : "http://127.0.0.1:15080",
+        target: server ? "http://www.tianbakery.store" : "http://127.0.0.1:21080",
         changeOrigin: true,
         pathReWrite: {
           "^/rest/shop": ""
@@ -38,7 +38,7 @@ module.exports = {
       },
       "/upload": {
         // target: "http://localhost:21080",
-        target: server ? "http://www.tianbakery.store" : "http://127.0.0.1:15080",
+        target: server ? "http://www.tianbakery.store" : "http://127.0.0.1:21080",
         changeOrigin: true,
         pathReWrite: {
           "^/upload": ""
