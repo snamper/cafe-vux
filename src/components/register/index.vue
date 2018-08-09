@@ -65,12 +65,12 @@ export default {
       // 控制显示第一页还是第二页
       step: true,
       page1: [
-        {content: '', label: '用户名', placeholder: '手机号码/邮箱名', required: true, error: false, desc: 'account'},
-        {content: '', label: '用户名', placeholder: '请输入密码', required: true, error: false, desc: 'pwd', type: 'password'},
-        {content: '', label: '用户名', placeholder: '请确认密码', required: true, error: false, desc: 'repwd', type: 'password'}
+        {content: '', label: '用户名', placeholder: '手机号码/邮箱名', required: true, error: false, desc: 'account', errorMessage: '用户名不能包含特殊字符'},
+        {content: '', label: '输入密码', placeholder: '请输入密码', required: true, error: false, desc: 'pwd', type: 'password', errorMessage: '密码不能包含特殊字符'},
+        {content: '', label: '确认密码', placeholder: '请确认密码', required: true, error: false, desc: 'repwd', type: 'password', errorMessage: '两次输入的密码不一致'}
       ],
       page2: [
-        {content: '', label: '姓名', placeholder: '请输入姓名', required: true, error: false, desc: 'name'},
+        {content: '', label: '姓名', placeholder: '请输入姓名', required: true, error: false, desc: 'name', errorMessage: '请输入正确的中文名字'},
         {content: '', label: '生日', placeholder: '请选择', required: true, error: false, desc: 'birthday'},
         {content: '', label: '性别', placeholder: '请选择', required: true, error: false, desc: 'sex'},
         {content: '', label: '电话号码', placeholder: '请输入电话号码', required: true, error: false, desc: 'mobile'},

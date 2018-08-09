@@ -35,7 +35,7 @@ export default {
     blur(field) {
       if (field.required) {
         this.$tools.isEmpty(field.content) ? field.error = true : field.error = false;
-        this.$toast(field.errorMessage);
+        this.$toast(field.label + '不能为空');
       } else {
         switch (field.desc) {
           case 'account':
