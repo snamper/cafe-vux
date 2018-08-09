@@ -44,16 +44,11 @@ export const routerMap = [
         component: () => import('@/views/main/login/index').then(m => m.default)
       },
       {
-        name: 'register1',
-        path: 'register1',
+        name: 'register',
+        path: 'register',
         component: () => import('@/views/main/register/index').then(m => m.default)
       }
     ]
-  },
-  {
-    name: 'register',
-    path: '/register',
-    component: () => import('@/views/register/index').then(m => m.default)
   },
   {
     name: 'food',

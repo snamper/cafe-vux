@@ -19,7 +19,7 @@
 
 <script>
 import { Field } from 'vant';
-import { isAccountValid, isTelValid, isEmailValid, isChineseNameValid } from '@/utils/validate';
+import { isTelValid, isEmailValid, isChineseNameValid } from '@/utils/validate';
 import Logger from 'chivy';
 const log = new Logger('components/field');
 export default {
@@ -33,25 +33,28 @@ export default {
   },
   methods: {
     blur(field) {
-      if (field.required) {
-        this.$tools.isEmpty(field.content) ? field.error = true : field.error = false;
+      log.debug('field is ' + JSON.stringify(field));
+      field.content = field.content.trim();
+      if (field.required && this.$tools.isEmpty(field.content)) {
+        field.error = true;
         this.$toast(field.label + '不能为空');
       } else {
+        field.error = false;
         switch (field.desc) {
           case 'account':
-            if (!this._checkAccountAvaliable(field.content)) {
+            if (!isTelValid(field.content)) {
               field.error = true;
               this.$toast(field.errorMessage);
-              return;
+            } else {
+              this.$store.dispatch('duplicate', field.content).then(resp => {
+                this.$toast({message: '用户名重复，请重新输入用户名', mask: true, type: 'text'});
+                field.content = '';
+                field.error = true;
+              }).catch(error => {
+                log.error('error is ' + JSON.stringify(error));
+                field.error = false;
+              });
             }
-            this.$store.dispatch('duplicate', field.content).then(resp => {
-              this.$toast({message: '用户名重复，请重新输入用户名', mask: true, type: 'text'});
-              field.content = '';
-              field.error = true;
-            }).catch(error => {
-              log.error('error is ' + JSON.stringify(error));
-              field.error = false;
-            });
             break;
           case 'name':
             if (!isChineseNameValid(field.content)) {
@@ -79,17 +82,6 @@ export default {
     },
     focus(field) {
       this.$emit(field.desc, field);
-    },
-    // 检查账号是否可用
-    _checkAccountAvaliable(account) {
-      if (isTelValid(account)) {
-        return true;
-      } else if (isEmailValid(account)) {
-        return true;
-      } else if (isAccountValid(account)) {
-        return true;
-      }
-      return false;
     }
   }
 };
@@ -97,5 +89,5 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 
- 
+
 </style>

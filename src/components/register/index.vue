@@ -7,7 +7,12 @@
     </van-nav-bar>
     <div class="register-first">
       <van-cell-group >
-        <field :fields="fields"></field>
+        <field
+          @birthday="birthday"
+          @sex="sex"
+          @area="area"
+          :fields="fields">
+        </field>
       </van-cell-group>
     </div>
     <div class="save-first" v-if="step">
@@ -22,20 +27,20 @@
         v-model="currentDate"
         type="date"
         :min-date="minDate"
-        @confirm="dateConfirm"
+        @confirm="confirmBirthday"
         @cancel="cancel">
       </van-datetime-picker>
       <van-picker
         show-toolbar
         v-if="show.sex"
         :columns="sexcolumns"
-        @confirm="pickerConfirm"
+        @confirm="confirmSex"
         @cancel="cancel">
       </van-picker>
       <van-area
         :area-list="areaList"
         v-if="show.area"
-        @confirm="areaConfirm"
+        @confirm="confirmArea"
         @cancel="cancel">
       </van-area>
     </van-actionsheet>
@@ -49,6 +54,7 @@
 */
 import { Button, Field, CellGroup, DatetimePicker, Picker, Area, Actionsheet, NavBar } from 'vant';
 import field from '@/components/field';
+import AreaList from '@/utils/area.js';
 /* import md5 from 'blueimp-md5'; */
 import Logger from 'chivy';
 const log = new Logger('components/register');
@@ -65,25 +71,30 @@ export default {
       // 控制显示第一页还是第二页
       step: true,
       page1: [
-        {content: '', label: '用户名', placeholder: '手机号码/邮箱名', required: true, error: false, desc: 'account', errorMessage: '用户名不能包含特殊字符'},
-        {content: '', label: '输入密码', placeholder: '请输入密码', required: true, error: false, desc: 'pwd', type: 'password', errorMessage: '密码不能包含特殊字符'},
-        {content: '', label: '确认密码', placeholder: '请确认密码', required: true, error: false, desc: 'repwd', type: 'password', errorMessage: '两次输入的密码不一致'}
+        {content: '', label: '手机号码', icon: 'close', placeholder: '请输入手机号码', required: true, error: false, desc: 'account', errorMessage: '用户名不能包含特殊字符'},
+        {content: '', label: '输入密码', icon: 'close', placeholder: '请输入密码', required: true, error: false, desc: 'pwd', type: 'password', errorMessage: '密码不能包含特殊字符'},
+        {content: '', label: '确认密码', icon: 'close', placeholder: '请确认密码', required: true, error: false, desc: 'repwd', type: 'password', errorMessage: '两次输入的密码不一致'}
       ],
       page2: [
-        {content: '', label: '姓名', placeholder: '请输入姓名', required: true, error: false, desc: 'name', errorMessage: '请输入正确的中文名字'},
+        {content: '', label: '姓名', icon: 'close', placeholder: '请输入姓名', required: true, error: false, desc: 'name', errorMessage: '请输入正确的中文名字'},
         {content: '', label: '生日', placeholder: '请选择', required: true, error: false, desc: 'birthday'},
         {content: '', label: '性别', placeholder: '请选择', required: true, error: false, desc: 'sex'},
-        {content: '', label: '电话号码', placeholder: '请输入电话号码', required: true, error: false, desc: 'mobile'},
-        {content: '', label: '电子邮箱', placeholder: '请输入邮箱地址', required: false, error: false, desc: 'email'},
-        {content: '', label: '微信号', placeholder: '请输入您的微信号', required: false, error: false, desc: 'wechat'},
+        /* {content: '', label: '电话号码', placeholder: '请输入电话号码', required: true, error: false, desc: 'mobile'}, */
+        {content: '', label: '电子邮箱', icon: 'close', placeholder: '请输入邮箱地址', required: false, error: false, desc: 'email', errorMessage: '请输入正确的电子邮箱'},
+        {content: '', label: '微信号', icon: 'close', placeholder: '请输入您的微信号', required: false, error: false, desc: 'wechat', errorMessage: '请输入正确的微信号'},
         {content: '', label: '所在地', placeholder: '请选择', required: false, error: false, desc: 'area'},
-        {content: '', label: '详细地址', placeholder: '请输入街道门牌号', required: false, error: false, desc: 'address'}
+        {content: '', label: '详细地址', icon: 'close', placeholder: '请输入街道门牌号', required: false, error: false, desc: 'address'}
       ],
       show: {
+        action: false,
         birthday: false,
         sex: false,
         area: false
-      }
+      },
+      areaList: AreaList,
+      sexcolumns: ['女', '男'],
+      currentDate: new Date(),
+      minDate: new Date(1900, 1, 1)
     };
   },
   components: {
@@ -111,12 +122,78 @@ export default {
     },
     next() {
       log.debug('next');
+      const content = this._isContentEmpty(this.page1);
+      if (content.result) {
+        this.$toast.fail(content.errorMessage);
+        return;
+      }
+      const errors = this._IteratorPage(this.page1);
+      if (errors.result) {
+        this.$toast.fail(errors.errorMessage);
+        return;
+      }
       // 显示第二页并显示回退按钮
       this.leftArrow = true;
       this.step = false;
     },
     save() {
 
+    },
+    birthday() {
+      this._closeAllActionSheet();
+      this.show.action = true;
+      this.show.birthday = true;
+    },
+    sex() {
+      this._closeAllActionSheet();
+      this.show.action = true;
+      this.show.sex = true;
+    },
+    area() {
+      this._closeAllActionSheet();
+      this.show.action = true;
+      this.show.area = true;
+    },
+    confirmBirthday(value) {
+      const date = this.$tools.formatDate(value);
+      this.page2[1].content = date.Year + '-' + date.Month + '-' + date.Day;
+      this._closeAllActionSheet();
+    },
+    confirmSex(value) {
+      this.page2[2].content = value;
+      this._closeAllActionSheet();
+    },
+    confirmArea(value) {
+      if (value[0].code !== '-1' && value[1].code !== '-1' && value[2].code !== '-1') {
+        this.page2[5].content = value[0].name + value[1].name + value[2].name;
+      }
+      this._closeAllActionSheet();
+    },
+    cancel() {
+      this._closeAllActionSheet();
+    },
+    _isContentEmpty(page) {
+      const result = true;
+      const errorMessage = '请填写手机号码';
+      page.forEach(item => {
+        result || this.$tools.isEmpty(item.content);
+      });
+      return {result, errorMessage};
+    },
+    // 遍历数组，当发现有error为true的时候返回真，否则是假
+    _IteratorPage(page) {
+      const result = false;
+      const errorMessage = '请填写正确的内容';
+      page.forEach(item => {
+        result || item.error;
+      });
+      return {result, errorMessage};
+    },
+    _closeAllActionSheet() {
+      this.show.area = false;
+      this.show.birthday = false;
+      this.show.action = false;
+      this.show.sex = false;
     }
   }
 };
@@ -124,5 +201,5 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 
- 
+
 </style>
