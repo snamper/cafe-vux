@@ -67,8 +67,9 @@ const member = {
     },
     // 注册新用户
     resigter({commit}, user) {
+      log.debug('user is ' + JSON.stringify(user));
       return new Promise((resolve, reject) => {
-        createMember(user.mobile, user.passWd).then(data => {
+        createMember(user).then(data => {
           log.debug('RESPONSE DATA IS ' + JSON.stringify(data));
           const memberinfo = getMemberInfo(data);
           commit('UPDATE_MEMBER', memberinfo);

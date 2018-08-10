@@ -8,6 +8,7 @@
     <div class="register-first">
       <van-cell-group >
         <field
+          @blurrepwd="repwd"
           @birthday="birthday"
           @sex="sex"
           @area="area"
@@ -77,12 +78,11 @@ export default {
       ],
       page2: [
         {content: '', label: '姓名', icon: 'close', placeholder: '请输入姓名', required: true, error: false, desc: 'name', errorMessage: '请输入正确的中文名字'},
-        {content: '', label: '生日', placeholder: '请选择', required: true, error: false, desc: 'birthday'},
-        {content: '', label: '性别', placeholder: '请选择', required: true, error: false, desc: 'sex'},
-        /* {content: '', label: '电话号码', placeholder: '请输入电话号码', required: true, error: false, desc: 'mobile'}, */
+        {content: '', label: '生日', placeholder: '请选择', required: true, error: false, desc: 'birthday', popup: true},
+        {content: '', label: '性别', placeholder: '请选择', required: true, error: false, desc: 'sex', popup: true},
         {content: '', label: '电子邮箱', icon: 'close', placeholder: '请输入邮箱地址', required: false, error: false, desc: 'email', errorMessage: '请输入正确的电子邮箱'},
         {content: '', label: '微信号', icon: 'close', placeholder: '请输入您的微信号', required: false, error: false, desc: 'wechat', errorMessage: '请输入正确的微信号'},
-        {content: '', label: '所在地', placeholder: '请选择', required: false, error: false, desc: 'area'},
+        {content: '', label: '所在地', placeholder: '请选择', required: false, error: false, desc: 'area', popup: true},
         {content: '', label: '详细地址', icon: 'close', placeholder: '请输入街道门牌号', required: false, error: false, desc: 'address'}
       ],
       show: {
@@ -122,14 +122,18 @@ export default {
     },
     next() {
       log.debug('next');
-      const content = this._isContentEmpty(this.page1);
-      if (content.result) {
-        this.$toast.fail(content.errorMessage);
+      /* eslint-disable */
+      /* debugger */
+      const content = this._isContentNotEmpty(this.page1);
+      log.debug('content is ' + JSON.stringify(content));
+      if (!content.result) {
+        this.$toast(content.errorMessage);
         return;
       }
       const errors = this._IteratorPage(this.page1);
+      log.debug('errors is ' + JSON.stringify(errors));
       if (errors.result) {
-        this.$toast.fail(errors.errorMessage);
+        this.$toast(errors.errorMessage);
         return;
       }
       // 显示第二页并显示回退按钮
@@ -142,14 +146,17 @@ export default {
        * 1. 先判断page1和page2是否为空， 其中需要判断page1和page2是否有错误
        * 2. 当没有错误的时候，做两个动作 a. createMember创建用户，b. modifyBasicInfo改用户信息
       */
-      const content = this._isContentEmpty(this.page2);
-      if (content.result) {
-        this.$toast.fail(content.errorMessage);
+      /* eslint-disable */
+      /* debugger */
+      const content = this._isContentNotEmpty(this.page2);
+      log.debug('save content is ' + JSON.stringify(content));
+      if (!content.result) {
+        this.$toast(content.errorMessage);
         return;
       }
       const errors = this._IteratorPage(this.page2);
       if (errors.result) {
-        this.$toast.fail(errors.errorMessage);
+        this.$toast(errors.errorMessage);
         return;
       }
       const register = {
@@ -157,13 +164,30 @@ export default {
         passwd: md5(this.page1[1].content)
       };
       this.$store.dispatch('resigter', register).then(resp => {
-        this.$toast({message: '用户名重复，请重新输入用户名', mask: true, type: 'text'});
-        field.content = '';
-        field.error = true;
+        if (resp.status) {
+          // 修改
+          const info = {
+            id: resp.id,
+            name: this.page2[0].content,
+            mobile: this.page1[0].content,
+            email: this.$tools.isNotEmpty(this.page2[3].content) ? this.page2[3].content : '',
+            gender: this.$tools.sex(this.page2[2].content),
+          }
+          /* this.$store.dispatch('modifyInfo', ) */
+        } else {
+          this.$toast.fail('注册失败');
+        }
       }).catch(error => {
         log.error('error is ' + JSON.stringify(error));
-        field.error = false;
+        this.$toast.fail('注册失败');
       });
+    },
+    repwd() {
+      this.page1[2].error = false;
+      if (this.page1[1].content !== this.page1[2].content) {
+        this.page1[2].error = true;
+        this.$toast(this.page1[2].errorMessage);
+      }
     },
     birthday() {
       this._closeAllActionSheet();
@@ -198,20 +222,22 @@ export default {
     cancel() {
       this._closeAllActionSheet();
     },
-    _isContentEmpty(page) {
-      const result = true;
+    _isContentNotEmpty(page) {
+      let result = true;
       const errorMessage = '请填写带*号的选项';
-      page.forEach(item => {
-        result || this.$tools.isEmpty(item.content);
+      page.filter(item => item.required === true).forEach(item => {
+        // log.debug(this.$tools.isNotEmpty(item.content));
+        result = result && this.$tools.isNotEmpty(item.content);
+        // log.warn(result);
       });
       return {result, errorMessage};
     },
     // 遍历数组，当发现有error为true的时候返回真，否则是假
     _IteratorPage(page) {
-      const result = false;
+      let result = false;
       const errorMessage = '请填写正确的内容';
       page.filter(item => item.required === true).forEach(item => {
-        result || item.error;
+        result = result || item.error;
       });
       return {result, errorMessage};
     },

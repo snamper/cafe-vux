@@ -4,7 +4,7 @@
       <van-field
         @blur="blur(field)"
         @focus="focus(field)"
-        @click-icon="field.content = ''"
+        @click-icon="clear(field)"
         v-model="field.content"
         :required="field.required"
         :type="field.type"
@@ -19,7 +19,7 @@
 
 <script>
 import { Field } from 'vant';
-import { isTelValid, isEmailValid, isChineseNameValid } from '@/utils/validate';
+import { isTelValid, isEmailValid, isChineseNameValid, isPwdValid } from '@/utils/validate';
 import Logger from 'chivy';
 const log = new Logger('components/field');
 export default {
@@ -36,8 +36,10 @@ export default {
       log.debug('field is ' + JSON.stringify(field));
       field.content = field.content.trim();
       if (field.required && this.$tools.isEmpty(field.content)) {
-        field.error = true;
-        this.$toast(field.label + '不能为空');
+        if (!field.popup) {
+          field.error = true;
+          this.$toast(field.label + '不能为空');
+        }
       } else {
         field.error = false;
         switch (field.desc) {
@@ -47,9 +49,10 @@ export default {
               this.$toast(field.errorMessage);
             } else {
               this.$store.dispatch('duplicate', {name: field.content}).then(resp => {
-                this.$toast({message: '用户名重复，请重新输入用户名', mask: true, type: 'text'});
-                field.content = '';
-                field.error = true;
+                if (resp.status) {
+                  this.$toast({message: '用户名重复，请重新输入用户名', mask: false, type: 'text'});
+                  field.error = true;
+                }
               }).catch(error => {
                 log.error('error is ' + JSON.stringify(error));
                 field.error = false;
@@ -74,14 +77,24 @@ export default {
               this.$toast(field.errorMessage);
             }
             break;
+          case 'pwd':
+            if (!isPwdValid(field.content)) {
+              field.error = true;
+              this.$toast(field.errorMessage);
+            }
+            break;
           // 默认则弹出desc的方法
           default:
-            this.$emit(field.desc, field);
+            this.$emit('blur' + field.desc, field);
         }
       }
     },
     focus(field) {
       this.$emit(field.desc, field);
+    },
+    clear(field) {
+      field.content = '';
+      field.error = false;
     }
   }
 };

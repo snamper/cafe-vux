@@ -1,6 +1,6 @@
 import Tools from './tools';
-import Logger from 'chivy';
-const log = new Logger('utils/memberInfo');
+/* import Logger from 'chivy';
+const log = new Logger('utils/memberInfo'); */
 const gender = {
   Male: {
     key: 'M',
@@ -14,7 +14,7 @@ const gender = {
 // 当函数长度小于2的时候，可用，当第一个参数为空的时候显示''，否则显示输入的参数
 // 单参数为空显示'', 两参数则显示后者
 const param = (...args) => {
-  log.debug('args length is ' + args.length);
+  /* log.debug('args length is ' + args.length); */
   switch (args.length) {
     case 1:
       return Tools.isNotEmpty(args[0]) ? args[0] : '';
