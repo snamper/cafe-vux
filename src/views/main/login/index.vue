@@ -223,7 +223,7 @@ export default {
       }
       // 注册用户
       const param ={
-        mobile: this.account.content,
+        name: this.account.content,
         passwd: md5(this.pwd)
       };
       this.$toast({message: '登录中', mask: true, type: 'loading'});

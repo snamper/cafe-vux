@@ -55,7 +55,7 @@
 import { Button, Field, CellGroup, DatetimePicker, Picker, Area, Actionsheet, NavBar } from 'vant';
 import field from '@/components/field';
 import AreaList from '@/utils/area.js';
-/* import md5 from 'blueimp-md5'; */
+import md5 from 'blueimp-md5';
 import Logger from 'chivy';
 const log = new Logger('components/register');
 export default {
@@ -137,7 +137,33 @@ export default {
       this.step = false;
     },
     save() {
-
+      log.debug('save');
+      /**
+       * 1. 先判断page1和page2是否为空， 其中需要判断page1和page2是否有错误
+       * 2. 当没有错误的时候，做两个动作 a. createMember创建用户，b. modifyBasicInfo改用户信息
+      */
+      const content = this._isContentEmpty(this.page2);
+      if (content.result) {
+        this.$toast.fail(content.errorMessage);
+        return;
+      }
+      const errors = this._IteratorPage(this.page2);
+      if (errors.result) {
+        this.$toast.fail(errors.errorMessage);
+        return;
+      }
+      const register = {
+        mobile: this.page1[0].content,
+        passwd: md5(this.page1[1].content)
+      };
+      this.$store.dispatch('resigter', register).then(resp => {
+        this.$toast({message: '用户名重复，请重新输入用户名', mask: true, type: 'text'});
+        field.content = '';
+        field.error = true;
+      }).catch(error => {
+        log.error('error is ' + JSON.stringify(error));
+        field.error = false;
+      });
     },
     birthday() {
       this._closeAllActionSheet();
@@ -174,7 +200,7 @@ export default {
     },
     _isContentEmpty(page) {
       const result = true;
-      const errorMessage = '请填写手机号码';
+      const errorMessage = '请填写带*号的选项';
       page.forEach(item => {
         result || this.$tools.isEmpty(item.content);
       });
@@ -184,7 +210,7 @@ export default {
     _IteratorPage(page) {
       const result = false;
       const errorMessage = '请填写正确的内容';
-      page.forEach(item => {
+      page.filter(item => item.required === true).forEach(item => {
         result || item.error;
       });
       return {result, errorMessage};

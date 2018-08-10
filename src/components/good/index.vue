@@ -80,8 +80,7 @@ export default {
   },
   methods: {
     Resize400(image) {
-      // return image;
-      return this.$tools.resizeImage(image, 400);
+      return this.$tools.resizeImage(image.split(';')[0], 400);
     },
     onClose(clickPosition, instance) {
       switch (clickPosition) {
