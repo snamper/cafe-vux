@@ -29,7 +29,7 @@ service.interceptors.response.use(
      */
     if (response.status === 200) {
       const data = response.data;
-      if (Tools.isEmpty(data.success)) {
+      if (Tools.isEmpty(data.success) || Tools.isEmpty(data.status)) {
         return data;
       } else if (data.success) {
         return data;
