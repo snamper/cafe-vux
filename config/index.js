@@ -1,4 +1,5 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
+var path = require('path')
 const local = 'http://127.0.0.1:21080'
 const tianbakery = 'http://www.tianbakery.store'
 const server = 'http://10.100.193.59'
