@@ -31,6 +31,7 @@ import { status } from '@/utils/products';
 import Logger from 'chivy';
 const log = new Logger('views/records');
 export default {
+  name: 'Records',
   data() {
     return {
       tabtitle: ['全部', '待付款', '待发货', '已发货', '已完成'],

@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'Loading',
   data() {
     return {
       url: '../../../static/img/loading.gif'

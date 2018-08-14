@@ -32,6 +32,7 @@ import sku from '@/components/sku';
 import Logger from 'chivy';
 const log = new Logger('views/food');
 export default {
+   name: 'Food',
   data() {
     return {
       to: '',

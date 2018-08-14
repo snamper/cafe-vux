@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'Round',
   props: {
     number: {
       type: Number,

@@ -17,6 +17,7 @@ import nameprice from './nameprice';
 import Logger from 'chivy';
 const log = new Logger('components/desc');
 export default {
+  name: 'Description',
   data() {
     return {
     }

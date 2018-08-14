@@ -55,6 +55,7 @@ import avator from '@/components/avator';
 import Logger from 'chivy';
 const log = new Logger('views/pay');
 export default {
+  name: 'Pay',
   data () {
     return {
       isObjEmpty: this.$tools.isEmpty,

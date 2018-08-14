@@ -34,6 +34,7 @@ import areaList from '@/utils/area';
 import Logger from 'chivy';
 const log = new Logger('views/address');
 export default {
+  name: 'PageAddress',
   data() {
     return {
       // 显示页面

@@ -103,6 +103,7 @@ import AreaList from '@/utils/area.js';
 import Logger from 'chivy';
 const log = new Logger('views/modify');
 export default {
+  name: 'Modify',
   data() {
     return {
       show: {

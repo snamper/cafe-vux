@@ -42,6 +42,7 @@ import { getUsername } from "@/utils/memberInfo";
 import Logger from 'chivy';
 const log = new Logger('views/card');
 export default {
+  name: 'Card',
   data() {
     return {
       getUsername,

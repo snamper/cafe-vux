@@ -81,6 +81,7 @@ import { status } from '@/utils/products';
 import Logger from 'chivy';
 const log = new Logger('views/record');
 export default {
+  name: 'Record',
   data() {
     return {
       active: 2,

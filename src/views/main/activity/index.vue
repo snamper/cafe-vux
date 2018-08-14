@@ -19,6 +19,7 @@ import orderdetail from '@/components/desc';
 import Logger from 'chivy';
 const log = new Logger('views/main/activity');
 export default {
+  name: 'Activity',
   data() {
     return {
     }

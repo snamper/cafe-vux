@@ -10,6 +10,7 @@
 import Logger from 'chivy';
 const log = new Logger('components/logo');
 export default {
+  name: 'Logo',
   data() {
     return {
       ratio: 2,

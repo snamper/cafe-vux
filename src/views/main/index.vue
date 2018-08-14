@@ -20,6 +20,7 @@ import { mapGetters } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('views/main');
 export default {
+  name: 'Main',
   data() {
     return {
       active: 0

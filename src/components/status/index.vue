@@ -15,6 +15,7 @@
 <script type="text/ecmascript=6">
 import { Icon } from 'vant';
 export default {
+  name: 'Status',
   components: {
     [Icon.name]: Icon
   },

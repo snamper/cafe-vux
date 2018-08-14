@@ -23,6 +23,7 @@ import { isTelValid, isEmailValid, isChineseNameValid, isPwdValid } from '@/util
 import Logger from 'chivy';
 const log = new Logger('components/field');
 export default {
+  name: 'Fields',
   props: {
     fields: {
       type: Array

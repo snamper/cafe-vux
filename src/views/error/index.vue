@@ -12,6 +12,7 @@
 <script>
 import avator from '@/components/avator';
 export default {
+  name: 'Error',
   data() {
     return {
       img: '../../../static/img/tian.jpg',

@@ -39,6 +39,7 @@ import productbanner from '@/components/good';
 import Logger from 'chivy';
 const log = new Logger('views/main/cart');
 export default {
+  name: 'Cart',
   data() {
     return {
       show: false,

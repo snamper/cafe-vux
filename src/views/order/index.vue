@@ -62,6 +62,7 @@ import { convertAddress } from '@/utils/address';
 import Logger from 'chivy';
 const log = new Logger('views/order');
 export default {
+  name: 'Order',
   data() {
     return {
       delivertype: '自提',

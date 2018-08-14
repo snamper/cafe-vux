@@ -30,6 +30,7 @@ import Vue from 'vue';
 import Logger from 'chivy';
 const log = new Logger('components/sku');
 export default {
+  name: 'Sku',
   data() {
     return {
       show: false,

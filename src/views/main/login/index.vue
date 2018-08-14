@@ -105,6 +105,7 @@ import { isPwdValid, isAccountValid, isTelValid, isEmailValid, isChineseNameVali
 import Logger from 'chivy';
 const log = new Logger('views/main/login');
 export default {
+  name: 'Login',
   data() {
     return {
       showlogin: true,

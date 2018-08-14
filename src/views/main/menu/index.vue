@@ -50,6 +50,7 @@ import { mapState } from 'vuex';
 import Logger from 'chivy';
 const log = new Logger('views/main/menu');
 export default {
+  name: 'Menu',
   data() {
     return {
       listHeight: [],

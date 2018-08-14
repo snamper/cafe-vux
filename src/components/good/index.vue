@@ -43,6 +43,7 @@ import { Checkbox, Icon, Cell, CellGroup, CellSwipe, Stepper } from 'vant';
 import Logger from 'chivy';
 const log = new Logger('components/good');
 export default {
+  name: 'Good',
   data() {
     return {
       value: this.good.count

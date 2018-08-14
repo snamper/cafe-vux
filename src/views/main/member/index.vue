@@ -65,6 +65,7 @@ import { getUsername } from '@/utils/memberInfo';
 import Logger from 'chivy';
 const log = new Logger('views/main/member');
 export default {
+  name: 'Member',
   data() {
     return {
       url: '../../../../static/img/avator.jpg',

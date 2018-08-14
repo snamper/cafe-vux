@@ -60,6 +60,7 @@ import md5 from 'blueimp-md5';
 import Logger from 'chivy';
 const log = new Logger('components/register');
 export default {
+  name: 'Register',
   data () {
     return {
       img: {
