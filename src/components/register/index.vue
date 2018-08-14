@@ -164,24 +164,41 @@ export default {
         mobile: this.page1[0].content,
         passwd: md5(this.page1[1].content)
       };
+      log.debug(JSON.stringify(register));
       this.$store.dispatch('resigter', register).then(resp => {
+        const info = {
+          id: resp.id,
+
+        }
+      });
+
+
+      /* {
+        "code": "a8ed2aac-d425-46ab-bcc1-eaedb6fa4926",
+        "createTime": 1534258819166,
+        "createTimeAsString": "2018-08-14 23:00:19",
+        "creatorId": -1,
+        "defaultEntity": false,
+        "discount": 0,
+        "id": 709,
+        "objClass": "com.xdt.ums.shop.member.manage.common.entity.MemberGradeImpl"
+      } */
+      /* this.$store.dispatch('resigter', register).then(resp => {
         if (resp.status) {
           // 修改
           const info = {
             id: resp.id,
             name: this.page2[0].content,
             mobile: this.page1[0].content,
-            email: this.$tools.isNotEmpty(this.page2[3].content) ? this.page2[3].content : '',
             gender: this.$tools.sex(this.page2[2].content),
           }
-          /* this.$store.dispatch('modifyInfo', ) */
         } else {
           this.$toast.fail('注册失败');
         }
       }).catch(error => {
         log.error('error is ' + JSON.stringify(error));
         this.$toast.fail('注册失败');
-      });
+      }); */
     },
     repwd() {
       this.page1[2].error = false;

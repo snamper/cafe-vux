@@ -31,21 +31,21 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/rest/shop': {
-        target: tianbakery,
+        target: local,
         changeOrigin: true,
         pathReWrite: {
           '^/rest/shop': ''
         }
       },
       '/shop': {
-        target: tianbakery,
+        target: local,
         changeOrigin: true,
         pathReWrite: {
           '^/shop': ''
         }
       },
       '/upload': {
-        target: tianbakery,
+        target: local,
         changeOrigin: true,
         pathReWrite: {
           '^/upload': ''
