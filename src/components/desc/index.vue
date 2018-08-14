@@ -37,7 +37,8 @@ export default {
   methods: {
     GetURL(imageUrl) {
       // log.debug(imageUrl);
-      return this.$tools.resizeImage(imageUrl, 400);
+      return this.$tools.resizeImage(imageUrl.split(';')[0], 400);
+      /* return this.$tools.resizeImage(imageUrl, 400); */
     },
     onClickBuy() {
       this.$emit('buy',{product: this.product});
