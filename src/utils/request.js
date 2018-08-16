@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Tools from './tools';
+import { Toast } from 'vant';
 /* import qs from 'qs'; */
 import Logger from 'chivy';
 const log = new Logger('utils/request');
@@ -11,6 +12,14 @@ const service = axios.create({
 
 const setMessage = message => {
   log.warn('toast or other ' + message);
+  Toast({
+    type: 'fail',
+    position: 'middle',
+    message: message,
+    mask: true,
+    forbidClick: true,
+    duration: 5000
+  });
 };
 
 service.interceptors.request.use(config => {
@@ -41,7 +50,7 @@ service.interceptors.response.use(
         setMessage('没有Success返回，请检查服务器返回值');
         return Promise.reject(JSON.stringify({type: 'undefined'}));
       } else if (!data.success) {
-        setMessage('服务器返回错误');
+        setMessage('操作失败');
         return Promise.reject(JSON.stringify({type: 'false'}));
       }
     } else {
@@ -50,6 +59,7 @@ service.interceptors.response.use(
     }
   },
   error => {
+    setMessage('服务器访问超时，请联系管理员');
     log.error('error be found ' + JSON.stringify(error));
     return Promise.reject(error);
   }
