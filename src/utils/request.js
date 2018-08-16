@@ -9,8 +9,12 @@ const service = axios.create({
   timeout: 5000
 });
 
-/* service.interceptors.request.use(config => {
-  config => {
+const setMessage = message => {
+  log.warn('toast or other ' + message);
+};
+
+service.interceptors.request.use(config => {
+  /* config => {
     if (config.method === 'post') {
       config.data = qs.stringify(config.data);
     }
@@ -18,27 +22,31 @@ const service = axios.create({
       'Content-Type': 'application/x-www.form-urlencoded'
     };
     return config;
-  };
-}); */
+  }; */
+  log.debug('url is ' + JSON.stringify(config.url));
+  log.debug('data is ' + JSON.stringify(config.data));
+  return config;
+});
 
 service.interceptors.response.use(
   response => {
-    // log.warn(response);
-    /**
-     * 当前HTTP返回不是200则返回error，如果是200则看success或者是status是否为真，如果真则返回数据
-     */
     if (response.status === 200) {
       const data = response.data;
-      if (Tools.isEmpty(data.success) || Tools.isEmpty(data.status)) {
+      log.debug('data is array ? ' + Array.isArray(data));
+      if (Array.isArray(data) || Tools.isEmpty(data.success) || (Tools.isNotEmpty(data.success) && data.success)) {
+        log.debug('success revice data and return value');
         return data;
-      } else if (data.success) {
-        return data;
-      } else {
-        return Promise.reject(new Error('[success is ' + data.success + '] && [status is ' + data.status + '].'));
+      }
+      if (Tools.isEmpty(data.success)) {
+        setMessage('没有Success返回，请检查服务器返回值');
+        return Promise.reject(JSON.stringify({type: 'undefined'}));
+      } else if (!data.success) {
+        setMessage('服务器返回错误');
+        return Promise.reject(JSON.stringify({type: 'false'}));
       }
     } else {
-      // log.error('response status code is ' + response.status + '.');
-      return Promise.reject(new Error('response status code is ' + response.status + '.'));
+      setMessage('服务器发生故障，请稍后再试');
+      return Promise.reject(JSON.stringify({type: response.status}));
     }
   },
   error => {
