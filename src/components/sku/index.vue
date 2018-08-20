@@ -147,7 +147,7 @@ export default {
         ],
         goods: {
           title: good.name,
-          picture: this.$tools.resizeImage(good.imageUrl, 400),
+          picture: this.$tools.resizeImage(good.imageUrl.split(';')[0], 400),
           price: good.price
         },
         price: good.price,

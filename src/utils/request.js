@@ -50,7 +50,7 @@ service.interceptors.response.use(
         setMessage('没有Success返回，请检查服务器返回值');
         return Promise.reject(JSON.stringify({type: 'undefined'}));
       } else if (!data.success) {
-        setMessage('操作失败');
+        // setMessage('操作失败');
         return Promise.reject(JSON.stringify({type: 'false'}));
       }
     } else {
