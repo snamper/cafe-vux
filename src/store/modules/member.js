@@ -65,13 +65,22 @@ const member = {
         }).catch(error => {
           log.error(JSON.stringify(error));
           toast('登陆失败', 'fail');
+          reject();
         });
       });
     },
     // 用户名是否重复
     duplicate({commit}, name) {
       log.debug('name is ' + name);
-      return isExistUserName(name);
+      return new Promise((resolve, reject) => {
+        isExistUserName(name).then(() => {
+          toast('用户名重复');
+          resolve();
+        }).catch(error => {
+          log.error(JSON.stringify(error));
+          reject();
+        });
+      });
     },
     // 注册新用户
     resigter({commit}, user) {
