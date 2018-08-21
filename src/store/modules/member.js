@@ -1,5 +1,7 @@
 import { memberLogin, isExistUserName, createMember, modifyBasicInfo} from '@/api/member';
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
+import { initStorage } from '@/utils/storage';
+import { toast } from '@/utils/toast';
 import Tools from '@/utils/tools';
 import Logger from 'chivy';
 const log = new Logger('store/modules/member');
@@ -58,11 +60,11 @@ const member = {
           const member = Tools.getMemberInfo(data);
           commit('LOGIN_IN', member);
           commit('UPDATE_ADDRESS', null);
-          Tools.toast('登陆成功');
+          toast('登陆成功', 'success');
           resolve();
         }).catch(error => {
-          log.error(error);
-          Tools.toast(error);
+          log.error(JSON.stringify(error));
+          toast('登陆失败', 'fail');
         });
       });
     },
@@ -99,13 +101,18 @@ const member = {
     },
     // 初始化用户
     initUser({commit}) {
-      return new Promise(resolve => {
-        Tools.initStorage().then(resp => {
-          commit('UPDATE_UUID', resp.uuid);
-          commit('UPDATE_MEMBER', resp.member);
-          resolve();
+      /**
+       * 从storage中读取用户，并从服务器中获取用户的信息填入到state中
+       */
+      const user = initStorage();
+      if (Tools.isEmpty(user.member)) {
+        commit('UPDATE_UUID', user.uuid);
+        commit('UPDATE_MEMBER', user.member);
+      } else {
+        return new Promise(resolve => {
+          // 先获取用户
         });
-      });
+      }
     },
     // 保存配送地址
     saveAddress({commit}, address) {

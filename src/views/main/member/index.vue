@@ -61,7 +61,6 @@ import { Cell, CellGroup, Row, Col, Icon, Button  } from 'vant';
 import { mapState, mapGetters } from 'vuex';
 import round from './round';
 import avator from '@/components/avator';
-import { status } from  '@/utils/consts';
 import Logger from 'chivy';
 const log = new Logger('views/main/member');
 export default {
@@ -69,7 +68,7 @@ export default {
   data() {
     return {
       url: '../../../../static/img/avator.jpg',
-      status,
+      status: this.$tools.status,
       getUsername: this.$tools.getUsername
     };
   },
@@ -87,14 +86,14 @@ export default {
     log.info('beforeRouteEnter');
     next(vm => {
       const id = vm.$tools.isCurrentJumpPage(window.location.href);
-      // log.info('id is ' + id);
+      log.info('id is ' + id);
       vm.$store.dispatch('initUser');
     });
   },
   created() {
     log.info('created');
     const id = this.$tools.isCurrentJumpPage(window.location.href);
-    // log.debug('id is ' + id);
+    log.debug('created id is ' + id);
   },
   computed: {
     ...mapState({
@@ -116,7 +115,7 @@ export default {
       }
     },
     username() {
-      return getUsername(this.uuid, this.member, '游客');
+      return this.getUsername(this.uuid, this.member, '游客');
     },
   },
   methods: {

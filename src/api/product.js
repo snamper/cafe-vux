@@ -1,11 +1,13 @@
 import service from '@/utils/request';
+import Tools from '@/utils/tools';
 import Logger from 'chivy';
 const log = new Logger('api/product');
-export const getCategoriedProducts = () => {
+// 获取所有商品
+export const getCategoriedProducts = (pageSize = 1000) => {
   const data = {
     envData: {
       pageNo: 1,
-      pageSize: 1000
+      pageSize: pageSize
     }
   };
   return service({
@@ -14,12 +16,12 @@ export const getCategoriedProducts = () => {
     data
   });
 };
-
+// 获取订单记录， 默认1000
 export const getRecordList = param => {
   const data = {
     envData: {
       pageNo: 1,
-      pageSize: 1000
+      pageSize: Tools.isNotEmpty(param.pageSize) ? param.pageSize : 1000
     },
     userId: param.userId,
     userCode: param.userCode,
@@ -31,7 +33,7 @@ export const getRecordList = param => {
     data
   });
 };
-
+// 保存订单
 export const saveRecordList = param => {
   const data = {
     userName: param.userName,
@@ -52,7 +54,7 @@ export const saveRecordList = param => {
     data
   });
 };
-
+// 更新订单状态
 export const alterStatus = param => {
   const data = {
     entityId: param.entityId,
@@ -64,7 +66,7 @@ export const alterStatus = param => {
     data
   });
 };
-
+// 获取配送地址
 export const getAddresses = param => {
   const data = {
     entityId: param.entityId
@@ -75,7 +77,7 @@ export const getAddresses = param => {
     data
   });
 };
-
+// 保存配送地址
 export const saveAddresses = param => {
   const data = {
     memberId: param.id,
@@ -95,7 +97,7 @@ export const saveAddresses = param => {
     data
   });
 };
-
+// 删除配送地址
 export const deleteAddresses = param => {
   const data = {
     entityId: param.entityId
@@ -106,7 +108,7 @@ export const deleteAddresses = param => {
     data
   });
 };
-
+// 更新配送地址
 export const updateAddresses = param => {
   log.debug('updateAddresses param is ' + JSON.stringify(param));
   const data = {

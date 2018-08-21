@@ -1,6 +1,5 @@
 import querystring from './queryString';
 import { appendZero, splitUrl, param } from './utils';
-import { setStorage, getStorage, delStorage, getUuid, initStorage } from './storage';
 import { isPwdValid, isAccountValid, isTelValid, isEmailValid, isChineseNameValid } from './validate';
 import { status } from './consts';
 import Logger from 'chivy';
@@ -159,16 +158,11 @@ export default class Tools {
     };
   };
   // 暴露操作接口给tools
-  static setStorage = setStorage;
-  static getStorage = getStorage;
-  static delStorage = delStorage;
-  static getUuid = getUuid;
-  static isPwdValid = isPwdValid;
-  static isAccountValid = isAccountValid;
-  static isTelValid = isTelValid;
-  static isEmailValid = isEmailValid;
-  static isChineseNameValid = isChineseNameValid;
-  static initStorage = initStorage;
+  static isPwdValid = isPwdValid();
+  static isAccountValid = isAccountValid();
+  static isTelValid = isTelValid();
+  static isEmailValid = isEmailValid();
+  static isChineseNameValid = isChineseNameValid();
   static status = status;
 
 };

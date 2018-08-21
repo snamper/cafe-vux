@@ -1,7 +1,7 @@
 import service from '@/utils/request';
 import Logger from 'chivy';
 const log = new Logger('api/member');
-
+// 用户是否存在
 export const isExistUserName = param => {
   const data = {
     name: param.name
@@ -12,7 +12,7 @@ export const isExistUserName = param => {
     data
   });
 };
-
+// 用户登录
 export const memberLogin = param => {
   const data = {
     name: param.name,
@@ -24,7 +24,23 @@ export const memberLogin = param => {
     data
   });
 };
-
+// 获取用户基本信息
+export const getBasicInfoList = param => {
+  const data = {
+    entityId: param.entityId,
+    entityName: param.entityName,
+    envData: {
+      pageNo: 1,
+      pageSize: 20
+    }
+  };
+  return service({
+    url: '/member/show/ui/getBasicInfoList.do',
+    method: 'post',
+    data
+  });
+};
+// 注册用户
 export const createMember = param => {
   const data = {
     mobile: param.mobile,
@@ -37,16 +53,15 @@ export const createMember = param => {
     data
   });
 };
-
+// 修改用户基本信息
 export const modifyBasicInfo = param => {
   const data = {
-    userId: param.id,
+    memberId: param.memberId,
     name: param.name,
-    mobile: param.mobile,
-    gender: param.gender,
-    email: param.email,
-    address: param.address,
-    detailAddress: param.detailAddress
+    birthDay: param.birthDay,
+    genderStr: param.genderStr,
+    region: param.region,
+    address: param.address
   };
   return service({
     url: '/member/show/ui/modifyBasicInfo.do',
@@ -54,7 +69,7 @@ export const modifyBasicInfo = param => {
     data
   });
 };
-
+// 修改用户密码
 export const modifyPassword = param => {
   const data = {
     entityId: param.entityId,
@@ -78,12 +93,34 @@ export const getMemberById = param => {
   });
 };
 
-export const getBasicInfoList = param => {
+// 获取指定用户信息
+export const getMember = param => {
   const data = {
-    entityId: param.entityId
+    entityId: param.entityId,
+    entityName: param.entityName,
+    envData: {
+      pageNo: 1,
+      pageSize: 20
+    }
   };
   return service({
-    url: '/member/show/ui/getBasicInfoList.do',
+    url: '/member/show/ui/getMember.do',
+    method: 'post',
+    data
+  });
+};
+
+// 更新会员信息
+export const updateMember = param => {
+  const data = {
+    id: param.id,
+    name: param.name,
+    mobile: param.mobile,
+    email: param.email,
+    nick: param.nick
+  };
+  return service({
+    url: '/member/show/ui/updateMember.do',
     method: 'post',
     data
   });

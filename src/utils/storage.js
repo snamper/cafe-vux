@@ -11,6 +11,7 @@ const key = {
 };
 
 export const setStorage = data => {
+  // log.debug('setStorage data is ' + JSON.stringify(data));
   var nextMonth = new Date();
   nextMonth.setMonth(nextMonth.getMonth() + 1);
   wsCache.set(data.key, data.value, { exp: nextMonth });
@@ -24,27 +25,16 @@ export const getUuid = () => uuidv4();
 
 // 初始化storage
 export const initStorage = () => {
-  return new Promise(resolve => {
-    /* eslint-disable */
-    // debugger
-    let result = {};
-    const member = getStorage(key.member);
-    if (Tools.isNotEmpty(member)) {
-      // 需要再次从服务器上获取相关的信息，否则会出问题。
-      // TODO
-      result = {uuid: null, member: member};
-    } else {
-      let uuid = getStorage(key.uuid);
-      if (Tools.isEmpty(uuid)) {
-        uuid = uuidv4();
-        log.debug('UUID is ' + uuid);
-        setStorage({key: key.uuid, value: uuid});
-      }
-      result = {uuid: uuid, member: null};
-    }
-    resolve(result);
-  });
+  const member = getStorage(key.member);
+  let uuid = getStorage(key.uuid);
+  if (Tools.isEmpty(member) && Tools.isEmpty(uuid)) {
+    uuid = uuidv4();
+    setStorage({key: key.uuid, value: uuid});
+  }
+  log.debug(JSON.stringify({uuid: uuid, member: member}));
+  return {uuid: uuid, member: member};
 };
+
 // 登陆成功后
 export const setMember = value => {
   delStorage(key.uuid);
