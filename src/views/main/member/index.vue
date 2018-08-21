@@ -61,8 +61,7 @@ import { Cell, CellGroup, Row, Col, Icon, Button  } from 'vant';
 import { mapState, mapGetters } from 'vuex';
 import round from './round';
 import avator from '@/components/avator';
-import { status } from  '@/utils/products';
-import { getUsername } from '@/utils/memberInfo';
+import { status } from  '@/utils/consts';
 import Logger from 'chivy';
 const log = new Logger('views/main/member');
 export default {
@@ -70,7 +69,8 @@ export default {
   data() {
     return {
       url: '../../../../static/img/avator.jpg',
-      status
+      status,
+      getUsername: this.$tools.getUsername
     };
   },
   components: {

@@ -2,7 +2,7 @@
 var path = require('path')
 const local = 'http://127.0.0.1:21080'
 const tianbakery = 'http://www.tianbakery.store'
-const server = 'http://10.100.193.59'
+const server = 'http://10.100.193.59:21080'
 module.exports = {
   build: {
     env: require('./prod.env'),
@@ -31,21 +31,21 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/rest/shop': {
-        target: local,
+        target: server,
         changeOrigin: true,
         pathReWrite: {
           '^/rest/shop': ''
         }
       },
       '/shop': {
-        target: local,
+        target: server,
         changeOrigin: true,
         pathReWrite: {
           '^/shop': ''
         }
       },
       '/upload': {
-        target: local,
+        target: server,
         changeOrigin: true,
         pathReWrite: {
           '^/upload': ''

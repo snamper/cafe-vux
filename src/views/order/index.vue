@@ -58,7 +58,6 @@ import { mapState, mapGetters } from 'vuex';
 import product from '@/components/good';
 import addr from '@/components/address';
 import split from '@/components/split';
-import { convertAddress } from '@/utils/address';
 import Logger from 'chivy';
 const log = new Logger('views/order');
 export default {
@@ -69,7 +68,8 @@ export default {
       action: false,
       comment: '',
       cardType: 'add',
-      columns: ['自提', '快递']
+      columns: ['自提', '快递'],
+      convertAddress: this.$tools.convertAddress
     };
   },
   beforeRouteEnter(from, to, next) {

@@ -147,8 +147,6 @@ export default {
        * 1. 先判断page1和page2是否为空， 其中需要判断page1和page2是否有错误
        * 2. 当没有错误的时候，做两个动作 a. createMember创建用户，b. modifyBasicInfo改用户信息
       */
-      /* eslint-disable */
-      /* debugger */
       const content = this._isContentNotEmpty(this.page2);
       log.debug('save content is ' + JSON.stringify(content));
       if (!content.result) {
@@ -166,10 +164,10 @@ export default {
       };
       log.debug(JSON.stringify(register));
       this.$store.dispatch('resigter', register).then(resp => {
-        const info = {
+        /* const info = {
           id: resp.id,
 
-        }
+        } */
       });
 
 

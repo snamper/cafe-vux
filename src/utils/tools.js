@@ -1,16 +1,15 @@
 import querystring from './queryString';
+import { appendZero, splitUrl, param } from './utils';
+import { setStorage, getStorage, delStorage, getUuid } from './storage';
+import { isPwdValid, isAccountValid, isTelValid, isEmailValid, isChineseNameValid } from './validate';
 import Logger from 'chivy';
 const log = new Logger('utils/tools');
-// 小于0的数字前面加0
-const appendZero = number => number <= 9 ? ('0' + number) : number;
-
-// 根据尺寸获取图片
-const splitUrl = (url, size) => {
-  const array = url.split('.');
-  return array[0] + '_' + size + 'X' + size + '.' + array[1];
-};
 
 export default class Tools {
+  // 对象属性已定义
+  static isUndefined = obj => typeof (obj) === 'undefined';
+  // 对象属性未定义
+  static isNotUndefined = obj => !Tools.isUndefined(obj);
   // 对象是否为空
   static isEmpty = obj => (obj === null || obj === '' || typeof (obj) === 'undefined');
   // 对象非空
@@ -51,41 +50,122 @@ export default class Tools {
   // 根据图片地址重新计算然后获取重绘后的图片地址
   static resizeImage = (url, size) => Tools.isEmpty(url) ? url : splitUrl(url, size);
 
-  // 打印log
-  static logger = (...args) => {
-    let str = '';
-    for (const arg in args) {
-      if (arg !== args[args.length]) {
-        str += ' ' + arg;
-      } else {
-        str += ' ';
-        switch (typeof (arg)) {
-          case 'undefined':
-            str += 'undefined';
-            break;
-          case 'Number':
-            str += arg;
-            break;
-          case 'String':
-            str += arg;
-            break;
-          case 'Boolean':
-            str += arg;
-            break;
-          case 'null':
-            str += 'null';
-            break;
-          case 'Object':
-            str += JSON.stringify(arg);
-            break;
-        }
-      }
-    }
-    return str;
-  }
   // 判断是否是在微信浏览器中打开
   static isWeixin = () => {
     const ua = navigator.userAgent.toLowerCase();
     return ua.indexOf('micromessenger') !== -1;
   }
+
+  // 性别设置
+  static sex = value => {
+    switch (value) {
+      case 'M':
+        return '男';
+      case 'F':
+        return '女';
+      case '男':
+        return 'M';
+      case '女':
+        return 'F';
+      default:
+        return null;
+    }
+  }
+
+  // 格式化时间
+  static formatTime = (value, separate) => {
+    const datetime = Tools.formatDate(value);
+    return datetime.Year + separate + datetime.Month + separate + datetime.Day;
+  };
+
+  // 时间转换成长整数
+  static date2Long = date => {
+    const dt = new Date(date.replace(new RegExp('/-/g', 'g'), '/'));
+    console.log(dt);
+    console.error(dt.getTime());
+    return new Date(date.replace(new RegExp('/-/g', 'g'), '/')).getTime();
+  };
+
+  // 地址显示
+  static convertAddress = addressinfo => {
+    /*eslint-disable*/
+    // debugger
+    if (Tools.isNotEmpty(addressinfo)) {
+      const area = addressinfo.province + addressinfo.city + addressinfo.county;
+      const detail = Tools.isNotEmpty(addressinfo.address) ? addressinfo.address : addressinfo.address_detail;
+      return {
+        id: addressinfo.id,
+        name: addressinfo.name,
+        tel: Tools.isNotEmpty(addressinfo.mobile) ? addressinfo.mobile : addressinfo.tel,
+        address: area + detail
+      };
+    }
+    return null;
+  };
+  
+  // 获取显示名字
+  static getUsername = (uuid, member, vistor) => {
+    /*eslint-disable*/
+    // debugger
+    if (Tools.isNotEmpty(uuid)) {
+      return vistor;
+    } else if (Tools.isNotEmpty(member)) {
+      if (Tools.isNotEmpty(member.nick)) {
+        return member.nick;
+      } else if (Tools.isNotEmpty(member.phone)) {
+        return member.phone;
+      } else if (Tools.isNotEmpty(member.email)) {
+        return member.email;
+      } else if (Tools.isNotEmpty(member.name)) {
+        return member.name;
+      }
+    }
+  };
+
+  // 设置可以修改的数据
+  static setModifyData = param => {
+    return {
+      userId: param.userId,
+      name: Tools.isNotEmpty(param.name) ? param.name : null,
+      nick: Tools.isNotEmpty(param.nick) ? param.nick : null,
+      mobile: Tools.isNotEmpty(param.mobile) ? param.mobile : null,
+      gender: Tools.isNotEmpty(param.gender) ? param.gender : null,
+      email: Tools.isNotEmpty(param.email) ? param.email : null,
+      address: Tools.isNotEmpty(param.area) ? param.area : null,
+      detailAddress: Tools.isNotEmpty(param.address) ? param.address : null
+    };
+  };
+  // 重组member数据并放入到store.state中
+  static getMemberInfo = data => {
+    return {
+      balance: param(data.balance, 0),
+      cardGrade: param(data.cardGrade),
+      cardNo: param(data.cardNo),
+      cardStatus: param(data.cardStatus),
+      createTime: param(data.createTime),
+      description: param(data.description),
+      gender: param(data.gender),
+      id: param(data.id),
+      name: param(data.name),
+      point: param(data.point, 0),
+      phone: param(data.phone),
+      email: param(data.email),
+      area: param(data.area),
+      address: param(data.address),
+      avator: param(data.avator),
+      nick: param(data.nick),
+      status: param(data.status)
+    };
+  };
+  // 暴露操作接口给tools
+  static setStorage = setStorage;
+  static getStorage = getStorage;
+  static delStorage = delStorage;
+  static getUuid = getUuid;
+  static isPwdValid = isPwdValid;
+  static isAccountValid = isAccountValid;
+  static isTelValid = isTelValid;
+  static isEmailValid = isEmailValid;
+  static isChineseNameValid = isChineseNameValid;
+
 };

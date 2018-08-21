@@ -2,6 +2,7 @@ import { memberLogin, isExistUserName, createMember, modifyBasicInfo} from '@/ap
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
 import { setMember, setUuid, initStorage } from '@/utils/storage';
 import { getMemberInfo, setModifyData } from '@/utils/memberInfo';
+import Tools from '@/utils/tools';
 import Logger from 'chivy';
 const log = new Logger('store/modules/member');
 const member = {
@@ -50,13 +51,20 @@ const member = {
   },
   actions: {
     // 登陆成功后
+    /**
+     * 登陆成功后需要获取用户基本信息并填充到数据中
+     */
     login({commit}, user) {
       return new Promise((resolve, reject) => {
         memberLogin(user).then(data => {
           const member = getMemberInfo(data);
           commit('LOGIN_IN', member);
           commit('UPDATE_ADDRESS', null);
+          Tools.toast('登陆成功');
           resolve();
+        }).catch(error => {
+          log.error(error);
+          Tools.toast(error);
         });
       });
     },
