@@ -27,7 +27,6 @@
 import { Tab, Tabs, NavBar, Icon } from 'vant';
 import { mapState } from 'vuex';
 import order from  './one';
-import { status } from '@/utils/products';
 import Logger from 'chivy';
 const log = new Logger('views/records');
 export default {
@@ -36,7 +35,7 @@ export default {
     return {
       tabtitle: ['全部', '待付款', '待发货', '已发货', '已完成'],
       active: 0,
-      status
+      status: this.$tools.status
     };
   },
   beforeRouteEnter(to, from, next) {

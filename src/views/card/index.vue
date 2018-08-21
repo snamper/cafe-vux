@@ -38,14 +38,13 @@ import { Cell, CellGroup, Row, Col, Icon, NavBar } from 'vant';
 import avator from '@/components/avator';
 import split from '@/components/split';
 import { mapState, mapGetters } from 'vuex';
-import { getUsername } from "@/utils/memberInfo";
 import Logger from 'chivy';
 const log = new Logger('views/card');
 export default {
   name: 'Card',
   data() {
     return {
-      getUsername,
+      getUsername: this.$tools.getUsername,
       avatorurl: '../../../static/img/avator.jpg'
     };
   },

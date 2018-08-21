@@ -1,7 +1,8 @@
 import querystring from './queryString';
 import { appendZero, splitUrl, param } from './utils';
-import { setStorage, getStorage, delStorage, getUuid } from './storage';
+import { setStorage, getStorage, delStorage, getUuid, initStorage } from './storage';
 import { isPwdValid, isAccountValid, isTelValid, isEmailValid, isChineseNameValid } from './validate';
+import { status } from './consts';
 import Logger from 'chivy';
 const log = new Logger('utils/tools');
 
@@ -167,5 +168,7 @@ export default class Tools {
   static isTelValid = isTelValid;
   static isEmailValid = isEmailValid;
   static isChineseNameValid = isChineseNameValid;
+  static initStorage = initStorage;
+  static status = status;
 
 };

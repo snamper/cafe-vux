@@ -1,7 +1,5 @@
 import { memberLogin, isExistUserName, createMember, modifyBasicInfo} from '@/api/member';
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
-import { setMember, setUuid, initStorage } from '@/utils/storage';
-import { getMemberInfo, setModifyData } from '@/utils/memberInfo';
 import Tools from '@/utils/tools';
 import Logger from 'chivy';
 const log = new Logger('store/modules/member');
@@ -32,11 +30,11 @@ const member = {
     LOGIN_IN: (state, payload) => {
       state.uuid = null;
       state.member = payload;
-      setMember(payload);
+      Tools.setMember(payload);
     },
     LOGIN_OUT: state => {
       state.member = null;
-      state.uuid = setUuid();
+      state.uuid = Tools.setUuid();
     },
     SET_DEFAULT_ADDRESS: state => {
       // 遍历看是否存在默认地址
@@ -57,7 +55,7 @@ const member = {
     login({commit}, user) {
       return new Promise((resolve, reject) => {
         memberLogin(user).then(data => {
-          const member = getMemberInfo(data);
+          const member = Tools.getMemberInfo(data);
           commit('LOGIN_IN', member);
           commit('UPDATE_ADDRESS', null);
           Tools.toast('登陆成功');
@@ -79,7 +77,7 @@ const member = {
       return new Promise((resolve, reject) => {
         createMember(user).then(data => {
           log.debug('RESPONSE DATA IS ' + JSON.stringify(data));
-          const memberinfo = getMemberInfo(data);
+          const memberinfo = Tools.getMemberInfo(data);
           commit('UPDATE_MEMBER', memberinfo);
           commit('LOGIN_IN', memberinfo);
           resolve();
@@ -96,13 +94,13 @@ const member = {
     },
     // 修改会员信息
     modifyInfo({commit}, user) {
-      const param = setModifyData(user);
+      const param = Tools.setModifyData(user);
       return modifyBasicInfo(param);
     },
     // 初始化用户
     initUser({commit}) {
       return new Promise(resolve => {
-        initStorage().then(resp => {
+        Tools.initStorage().then(resp => {
           commit('UPDATE_UUID', resp.uuid);
           commit('UPDATE_MEMBER', resp.member);
           resolve();
