@@ -1,4 +1,4 @@
-import { memberLogin, isExistUserName, createMember, modifyBasicInfo} from '@/api/member';
+import { memberLogin, isExistUserName, createMember, modifyBasicInfo, getMember, getBasicInfoList } from '@/api/member';
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
 import { initStorage } from '@/utils/storage';
 import { toast, loading, clear } from '@/utils/toast';
@@ -59,12 +59,15 @@ const member = {
       return new Promise((resolve, reject) => {
         memberLogin(user).then(data => {
           if (data.status) {
-            const member = Tools.getMemberInfo(data);
-            log.debug('member is ' + JSON.stringify(member));
-            commit('LOGIN_IN', member);
-            commit('UPDATE_ADDRESS', null);
-            toast('登陆成功', 'success');
-            resolve();
+            const request = Tools.setSearchData(data.id);
+            Promise.all([getMember(request), getBasicInfoList(request)]).then(resp => {
+              const member = Tools.getMemberInfo(data);
+              log.debug('member is ' + JSON.stringify(member));
+              commit('LOGIN_IN', member);
+              commit('UPDATE_ADDRESS', null);
+              toast('登陆成功', 'success');
+              resolve();
+            });
           } else {
             toast('登陆失败', 'fail');
             reject();

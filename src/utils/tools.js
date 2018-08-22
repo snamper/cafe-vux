@@ -102,7 +102,7 @@ export default class Tools {
     }
     return null;
   };
-  
+
   // 获取显示名字
   static getUsername = (uuid, member, vistor) => {
     /*eslint-disable*/
@@ -149,6 +149,18 @@ export default class Tools {
       valid: param(data.valid)
     };
   };
+
+  static setSearchData = id => {
+    return {
+      entityId: id,
+      entityName: '',
+      envData: {
+        pageNo: 1,
+        pageSize: 20
+      }
+    }
+  };
+
   // 暴露操作接口给tools
   static isPwdValid = isPwdValid();
   static isAccountValid = isAccountValid();
