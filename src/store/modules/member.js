@@ -1,7 +1,7 @@
 import { memberLogin, isExistUserName, createMember, modifyBasicInfo} from '@/api/member';
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
 import { initStorage } from '@/utils/storage';
-import { toast } from '@/utils/toast';
+import { toast, loading, clear } from '@/utils/toast';
 import Tools from '@/utils/tools';
 import Logger from 'chivy';
 const log = new Logger('store/modules/member');
@@ -32,10 +32,11 @@ const member = {
     LOGIN_IN: (state, payload) => {
       state.uuid = null;
       state.member = payload;
-      Tools.setMember(payload);
+      // Tools.setMember(payload);
     },
     LOGIN_OUT: state => {
       state.member = null;
+      state.addresses = null;
       state.uuid = Tools.setUuid();
     },
     SET_DEFAULT_ADDRESS: state => {
@@ -57,41 +58,55 @@ const member = {
     login({commit}, user) {
       return new Promise((resolve, reject) => {
         memberLogin(user).then(data => {
-          const member = Tools.getMemberInfo(data);
-          commit('LOGIN_IN', member);
-          commit('UPDATE_ADDRESS', null);
-          toast('登陆成功', 'success');
-          resolve();
-        }).catch(error => {
-          log.error(JSON.stringify(error));
-          toast('登陆失败', 'fail');
-          reject();
+          if (data.status) {
+            const member = Tools.getMemberInfo(data);
+            log.debug('member is ' + JSON.stringify(member));
+            commit('LOGIN_IN', member);
+            commit('UPDATE_ADDRESS', null);
+            toast('登陆成功', 'success');
+            resolve();
+          } else {
+            toast('登陆失败', 'fail');
+            reject();
+          }
         });
       });
     },
     // 用户名是否重复
     duplicate({commit}, name) {
       log.debug('name is ' + name);
+      loading('用户名查询中');
       return new Promise((resolve, reject) => {
-        isExistUserName(name).then(() => {
-          toast('用户名重复');
-          resolve();
-        }).catch(error => {
-          log.error(JSON.stringify(error));
-          reject();
+        isExistUserName({name}).then(data => {
+          if (data.status) {
+            clear();
+            toast('用户名已重复');
+            reject();
+          } else {
+            clear();
+            // toast('用户名未重复');
+            resolve();
+          }
         });
       });
     },
     // 注册新用户
     resigter({commit}, user) {
       log.debug('user is ' + JSON.stringify(user));
+      const load = loading();
       return new Promise((resolve, reject) => {
         createMember(user).then(data => {
-          log.debug('RESPONSE DATA IS ' + JSON.stringify(data));
-          const memberinfo = Tools.getMemberInfo(data);
-          commit('UPDATE_MEMBER', memberinfo);
-          commit('LOGIN_IN', memberinfo);
-          resolve();
+          if (data.status) {
+            const memberinfo = Tools.getMemberInfo(data);
+            commit('LOGIN_IN', memberinfo);
+            load.clear();
+            toast('新用户注册成功');
+            resolve();
+          } else {
+            load.clear();
+            toast('新用户注册失败');
+            reject();
+          }
         });
       });
     },
@@ -99,7 +114,6 @@ const member = {
     logout({commit}) {
       return new Promise(resolve => {
         commit('LOGIN_OUT');
-        commit('UPDATE_ADDRESS', null);
         resolve();
       });
     },

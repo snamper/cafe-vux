@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login-wrapper">
     <div class="logo">
       <avator
         :url="img.url"
@@ -7,80 +7,23 @@
         :height="img.height">
       </avator>
     </div>
-    <div class="input" v-if="showlogin">
-      <van-cell-group>
-        <van-field
-          v-model="username.content"
-          label="用户名"
-          icon="clear"
-          placeholder="请输入用户名"
-          required
-          :error="username.error"
-          @blur="checkAvaliable(username)"
-          @click-icon="username.content = ''"
-        />
-        <van-field
-          v-model="password.content"
-          type="password"
-          label="密码"
-          placeholder="请输入密码"
-          @blur="checkAvaliable(password)"
-          :error="password.error"
-          @click-icon="password.content = ''"
-          required
-        />
+    <div class="login">
+      <van-cell-group >
+        <field
+          :fields="fields">
+        </field>
       </van-cell-group>
     </div>
-    <div class="input" v-else>
-      <van-cell-group>
-        <van-field
-          v-model="account.content"
-          label="用户名"
-          icon="clear"
-          placeholder="手机号码/邮箱名"
-          required
-          :error="account.error"
-          @blur="checkAccountDuplicate(account)"
-          @click-icon="account.content = ''"
-        />
-        <van-field
-          v-model="pwd.content"
-          type="password"
-          label="输入密码"
-          placeholder="请输入密码"
-          :error="pwd.error"
-          @blur="checkAvaliable(pwd)"
-          @click-icon="pwd.content = ''"
-          required
-        />
-        <van-field
-          v-model="repwd.content"
-          type="password"
-          label="确认密码"
-          placeholder="请确认密码"
-          :error="repwd.error"
-          @blur="checkAvaliable(repwd)"
-          @click-icon="repwd.content = ''"
-          required
-        />
-      </van-cell-group>
-    </div>
-    <div class="submit" v-if="showlogin">
+    <div class="submit">
       <div class="login">
-        <van-button style="width:97%" type="primary" @click="onClickLogin" :disabled="disable.login">登录</van-button>
+        <van-button style="width:97%" type="primary" @click.native="onClickLogin">登录</van-button>
       </div>
       <div class="ops">
         <van-row type="flex">
           <van-col class="forget" span="8" @click.native="onClickForget">忘记密码</van-col>
-          <van-col class="vistor" span="8" @click.native="onClickVistor">游客访问</van-col>
-          <van-col class="register" span="8" @click.native="onClickShow">注册</van-col>
+          <van-col class="vistor" span="8" @click.native="onClickVistor" >游客访问</van-col>
+          <van-col class="register" span="8" @click.native="onClickRegister">注册</van-col>
         </van-row>
-      </div>
-    </div>
-    <div class="submit" v-else>
-      <div class="submit-wrapper">
-        <van-button class="registerbtn" type="primary" @click="onClickRegister" :disabled="disable.register">注册</van-button>
-        <van-button class="loginbtn"  type="default" @click="onClickShow">登录</van-button>
       </div>
     </div>
     <div class="foot">
@@ -96,23 +39,17 @@
   </div>
 </template>
 
-<script type="text/ecmascript=6">
-import { Button, Field, CellGroup, Row, Col } from 'vant';
+<script>
+import { Button, CellGroup, Row, Col } from 'vant';
 import avator from '@/components/avator';
-import { mapState } from 'vuex';
+import field from '@/components/field';
 import md5 from 'blueimp-md5';
-import { isPwdValid, isAccountValid, isTelValid, isEmailValid, isChineseNameValid } from '@/utils/validate';
 import Logger from 'chivy';
 const log = new Logger('views/main/login');
 export default {
   name: 'Login',
-  data() {
+  data () {
     return {
-      showlogin: true,
-      disable: {
-        login: false,
-        register: false
-      },
       img: {
         url: '../../../../static/img/tian.jpg',
         width: 100,
@@ -124,197 +61,74 @@ export default {
           radius: 50
         }
       },
-      username: {
-        key: 'username',
-        content: '',
-        error: false
-      },
-      password: {
-        key: 'password',
-        content: '',
-        error: false
-      },
-      account: {
-        key: 'account',
-        content: '',
-        error: false
-      },
-      pwd: {
-        key: 'pwd',
-        content: '',
-        error: false
-      },
-      repwd: {
-        key: 'repwd',
-        content: '',
-        error: false
-      }
-    }
+      fields: [
+        {content: '', label: '用户名', icon: 'close', placeholder: '手机号码', required: true, error: false, desc: 'mobile', errorMessage: '请输入正确的手机号码'},
+        {content: '', label: '密码', icon: 'close', placeholder: '请输入密码', required: true, error: false, desc: 'password', type: 'password'}
+      ]
+    };
   },
   components: {
     [Button.name]: Button,
-    [Field.name]: Field,
     [CellGroup.name]: CellGroup,
     [Row.name]: Row,
     [Col.name]: Col,
+    field,
     avator
   },
-  computed: {
-    ...mapState({
-      'uuid': state => state.member.uuid
-    })
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      log.debug('uuid is ' + vm.uuid);
-      if (vm.$tools.isEmpty(vm.uuid)) {
-        vm.$router.push({name: 'member'});
-      }
-    })
-  },
   methods: {
+    // 游客
+    onClickVistor() {
+      this.$router.push({name: 'member'});
+    },
+    onClickRegister() {
+      this.$router.push({name: 'register'});
+    },
     // 微博登陆
     onClickWeibo() {
       log.info('weibo login');
       this.$toast('暂未开放第三方登陆');
       // window.location.href = '/shop/member/show/ui/loginByOauth2.do?accountType=weibo';
     },
-    // 游客
-    onClickVistor() {
-      this.$router.push({name: 'member'});
-    },
-    // 显示登陆和注册
-    onClickShow() {
-      this.showlogin = !this.showlogin;
-    },
-    // 登陆
-    onClickLogin() {
-      this.disable.login = true;
-      const valid = !this.username.error && !this.password.error && !this.$tools.isEmpty(this.username.content) && !this.$tools.isEmpty(this.password.content);
-      if (!valid) {
-        this.$toast({message: '请填写正确的内容', mask: true, type: 'fail'});
-        this.disable.login = false;
-        return;
-      }
-      // 用户登录
-      const param = {
-        name: this.username.content,
-        passWd: md5(this.password.content)
-      };
-      this.$toast('登录中', true, 'loading');
-      this.$store.dispatch('login', param).then(() => {
-        log.info('login success');
-        this.$toast({message: '登录成功', mask: true, type: 'success'});
-        this.disable.login = false;
-        this.Jump2MemberPage();
-      }).catch((error) => {
-        this.$toast({message: '登录失败', mask: true, type: 'fail'});
-        this.disable.login = false;
-        this.ResetField(true);
-      });
-    },
-    // 注册
-    onClickRegister() {
-      this.disable.register = true;
-      const valid = !this.account.error && !this.pwd.error && !this.repwd.error && !this.$tools.isEmpty(this.account.content) && !this.$tools.isEmpty(this.pwd.content) && !this.$tools.isEmpty(this.repwd.content);
-      if (!valid) {
-        this.$toast({message: '请填写正确的内容', mask: true, type: 'fail'});
-        this.disable.register = false;
-        return;
-      }
-      // 注册用户
-      const param ={
-        name: this.account.content,
-        passwd: md5(this.pwd)
-      };
-      this.$toast({message: '登录中', mask: true, type: 'loading'});
-      this.$store.dispatch('resigter', param).then(() => {
-        this.$toast({message: '注册成功', mask: true, type: 'success'});
-        this.disable.register = false;
-        this.Jump2MemberPage();
-      }).catch(error => {
-        log.error('error is ' + JSON.stringify(error));
-        this.$toast({message: '注册失败', mask: true, type: 'fail'});
-        this.ResetField(true);
-        this.disable.register = false;
-      });
-    },
-    // 检查账户是否重复
-    checkAccountDuplicate(data) {
-      if (this.$tools.isEmpty(data.content)){
-        return;
-      }
-      // debugger
-      if  (!this.CheckAccountAvaliable(data.content)) {
-        data.error = true;
-        return;
-      }
-      this.$store.dispatch('duplicate', data.content).then(resp => {
-          this.$toast({message: '用户名重复，请重新输入用户名', mask: true, type: 'text'});
-          this.account.content = '';
-          data.error = true;
-      }).catch(error => {
-        log.error('account is duplicate, error is ' + JSON.stringify(error));
-        data.error = false;
-      });
-
-    },
-    // 忘记密码
     onClickForget() {
-      log.info('forget password');
+      this.$toast('请联系管理员重置密码');
     },
-    checkAvaliable(data) {
-      let error = false;
-      data.error = error;
-      if (data.content === '') {
-        error = true;
+    onClickLogin() {
+      const content = this._isContentNotEmpty(this.fields);
+      if (!content.result) {
+        this.$toast(content.errorMessage);
         return;
       }
-      switch(data.key) {
-        case this.username.key:
-          error = !this.CheckAccountAvaliable(data.content);
-          if(error) {
-            this.$toast('账户可以是邮箱或者手机号码');
-          }
-          break;
-        case this.pwd.key:
-          error = !isPwdValid(data.content);
-          if(error) {
-            this.$toast('密码由6-21字母和数字组成');
-          }
-          break;
-        case this.repwd.key:
-          error = this.repwd.content !== this.pwd.content ? true: false;
-          if(error) {
-             this.$toast('两次输入的密码不一致');
-          }
-          break;
+      const errors = this._IteratorPage(this.fields);
+      if (errors.result) {
+        this.$toast(errors.errorMessage);
+        return;
       }
-      log.debug(data.key + ' check result is ' + error);
-      data.error = error;
+      const user = {
+        name: this.fields[0].content,
+        passWd: md5(this.fields[1].content)
+      };
+      this.$store.dispatch('login', user).then(() => {
+        this.$router.push({name: 'member'});
+      });
     },
-    // 检查账号是否可用
-    CheckAccountAvaliable(account) {
-      if (isTelValid(account)) {
-        return true;
-      } else if (isEmailValid(account)) {
-        return true;
-      } else if (isAccountValid(account)) {
-        return true;
-      }
-      return false;
+    _isContentNotEmpty(page) {
+      let result = true;
+      const errorMessage = '请填写带*号的选项';
+      page.filter(item => item.required === true).forEach(item => {
+        // log.debug(this.$tools.isNotEmpty(item.content));
+        result = result && this.$tools.isNotEmpty(item.content);
+        // log.warn(result);
+      });
+      return {result, errorMessage};
     },
-    ResetField(status) {
-      // 密码清空
-      this.showlogin = status;
-      this.username.content = '';
-      this.password.content = '';
-      this.account.content = '';
-      this.pwd.content = '';
-      this.repwd.content = '';
-    },
-    Jump2MemberPage() {
-      this.$router.push({name: 'member'});
+    // 遍历数组，当发现有error为true的时候返回真，否则是假
+    _IteratorPage(page) {
+      let result = false;
+      const errorMessage = '请填写正确的内容';
+      page.filter(item => item.required === true).forEach(item => {
+        result = result || item.error;
+      });
+      return {result, errorMessage};
     }
   }
 };
@@ -322,7 +136,7 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import '../../../styles/mixin.styl';
-.login
+.login-wrapper
   bgcolor()
   bottom()
   .logo
@@ -332,8 +146,6 @@ export default {
     height 160px
     width 100%
     margin-top 10px
-  .input
-    margin 10px 0px
   .submit
     width 100%
     .login
@@ -354,16 +166,6 @@ export default {
         .forget
           justify-content flex-start
           padding-left 10px
-    .submit-wrapper
-      display flex
-      justify-content space-between
-      .registerbtn,.loginbtn
-        display inline-block
-        width 45%
-      .registerbtn
-        margin-left 15px
-      .loginbtn
-        margin-right 15px
   .foot
     .divider
       font-size 18px

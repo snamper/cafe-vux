@@ -15,3 +15,19 @@ export const toast = (message, type = 'text', duration = 3000, forbidClick = fal
     duration: duration
   });
 };
+
+export const loading = (message = '') => {
+  Toast({
+    type: 'loading',
+    position: 'middle',
+    message: message,
+    mask: true,
+    forbidClick: true,
+    loadingType: 'spinner',
+    duration: 0
+  });
+};
+
+export const clear = () => {
+  Toast.clear();
+};

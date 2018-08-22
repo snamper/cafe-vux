@@ -27,7 +27,8 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     if (response.status === 200) {
-      const data = response.data;
+      return response.data;
+     /*  const data = response.data;
       // log.debug('data is array ? ' + Array.isArray(data));
       if (Array.isArray(data) || Tools.isEmpty(data.success) || (Tools.isNotEmpty(data.success) && data.success)) {
         // log.debug('success revice data and return value');
@@ -39,9 +40,9 @@ service.interceptors.response.use(
       } else if (!data.success || !data.status) {
         // setMessage('操作失败');
         return Promise.reject(JSON.stringify({type: 'false'}));
-      }
+      } */
     } else {
-      Tools.toast('服务器发生故障，请稍后再试');
+      Tools.toast('服务器发生故障[' + response.status + ']，请稍后再试');
       return Promise.reject(JSON.stringify({type: response.status}));
     }
   },

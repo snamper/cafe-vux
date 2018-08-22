@@ -138,23 +138,15 @@ export default class Tools {
   // 重组member数据并放入到store.state中
   static getMemberInfo = data => {
     return {
-      balance: param(data.balance, 0),
-      cardGrade: param(data.cardGrade),
-      cardNo: param(data.cardNo),
-      cardStatus: param(data.cardStatus),
-      createTime: param(data.createTime),
-      description: param(data.description),
-      gender: param(data.gender),
       id: param(data.id),
       name: param(data.name),
-      point: param(data.point, 0),
-      phone: param(data.phone),
-      email: param(data.email),
-      area: param(data.area),
-      address: param(data.address),
-      avator: param(data.avator),
       nick: param(data.nick),
-      status: param(data.status)
+      sex: param(data.sex),
+      mobile: param(data.mobile),
+      region: param(data.region),
+      address: param(data.address),
+      point: param(data.point),
+      valid: param(data.valid)
     };
   };
   // 暴露操作接口给tools

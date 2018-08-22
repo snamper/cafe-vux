@@ -18,6 +18,7 @@
     </div>
     <div class="save-first" v-if="step">
       <van-button style="width:95%" type="primary" @click.native="next">下一步</van-button>
+      <van-button style="width:95%;margin-top:5px;" type="primary" @click.native="login">我要登录</van-button>
     </div>
     <div class="save-second" v-else>
       <van-button style="width:95%" type="primary" @click.native="save">注册会员</van-button>
@@ -115,6 +116,9 @@ export default {
     }
   },
   methods: {
+    login() {
+      this.$router.push({name: 'login'});
+    },
     back() {
       log.debug('back');
       // 返回按钮点击后显示第一页并不显示回退按钮
