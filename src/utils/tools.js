@@ -150,10 +150,9 @@ export default class Tools {
     };
   };
 
-  static setSearchData = id => {
+  static setSearchData = name => {
     return {
-      entityId: id,
-      entityName: '',
+      entityName: name,
       envData: {
         pageNo: 1,
         pageSize: 20
