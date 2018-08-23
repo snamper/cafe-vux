@@ -1,6 +1,6 @@
 import { memberLogin, isExistUserName, createMember, modifyBasicInfo, getMemberById } from '@/api/member';
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
-import { initStorage } from '@/utils/storage';
+import { initStorage, setUuid } from '@/utils/storage';
 import { toast, loading, clear } from '@/utils/toast';
 import Tools from '@/utils/tools';
 import Logger from 'chivy';
@@ -29,15 +29,26 @@ const member = {
     UPDATE_ADDRESSES: (state, payload) => {
       state.addresses = payload;
     },
+    /**
+     * 1.登陆成功后需要把uuid变为null
+     * 2.更新member信息
+     * 3.把单个的address设置为null
+     */
     LOGIN_IN: (state, payload) => {
       state.uuid = null;
       state.member = payload;
+      state.address = null;
       // Tools.setMember(payload);
     },
+    /**
+     * 1. 重新设置uuid
+     * 2. 重新更新member为null
+     * 3. 更新addresses为null
+     */
     LOGIN_OUT: state => {
       state.member = null;
       state.addresses = null;
-      state.uuid = Tools.setUuid();
+      state.uuid = setUuid();
     },
     SET_DEFAULT_ADDRESS: state => {
       // 遍历看是否存在默认地址
@@ -64,7 +75,6 @@ const member = {
                 const member = Tools.getMemberInfo(data);
                 log.debug('member is ' + JSON.stringify(member));
                 commit('LOGIN_IN', member);
-                commit('UPDATE_ADDRESS', null);
                 toast('登陆成功', 'success');
                 resolve();
               } else {
