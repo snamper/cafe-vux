@@ -91,7 +91,7 @@ const member = {
     // 用户名是否重复
     duplicate({commit}, name) {
       log.debug('name is ' + name);
-      loading('用户名查询中');
+      loading('用户名查询中...');
       return new Promise((resolve, reject) => {
         isExistUserName({name}).then(data => {
           if (data.status) {
@@ -100,7 +100,6 @@ const member = {
             reject();
           } else {
             clear();
-            // toast('用户名未重复');
             resolve();
           }
         });
@@ -109,17 +108,17 @@ const member = {
     // 注册新用户
     resigter({commit}, user) {
       log.debug('user is ' + JSON.stringify(user));
-      const load = loading();
+      loading('用户注册中...');
       return new Promise((resolve, reject) => {
         createMember(user).then(data => {
           if (data.status) {
-            const memberinfo = Tools.getMemberInfo(data);
-            commit('LOGIN_IN', memberinfo);
-            load.clear();
+            const member = Tools.getMemberInfo(data);
+            commit('LOGIN_IN', member);
+            clear();
             toast('新用户注册成功');
             resolve();
           } else {
-            load.clear();
+            clear();
             toast('新用户注册失败');
             reject();
           }
@@ -140,18 +139,21 @@ const member = {
     },
     // 初始化用户
     initUser({commit}) {
-      /**
+      loading('初始化中....');
+      return new Promise((resolve, reject) => {
+        /**
        * 从storage中读取用户，并从服务器中获取用户的信息填入到state中
        */
-      const user = initStorage();
-      if (Tools.isEmpty(user.member)) {
-        commit('UPDATE_UUID', user.uuid);
-        commit('UPDATE_MEMBER', user.member);
-      } else {
-        return new Promise(resolve => {
-          // 先获取用户
-        });
-      }
+        const user = initStorage();
+        if (Tools.isEmpty(user.member)) {
+          commit('UPDATE_UUID', user.uuid);
+          commit('UPDATE_MEMBER', user.member);
+        } else {
+          return new Promise(resolve => {
+            // 先获取用户
+          });
+        }
+      });
     },
     // 保存配送地址
     saveAddress({commit}, address) {
