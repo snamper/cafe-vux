@@ -1,6 +1,6 @@
 import { memberLogin, isExistUserName, createMember, modifyBasicInfo, getMemberById } from '@/api/member';
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
-import { initStorage, setUuid } from '@/utils/storage';
+import { initStorage, setUuid, setMember } from '@/utils/storage';
 import { toast, loading, clear } from '@/utils/toast';
 import Tools from '@/utils/tools';
 import Logger from 'chivy';
@@ -38,7 +38,7 @@ const member = {
       state.uuid = null;
       state.member = payload;
       state.address = null;
-      // Tools.setMember(payload);
+      setMember(payload);
     },
     /**
      * 1. 重新设置uuid
@@ -69,22 +69,11 @@ const member = {
     login({commit}, user) {
       return new Promise((resolve, reject) => {
         memberLogin(user).then(data => {
-          if (data.status) {
-            getMemberById({entityId: data.id}).then(() => {
-              if (data.status) {
-                const member = Tools.getMemberInfo(data);
-                log.debug('member is ' + JSON.stringify(member));
-                commit('LOGIN_IN', member);
-                toast('登陆成功', 'success');
-                resolve();
-              } else {
-                toast('获取用户基本信息失败', 'fail');
-              }
-            });
-          } else {
-            toast('登陆失败', 'fail');
-            reject();
-          }
+          const member = Tools.getMemberInfo(data);
+          log.debug('member is ' + JSON.stringify(member));
+          commit('LOGIN_IN', member);
+          toast('登陆成功', 'success');
+          resolve();
         });
       });
     },
@@ -111,17 +100,11 @@ const member = {
       loading('用户注册中...');
       return new Promise((resolve, reject) => {
         createMember(user).then(data => {
-          if (data.status) {
-            const member = Tools.getMemberInfo(data);
-            commit('LOGIN_IN', member);
-            clear();
-            toast('新用户注册成功');
-            resolve();
-          } else {
-            clear();
-            toast('新用户注册失败');
-            reject();
-          }
+          const member = Tools.getMemberInfo(data);
+          commit('LOGIN_IN', member);
+          clear();
+          toast('新用户注册成功');
+          resolve();
         });
       });
     },
@@ -139,7 +122,7 @@ const member = {
     },
     // 初始化用户
     initUser({commit}) {
-      loading('初始化中....');
+      // loading('初始化中....');
       return new Promise((resolve, reject) => {
         /**
        * 从storage中读取用户，并从服务器中获取用户的信息填入到state中
@@ -149,10 +132,14 @@ const member = {
           commit('UPDATE_UUID', user.uuid);
           commit('UPDATE_MEMBER', user.member);
         } else {
-          return new Promise(resolve => {
             // 先获取用户
+          getMemberById({entityId: user.member.id}).then(data => {
+              const member = Tools.getMemberInfo(data);
+              log.debug('member is ' + JSON.stringify(member));
+              commit('LOGIN_IN', member);
           });
         }
+        resolve();
       });
     },
     // 保存配送地址

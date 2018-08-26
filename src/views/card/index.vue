@@ -23,12 +23,12 @@
     <van-cell-group v-if="member">
       <van-cell title="姓名" :value="show(member.name)" />
       <van-cell title="生日" :value="show(member.birthday)" />
-      <van-cell title="性别" :value="show(member.gender)" />
-      <van-cell title="电话号码" :value="show(member.phone)" />
-      <van-cell title="所在地" :value="show(member.area)" />
+      <van-cell title="性别" :value="show(member.sex)" />
+      <van-cell title="电话号码" :value="show(member.mobile)" />
+      <van-cell title="所在地" :value="show(member.region)" />
       <van-cell title="详细地址" :value="show(member.address)" />
       <van-cell title="积分" :value="show(member.point)" />
-      <van-cell title="会员状态" :value="status(member.status)" />
+      <van-cell title="会员状态" :value="status(member.valid)" />
     </van-cell-group>
   </div>
 </template>
@@ -44,7 +44,6 @@ export default {
   name: 'Card',
   data() {
     return {
-      getUsername: this.$tools.getUsername,
       avatorurl: '../../../static/img/avator.jpg'
     };
   },
@@ -74,7 +73,7 @@ export default {
       'member': state => state.member.member
     }),
     username() {
-      return getUsername(this.uuid, this.member, '游客');
+      return this.$tools.getUsername(this.uuid, this.member, '游客');
     }
   },
   methods: {

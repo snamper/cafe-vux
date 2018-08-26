@@ -141,9 +141,10 @@ export default class Tools {
       id: param(data.id),
       name: param(data.name),
       nick: param(data.nick),
-      sex: param(data.sex),
+      sex: Tools.sex(param(data.genderStr)),
       mobile: param(data.mobile),
       region: param(data.region),
+      birthday: param(data.birthDay),
       address: param(data.address),
       point: param(data.point),
       valid: param(data.valid)

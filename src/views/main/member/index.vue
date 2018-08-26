@@ -87,7 +87,9 @@ export default {
     next(vm => {
       const id = vm.$tools.isCurrentJumpPage(window.location.href);
       log.info('id is ' + id);
-      vm.$store.dispatch('initUser');
+      if (vm.$tools.isNotEmpty) {
+        vm.$store.dispatch('initUser');
+      }
     });
   },
   created() {

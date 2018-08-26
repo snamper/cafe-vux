@@ -1,6 +1,6 @@
 <template>
   <div class="product-banner">
-    <van-cell-swipe :right-width="rightwidth" :on-close="onClose">
+    <van-swipe-cell :right-width="rightwidth" :on-close="onClose">
       <van-cell-group>
         <van-cell>
           <template slot="title">
@@ -34,12 +34,12 @@
         </van-cell>
       </van-cell-group>
       <span slot="right">删除</span>
-    </van-cell-swipe>
+    </van-swipe-cell>
   </div>
 </template>
 
 <script type="text/ecmascript=6">
-import { Checkbox, Icon, Cell, CellGroup, CellSwipe, Stepper } from 'vant';
+import { Checkbox, Icon, Cell, CellGroup, SwipeCell, Stepper } from 'vant';
 import Logger from 'chivy';
 const log = new Logger('components/good');
 export default {
@@ -66,7 +66,7 @@ export default {
     [Icon.name]: Icon,
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
-    [CellSwipe.name]: CellSwipe,
+    [SwipeCell.name]: SwipeCell,
     [Checkbox.name]: Checkbox,
     [Stepper.name]: Stepper
   },
@@ -108,7 +108,7 @@ export default {
   padding 0px
   .van-cell
     padding 5px
-  .van-cell-swipe
+  .van-swipe-cell
     .van-cell-swipe__right
       span
         color: #FFFFFF;

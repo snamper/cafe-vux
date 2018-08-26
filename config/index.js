@@ -1,6 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
 const local = 'http://127.0.0.1:21080'
+const background = 'http://127.0.0.1:15080'
 const tianbakery = 'http://www.tianbakery.store'
 const server = 'http://10.100.193.59:21080'
 module.exports = {
@@ -31,21 +32,21 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/rest/shop': {
-        target: server,
+        target: background,
         changeOrigin: true,
         pathReWrite: {
           '^/rest/shop': ''
         }
       },
       '/shop': {
-        target: server,
+        target: background,
         changeOrigin: true,
         pathReWrite: {
           '^/shop': ''
         }
       },
       '/upload': {
-        target: server,
+        target: background,
         changeOrigin: true,
         pathReWrite: {
           '^/upload': ''

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import Tools from './tools';
 /* import qs from 'qs'; */
+import { toast } from './toast';
 import Logger from 'chivy';
 const log = new Logger('utils/request');
 
@@ -42,12 +42,12 @@ service.interceptors.response.use(
         return Promise.reject(JSON.stringify({type: 'false'}));
       } */
     } else {
-      Tools.toast('服务器发生故障[' + response.status + ']，请稍后再试');
+      toast('服务器发生故障[' + response.status + ']，请稍后再试', 'fail');
       return Promise.reject(JSON.stringify({type: response.status}));
     }
   },
   error => {
-    Tools.toast('服务器访问超时，请联系管理员');
+    toast('服务器访问超时，请联系管理员', 'fail');
     log.error('error be found ' + JSON.stringify(error));
     return Promise.reject(error);
   }
