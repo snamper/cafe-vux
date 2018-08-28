@@ -47,7 +47,7 @@
       <van-cell title="我的信息" is-link ></van-cell> -->
     </van-cell-group>
     <van-cell-group class="loginout" v-if="member">
-      <van-button type="danger" @click.native="onClickLogout">注销</van-button>
+      <van-button type="danger"  @click.native="onClickLogout">注销</van-button>
     </van-cell-group>
     <van-cell-group class="loginout" v-else>
       <van-button type="primary" @click.native="onClickLogin">我要登录</van-button>

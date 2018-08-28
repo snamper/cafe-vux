@@ -67,11 +67,12 @@ const member = {
      * 登陆成功后需要获取用户基本信息并填充到数据中
      */
     login({commit}, user) {
+      loading('登录中...');
       return new Promise((resolve, reject) => {
         memberLogin(user).then(data => {
           const member = Tools.getMemberInfo(data);
-          log.debug('member is ' + JSON.stringify(member));
           commit('LOGIN_IN', member);
+          clear();
           toast('登陆成功', 'success');
           resolve();
         });
@@ -82,12 +83,15 @@ const member = {
       log.debug('name is ' + name);
       loading('用户名查询中...');
       return new Promise((resolve, reject) => {
-        isExistUserName({name}).then(data => {
-          if (data.status) {
+        isExistUserName(name).then(data => {
+          log.debug('data is ' + JSON.stringify(data));
+          if (data.success) {
             clear();
+            log.debug('用户名已重复');
             toast('用户名已重复');
             reject();
           } else {
+            log.debug('用户名可以使用');
             clear();
             resolve();
           }
