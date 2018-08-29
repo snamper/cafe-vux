@@ -1,6 +1,7 @@
 import axios from 'axios';
 /* import qs from 'qs'; */
 import { toast } from './toast';
+import Tools from './tools';
 import Logger from 'chivy';
 const log = new Logger('utils/request');
 
@@ -31,10 +32,14 @@ service.interceptors.response.use(
       const status = data.envData.responseStatusCode;
       switch (status) {
         case '200':
-          if (data.data.length === 1) {
-            return data.data[0];
+          if (Tools.isEmpty(data.data)) {
+            return data;
           } else {
-            return data.data;
+            if (data.data.length === 1) {
+              return data.data[0];
+            } else {
+              return data.data;
+            }
           }
         case '4001':
           toast('服务器故障，查询不到数据');

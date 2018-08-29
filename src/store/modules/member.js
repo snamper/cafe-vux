@@ -51,14 +51,16 @@ const member = {
       state.uuid = setUuid();
     },
     SET_DEFAULT_ADDRESS: state => {
-      // 遍历看是否存在默认地址
-      state.addresses.forEach(address => {
-        if (address.defaultEntity) {
-          state.address = address;
-        }
-      });
-      // 如果没有默认地址，则为地址中的第一个
-      state.address = state.addresses[0];
+      if (state.addresses.length > 0) {
+        // 遍历看是否存在默认地址
+        state.addresses.forEach(address => {
+          if (address.defaultEntity) {
+            state.address = address;
+          }
+        });
+        // 如果没有默认地址，则为地址中的第一个
+        state.address = state.addresses[0];
+      }
     }
   },
   actions: {
@@ -141,6 +143,9 @@ const member = {
               const member = Tools.getMemberInfo(data);
               log.debug('member is ' + JSON.stringify(member));
               commit('LOGIN_IN', member);
+          }).catch(error => {
+            log.error(error);
+            commit('UPDATE_MEMBER', user.member);
           });
         }
         resolve();

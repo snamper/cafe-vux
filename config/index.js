@@ -3,7 +3,7 @@ var path = require('path')
 const ext = "http://"
 const ip = ['127.0.0.1', '10.100.193.59', 'www.tianbakery.store']
 const port = ['15080', '21080', '80']
-const server = ext + ip[1] + ':' + port[0];
+const server = ext + ip[0] + ':' + port[0];
 module.exports = {
   build: {
     env: require('./prod.env'),

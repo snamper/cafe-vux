@@ -144,6 +144,7 @@ export default class Tools {
       sex: Tools.sex(param(data.genderStr)),
       mobile: param(data.mobile),
       region: param(data.region),
+      balance: param(data.balance),
       birthday: param(data.birthDay),
       address: param(data.address),
       point: param(data.point),

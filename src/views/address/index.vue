@@ -120,15 +120,18 @@ export default {
     // 地址列表中的地址列表
     list() {
       const list = [];
-      this.addresses.forEach(address => {
-        list.push({
-          id: address.id,
-          name: address.name,
-          area_code: address.areaCode,
-          tel: this.$tools.isEmpty(address.mobile) ? address.tel : address.mobile,
-          address: address.province + address.city + address.county + (this.$tools.isEmpty(address.address) ? address.address_detail: address.address)
+      log.debug('addresses is ' + JSON.stringify(this.addresses));
+      if (this.addresses.length > 0) {
+        this.addresses.forEach(address => {
+          list.push({
+            id: address.id,
+            name: address.name,
+            areaCode: address.areaCode,
+            tel: this.$tools.isEmpty(address.mobile) ? address.tel : address.mobile,
+            address: address.province + address.city + address.county + (this.$tools.isEmpty(address.address) ? address.address_detail: address.address)
+          });
         });
-      });
+      }
       return list;
     }
   },
@@ -167,13 +170,12 @@ export default {
         province: content.province,
         city: content.city,
         county: content.county,
-        address: content.address_detail,
+        address: content.addressDetail,
         mobile: content.tel,
-        areaCode: content.area_code,
+        areaCode: content.areaCode,
         defaultEntity: content.is_default
       };
-
-      log.debug('address is' + JSON.stringify(address));
+      log.debug('address is ' + JSON.stringify(address));
       /**
        * 非会员情况
        * 新增的时候只需要更新address，同时更新addresses数组
