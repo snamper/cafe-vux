@@ -161,7 +161,7 @@ export default {
       log.debug('content is ' + JSON.stringify(content));
       // 组织需要提交的数据
       const address = {
-        id: this.member.id,
+        id: this.$tools.isNotEmpty(this.member) ? this.member.id : -1,
         code: this.uuid,
         name: content.name,
         province: content.province,

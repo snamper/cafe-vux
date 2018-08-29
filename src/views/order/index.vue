@@ -6,7 +6,7 @@
       @click-left="backHistoryPage">
     </van-nav-bar>
     <div class="content">
-      <addr :address="ConverAddress(address)" @addaddress="addaddress"></addr>
+      <addr :address="convertAddress(address)" @addaddress="addaddress"></addr>
       <div class="orderlist" v-for="(good, index) in carts" :key="index">
         <product :good="good"></product>
       </div>
@@ -163,10 +163,10 @@ export default {
     // 获取所有配送地址
     GetAddresses(id) {
       return this.$store.dispatch('getAddress', {entityId: id});
-    },
+    }/* ,
     ConverAddress(address) {
       return convertAddress(address);
-    }
+    } */
   }
 };
 </script>
