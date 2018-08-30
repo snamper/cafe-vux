@@ -58,14 +58,6 @@ export default {
     [AddressList.name]: AddressList,
     [AddressEdit.name]: AddressEdit
   },
-  mounted() {
-    log.info('addressList components mounted');
-    if (this.addresses.length === 0 && this.$tools.isNotEmpty(this.member)) {
-      this.$store.dispatch('getAddress', {entityId: this.member.id}).then(() => {
-
-      });
-    }
-  },
   computed: {
     ...mapState({
       'uuid': state => state.member.uuid,
