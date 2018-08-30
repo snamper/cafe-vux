@@ -164,11 +164,21 @@ export default {
       }
       const register = {
         mobile: this.page1[0].content,
-        passwd: md5(this.page1[1].content)
+        passwd: md5(this.page1[1].content),
+        username: this.page2[0].content,
+        birthday: this.page2[1].content,
+        gender: this.page2[2].content,
+        email: this.page2[3].content,
+        wechat: this.page2[4].content,
+        region: this.page2[5].content,
+        address: this.page2[6].content
       };
       log.debug(JSON.stringify(register));
       this.$store.dispatch('resigter', register).then(resp => {
-        // TODO
+        this.$router.push({name: 'member'});
+      }).catch(error => {
+        // 注册失败，需要清空数据并显示第一页
+
       });
     },
     repwd() {
@@ -235,6 +245,15 @@ export default {
       this.show.birthday = false;
       this.show.action = false;
       this.show.sex = false;
+    },
+    _clearInput() {
+      this.page1.forEach(field => {
+        field.content = '';
+      });
+      this.page2.forEach(field => {
+        field.content = '';
+      });
+      this.step = true;
     }
   }
 };

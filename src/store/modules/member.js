@@ -1,4 +1,4 @@
-import { memberLogin, isExistUserName, createMember, modifyBasicInfo, getMemberById } from '@/api/member';
+import { memberLogin, isExistUserName, createMember, modifyBasicInfo, getMemberById, updateMember, deleteMember } from '@/api/member';
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
 import { initStorage, setUuid, setMember } from '@/utils/storage';
 import { toast, loading, clear } from '@/utils/toast';
@@ -106,10 +106,35 @@ const member = {
       loading('用户注册中...');
       return new Promise((resolve, reject) => {
         createMember(user).then(data => {
-          const member = Tools.getMemberInfo(data);
-          commit('LOGIN_IN', member);
-          clear();
-          toast('新用户注册成功');
+          const id = data.id;
+          const member = {
+            id: id,
+            email: user.email
+          };
+          const basic = {
+            memberId: id,
+            name: user.username,
+            genderStr: Tools.sex(user.gender),
+            birthDay: Tools.date2Long(user.birthday),
+            region: Tools.isNotEmpty(user.region),
+            address: Tools.isNotEmpty(user.address)
+          };
+          Promise.all([updateMember(member), modifyBasicInfo(basic)]).then(() => {
+            getMemberById(id).then(data => {
+              const member = Tools.getMemberInfo(data);
+              log.debug('member is ' + JSON.stringify(member));
+              commit('LOGIN_IN', member);
+              toast('新用户注册成功');
+              resolve();
+            });
+          }).catch(error => {
+            log.error(error);
+            const data = {entityId: id};
+            // 删除已创建的ID，并返回错误
+            deleteMember(data).then(() => {
+              reject();
+            });
+          });
           resolve();
         });
       });

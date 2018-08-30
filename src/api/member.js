@@ -125,4 +125,15 @@ export const updateMember = param => {
     data
   });
 };
+// 删除用户
+export const deleteMember = param => {
+  const data = {
+    entityId: param.entityId
+  };
+  return service({
+    url: '/member/show/ui/deleteMember.do',
+    method: 'post',
+    data
+  });
+};
 
