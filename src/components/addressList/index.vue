@@ -51,6 +51,12 @@ export default {
       editAddress: '修改地址'
     };
   },
+  props: {
+    backPage: {
+      type: String,
+      default: 'order'
+    }
+  },
   components: {
     [NavBar.name]: NavBar,
     [Cell.name]: Cell,
@@ -102,15 +108,16 @@ export default {
     // 地址列表中的地址列表
     list() {
       const list = [];
-      log.debug('this.addresses is ' + JSON.stringify(this.addresses));
       if (this.addresses.length > 0) {
+        // 默认选择第一个地址
+        this.chosenAddressId = this.addresses[0].id;
         this.addresses.forEach(address => {
           list.push({
             id: address.id,
             name: address.name,
             areaCode: address.areaCode,
             tel: this.$tools.isEmpty(address.mobile) ? address.tel : address.mobile,
-            address: address.province + address.city + address.county + (this.$tools.isEmpty(address.address) ? address.address_detail : address.address)
+            address: address.province + address.city + address.county + (this.$tools.isEmpty(address.address) ? '' : address.address)
           });
         });
       }
@@ -146,7 +153,7 @@ export default {
       log.debug('content is ' + JSON.stringify(content));
       // 组织需要提交的数据
       const address = {
-        id: this.$tools.isNotEmpty(this.member) ? this.member.id : -1,
+        id: this.$tools.isNotEmpty(content.id) ? content.id : -1,
         code: this.uuid,
         name: content.name,
         province: content.province,
@@ -155,7 +162,7 @@ export default {
         address: content.addressDetail,
         mobile: content.tel,
         areaCode: content.areaCode,
-        defaultEntity: content.is_default
+        defaultEntity: content.isDefault
       };
       log.debug('address is ' + JSON.stringify(address));
       /**
@@ -204,7 +211,7 @@ export default {
       if (this.show) {
         log.info('onfinish in list page');
         this.$store.commit('UPDATE_ADDRESS', this.currentSelectAddress);
-        this.$router.push({name: 'order'});
+        this.$router.push({name: this.backPage});
       } else {
         log.info('onfinish in edit page');
         this.ShowListPage();
@@ -215,22 +222,11 @@ export default {
       if (this.navBarTitle === this.editAddress || this.navBarTitle === this.addAddress) {
         this.ShowListPage();
       } else {
-        this.$router.push({name: 'order'});
+        this.$router.push({name: this.backPage});
       }
     },
     GetAddressList(id) {
       return this.$store.dispatch('getAddress', {entityId: id});
-    },
-    // 根据地址来查询code
-    FindAreaCode(address) {
-      let code = '';
-      Object.keys(this.areaList.county_list).forEach(key => {
-        if (this.areaList.county_list[key] === address) {
-          code = key;
-          return;
-        }
-      });
-      return code;
     },
     // 显示编辑页面
     ShowEditPage() {
@@ -266,7 +262,7 @@ export default {
         province: this.address.province,
         city: this.address.city,
         county: this.address.county,
-        addressDetail: this.$tools.isNotEmpty(this.address.address) ? this.address.address : this.address.address_detail,
+        addressDetail: this.$tools.isNotEmpty(this.address.address) ? this.address.address : '',
         areaCode: this.address.areaCode,
         isDefault: this.$tools.isEmpty(this.address.defaultEntity) ? false : this.address.defaultEntity
       };

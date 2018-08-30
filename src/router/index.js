@@ -47,6 +47,11 @@ export const routerMap = [
         name: 'register',
         path: 'register',
         component: () => import('@/views/main/register/index').then(m => m.default)
+      },
+      {
+        name: 'expressAddress',
+        path: 'expressAddress',
+        component: () => import('@/views/main/address/index').then(m => m.default)
       }
     ]
   },

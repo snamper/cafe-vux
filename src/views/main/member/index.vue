@@ -43,7 +43,7 @@
     <van-cell-group v-if="member">
       <van-cell title="我的会员卡" is-link :to="{name: 'card'}"></van-cell>
       <van-cell title="我的优惠券" is-link :to="{name: 'coupon'}"></van-cell>
-      <van-cell title="我的配送地址" is-link :to="{name: 'address'}"></van-cell>
+      <van-cell title="我的配送地址" is-link :to="{name: 'expressAddress'}"></van-cell>
       <!-- <van-cell title="我的积分" is-link ></van-cell>
       <van-cell title="我的信息" is-link ></van-cell> -->
     </van-cell-group>

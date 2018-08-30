@@ -125,7 +125,7 @@ export const updateAddresses = param => {
   };
   log.debug('updateAddresses data is ' + JSON.stringify(data));
   return service({
-    url: '/shop/product/show/ui/updateAddresses.do',
+    url: '/product/show/ui/updateAddresses.do',
     method: 'post',
     data
   });
