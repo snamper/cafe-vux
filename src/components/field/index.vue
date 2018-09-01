@@ -36,6 +36,9 @@ export default {
     blur(field) {
       log.debug('field is ' + JSON.stringify(field));
       field.content = field.content.trim();
+      if (this.$tools.isEmpty(field.content)) {
+        return;
+      }
       if (field.required && this.$tools.isEmpty(field.content)) {
         if (!field.popup) {
           field.error = true;
@@ -50,9 +53,10 @@ export default {
               this.$toast(field.errorMessage);
             } else {
               this.$store.dispatch('duplicate', {name: field.content}).then(resp => {
-                if (resp.status) {
-                  this.$toast({message: '用户名重复，请重新输入用户名', mask: false, type: 'text'});
+                if (resp.success) {
+                  log.debug('duplicate');
                   field.error = true;
+                  this.$toast({message: '用户名重复，请重新输入用户名', mask: false, type: 'text'});
                 }
               }).catch(error => {
                 log.error('error is ' + JSON.stringify(error));
@@ -70,6 +74,14 @@ export default {
             if (!isTelValid(field.content)) {
               field.error = true;
               this.$toast(field.errorMessage);
+            } else {
+              this.$store.dispatch('duplicate', {name: field.content}).then(resp => {
+                field.error = false;
+              }).catch(error => {
+                log.error('error is ' + JSON.stringify(error));
+                this.$toast({message: '用户名重复，请重新输入用户名', mask: false, type: 'text'});
+                field.error = true;
+              });
             }
             break;
           case 'email':

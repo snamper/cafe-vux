@@ -2,7 +2,7 @@
   <div class="register-wrapper">
     <van-nav-bar
       title="会员注册"
-      :left-arrow="leftArrow"
+      :left-arrow="true"
       @click-left="back">
     </van-nav-bar>
     <div class="register-first">
@@ -69,13 +69,12 @@ export default {
         width: 100,
         height: 100
       },
-      // Navbar是否要显示，默认不显示，只有当第二步的时候才显示
       leftArrow: false,
       // 控制显示第一页还是第二页
       step: true,
       page1: [
-        {content: '', label: '手机号码', icon: 'close', placeholder: '请输入手机号码', required: true, error: false, desc: 'account', errorMessage: '用户名不能包含特殊字符'},
-        {content: '', label: '输入密码', icon: 'close', placeholder: '请输入密码', required: true, error: false, desc: 'pwd', type: 'password', errorMessage: '密码不能包含特殊字符'},
+        {content: '', label: '手机号码', icon: 'close', placeholder: '请输入手机号码', required: true, error: false, desc: 'mobile', errorMessage: '请输入正确的手机号码'},
+        {content: '', label: '输入密码', icon: 'close', placeholder: '请输入密码', required: true, error: false, desc: 'pwd', type: 'password', errorMessage: '密码必须由6-21字母和数字组成'},
         {content: '', label: '确认密码', icon: 'close', placeholder: '请确认密码', required: true, error: false, desc: 'repwd', type: 'password', errorMessage: '两次输入的密码不一致'}
       ],
       page2: [
@@ -121,9 +120,12 @@ export default {
     },
     back() {
       log.debug('back');
-      // 返回按钮点击后显示第一页并不显示回退按钮
-      this.leftArrow = false;
-      this.step = true;
+      if (this.leftArrow) {
+        this.step = true;
+        this.leftArrow = false;
+      } else {
+        this.$router.push({name: 'member'});
+      }
     },
     next() {
       log.debug('next');
@@ -164,16 +166,16 @@ export default {
       }
       const register = {
         mobile: this.page1[0].content,
-        passwd: md5(this.page1[1].content),
-        username: this.page2[0].content,
-        birthday: this.page2[1].content,
-        gender: this.page2[2].content,
+        passWd: md5(this.page1[1].content),
+        realName: this.page2[0].content,
+        birthDay: this.$tools.isNotEmpty(this.page2[1].content) ? this.$tools.date2Long(this.page2[1].content) : '',
+        genderStr: this.$tools.sex(this.page2[2].content),
         email: this.page2[3].content,
         wechat: this.page2[4].content,
         region: this.page2[5].content,
         address: this.page2[6].content
       };
-      log.debug(JSON.stringify(register));
+      log.debug('register data is ' + JSON.stringify(register));
       this.$store.dispatch('resigter', register).then(resp => {
         this.$router.push({name: 'member'});
       }).catch(error => {
@@ -214,7 +216,7 @@ export default {
     },
     confirmArea(value) {
       if (value[0].code !== '-1' && value[1].code !== '-1' && value[2].code !== '-1') {
-        this.page2[5].content = value[0].name + value[1].name + value[2].name;
+        this.page2[5].content = value[0].name + '-' + value[1].name + '-' + value[2].name;
       }
       this._closeAllActionSheet();
     },

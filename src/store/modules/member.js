@@ -1,7 +1,7 @@
-import { memberLogin, isExistUserName, createMember, modifyBasicInfo, getMemberById, updateMember, deleteMember } from '@/api/member';
+import { memberLogin, isExistUserName, createMemberWithBasic, modifyBasicInfo, getMemberById } from '@/api/member';
 import { saveAddresses, deleteAddresses, getAddresses, updateAddresses } from '@/api/product';
 import { initStorage, setUuid, setMember } from '@/utils/storage';
-import { toast, loading, clear } from '@/utils/toast';
+import { toast } from '@/utils/toast';
 import Tools from '@/utils/tools';
 import Logger from 'chivy';
 const log = new Logger('store/modules/member');
@@ -69,12 +69,10 @@ const member = {
      * 登陆成功后需要获取用户基本信息并填充到数据中
      */
     login({commit}, user) {
-      loading('登录中...');
       return new Promise((resolve, reject) => {
         memberLogin(user).then(data => {
           const member = Tools.getMemberInfo(data);
           commit('LOGIN_IN', member);
-          clear();
           toast('登陆成功', 'success');
           resolve();
         });
@@ -83,18 +81,15 @@ const member = {
     // 用户名是否重复
     duplicate({commit}, name) {
       log.debug('name is ' + name);
-      loading('用户名查询中...');
       return new Promise((resolve, reject) => {
         isExistUserName(name).then(data => {
           log.debug('data is ' + JSON.stringify(data));
           if (data.success) {
-            clear();
             log.debug('用户名已重复');
             toast('用户名已重复');
             reject();
           } else {
             log.debug('用户名可以使用');
-            clear();
             resolve();
           }
         });
@@ -103,38 +98,11 @@ const member = {
     // 注册新用户
     resigter({commit}, user) {
       log.debug('user is ' + JSON.stringify(user));
-      loading('用户注册中...');
       return new Promise((resolve, reject) => {
-        createMember(user).then(data => {
-          const id = data.id;
-          const member = {
-            id: id,
-            email: user.email
-          };
-          const basic = {
-            memberId: id,
-            name: user.username,
-            genderStr: Tools.sex(user.gender),
-            birthDay: Tools.date2Long(user.birthday),
-            region: Tools.isNotEmpty(user.region),
-            address: Tools.isNotEmpty(user.address)
-          };
-          Promise.all([updateMember(member), modifyBasicInfo(basic)]).then(() => {
-            getMemberById(id).then(data => {
-              const member = Tools.getMemberInfo(data);
-              log.debug('member is ' + JSON.stringify(member));
-              commit('LOGIN_IN', member);
-              toast('新用户注册成功');
-              resolve();
-            });
-          }).catch(error => {
-            log.error(error);
-            const data = {entityId: id};
-            // 删除已创建的ID，并返回错误
-            deleteMember(data).then(() => {
-              reject();
-            });
-          });
+        createMemberWithBasic(user).then(data => {
+          log.debug('after register return data is ' + JSON.stringify(data));
+          const member = Tools.getMemberInfo(data);
+          commit('LOGIN_IN', member);
           resolve();
         });
       });

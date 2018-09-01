@@ -41,14 +41,21 @@ export const getBasicInfoList = param => {
   });
 };
 // 注册用户
-export const createMember = param => {
+export const createMemberWithBasic = param => {
   const data = {
     mobile: param.mobile,
-    passwd: param.passwd
+    passWd: param.passWd,
+    email: param.email,
+    genderStr: param.genderStr,
+    birthDay: param.birthDay,
+    region: param.region,
+    address: param.address,
+    realName: param.realName,
+    wechat: param.wechat
   };
   log.debug('createMember data is ' + JSON.stringify(data));
   return service({
-    url: '/member/show/ui/createMember.do',
+    url: '/member/show/ui/createMemberWithBasic.do',
     method: 'post',
     data
   });
@@ -121,17 +128,6 @@ export const updateMember = param => {
   };
   return service({
     url: '/member/show/ui/updateMember.do',
-    method: 'post',
-    data
-  });
-};
-// 删除用户
-export const deleteMember = param => {
-  const data = {
-    entityId: param.entityId
-  };
-  return service({
-    url: '/member/show/ui/deleteMember.do',
     method: 'post',
     data
   });
