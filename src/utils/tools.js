@@ -110,14 +110,14 @@ export default class Tools {
     if (Tools.isNotEmpty(uuid)) {
       return vistor;
     } else if (Tools.isNotEmpty(member)) {
-      if (Tools.isNotEmpty(member.nick)) {
+      if (Tools.isNotEmpty(member.realName)) {
+        return member.realName;
+      } else if (Tools.isNotEmpty(member.nick)) {
         return member.nick;
       } else if (Tools.isNotEmpty(member.phone)) {
         return member.phone;
       } else if (Tools.isNotEmpty(member.email)) {
         return member.email;
-      } else if (Tools.isNotEmpty(member.name)) {
-        return member.name;
       }
     }
   };
@@ -126,8 +126,9 @@ export default class Tools {
   static setModifyData = param => {
     return {
       userId: param.userId,
-      name: Tools.isNotEmpty(param.name) ? param.name : null,
+      name: Tools.isNotEmpty(param.realName) ? param.realName : null,
       nick: Tools.isNotEmpty(param.nick) ? param.nick : null,
+      birthday: Tools.isNotEmpty(param.birthDayStr) ? param.birthDayStr.substring(0, 10): null,
       mobile: Tools.isNotEmpty(param.mobile) ? param.mobile : null,
       gender: Tools.isNotEmpty(param.gender) ? param.gender : null,
       email: Tools.isNotEmpty(param.email) ? param.email : null,
@@ -139,13 +140,13 @@ export default class Tools {
   static getMemberInfo = data => {
     return {
       id: param(data.id),
-      name: param(data.name),
+      realName: param(data.realName),
       nick: param(data.nick),
       sex: Tools.sex(param(data.genderStr)),
       mobile: param(data.mobile),
       region: param(data.region),
       balance: param(data.balance),
-      birthday: param(data.birthDay),
+      birthday: param(data.birthDayStr.substring(0, 10)),
       address: param(data.address),
       point: param(data.point),
       valid: param(data.valid)

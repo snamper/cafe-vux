@@ -93,6 +93,7 @@ export const getMemberById = param => {
   const data = {
     entityId: param.entityId
   };
+  log.debug('getMemberById data is ' + JSON.stringify(data));
   return service({
     url: '/member/show/ui/getMemberById.do',
     method: 'post',

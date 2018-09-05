@@ -21,14 +21,15 @@
     </van-cell-group>
     <split></split>
     <van-cell-group v-if="member">
-      <van-cell title="姓名" :value="show(member.name)" />
+      <van-cell title="姓名" :value="show(member.realName)" />
       <van-cell title="生日" :value="show(member.birthday)" />
       <van-cell title="性别" :value="show(member.sex)" />
       <van-cell title="电话号码" :value="show(member.mobile)" />
       <van-cell title="所在地" :value="show(member.region)" />
       <van-cell title="详细地址" :value="show(member.address)" />
-      <van-cell title="积分" :value="show(member.point)" />
-      <van-cell title="会员状态" :value="status(member.valid)" />
+      <van-cell title="积分" :value="`${show(member.point)}分`" />
+      <van-cell title="余额" :value="`${show(member.balance)}元`" />
+      <!-- <van-cell title="会员状态" :value="status(member.valid)" /> -->
     </van-cell-group>
   </div>
 </template>

@@ -126,22 +126,36 @@ const member = {
         /**
        * 从storage中读取用户，并从服务器中获取用户的信息填入到state中
        */
+        log.info('initing...');
         const user = initStorage();
         if (Tools.isEmpty(user.member)) {
           commit('UPDATE_UUID', user.uuid);
           commit('UPDATE_MEMBER', user.member);
         } else {
-            // 先获取用户
+          log.info('get user info from server');
+          // 先获取用户
           getMemberById({entityId: user.member.id}).then(data => {
-              const member = Tools.getMemberInfo(data);
-              log.debug('member is ' + JSON.stringify(member));
-              commit('LOGIN_IN', member);
+            // log.debug(data);
+            const member = Tools.getMemberInfo(data);
+            log.debug('member is ' + JSON.stringify(member));
+            commit('LOGIN_IN', member);
           }).catch(error => {
             log.error(error);
             commit('UPDATE_MEMBER', user.member);
           });
         }
         resolve();
+      });
+    },
+    // 获取第三方用户登录的账户信息
+    getMemberInfo({commit}, user) {
+      getMemberById(user).then(data => {
+          const member = Tools.getMemberInfo(data);
+          log.debug('member is ' + JSON.stringify(member));
+          commit('LOGIN_IN', member);
+      }).catch(error => {
+        log.error(error);
+        commit('UPDATE_MEMBER', user.member);
       });
     },
     // 保存配送地址

@@ -62,6 +62,7 @@ import { Cell, CellGroup, Row, Col, Icon, Button  } from 'vant';
 import { mapState, mapGetters } from 'vuex';
 import round from './round';
 import avator from '@/components/avator';
+import { getMemberById, memberLogin } from '@/api/member';
 import Logger from 'chivy';
 const log = new Logger('views/main/member');
 export default {
@@ -88,8 +89,9 @@ export default {
     next(vm => {
       const id = vm.$tools.isCurrentJumpPage(window.location.href);
       log.info('id is ' + id);
-      if (vm.$tools.isNotEmpty) {
-        vm.$store.dispatch('initUser');
+      if (vm.$tools.isNotEmpty(id)) {
+        log.debug('request getMemberInfo');
+        vm.$store.dispatch('getMemberInfo', {entityId: id});
       }
     });
   },
