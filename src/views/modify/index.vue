@@ -6,66 +6,12 @@
       @click-left="back">
     </van-nav-bar>
     <van-cell-group>
-      <van-field
-        v-model="name.content"
-        label="姓名"
-        icon="clear"
-        placeholder="请输入姓名"
-        required
-        :error="name.error"
-        @blur="check(name)"
-        @focus="close"
-        @click-icon="name.content = ''">
-      </van-field>
-      <van-field
-        v-model="birthday.content"
-        label="生日"
-        placeholder="请选择"
-        required
-        :error="birthday.error"
-        @blur="check(birthday)"
-        @focus="selectbirthday">
-      </van-field>
-      <van-field
-        v-model="sex.content"
-        label="性别"
-        placeholder="请选择"
-        @focus="selectsex">
-      </van-field>
-      <van-field
-        v-model="mobile.content"
-        label="电话号码"
-        icon="clear"
-        placeholder="请输入电话号码"
-        required
-        :error="mobile.error"
-        @blur="check(mobile)"
-        @focus="close"
-        @click-icon="mobile.content = ''">
-      </van-field>
-      <van-field
-        v-model="email.content"
-        label="电子邮箱"
-        icon="clear"
-        placeholder="请输入邮箱地址"
-        required
-        :error="email.error"
-        @blur="check(email)"
-        @focus="close"
-        @click-icon="email.content = ''">
-      </van-field>
-      <van-field
-        v-model="area.content"
-        label="所在地"
-        placeholder="请选择"
-        @focus="selectarea">
-      </van-field>
-      <van-field
-        v-model="address.content"
-        label="详细地址"
-        :error="address.error"
-        placeholder="请输入街道门牌号">
-      </van-field>
+      <field
+        @birthday="birthday"
+        @sex="sex"
+        @area="area"
+        :fields="fields">
+      </field>
     </van-cell-group>
     <div class="save">
       <van-button style="width:95%" type="primary" @click.native="save">保存</van-button>
@@ -76,20 +22,20 @@
         v-model="currentDate"
         type="date"
         :min-date="minDate"
-        @confirm="dateConfirm"
+        @confirm="confirmBirthday"
         @cancel="cancel">
       </van-datetime-picker>
       <van-picker
         show-toolbar
         v-if="show.sex"
         :columns="sexcolumns"
-        @confirm="pickerConfirm"
+        @confirm="confirmSex"
         @cancel="cancel">
       </van-picker>
       <van-area
         :area-list="areaList"
         v-if="show.area"
-        @confirm="areaConfirm"
+        @confirm="confirmArea"
         @cancel="cancel">
       </van-area>
     </van-actionsheet>
@@ -97,7 +43,8 @@
 </template>
 
 <script type="text/ecmascript=6">
-import { Field, NavBar, CellGroup, DatetimePicker, Picker, Area, Actionsheet, Button, Toast } from 'vant';
+import { Button, Field, CellGroup, DatetimePicker, Picker, Area, Actionsheet, NavBar } from 'vant';
+import field from '@/components/field';
 import { mapState } from 'vuex';
 import AreaList from '@/utils/area.js';
 import Logger from 'chivy';
@@ -113,62 +60,43 @@ export default {
         action: false
       },
       areaList: AreaList,
-      sexcolumns: ['请选择', '男', '女'],
+      sexcolumns: ['女', '男'],
       currentDate: new Date(),
       minDate: new Date(1900, 1, 1),
-      mobile: {
-        key: 'mobile',
-        content: '',
-        error: false
-      },
-      name: {
-        key: 'name',
-        content: '',
-        error: false
-      },
-      birthday: {
-        key: 'birthday',
-        content: '',
-        error: false
-      },
-      sex: {
-        key: 'sex',
-        content: '',
-        error: false
-      },
-      address: {
-        key: 'address',
-        content: '',
-        error: false
-      },
-      area: {
-        key: 'area',
-        content: '',
-        error: false
-      },
-      email: {
-        key: 'email',
-        content: '',
-        error: false
-      }
+      fields: [
+        {content: '', label: '姓名', icon: 'close', placeholder: '请输入中文姓名', required: true, error: false, desc: 'name', errorMessage: '请输入正确的中文姓名'},
+        {content: '', label: '生日', icon: 'close', placeholder: '请选择生日', required: true, error: false, desc: 'birthday', errorMessage: '请选择正确的生日'},
+        {content: '', label: '性别', icon: 'close', placeholder: '请选择性别', required: true, error: false, desc: 'sex', errorMessage: '请选择性别'},
+        {content: '', label: '电子邮箱', icon: 'close', placeholder: '请输入电子邮箱', required: false, error: false, desc: 'email', errorMessage: '请输入正确的电子邮箱'},
+        {content: '', label: '所在地', icon: 'close', placeholder: '请选择所在地', required: false, error: false, desc: 'area', errorMessage: '请选择正确的所在地'},
+        {content: '', label: '详细地址', icon: 'close', placeholder: '请输入详细地址', required: false, error: false, desc: 'address', errorMessage: '请输入详细地址'}
+      ]
     };
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (from.path !== '/card' || vm.$tools.isEmpty(vm.member)) {
-        vm.$router.push({name: 'member'});
+      if (from.path !== '/card' || vm.member) {
+        // vm.$router.push({name: 'member'});
       }
+      // TODO需要将数据填入其中
+      vm.fields[0].content = vm.member.realName;
+      vm.fields[1].content = vm.member.birthday;
+      vm.fields[2].content = vm.member.sex;
+      vm.fields[3].content = vm.member.email;
+      vm.fields[4].content = vm.member.region;
+      vm.fields[5].content = vm.member.address;
     });
   },
   components: {
+    [Button.name]: Button,
     [Field.name]: Field,
     [CellGroup.name]: CellGroup,
-    [NavBar.name]: NavBar,
     [DatetimePicker.name]: DatetimePicker,
     [Picker.name]: Picker,
     [Area.name]: Area,
     [Actionsheet.name]: Actionsheet,
-    [Button.name]: Button
+    [NavBar.name]: NavBar,
+    field
   },
   computed: {
     ...mapState({
@@ -177,6 +105,21 @@ export default {
     })
   },
   methods: {
+    birthday() {
+      this._closeAllActionSheet();
+      this.show.action = true;
+      this.show.birthday = true;
+    },
+    sex() {
+      this._closeAllActionSheet();
+      this.show.action = true;
+      this.show.sex = true;
+    },
+    area() {
+      this._closeAllActionSheet();
+      this.show.action = true;
+      this.show.area = true;
+    },
     close() {
       this.show.area = false;
       this.show.birthday = false;
@@ -186,106 +129,83 @@ export default {
     back() {
       this.$router.push({name: 'card'});
     },
-    selectarea() {
-      this.close();
-      this.show.area = true;
-      this.show.action = true;
-      // 禁止手机调用输入法
-      document.activeElement.blur();
-    },
-    selectbirthday() {
-      this.close();
-      this.show.birthday = true;
-      this.show.action = true;
-      // 禁止手机调用输入法
-      document.activeElement.blur();
-    },
-    selectsex() {
-      this.close();
-      this.show.sex = true;
-      this.show.action = true;
-      document.activeElement.blur();
-    },
     cancel() {
       this.close();
     },
-    dateConfirm(value) {
-      const date = formatDate(value);
-      this.birthday.content = date.Year + '-' + date.Month + '-' + date.Day;
-      this.close();
+    confirmBirthday(value) {
+      const date = this.$tools.formatDate(value);
+      this.fields[1].content = date.Year + '-' + date.Month + '-' + date.Day;
+      this._closeAllActionSheet();
     },
-    pickerConfirm(data) {
-      if (data !== this.sexcolumns[0]) {
-        this.sex.content = data;
-      }
-      this.close();
+    confirmSex(value) {
+      this.fields[2].content = value;
+      this._closeAllActionSheet();
     },
-    areaConfirm(data) {
-      if(data[0].code !== '-1' && data[1].code !== '-1' && data[2].code !== '-1') {
-        this.area.content = data[0].name + data[1].name + data[2].name;
+    confirmArea(value) {
+      if (value[0].code !== '-1' && value[1].code !== '-1' && value[2].code !== '-1') {
+        this.fields[4].content = value[0].name + '-' + value[1].name + '-' + value[2].name;
       }
-      this.close();
+      this._closeAllActionSheet();
     },
     save() {
-      const error = this.name.error || this.birthday.error || this.mobile.error || this.$tools.isEmpty(this.name.content) || this.$tools.isEmpty(this.birthday.content) || this.$tools.isEmpty (this.mobile.content);
-      if (error) {
-        this.$toast('请检查填写内容');
-      } else {
-        // 查重
-        this.$store.dispatch('duplicate', this.mobile.content).then(resp => {
-          if (resp) {
-            this.$toast('手机已被注册，请重新输入手机号码');
-            this.mobile.content = '';
-          } else {
-            const param = {
-              userId: this.member.id,
-              name: this.name.content,
-              mobile: this.mobile.content,
-              gender: this.$tools.isEmpty(this.sex.content) ? this.sex.content : null,
-              email: this.$tools.isEmpty(this.email.content) ? this.email.content : null,
-              address: this.$tools.isEmpty(this.area.content) ? this.area.content : null,
-              detailAddress : this.$tools.isEmpty(this.address.content) ? this.address.content : null
-            }
-            this.$store.dispatch('modifyInfo', param).then(resp => {
-              // TODO 需要更新state中的内容
-              this.$toast.success('个人信息修改成功');
-            }).catch(error => {
-              log.error('error is ' + JSON.stringify(error));
-              this.$toast.fail('个人信息修改失败');
-            });
-          }
-        });
+      log.info('save function');
+      /**
+       * 1. 先判断page1和page2是否为空， 其中需要判断page1和page2是否有错误
+       * 2. 当没有错误的时候，做两个动作 a. createMember创建用户，b. modifyBasicInfo改用户信息
+      */
+      const content = this._isContentNotEmpty(this.fields);
+      log.debug('save content is ' + JSON.stringify(content));
+      if (!content.result) {
+        this.$toast(content.errorMessage);
+        return;
       }
+      const errors = this._IteratorPage(this.fields);
+      if (errors.result) {
+        this.$toast(errors.errorMessage);
+        return;
+      }
+      log.info('TODO');
+      /* const register = {
+        mobile: this.page1[0].content,
+        passWd: md5(this.page1[1].content),
+        realName: this.page2[0].content,
+        birthDay: this.$tools.isNotEmpty(this.page2[1].content) ? this.$tools.date2Long(this.page2[1].content) : '',
+        genderStr: this.$tools.sex(this.page2[2].content),
+        email: this.page2[3].content,
+        wechat: this.page2[4].content,
+        region: this.page2[5].content,
+        address: this.page2[6].content
+      }; */
     },
-    check(data) {
-      let error = false;
-      // debugger
-      switch(data.key) {
-        case this.name.key:
-          error = this.$tools.isEmpty(this.name.content) || !this.$tools.isChineseNameValid(data.content);
-          if (error) {
-            this.$toast('请输入中文姓名');
-          }
-          break;
-        case this.birthday.key:
-          error = this.$tools.isEmpty(this.birthday.content);
-          if(error) {
-            this.$toast('请选择生日');
-          }
-          break;
-        case this.mobile.key:
-          error = this.$tools.isEmpty(this.mobile.content) || !this.$tools.isTelValid(data.content);
-          if(error) {
-            this.$toast('请输入正确的电话号码');
-          }
-          break;
-        case this.email.key:
-          error = this.$tools.isEmpty(this.email.content) || !this.$tools.isEmailValid(data.content);
-          if(error) {
-            this.$toast('请输入正确的邮件地址');
-          }
-      }
-      data.error = error;
+    _isContentNotEmpty(page) {
+      let result = true;
+      const errorMessage = '请填写带*号的选项';
+      page.filter(item => item.required === true).forEach(item => {
+        // log.debug(this.$tools.isNotEmpty(item.content));
+        result = result && this.$tools.isNotEmpty(item.content);
+        // log.warn(result);
+      });
+      return {result, errorMessage};
+    },
+    // 遍历数组，当发现有error为true的时候返回真，否则是假
+    _IteratorPage(page) {
+      let result = false;
+      const errorMessage = '请填写正确的内容';
+      page.filter(item => item.required === true).forEach(item => {
+        result = result || item.error;
+      });
+      return {result, errorMessage};
+    },
+    _closeAllActionSheet() {
+      this.show.area = false;
+      this.show.birthday = false;
+      this.show.action = false;
+      this.show.sex = false;
+    },
+    _clearInput() {
+      this.fields.forEach(field => {
+        field.content = '';
+      });
     }
   }
 };
