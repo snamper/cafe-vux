@@ -73,7 +73,7 @@ export default {
       // 控制显示第一页还是第二页
       step: true,
       page1: [
-        {content: '', label: '手机号码', icon: 'close', placeholder: '请输入手机号码', required: true, error: false, desc: 'mobile', errorMessage: '请输入正确的手机号码'},
+        {content: '', label: '手机号码', icon: 'close', placeholder: '请输入手机号码', required: true, error: false, post: true, desc: 'mobile', errorMessage: '请输入正确的手机号码'},
         {content: '', label: '输入密码', icon: 'close', placeholder: '请输入密码', required: true, error: false, desc: 'pwd', type: 'password', errorMessage: '密码必须由6-21字母和数字组成'},
         {content: '', label: '确认密码', icon: 'close', placeholder: '请确认密码', required: true, error: false, desc: 'repwd', type: 'password', errorMessage: '两次输入的密码不一致'}
       ],

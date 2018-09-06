@@ -74,7 +74,7 @@ export default {
             if (!isTelValid(field.content)) {
               field.error = true;
               this.$toast(field.errorMessage);
-            } else {
+            } else if (field.post) {
               this.$store.dispatch('duplicate', {name: field.content}).then(resp => {
                 field.error = false;
               }).catch(error => {

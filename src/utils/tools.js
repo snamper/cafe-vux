@@ -138,9 +138,11 @@ export default class Tools {
   };
   // 重组member数据并放入到store.state中
   static getMemberInfo = data => {
+    log.debug('getMemberInfo get data is ' + JSON.stringify(data));
     return {
       id: param(data.id),
       realName: param(data.realName),
+      email: param(data.email),
       nick: param(data.nick),
       sex: Tools.sex(param(data.genderStr)),
       mobile: param(data.mobile),

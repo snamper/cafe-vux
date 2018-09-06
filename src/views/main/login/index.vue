@@ -62,7 +62,7 @@ export default {
         }
       },
       fields: [
-        {content: '', label: '用户名', icon: 'close', placeholder: '手机号码', required: true, error: false, desc: 'mobile', errorMessage: '请输入正确的手机号码'},
+        {content: '', label: '用户名', icon: 'close', placeholder: '请输入手机号码', required: true, post: false, error: false, desc: 'mobile', errorMessage: '请输入正确的手机号码'},
         {content: '', label: '密码', icon: 'close', placeholder: '请输入密码', required: true, error: false, desc: 'password', type: 'password'}
       ]
     };

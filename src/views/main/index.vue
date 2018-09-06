@@ -30,17 +30,13 @@ export default {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem
   },
-  created() {
-    log.info('start init UUID');
-    // this.$toast('open it in weixin？' + this.$tools.isWeixin());
-    this.$store.dispatch('initUser').then(() => {
-      this.Selected();
-    });
-  },
   computed: {
     ...mapGetters([
       'info'
     ])
+  },
+  mounted() {
+    this.Selected();
   },
   methods: {
     // 根据路由代码激活当前选中图标

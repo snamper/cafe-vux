@@ -23,7 +23,7 @@ export default {
     addressList
   },
   beforeRouteEnter(to, from, next) {
-    log.info('beforeRouteEnter address page');
+    log.info('beforeRouteEnter expressAddress page');
     // log.debug(from);
     next(vm => {
       vm.backPage = from.name;
@@ -31,14 +31,10 @@ export default {
       if (vm.$tools.isEmpty(vm.uuid) && vm.$tools.isEmpty(vm.member)) {
         vm.$router.push({name: 'menu'});
       }
-      // 购物车为空直接回购物车并且不是从member页面过来的
-      if (vm.carts.length === 0 && from.path !== '/member') {
-        vm.$router.push({name: 'cart'});
-      }
       // 如果address为空则获取一次数据
-      if (vm.addresses.length === 0 && vm.$tools.isNotEmpty(vm.member)) {
+      /* if (vm.addresses.length === 0 && vm.$tools.isNotEmpty(vm.member)) {
         vm.$store.dispatch('getAddress', {entityId: vm.member.id});
-      }
+      } */
     });
   },
   computed: {

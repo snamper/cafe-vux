@@ -51,15 +51,23 @@ const member = {
       state.uuid = setUuid();
     },
     SET_DEFAULT_ADDRESS: state => {
+      log.info('SET_DEFAULT_ADDRESS');
+      log.debug('addresses length is ' + state.addresses.length);
       if (state.addresses.length > 0) {
+        log.info('address is more than 0');
         // 遍历看是否存在默认地址
         state.addresses.forEach(address => {
+          log.debug('address data in this.addresses is ' + JSON.stringify(address));
           if (address.defaultEntity) {
+            log.info('addresses is have default address');
             state.address = address;
           }
         });
-        // 如果没有默认地址，则为地址中的第一个
-        state.address = state.addresses[0];
+        if (Tools.isEmpty(state.address)) {
+          log.info('addresses is not set default');
+          // 如果没有默认地址，则为地址中的第一个
+          state.address = state.addresses[0];
+        }
       }
     }
   },
@@ -69,8 +77,9 @@ const member = {
      * 登陆成功后需要获取用户基本信息并填充到数据中
      */
     login({commit}, user) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         memberLogin(user).then(data => {
+          log.debug('memberLogin get response data is ' + JSON.stringify(data));
           const member = Tools.getMemberInfo(data);
           commit('LOGIN_IN', member);
           toast('登陆成功', 'success');
@@ -173,7 +182,11 @@ const member = {
     getAddress({commit}, user) {
       return new Promise(resolve => {
         getAddresses(user).then(data => {
-          commit('UPDATE_ADDRESSES', data);
+          if (Array.isArray(data)) {
+            commit('UPDATE_ADDRESSES', data);
+          } else {
+            commit('UPDATE_ADDRESSES', [data]);
+          }
           commit('SET_DEFAULT_ADDRESS');
           resolve();
         });

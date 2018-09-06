@@ -64,6 +64,9 @@ export default {
     [AddressList.name]: AddressList,
     [AddressEdit.name]: AddressEdit
   },
+  created() {
+    this.RefeshList();
+  },
   computed: {
     ...mapState({
       'uuid': state => state.member.uuid,
@@ -110,7 +113,7 @@ export default {
       const list = [];
       if (this.addresses.length > 0) {
         // 默认选择第一个地址
-        this.chosenAddressId = this.addresses[0].id;
+        this.chosenAddressId = this.address.id;
         this.addresses.forEach(address => {
           list.push({
             id: address.id,
@@ -150,10 +153,10 @@ export default {
     onSave(content) {
       // 不论是修改还是新增都会调用该方法，在保存完成之后，需要重新刷新一下列表，否则显示会出问题。
       log.info('onSave');
-      log.debug('content is ' + JSON.stringify(content));
+      log.debug('onSave content is ' + JSON.stringify(content));
       // 组织需要提交的数据
       const address = {
-        id: this.$tools.isNotEmpty(content.id) ? content.id : -1,
+        id: this.$tools.isNotEmpty(content.id) ? content.id : this.member.id,
         code: this.uuid,
         name: content.name,
         province: content.province,
@@ -164,7 +167,7 @@ export default {
         areaCode: content.areaCode,
         defaultEntity: content.isDefault
       };
-      log.debug('address is ' + JSON.stringify(address));
+      log.debug('onSave address is ' + JSON.stringify(address));
       /**
        * 非会员情况
        * 新增的时候只需要更新address，同时更新addresses数组
@@ -245,12 +248,14 @@ export default {
     },
     // 刷新List
     RefeshList() {
-      this.GetAddressList(this.member.id).then(() => {
-        log.debug('RefeshList');
-        this.$store.commit('SET_DEFAULT_ADDRESS');
-        this.show = true;
-        this.edit = false;
-      });
+      if (this.$tools.isNotEmpty(this.member)) {
+        this.GetAddressList(this.member.id).then(() => {
+          log.debug('RefeshList');
+          this.$store.commit('SET_DEFAULT_ADDRESS');
+          this.show = true;
+          this.edit = false;
+        });
+      }
     },
     // 返回适合显示的address
     ConvertAddress(address) {
