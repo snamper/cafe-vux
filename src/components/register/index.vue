@@ -243,6 +243,7 @@ export default {
       return {result, errorMessage};
     },
     _closeAllActionSheet() {
+      document.activeElement.blur();
       this.show.area = false;
       this.show.birthday = false;
       this.show.action = false;
