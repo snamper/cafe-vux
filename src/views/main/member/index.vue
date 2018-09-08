@@ -3,7 +3,7 @@
     <div class="avator">
       <div class="info">
         <avator :url="url" :radius="50" :width="100" :height="100"></avator>
-        <div class="name">{{username}}</div>
+        <div class="name">你好, {{username}}</div>
       </div>
     </div>
     <van-cell-group>

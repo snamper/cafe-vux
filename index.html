@@ -15,18 +15,15 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <script>
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', function() {
+        history.pushState(null, null, document.URL);
+      });
       window.__Konph = {
         'chivy-level': 'debug',
         'chivy-modules': ['**'],
         'chivy-context-flags': ['color', 'level', 'module', 'time']
       };
     </script>
-    <!-- <style>
-      html,body{
-        height:100%;
-        width:100%;
-        overflow-x:hidden;
-      }
-    </style> -->
   </body>
 </html>
