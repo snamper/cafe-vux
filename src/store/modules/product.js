@@ -94,7 +94,7 @@ const product = {
     getRecords: ({ commit }, user) => {
       return new Promise(resolve => {
         getRecordList(user).then(data => {
-          commit('UPDATE_RECORDS', data);
+          Array.isArray(data) ? commit('UPDATE_RECORDS', data) : commit('UPDATE_RECORDS', [data]);
           resolve();
         });
       });

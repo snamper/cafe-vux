@@ -7,37 +7,37 @@
     </van-nav-bar>
     <van-radio-group v-model="radio">
       <van-cell-group>
-        <van-cell v-if="visable" clickable @click="Choose(alipay)">
+        <van-cell v-if="visable" clickable @click="Choose(alipayItem)">
           <template slot="title">
             <div class="title-wrapper">
-              <avator :url="alipay.img"></avator>
-              <span class="title">{{alipay.value}}</span>
+              <avator :url="alipayItem.img"></avator>
+              <span class="title">{{alipayItem.value}}</span>
             </div>
           </template>
           <div class="radio-wrapper">
             <van-radio :name="alipay.value" />
           </div>
         </van-cell>
-        <van-cell clickable @click="Choose(wechat)">
+        <van-cell clickable @click="Choose(wechatItem)">
           <template slot="title">
             <div class="title-wrapper">
-              <avator :url="wechat.img"></avator>
-              <span class="title">{{wechat.value}}</span>
+              <avator :url="wechatItem.img"></avator>
+              <span class="title">{{wechatItem.value}}</span>
             </div>
           </template>
           <div class="radio-wrapper">
-            <van-radio :name="wechat.value" />
+            <van-radio :name="wechatItem.value" />
           </div>
         </van-cell>
-        <van-cell v-if="member" clickable @click="Choose(memberObj)">
+        <van-cell v-if="member" clickable @click="Choose(memberItem)">
           <template slot="title">
             <div class="title-wrapper">
-              <avator :url="memberObj.img"></avator>
-              <span class="title">{{memberObj.value}}(￥{{member.balance}})</span>
+              <avator :url="memberItem.img"></avator>
+              <span class="title">{{memberItem.value}}(￥{{member.balance}})</span>
             </div>
           </template>
           <div class="radio-wrapper">
-            <van-radio :name="memberObj.value" />
+            <van-radio :name="memberItem.value" />
           </div>
         </van-cell>
       </van-cell-group>
@@ -64,15 +64,15 @@ export default {
       visable: false,
       radio: '微信支付',
       recordPrice: 0,
-      alipay: {
+      alipayItem: {
         value: '支付宝',
         img: '../../../static/img/alipay.png'
       },
-      wechat: {
+      wechatItem: {
         value: '微信支付',
         img: '../../../static/img/wechat.png'
       },
-      memberObj: {
+      memberItem: {
         value: '余额支付',
         img: '../../../static/img/tianicon.jpg'
       },
@@ -89,10 +89,10 @@ export default {
       if (to.path === '/' || vm.$tools.isEmpty(vm.carts)) {
         vm.$router.push({name: 'menu'});
       }
-      /* if (vm.$tools.isWeixin()) {
+      if (vm.$tools.isWeixin()) {
         log.debug('weixin browser found, not show alipay');
         vm.visable = false;
-      } */
+      }
     });
   },
   beforeRouteLeave (from, to, next) {
@@ -152,7 +152,7 @@ export default {
     // 会员余额
     balance() {
       if (this.$tools.isNotEmpty(this.member)) {
-        return this.memberObj.balance;
+        return this.member.balance;
       }
     },
     // 计算具体的商品
@@ -160,7 +160,7 @@ export default {
       const details = [];
       this.carts.forEach(good => {
         let detail;
-        if (this.radio === this.memberObj.value) {
+        if (this.radio === this.memberItem.value) {
           detail = {
             productId: good.id,
             amount: good.count * good.memberPrice,
@@ -186,21 +186,16 @@ export default {
         deliveryMobile: this.address.mobile,
         paymentTypeStr: this.deliverType ? '快递' : '自取',
         amount: this.totalPrice,
-        userId: this.$tools.isNotEmpty(this.member) ? this.member.id : '',
-        userCode: this.$tools.isNotEmpty(this.uuid) ? this.uuid : '',
-        cashOrBalance: this.$tools.isNotEmpty(this.memberObj) && this.totalPrice <= this.memberObj.balance && this.radio === this.memberObj.value ? 'BALANCE' : 'CASH',
+        userId: this.$tools.isNotEmpty(this.member) ? this.member.id : null,
+        userCode: this.$tools.isNotEmpty(this.uuid) ? this.uuid : null,
+        cashOrBalance: this.$tools.isNotEmpty(this.member) && this.totalPrice <= this.member.balance && this.radio === this.memberItem.value ? 'BALANCE' : 'CASH',
         details: this.details
       };
       return result;
     },
     url() {
-      if (this.to === '/order') {
-        return true;
-      } else if (this.to === '/records' || this.to === '/record') {
-        return false;
-      } else {
-        return null;
-      }
+      // 从Order页面来则是真，如果是Record/Records来则是假，其他为null
+      return this.to === '/order' ? true : (this.to === '/records' || this.to === '/record') ? false : null;
     }
   },
   methods: {
@@ -242,12 +237,12 @@ export default {
        * 2. 当微信支付的时候，如果成功则订单状态变更，如果失败则变更为订单关闭  （考虑订单关闭的时候是否需要提供重新购买按钮）
        * 3. 不存在余额支付的情况。
       */
-      if (this.radio === this.memberObj.value && this.member.balance < this.totalPrice) {
+      if (this.radio === this.memberItem.value && this.member.balance < this.totalPrice) {
         this.$toast('余额不足，请重新选择支付方式');
         return;
       }
       switch (this.radio) {
-        case this.alipay.value:
+        case this.alipayItem.value:
           // 支付宝支付
           log.info('alipay pay');
           if (this.url) {
@@ -258,7 +253,7 @@ export default {
             window.location.href = this.getPayURL(this.alipay.value, this.totalPrice, this.orderid);
           }
           break;
-        case this.wechat.value:
+        case this.wechatItem.value:
           // 微信支付
           log.info('wechat pay');
           if (!this.$tools.isWeixin()) {
@@ -273,7 +268,7 @@ export default {
             window.location.href = this.getPayURL(this.wechat.value, this.totalPrice, this.orderid);
           }
           break;
-        case this.memberObj.value:
+        case this.memberItem.value:
           // 会员支付
           log.info('member pay');
           log.debug('submitRecord payload is ' + JSON.stringify(this.order));

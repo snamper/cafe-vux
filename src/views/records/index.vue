@@ -41,14 +41,8 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (from.path === '/member' || from.path === '/record' || from.path === '/pay') {
-        vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: true});
-        vm.GetRecords().then(() => {
-          vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false});
-          vm.Selected();
-        }).catch(error=> {
-          vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false});
-          vm.Selected();
-        });
+        vm.GetRecords();
+        vm.Selected();
       } else {
         vm.$router.push({name: 'member'});
       }
@@ -106,11 +100,10 @@ export default {
       this.$router.push({name: 'member'});
     },
     GetRecords() {
-      return new Promise((resolve)=> {
+      return new Promise(resolve=> {
         const param = this.$tools.isEmpty(this.uuid) ? { userId: this.member.id, needDetail: true } : { userCode: this.uuid, needDetail: true };
-        this.$store.dispatch('getRecords', param).then(() => {
-          resolve();
-        });
+        this.$store.dispatch('getRecords', param);
+        resolve();
       });
     },
     Selected() {

@@ -1,4 +1,7 @@
 export const status = {
+  /**
+	 * 交易创建，等待买家付款
+	 */
   NOTPAY: {
     key: 'NOTPAY',
     value: '待付款',
