@@ -26,10 +26,10 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: true});
-      vm.$store.dispatch('getGoods').then(() => {
-        vm.$store.commit('UPDATE_LOADING_STATUS', {isLoading: false});
-      });
+      // 检查是否有商品，如果没有商品则跳转到menu页面
+      if (vm.$store.state.product.goods.length === 0 ) {
+        vm.$router.push({name: 'menu'});
+      }
     });
   },
   components: {
