@@ -164,6 +164,18 @@ export default class Tools {
       }
     }
   };
+  /*
+   计算当付款类型为某个的时候，他的显示的值
+   */
+  static getPaymentStatusValue = (status, paymentType) => {
+    let result = '';
+    Object.keys(paymentType).forEach(key => {
+      if (status === key){
+        result = paymentType[key];
+      }
+    });
+    return result;
+  }
 
   // 暴露操作接口给tools
   static isPwdValid = isPwdValid();

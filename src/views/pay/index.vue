@@ -15,10 +15,10 @@
             </div>
           </template>
           <div class="radio-wrapper">
-            <van-radio :name="alipay.value" />
+            <van-radio :name="alipayItem.value" />
           </div>
         </van-cell>
-        <van-cell clickable @click="Choose(wechatItem)">
+        <van-cell v-if="!visable" clickable @click="Choose(wechatItem)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="wechatItem.img"></avator>
@@ -61,7 +61,7 @@ export default {
       isObjEmpty: this.$tools.isEmpty,
       isObjNotEmpty: this.$tools.isNotEmpty,
       // 是否显示支付宝付款  暂时屏蔽支付宝支付
-      visable: false,
+      visable: true,
       radio: '微信支付',
       recordPrice: 0,
       alipayItem: {
@@ -207,9 +207,9 @@ export default {
     getPayURL(type, value, orderId) {
       log.debug('type is ' + type);
       switch (type) {
-        case this.wechat.value:
+        case this.wechatItem.value:
           return '/shop/member/pay/wechat/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + orderId;
-        case this.alipay.value:
+        case this.alipayItem.value:
           return '/shop/member/pay/alipay/ui/order.do' + '?payMoney=' + value + '&tradeNo=' + orderId;
       }
     },

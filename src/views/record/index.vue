@@ -11,7 +11,7 @@
         :active="active"
         :icon="stepicon"
         :title="orderstatus"
-        :description="stepdesc">
+        :description="orderstatus">
         <van-step>买家下单</van-step>
         <van-step>买家付款</van-step>
         <van-step>卖家发货</van-step>
@@ -21,7 +21,7 @@
         v-else
         :icon="stepicon"
         :title="orderstatus"
-        :description="stepdesc">
+        :description="orderstatus">
       </status>
       <addr :address="address" :editable="false"></addr>
       <div>
@@ -141,7 +141,7 @@ export default {
       return '自提';
     },
     orderstatus() {
-      return this.stepdesc;
+      return this.$tools.getPaymentStatusValue(this.detail.status, this.payStatus);
     },
     stepicon() {
       switch (this.detail.status) {
@@ -154,18 +154,6 @@ export default {
         case 'REFUND' || 'CLOSED' || 'FINISHED':
           return 'completed';
       }
-    },
-    stepdesc() {
-      let stepValue = '';
-      Object.keys(this.payStatus).forEach(key => {
-        if (this.detail.status === key) {
-          log.debug('this.detail.status is ' + this.detail.status);
-          log.debug('key is ' + key);
-          stepValue = this.payStatus[key];
-          log.debug('stepvalue is ' + stepValue);
-        }
-      });
-      return stepValue;
     }
   },
   methods: {

@@ -62,16 +62,16 @@ export default {
       'isLoading': state => state.product.isLoading
     }),
     notpay() {
-      return this.records.filter(record => record.status === this.payStatus.NOTPAY.key);
+      return this.records.filter(record => record.status === 'NOTPAY');
     },
     success() {
-      return this.records.filter(record => record.status === this.payStatus.SUCCESS.key);
+      return this.records.filter(record => record.status === 'SUCCESS');
     },
     dispatched() {
-      return this.records.filter(record => record.status === this.payStatus.DISPATCHED.key);
+      return this.records.filter(record => record.status === 'DISPATCHED');
     },
     finished() {
-      return this.records.filter(record => record.status === this.payStatus.FINISHED.key);
+      return this.records.filter(record => record.status === 'FINISHED');
     },
     recordList() {
       switch(this.active) {

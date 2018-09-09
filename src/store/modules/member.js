@@ -47,6 +47,7 @@ const member = {
      */
     LOGIN_OUT: state => {
       state.member = null;
+      state.address = null;
       state.addresses = null;
       state.uuid = setUuid();
     },

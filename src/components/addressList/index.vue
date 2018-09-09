@@ -111,7 +111,7 @@ export default {
     // 地址列表中的地址列表
     list() {
       const list = [];
-      if (this.addresses.length > 0) {
+      if (this.$tools.isNotEmpty(this.addresses) && this.addresses.length > 0) {
         // 默认选择第一个地址
         this.chosenAddressId = this.address.id;
         this.addresses.forEach(address => {
@@ -156,7 +156,8 @@ export default {
       log.debug('onSave content is ' + JSON.stringify(content));
       // 组织需要提交的数据
       const address = {
-        id: this.$tools.isNotEmpty(content.id) ? content.id : this.member.id,
+        // TODO 需要理解一下
+        id: this.$tools.isNotEmpty(content.id) ? content.id : this.$tools.isNotEmpty(this.member) ? this.member.id : '',
         code: this.uuid,
         name: content.name,
         province: content.province,

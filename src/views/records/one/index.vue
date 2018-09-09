@@ -16,7 +16,7 @@
     <div class="total van-hairline--top-bottom">
       合计:<span>￥{{order.amount}}</span>
     </div>
-    <div class="ops-warpper" v-if="orderstatus === payStatus.NOTPAY.status">
+    <div class="ops-warpper" v-if="orderstatus === 'NOTPAY'">
       <van-cell-group>
         <van-cell>
           <div class="ops">
@@ -58,13 +58,7 @@ export default {
   },
   computed: {
     orderstatus() {
-      Object.keys(this.payStatus).forEach(key => {
-        if (this.order.status === key) {
-          const statusValue = this.payStatus[key].status
-          // log.debug('orderstatus return value is ' + statusValue);
-          return statusValue;
-        }
-      });
+      return this.$tools.getPaymentStatusValue(this.order.status, this.payStatus);
     },
     recordsCount() {
       return this.order.details.length > 0 ? '查看全部' + this.order.details.length + '件商品' : '';
@@ -75,7 +69,7 @@ export default {
       this.$router.push({name: 'record', params: {detail: this.order}});
     },
     onclickCancel() {
-      const param = {entityId: this.order.id, status: this.payStatus.CLOSED.key};
+      const param = {entityId: this.order.id, status: 'CLOSED'};
       this.$store.dispatch('alterStatus', param).then(() => {
         this.$router.push({name: 'order'});
       });
