@@ -7,7 +7,7 @@
     </van-nav-bar>
     <van-radio-group v-model="radio">
       <van-cell-group>
-        <van-cell v-if="visable" clickable @click="Choose(alipayItem)">
+        <van-cell v-if="showAlipay" clickable @click="Choose(alipayItem)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="alipayItem.img"></avator>
@@ -18,7 +18,7 @@
             <van-radio :name="alipayItem.value" />
           </div>
         </van-cell>
-        <van-cell v-if="!visable" clickable @click="Choose(wechatItem)">
+        <van-cell v-if="showWechat" clickable @click="Choose(wechatItem)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="wechatItem.img"></avator>
@@ -29,7 +29,7 @@
             <van-radio :name="wechatItem.value" />
           </div>
         </van-cell>
-        <van-cell v-if="member" clickable @click="Choose(memberItem)">
+        <van-cell v-if="showBalance" clickable @click="Choose(memberItem)">
           <template slot="title">
             <div class="title-wrapper">
               <avator :url="memberItem.img"></avator>
@@ -61,8 +61,7 @@ export default {
       isObjEmpty: this.$tools.isEmpty,
       isObjNotEmpty: this.$tools.isNotEmpty,
       // 是否显示支付宝付款  暂时屏蔽支付宝支付
-      visable: true,
-      radio: '微信支付',
+      radio: '',
       recordPrice: 0,
       alipayItem: {
         value: '支付宝',
@@ -89,10 +88,22 @@ export default {
       if (to.path === '/' || vm.$tools.isEmpty(vm.carts)) {
         vm.$router.push({name: 'menu'});
       }
-      if (vm.$tools.isWeixin()) {
-        log.debug('weixin browser found, not show alipay');
-        vm.visable = false;
+      /* eslint-disable */
+      // debugger
+      log.info('vm.showWechat ' + vm.showWechat);
+      log.info('vm.showAlipay ' + vm.showAlipay);
+      log.info('vm.memberItem ' + vm.showBalance);
+      if (vm.showWechat && !vm.showAlipay) {
+        log.debug('show alipay ' + vm.alipayItem.value);
+        vm.radio = vm.wechatItem.value;
+      } else if (!vm.showWechat && vm.showAlipay) {
+        log.debug('show wechat ' + vm.wechatItem.value);
+        vm.radio = vm.alipayItem.value;
+      } else {
+        log.debug('show member');
+        vm.radio = vm.memberItem.value;
       }
+      log.debug('radio is ' + vm.radio);
     });
   },
   beforeRouteLeave (from, to, next) {
@@ -127,6 +138,15 @@ export default {
       'deliverPrice': state => state.product.deliverPrice,
       'address': state => state.member.address
     }),
+    showAlipay() {
+      return !this.$tools.isWeixin();
+    },
+    showWechat() {
+      return this.$tools.isWeixin();
+    },
+    showBalance() {
+      return this.$tools.isNotEmpty(this.member);
+    },
     // 购物总价
     totalPrice() {
       if (this.url) {
