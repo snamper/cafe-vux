@@ -7,22 +7,22 @@
     </van-nav-bar>
     <div class="content">
       <van-steps
-        v-if="orderstatus !== status.NOTPAY.status"
+        v-if="orderstatus !== payStatus.NOTPAY.status"
         :active="active"
         :icon="stepicon"
         :title="orderstatus"
-        :description="setpdesc">
+        :description="stepdesc">
         <van-step>买家下单</van-step>
-        <van-step>商家接单</van-step>
-        <van-step>买家提货</van-step>
+        <van-step>买家付款</van-step>
+        <van-step>卖家发货</van-step>
         <van-step>交易完成</van-step>
       </van-steps>
-      <orderstatus
+      <status
         v-else
         :icon="stepicon"
         :title="orderstatus"
-        :description="setpdesc">
-      </orderstatus>
+        :description="stepdesc">
+      </status>
       <addr :address="address" :editable="false"></addr>
       <div>
         <div class="products" v-for="(product, index) in detail.details" :key="index">
@@ -57,7 +57,7 @@
           </template>
         </van-cell>
       </van-cell-group>
-      <div class="ops-warpper" v-if="orderstatus === status.NOTPAY.status">
+      <div class="ops-warpper" v-if="orderstatus === payStatus.NOTPAY.status">
         <van-cell-group>
           <van-cell>
             <div class="ops">
@@ -76,15 +76,14 @@ import { Cell, CellGroup, NavBar, Icon, ContactCard, Field, Step, Steps, Button,
 import { mapState } from 'vuex';
 import product from '@/components/good';
 import addr from '@/components/address';
-import orderstatus from '@/components/status';
+import status from '@/components/status';
 import Logger from 'chivy';
 const log = new Logger('views/record');
 export default {
   name: 'Record',
   data() {
     return {
-      active: 2,
-      status: this.$tools.status
+      payStatus: this.$tools.payStatus
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -108,7 +107,7 @@ export default {
     [Button.name]: Button,
     addr,
     product,
-    orderstatus
+    status
   },
   props: {
     detail: {
@@ -119,47 +118,54 @@ export default {
     ...mapState({
       'deliverPrice': state => state.product.deliverPrice
     }),
+    active() {
+      switch (this.detail.status) {
+        case 'NOTPAY' || 'PAYERROR':
+          return 0;
+        case 'SUCCESS':
+          return 1;
+        case 'DISPATCHED':
+          return 2;
+        case 'REFUND' || 'CLOSED' || 'FINISHED':
+          return 3;
+      }
+    },
     address() {
       return {
         name: this.detail.userName,
         tel: this.detail.deliveryMobile,
         address: this.detail.deliveryLocation
-        /* name: '11',
-        tel: '13333333333',
-        address: 'xxxxxxxxxxxxx' */
       };
     },
     delivertype() {
       return '自提';
     },
     orderstatus() {
-      switch(this.detail.status) {
-        case this.status.NOTPAY.key:
-          return this.status.NOTPAY.status;
-        case this.status.WAIT4DELIVERY.key:
-          return this.status.WAIT4DELIVERY.status;
-        case this.status.ALREADYDELIVERY.key:
-          return this.status.ALREADYDELIVERY.status;
-        case this.status.FINISH.key:
-          return this.status.FINISH.status;
-        case this.status.CLOSED.key:
-          return this.status.CLOSED.status;
-      }
-    },
-    showsteps() {
-      return false;
+      return this.stepdesc;
     },
     stepicon() {
-      return 'logistics';
+      switch (this.detail.status) {
+        case 'NOTPAY' || 'PAYERROR':
+          return 'pending-payment';
+        case 'SUCCESS':
+          return 'pending-deliver';
+        case 'DISPATCHED':
+          return 'logistics';
+        case 'REFUND' || 'CLOSED' || 'FINISHED':
+          return 'completed';
+      }
     },
-    setpdesc() {
-      return '超时关闭';
-    },
-    onclickConfirm() {
-
-    },
-    onclickCancel() {
-
+    stepdesc() {
+      let stepValue = '';
+      Object.keys(this.payStatus).forEach(key => {
+        if (this.detail.status === key) {
+          log.debug('this.detail.status is ' + this.detail.status);
+          log.debug('key is ' + key);
+          stepValue = this.payStatus[key];
+          log.debug('stepvalue is ' + stepValue);
+        }
+      });
+      return stepValue;
     }
   },
   methods: {
@@ -167,7 +173,7 @@ export default {
       this.$router.push({name: 'records', params: {order: this.detail}});
     },
     cancelOrder() {
-      const param = {entityId: this.detail.id, status: this.status.CLOSED.key};
+      const param = {entityId: this.detail.id, status: this.payStatus.CLOSED.key};
       this.$store.dispatch('alterStatus', param).then((resp) => {
         this.$router.push({name: 'records'});
       }).catch(error => {
@@ -179,6 +185,12 @@ export default {
       this.$store.dispatch('setcartsgoods',this.detail.details).then(() => {
         this.$router.push({name: 'pay', params: {orderid: this.detail.id}});
       });
+    },
+    onclickConfirm() {
+
+    },
+    onclickCancel() {
+
     }
   }
 };

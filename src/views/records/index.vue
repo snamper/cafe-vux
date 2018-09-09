@@ -35,7 +35,7 @@ export default {
     return {
       tabtitle: ['全部', '待付款', '待发货', '已发货', '已完成'],
       active: 0,
-      status: this.$tools.status
+      payStatus: this.$tools.payStatus
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -62,16 +62,16 @@ export default {
       'isLoading': state => state.product.isLoading
     }),
     notpay() {
-      return this.records.filter(record => record.status === this.status.NOTPAY.key);
+      return this.records.filter(record => record.status === this.payStatus.NOTPAY.key);
     },
-    wait4delivery() {
-      return this.records.filter(record => record.status === this.status.WAIT4DELIVERY.key);
+    success() {
+      return this.records.filter(record => record.status === this.payStatus.SUCCESS.key);
     },
-    alreadydelivery() {
-      return this.records.filter(record => record.status === this.status.ALREADYDELIVERY.key);
+    dispatched() {
+      return this.records.filter(record => record.status === this.payStatus.DISPATCHED.key);
     },
-    finish() {
-      return this.records.filter(record => record.status === this.status.FINISH.key);
+    finished() {
+      return this.records.filter(record => record.status === this.payStatus.FINISHED.key);
     },
     recordList() {
       switch(this.active) {
@@ -80,11 +80,11 @@ export default {
         case 1:
           return this.notpay;
         case 2:
-          return this.wait4delivery;
+          return this.success;
         case 3:
-          return this.alreadydelivery;
+          return this.dispatched;
         case 4:
-          return this.finish;
+          return this.finished;
       }
     }
   },

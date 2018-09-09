@@ -1,7 +1,7 @@
 import querystring from './queryString';
 import { appendZero, splitUrl, param } from './utils';
 import { isPwdValid, isAccountValid, isTelValid, isEmailValid, isChineseNameValid } from './validate';
-import { status } from './consts';
+import payStatus from './payStatus';
 import Logger from 'chivy';
 const log = new Logger('utils/tools');
 
@@ -171,6 +171,6 @@ export default class Tools {
   static isTelValid = isTelValid();
   static isEmailValid = isEmailValid();
   static isChineseNameValid = isChineseNameValid();
-  static status = status;
+  static payStatus = payStatus;
 
 };

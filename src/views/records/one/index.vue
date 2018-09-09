@@ -16,7 +16,7 @@
     <div class="total van-hairline--top-bottom">
       合计:<span>￥{{order.amount}}</span>
     </div>
-    <div class="ops-warpper" v-if="orderstatus === status.NOTPAY.status">
+    <div class="ops-warpper" v-if="orderstatus === payStatus.NOTPAY.status">
       <van-cell-group>
         <van-cell>
           <div class="ops">
@@ -39,7 +39,7 @@ export default {
   name: 'One',
   data() {
     return {
-      status: this.$tools.status
+      payStatus: this.$tools.payStatus
     };
   },
   props: {
@@ -58,19 +58,13 @@ export default {
   },
   computed: {
     orderstatus() {
-      // debugger
-      switch(this.order.status) {
-        case this.status.NOTPAY.key:
-          return this.status.NOTPAY.status;
-        case this.status.WAIT4DELIVERY.key:
-          return this.status.WAIT4DELIVERY.status;
-        case this.status.ALREADYDELIVERY.key:
-          return this.status.ALREADYDELIVERY.status;
-        case this.status.FINISH.key:
-          return this.status.FINISH.status;
-        case this.status.CLOSED.key:
-          return this.status.CLOSED.status;
-      }
+      Object.keys(this.payStatus).forEach(key => {
+        if (this.order.status === key) {
+          const statusValue = this.payStatus[key].status
+          // log.debug('orderstatus return value is ' + statusValue);
+          return statusValue;
+        }
+      });
     },
     recordsCount() {
       return this.order.details.length > 0 ? '查看全部' + this.order.details.length + '件商品' : '';
@@ -81,12 +75,9 @@ export default {
       this.$router.push({name: 'record', params: {detail: this.order}});
     },
     onclickCancel() {
-      const param = {entityId: this.order.id, status: this.status.CLOSED.key};
+      const param = {entityId: this.order.id, status: this.payStatus.CLOSED.key};
       this.$store.dispatch('alterStatus', param).then(() => {
         this.$router.push({name: 'order'});
-      }).catch(error => {
-        log.error('error is ' + JSON.stringify(error));
-        this.$toast('取消错误');
       });
     },
     onclickConfirm() {
