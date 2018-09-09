@@ -109,7 +109,8 @@ export default {
   .van-cell
     padding 5px
   .van-swipe-cell
-    .van-cell-swipe__right
+    .van-swipe-cell__right
+      border 1px solid red
       span
         color: #FFFFFF;
         font-size: 15px;
