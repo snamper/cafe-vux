@@ -242,44 +242,27 @@ export default {
         return;
       }
       switch (this.radio) {
-        case this.alipayItem.value:
-          // 支付宝支付
-          log.info('alipay pay');
+        case this.alipayItem.value || this.wechatItem.value:
+          // 支付宝支付或者微信支付
+          log.info('pay type is ' + this.radio.value);
           if (this.url) {
             this.$store.dispatch('submitRecord', this.order).then(resp => {
-              window.location.href = this.getPayURL(this.alipay.value, this.totalPrice, resp);
+              window.location.href = this.getPayURL(this.radio.value, this.totalPrice, resp);
             });
           } else {
-            window.location.href = this.getPayURL(this.alipay.value, this.totalPrice, this.orderid);
-          }
-          break;
-        case this.wechatItem.value:
-          // 微信支付
-          log.info('wechat pay');
-          if (!this.$tools.isWeixin()) {
-            this.$toast.fail('请在微信中使用微信支付');
-            return;
-          }
-          if (this.url) {
-            this.$store.dispatch('submitRecord', this.order).then(resp => {
-              window.location.href = this.getPayURL(this.wechat.value, this.totalPrice, resp.entityCode);
-            });
-          } else {
-            window.location.href = this.getPayURL(this.wechat.value, this.totalPrice, this.orderid);
+            window.location.href = this.getPayURL(this.radio.value, this.totalPrice, this.orderid);
           }
           break;
         case this.memberItem.value:
           // 会员支付
           log.info('member pay');
           log.debug('submitRecord payload is ' + JSON.stringify(this.order));
-          this.$store.dispatch('submitRecord', this.order).then(resp => {
-            const data = {
-              entityId: resp.entityId,
-              status: 'CLOSED'
-            };
-            return this.$store.dispatch('alterStatus', data).then(() => {
-              this.$router.push({name: 'records'});
-            });
+          this.$store.dispatch('submitRecord', this.order).then(() => {
+            const member = this.member;
+            member.balance = this.member.balance - this.order.amount;
+            // 修改余额并跳转到其他页面
+            this.$store.commit('UPDATE_MEMBER', member);
+            this.$router.push({name: 'records'});
           });
           break;
       }
